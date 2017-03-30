@@ -1,19 +1,12 @@
-package sample.Controller;
+package com.cs3733.teamd.Controller;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.cs3733.teamd.Main;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
-
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import sample.Main;
 
 
 /**

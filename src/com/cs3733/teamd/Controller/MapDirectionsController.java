@@ -1,4 +1,4 @@
-package sample.Controller;
+package com.cs3733.teamd.Controller;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;

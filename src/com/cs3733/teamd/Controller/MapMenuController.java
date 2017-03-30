@@ -1,12 +1,12 @@
-package sample.Controller;
+package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.Main;
 
 import java.io.IOException;
 
