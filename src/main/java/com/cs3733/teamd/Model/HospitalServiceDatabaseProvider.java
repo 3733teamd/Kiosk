@@ -1,4 +1,4 @@
-package com.cs3733.teamd;
+package com.cs3733.teamd.Model;
 
 import java.sql.*;
 import java.util.ArrayList;

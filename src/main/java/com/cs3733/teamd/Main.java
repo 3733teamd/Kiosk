@@ -1,5 +1,8 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Model.HospitalProfessional;
+import com.cs3733.teamd.Model.HospitalProfessionalDatabaseProvider;
+import com.cs3733.teamd.Model.Location;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,14 +41,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Langugage = "English";
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("Views/Main.fxml"));
-        rootLogin = FXMLLoader.load(getClass().getResource("Views/Login.fxml"));
-        rootMapMenu = FXMLLoader.load(getClass().getResource("Views/MapMenu.fxml"));
-        rootMapDirections = FXMLLoader.load(getClass().getResource("Views/MapDirections.fxml"));
-        rootAdminMenu = FXMLLoader.load(getClass().getResource("Views/AdminMenu.fxml"));
-        rootEditService = FXMLLoader.load(getClass().getResource("Views/EditService.fxml"));
-        rootEditDoctor = FXMLLoader.load(getClass().getResource("Views/EditDoctor.fxml"));
-        rootEditMap = FXMLLoader.load(getClass().getResource("Views/EditMap.fxml"));
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"));
+        rootLogin = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
+        rootMapMenu = FXMLLoader.load(getClass().getResource("/Views/MapMenu.fxml"));
+        rootMapDirections = FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"));
+        rootAdminMenu = FXMLLoader.load(getClass().getResource("/Views/AdminMenu.fxml"));
+        rootEditService = FXMLLoader.load(getClass().getResource("/Views/EditService.fxml"));
+        rootEditDoctor = FXMLLoader.load(getClass().getResource("/Views/EditDoctor.fxml"));
+        rootEditMap = FXMLLoader.load(getClass().getResource("/Views/EditMap.fxml"));
 
         MainScene=new Scene(rootMain, 2124, 1010);
         LoginScene=new Scene(rootLogin, 2124, 1010);
@@ -113,8 +116,8 @@ public class Main extends Application {
 
         try {
             Statement s = connection.createStatement();
-            s.execute(createLocationsSql);
-            s.execute(createProvidersSql);
+            //s.execute(createLocationsSql);
+            //s.execute(createProvidersSql);
             List<Location> locations = new ArrayList<Location>();
             locations.add(new Location(4, 1, "422F"));
             locations.add(new Location(3, 1, "317B"));

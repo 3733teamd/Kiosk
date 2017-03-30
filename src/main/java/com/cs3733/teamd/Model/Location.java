@@ -1,4 +1,4 @@
-package com.cs3733.teamd;
+package com.cs3733.teamd.Model;
 
 /**
  * Created by sdmichelini on 3/29/17.
