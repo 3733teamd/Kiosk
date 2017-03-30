@@ -112,8 +112,9 @@ public class Main extends Application {
         String queryServiceSql = "SELECT * FROM SERVICES";
 
         try {
-            //Statement s = connection.createStatement();
-            //s.execute(createLocationsSql);
+            Statement s = connection.createStatement();
+            s.execute(createLocationsSql);
+            s.execute(createProvidersSql);
             List<Location> locations = new ArrayList<Location>();
             locations.add(new Location(4, 1, "422F"));
             locations.add(new Location(3, 1, "317B"));
