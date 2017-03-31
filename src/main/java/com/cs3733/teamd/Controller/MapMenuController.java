@@ -45,7 +45,7 @@ public class MapMenuController {
         Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.LoginScene; //
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
