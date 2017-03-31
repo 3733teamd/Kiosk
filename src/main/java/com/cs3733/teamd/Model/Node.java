@@ -35,4 +35,9 @@ public class Node {
         return this.neighbors;
     }
 
+    public void addNeighbor(Node n){
+        this.neighbors.add(n);
+        n.neighbors.add(this);
+    }
+
 }
