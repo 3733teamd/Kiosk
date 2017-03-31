@@ -1,7 +1,6 @@
-package com.cs3733.teamd.entities;
+package com.cs3733.teamd.Model;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
 /**
@@ -20,7 +19,9 @@ public class Node {
 
     public void addTag(Tag t){
         traits.add(t);
-        t.locations.add(this);
+        if(!t.locations.contains(this)){
+            t.addNode(this);
+        }
     }
 
 

@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.entities.Professional;
-import com.cs3733.teamd.entities.Tag;
+import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
