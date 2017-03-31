@@ -14,4 +14,12 @@ public class Node {
     public Node(int x, int y){
         coord.setLocation(x,y);
     }
+
+    public void addTag(Tag t){
+        traits.add(t);
+        t.addNodeLast(this);
+    }
+    protected void addTagLast(Tag t){
+        traits.add(t);
+    }
 }
