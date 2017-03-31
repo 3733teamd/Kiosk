@@ -31,5 +31,8 @@ public class Node {
         return this.coord.y;
     }
 
+    public LinkedList<Node> getNeighbors(){
+        return this.neighbors;
+    }
 
 }
