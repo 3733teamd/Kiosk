@@ -24,6 +24,9 @@ public class LoginController {
     public TextField UserNameField;
     public TextField PasswordField;
 
+    private String username;
+    private String password;
+
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         Main.window.hide();
@@ -46,6 +49,20 @@ public class LoginController {
         Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.LoginScene;
+    }
+
+    @FXML
+    public void onSubmit(ActionEvent actionEvent) throws  IOException {
+        username = UserNameField.getText();
+        password = PasswordField.getText();
+        System.out.print(username);
+        System.out.print(password);
+
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.LoginScene;
+
     }
 
 }
