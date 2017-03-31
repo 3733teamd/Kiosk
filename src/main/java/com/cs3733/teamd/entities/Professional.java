@@ -10,12 +10,10 @@ public class Professional {
     Title title;
     LinkedList<Tag> locations = new LinkedList<Tag>();
 
-    public Professional(String name, Title title){
+    public Professional(String name, Title title) {
         this.name = name;
         this.title = title;
     }
-
-    
 
     //enum of viable titles
     public enum Title{
@@ -32,6 +30,7 @@ public class Professional {
         }
 
     }
+
 
 }
 
