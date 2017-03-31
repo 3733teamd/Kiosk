@@ -1,4 +1,4 @@
-package com.cs3733.teamd.entities;
+package com.cs3733.teamd.Model;
 
 import java.util.LinkedList;
 
