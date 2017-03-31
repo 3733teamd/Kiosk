@@ -45,14 +45,14 @@ public class MapMenuController {
         Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.MapMenuScene;
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
+        Main.backRoot = Main.MapMenuScene;
     }
 
     @FXML
@@ -60,7 +60,7 @@ public class MapMenuController {
         Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
+        Main.backRoot = Main.MapMenuScene;
     }
 
 }
