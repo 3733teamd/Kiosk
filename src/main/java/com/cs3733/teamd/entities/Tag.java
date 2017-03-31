@@ -25,7 +25,7 @@ public class Tag {
     }
 
     public String toString(){
-        return title;
+        return word;
     }
 
 }
