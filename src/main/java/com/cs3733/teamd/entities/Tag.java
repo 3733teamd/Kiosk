@@ -10,15 +10,26 @@ public class Tag {
 
      String trait;
      LinkedList<Node> locations = new LinkedList<Node>();
+     LinkedList<Professional> occupants = new LinkedList<Professional>();
 
     public Tag(String trait){
         this.trait = trait;
     }
 
-    //adds a node, and adds this tag to the other node
+    //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
     public void addNode(Node n){
         locations.add(n);
-        n.traits.add(this);
+        if(!n.traits.contains(this)){
+            n.addTag(this);
+        }
+    }
+
+
+    public void addProf(Professional p){
+        occupants.add(p);
+        if(!p.locations.contains(this)){
+            p.locations.add(this);
+        }
     }
 
 

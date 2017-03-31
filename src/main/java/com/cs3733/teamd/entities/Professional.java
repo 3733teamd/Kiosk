@@ -17,6 +17,18 @@ public class Professional {
         this.dept = dept;
     }
 
+    public void addTag(Tag t){
+        locations.add(t);
+        if(!t.occupants.contains(this)){
+            t.addProf(this);
+        }
+    }
+
+    @Override
+    public String toString(){
+        return title.toString() + name + " (" + dept + ")";
+    }
+
     //enum of viable titles
     public enum Title{
         DR("Dr.");
@@ -32,7 +44,7 @@ public class Professional {
         }
 
     }
-    
+
 
 
 }

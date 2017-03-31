@@ -20,7 +20,9 @@ public class Node {
 
     public void addTag(Tag t){
         traits.add(t);
-        t.locations.add(this);
+        if(!t.locations.contains(this)){
+            t.addNode(this);
+        }
     }
 
 
