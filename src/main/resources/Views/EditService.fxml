@@ -55,7 +55,7 @@
                         <Font size="29.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+                  <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
                      <font>
                         <Font size="29.0" />
                      </font>

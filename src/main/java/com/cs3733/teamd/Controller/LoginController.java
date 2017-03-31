@@ -40,6 +40,12 @@ public class LoginController {
         Main.backRoot = Main.LoginScene;
     }
 
-
+    @FXML
+    public void onBack(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.backRoot);
+        Main.window.show();
+        Main.backRoot = Main.LoginScene;
+    }
 
 }

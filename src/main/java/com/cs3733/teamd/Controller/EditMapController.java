@@ -41,4 +41,12 @@ public class EditMapController {
         Main.window.show();
         Main.backRoot = Main.EditMapScene;
     }
+    @FXML
+    public void onBack(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.backRoot);
+        Main.window.show();
+        Main.backRoot = Main.EditMapScene;
+    }
+
 }

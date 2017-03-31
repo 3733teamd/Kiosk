@@ -18,6 +18,7 @@ public class Main extends Application {
 
     public static String Langugage;
     public static Stage window;
+
     public static Parent rootMain;
     public static Parent rootLogin;
     public static Parent rootMapMenu;
