@@ -24,5 +24,12 @@ public class Node {
         }
     }
 
+    public int getX(){
+        return this.coord.x;
+    }
+    public int getY(){
+        return this.coord.y;
+    }
+
 
 }
