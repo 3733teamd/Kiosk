@@ -9,8 +9,8 @@ import java.util.LinkedList;
  */
 public class Node {
 
-    private Point coord = new Point();
-    private LinkedList<Tag> traits = new LinkedList<Tag>();
+     Point coord = new Point();
+     LinkedList<Tag> traits = new LinkedList<Tag>();
     public Node(int x, int y){
         coord.setLocation(x,y);
     }
