@@ -7,11 +7,31 @@ import java.util.LinkedList;
  */
 public class Professional {
     String name;
-    String title;
+    Title title;
     LinkedList<Tag> locations = new LinkedList<Tag>();
 
-    public Professional(String name, String title){
+    public Professional(String name, Title title){
         this.name = name;
         this.title = title;
     }
+
+    
+
+    //enum of viable titles
+    public enum Title{
+        DR("Dr.");
+        String text;
+
+        Title(String text){
+            this.text = text;
+        }
+
+        @Override
+        public String toString(){
+            return text;
+        }
+
+    }
+
 }
+
