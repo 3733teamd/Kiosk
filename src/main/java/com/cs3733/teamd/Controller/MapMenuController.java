@@ -1,6 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.entities.Professional;
+import com.cs3733.teamd.entities.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,10 +14,11 @@ import java.io.IOException;
 
 
 public class MapMenuController {
-    static ObservableList<String> roomsList =
-            FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
-    static ObservableList<String> serviceList =
-            FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
+    static ObservableList<Professional> roomDropDown =
+            FXCollections.observableArrayList(new Professional("Ryan", "Doctor", "cardiology"), new Professional("andy", "Surgeon", "Neuroscience"));
+
+    static ObservableList<Tag> serviceDropDown =
+            FXCollections.observableArrayList( new Tag("Allergy"), new Tag("Blood Test"), new Tag("ICU"));
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -34,9 +37,9 @@ public class MapMenuController {
     @FXML
     private void initialize(){
         RoomSelect.setValue("Select Room");
-        RoomSelect.setItems(roomsList);
+        RoomSelect.setItems(roomDropDown);
         ServiceSelect.setValue("Select Service");
-        ServiceSelect.setItems(serviceList);
+        ServiceSelect.setItems(serviceDropDown);
     }
 
     @FXML
@@ -55,4 +58,8 @@ public class MapMenuController {
     }
 
 
+    public void submitSearch(ActionEvent actionEvent) {
+        Professional desiredProfessional = (Professional) RoomSelect.getValue();
+        Tag desiredTag = (Tag) ServiceSelect.getValue();
+    }
 }
