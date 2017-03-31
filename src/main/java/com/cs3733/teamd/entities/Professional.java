@@ -7,12 +7,14 @@ import java.util.LinkedList;
  */
 public class Professional {
     String name;
+    String dept;
     Title title;
     LinkedList<Tag> locations = new LinkedList<Tag>();
 
-    public Professional(String name, Title title) {
+    public Professional(String name, Title title, String dept) {
         this.name = name;
         this.title = title;
+        this.dept = dept;
     }
 
     //enum of viable titles
@@ -30,6 +32,7 @@ public class Professional {
         }
 
     }
+    
 
 
 }

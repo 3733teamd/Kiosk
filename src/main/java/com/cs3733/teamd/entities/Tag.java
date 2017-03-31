@@ -15,7 +15,7 @@ public class Tag {
         this.trait = trait;
     }
 
-    //called to add a node and have the node add the tag
+    //adds a node, and adds this tag to the other node
     public void addNode(Node n){
         locations.add(n);
         n.traits.add(this);

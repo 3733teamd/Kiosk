@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class MapMenuController {
     static ObservableList<Professional> roomDropDown =
-            FXCollections.observableArrayList(new Professional("Ryan", "Doctor", "cardiology"), new Professional("andy", "Surgeon", "Neuroscience"));
+            FXCollections.observableArrayList(new Professional("Ryan", Professional.Title.DR, "cardiology"), new Professional("andy", Professional.Title.DR, "Neuroscience"));
 
     static ObservableList<Tag> serviceDropDown =
             FXCollections.observableArrayList( new Tag("Allergy"), new Tag("Blood Test"), new Tag("ICU"));
