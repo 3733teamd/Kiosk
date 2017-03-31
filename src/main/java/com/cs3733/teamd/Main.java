@@ -64,7 +64,42 @@ public class Main extends Application {
         window.show();
 
     }
+    public static void dropTables(Connection connection){
+        String dropServicesSql = "DROP TABLE SERVICES";
+        String dropLocationsSql = "DROP TABLE LOCATIONS";
+        String dropProvidersSql = "DROP TABLE PROVIDERS";
+        try {
+            Statement s = connection.createStatement();
+            s.execute(dropLocationsSql);
+            //s.execute(dropServicesSql);
+            s.execute(dropProvidersSql);
+        } catch (SQLException e) {
+            System.err.println("Failed to drop tables, most likely because they do not exist");
+            //e.printStackTrace();
+        }
+    }
 
+    public static void createTables(Connection connection){
+        String createProvidersSql = "CREATE TABLE PROVIDERS"
+                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
+                "        (START WITH 1, INCREMENT BY 1),"
+                + "name VARCHAR(50))";
+
+        String createLocationsSql = "CREATE TABLE LOCATIONS"
+                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
+                "        (START WITH 1, INCREMENT BY 1),"
+                + "floor INTEGER,"
+                + "room VARCHAR(20),"
+                + "p_id INTEGER)";
+        try {
+            Statement s = connection.createStatement();
+            s.execute(createLocationsSql);
+            s.execute(createProvidersSql);
+        } catch (SQLException e) {
+            System.err.println("Failed to create tables");
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("-------Embedded Java DB Connection Testing --------");
@@ -94,30 +129,11 @@ public class Main extends Application {
             return;
         }
 
-
-        String dropServicesSql = "DROP TABLE SERVICES";
-        String createProvidersSql = "CREATE TABLE PROVIDERS"
-                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
-                "        (START WITH 1, INCREMENT BY 1),"
-                + "name VARCHAR(50))";
-
-        String createLocationsSql = "CREATE TABLE LOCATIONS"
-                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
-                "        (START WITH 1, INCREMENT BY 1),"
-                + "floor INTEGER,"
-                + "room VARCHAR(20),"
-                + "p_id INTEGER)";
-
-        String insertServiceSql = "INSERT INTO SERVICES " +
-                " (name, floor, room) VALUES(" +
-                "'Test Service', 4, '420C')";
-
-        String queryServiceSql = "SELECT * FROM SERVICES";
+        dropTables(connection);
+        createTables(connection);
 
         try {
-            Statement s = connection.createStatement();
-            s.execute(createLocationsSql);
-            s.execute(createProvidersSql);
+
             List<Location> locations = new ArrayList<Location>();
             locations.add(new Location(4, 1, "422F"));
             locations.add(new Location(3, 1, "317B"));
