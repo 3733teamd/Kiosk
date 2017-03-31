@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.MapMenuController">
+<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.MapMenuController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -23,77 +23,74 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="935.0" prefWidth="1832.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Rectangle id="Ruler" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="855.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="968.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="1183.0" layoutX="-219.0" layoutY="-203.0" stroke="BLACK" strokeType="INSIDE" width="2118.0" />
-            <AnchorPane layoutX="-12.0" layoutY="142.0" prefHeight="629.0" prefWidth="1913.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="1308.0" />
+            <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="687.0" stroke="BLACK" strokeType="INSIDE" width="1913.0" />
-                  <Text layoutX="862.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
+                  <Button fx:id="largerTextButton" layoutX="1102.0" layoutY="151.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                      <font>
-                        <Font size="33.0" />
+                        <Font size="20.0" />
                      </font>
-                  </Text>
-                  <Text layoutX="730.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Map Menu" textAlignment="CENTER">
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="1242.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="MenuButton" layoutX="1182.0" layoutY="683.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="LoginButton" layoutX="-10.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#007bedd6" layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="425.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Map Menu" textAlignment="CENTER">
                      <font>
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Button fx:id="SubmitButton" layoutX="890.0" layoutY="574.0" mnemonicParsing="false" text="Submit">
+                  <Label layoutX="452.0" layoutY="151.0" prefHeight="226.0" prefWidth="385.0" text="Instructions: To create a map select a destination by choosing one amongst:" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="540.0" layoutY="298.0" prefHeight="134.0" prefWidth="209.0" text="Room Number Service Provided" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox id="RoomSelect" fx:id="RoomSelect" layoutX="546.0" layoutY="432.0" prefHeight="31.0" prefWidth="196.0">
+                     <tooltip>
+                        <Tooltip text="Select a Room" />
+                     </tooltip>
+                  </ChoiceBox>
+                  <ChoiceBox id="RoomSelect" fx:id="ServiceSelect" layoutX="546.0" layoutY="495.0" prefHeight="31.0" prefWidth="196.0">
+                     <tooltip>
+                        <Tooltip text="Select a Service" />
+                     </tooltip>
+                  </ChoiceBox>
+                  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" text="Submit">
                      <font>
                         <Font size="26.0" />
                      </font>
                   </Button>
-                  <Label layoutX="756.0" layoutY="155.0" prefHeight="226.0" prefWidth="385.0" text="Instructions: To create a map select a destination by choosing one amongst:" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="844.0" layoutY="301.0" prefHeight="134.0" prefWidth="209.0" text="Room Number Service Provided" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="RoomSelect" layoutX="851.0" layoutY="435.0" prefHeight="31.0" prefWidth="196.0">
-                     <tooltip>
-                        <Tooltip text="Select a Room" />
-                     </tooltip></ChoiceBox>
-                  <ChoiceBox id="RoomSelect" fx:id="ServiceSelect" layoutX="851.0" layoutY="498.0" prefHeight="31.0" prefWidth="196.0">
-                     <tooltip>
-                        <Tooltip text="Select a Service" />
-                     </tooltip></ChoiceBox>
-                  <Button fx:id="largerTextButton" layoutX="1680.0" layoutY="62.0" mnemonicParsing="false" text="Larger Text">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Button>
                </children>
             </AnchorPane>
-            <Circle fill="#007bedd6" layoutX="1825.0" layoutY="903.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="1826.0" layoutY="64.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="67.0" layoutY="65.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="68.0" layoutY="905.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button fx:id="SearchButton" layoutX="-16.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="LoginButton" layoutX="-4.0" layoutY="837.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="134.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="MenuButton" layoutX="1756.0" layoutY="837.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="138.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="BackButton" layoutX="1757.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
    </children>

@@ -50,14 +50,14 @@ public class Main extends Application {
         rootEditDoctor = FXMLLoader.load(getClass().getResource("/Views/EditDoctor.fxml"));
         rootEditMap = FXMLLoader.load(getClass().getResource("/Views/EditMap.fxml"));
 
-        MainScene=new Scene(rootMain, 2124, 1010);
-        LoginScene=new Scene(rootLogin, 2124, 1010);
-        MapMenuScene=new Scene(rootMapMenu, 2124, 1010);
-        MapDirectionsScene=new Scene(rootMapDirections, 2124, 1010);
-        AdminMenuScene=new Scene(rootAdminMenu, 2124, 1010);
-        EditDoctorScene=new Scene(rootEditDoctor, 2124, 1010);
-        EditServiceScene=new Scene(rootEditService, 2124, 1010);
-        EditMapScene=new Scene(rootEditMap, 2124, 1010);
+        MainScene=new Scene(rootMain, 1300, 800);
+        LoginScene=new Scene(rootLogin, 1300, 800);
+        MapMenuScene=new Scene(rootMapMenu, 1300, 800);
+        MapDirectionsScene=new Scene(rootMapDirections, 1300, 800);
+        AdminMenuScene=new Scene(rootAdminMenu, 1300, 800);
+        EditDoctorScene=new Scene(rootEditDoctor, 1300, 800);
+        EditServiceScene=new Scene(rootEditService, 1300, 800);
+        EditMapScene=new Scene(rootEditMap, 1300, 800);
 
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);

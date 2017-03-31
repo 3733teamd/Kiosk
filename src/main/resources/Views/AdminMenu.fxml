@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
+<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -20,74 +20,64 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="935.0" prefWidth="1832.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <AnchorPane prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Rectangle id="Ruler" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="855.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="968.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="1183.0" layoutX="-219.0" layoutY="-203.0" stroke="BLACK" strokeType="INSIDE" width="2124.0" />
-            <AnchorPane layoutX="-12.0" layoutY="142.0" prefHeight="629.0" prefWidth="1913.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="1308.0" />
+            <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="687.0" stroke="BLACK" strokeType="INSIDE" width="1913.0" />
-                  <Text layoutX="862.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
+                  <Button fx:id="largerTextButton" layoutX="1053.0" layoutY="196.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                      <font>
-                        <Font size="33.0" />
+                        <Font size="20.0" />
                      </font>
-                  </Text>
-                  <Text layoutX="689.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Menu" textAlignment="CENTER">
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="1242.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="MenuButton" layoutX="1182.0" layoutY="683.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="LoginButton" layoutX="-10.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#007bedd6" layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="392.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Menu" textAlignment="CENTER">
                      <font>
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Button fx:id="EditServiceDirectory" layoutX="799.0" layoutY="272.0" mnemonicParsing="false" text="Edit Service Directory">
+                  <Button fx:id="EditServiceDirectory" layoutX="502.0" layoutY="248.0" mnemonicParsing="false" text="Edit Service Directory">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="EditMap" layoutX="867.0" layoutY="394.0" mnemonicParsing="false" text="Edit Map ">
+                  <Button fx:id="EditMap" layoutX="570.0" layoutY="370.0" mnemonicParsing="false" text="Edit Map ">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="EditDoctorDirectory" layoutX="801.0" layoutY="502.0" mnemonicParsing="false" text="Edit Doctor Directory">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="Logout" layoutX="147.0" layoutY="595.0" mnemonicParsing="false" text="Logout">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="largerTextButton" layoutX="1679.0" layoutY="44.0" mnemonicParsing="false" text="Larger Text">
+                  <Button fx:id="EditDoctorDirectory" layoutX="504.0" layoutY="478.0" mnemonicParsing="false" text="Edit Doctor Directory">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <Circle fill="#007bedd6" layoutX="1825.0" layoutY="903.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="1826.0" layoutY="64.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="67.0" layoutY="65.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#007bedd6" layoutX="68.0" layoutY="905.0" radius="75.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button fx:id="SearchButton" layoutX="-16.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="LoginButton" layoutX="-4.0" layoutY="837.0" mnemonicParsing="false" prefHeight="134.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="MenuButton" layoutX="1756.0" layoutY="837.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
-            <Button fx:id="BackButton" layoutX="1757.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
-               <font>
-                  <Font size="29.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
    </children>
