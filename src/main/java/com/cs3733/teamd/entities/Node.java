@@ -11,15 +11,17 @@ public class Node {
 
      Point coord = new Point();
      LinkedList<Tag> traits = new LinkedList<Tag>();
+     LinkedList<Node> neighbors = new LinkedList<Node>();
+
     public Node(int x, int y){
         coord.setLocation(x,y);
     }
 
+
     public void addTag(Tag t){
         traits.add(t);
-        t.addNodeLast(this);
+        t.locations.add(this);
     }
-    protected void addTagLast(Tag t){
-        traits.add(t);
-    }
+
+
 }
