@@ -17,6 +17,7 @@ public class MapMenuController {
     static ObservableList<String> serviceList =
             FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
 
+
     public Button largerTextButton;
     public Button SearchButton;
     public Button LoginButton;
