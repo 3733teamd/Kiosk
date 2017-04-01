@@ -49,7 +49,7 @@ public class Professional {
 
     @Override
     public String toString(){
-        return title.toString() + name + " (" + dept + ")";
+        return title.toString() +" " + name + " (" + dept + ")";
     }
 
     //enum of viable titles
