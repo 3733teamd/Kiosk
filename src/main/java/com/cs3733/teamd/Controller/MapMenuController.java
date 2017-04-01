@@ -8,6 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.*;
 import java.io.IOException;
 
 
@@ -45,14 +46,14 @@ public class MapMenuController {
         Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene; //
+        Main.backRoot = Main.MapMenuScene; //
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
+        Main.backRoot = Main.MapMenuScene;
     }
 
     @FXML
@@ -60,7 +61,17 @@ public class MapMenuController {
         Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
+        Main.backRoot = Main.MapMenuScene;
+    }
+
+    @FXML
+    public void onSubmit(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+        Main.roomSelected = RoomSelect.getValue().toString();
+        Main.serviceSelected = ServiceSelect.getValue().toString();
+        Main.window.setScene(Main.MapDirectionsScene);
+        Main.window.show();
+        Main.backRoot = Main.MapMenuScene;
     }
 
 }

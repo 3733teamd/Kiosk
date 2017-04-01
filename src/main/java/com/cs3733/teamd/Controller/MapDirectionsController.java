@@ -23,6 +23,38 @@ public class MapDirectionsController {
     public ImageView mapImage;
     public TextArea textDirectionsDisplay;
 
+    @FXML private void initialize()
+    {
+        if (Main.roomSelected == "Select Room") {
+            if (Main.serviceSelected == "Allergy"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "Blood Test"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "ICU"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "Oranges"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "Emergency Room"){
+                // Map data goes here
+            }
+        }
+        if (Main.serviceSelected == "Select Service"){
+            if (Main.roomSelected == "3A"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "3B"){
+                // Map data goes here
+            }
+            if (Main.serviceSelected == "3C"){
+                // Map data goes here
+            }
+        }
+    }
+
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         Main.window.hide();
