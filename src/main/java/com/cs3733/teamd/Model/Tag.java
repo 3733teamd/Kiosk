@@ -35,8 +35,8 @@ public class Tag {
     public void rmvProf(Professional p){
         if (occupants.contains(p)){
             occupants.remove(p);
-            if(p.locations.contains(this)) {
-                p.locations.remove(this);
+            if(p.containsTag(this)) {
+                p.rmvTag(this);
             }
         }
     }
@@ -44,8 +44,8 @@ public class Tag {
     public void rmvNode(Node n){
         if (locations.contains(n)){
             locations.remove(n);
-            if(n.traits.contains(this)) {
-                n.traits.remove(this);
+            if(n.containsTag(this)) {
+                n.rmvTag(this);
             }
         }
     }

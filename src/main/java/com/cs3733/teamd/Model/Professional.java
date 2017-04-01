@@ -19,7 +19,7 @@ public class Professional {
 
     public void addTag(Tag t){
         locations.add(t);
-        if(!t.occupants.contains(this)){
+        if(!t.containsProf(this)){
             t.addProf(this);
         }
     }
