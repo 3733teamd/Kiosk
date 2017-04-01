@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Me on 4/1/2017.
+ * TESTS THE THREE CORE ENTITIES: TAG, NODE, PROFESSIONAL
  */
 public class ThreeEntityTest {
     @Test
@@ -25,5 +26,13 @@ public class ThreeEntityTest {
         Node n2 = new Node(1,3);
         n1.addNode(n2);
         assertTrue(n2.containsNode(n1));
+    }
+
+    @Test
+    public void addTagToNode(){
+        Node n = new Node(1,2);
+        Tag t = new Tag("Testing");
+        n.addTag(t);
+        assertTrue(t.containsNode(n));
     }
 }

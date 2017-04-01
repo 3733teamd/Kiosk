@@ -16,4 +16,5 @@ public class NodeTest {
         Node n2 = new Node(1,3);
         assertEquals(n1.getDist(n2),1, .005);
     }
+
 }
