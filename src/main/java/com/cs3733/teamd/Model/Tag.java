@@ -8,12 +8,12 @@ import java.util.LinkedList;
 public class Tag {
 
 
-     String trait;
+     String tagName;
      private LinkedList<Node> nodes = new LinkedList<Node>();
      private LinkedList<Professional> profs = new LinkedList<Professional>();
 
     public Tag(String trait){
-        this.trait = trait;
+        this.tagName = trait;
     }
 
     //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
@@ -58,9 +58,13 @@ public class Tag {
         return (this.profs.contains(p));
     }
 
+    public LinkedList<Node> getNodes(){
+        return this.nodes;
+    }
+
 
     public String toString(){
-        return trait;
+        return tagName;
     }
 
 }
