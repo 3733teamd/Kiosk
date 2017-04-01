@@ -9,8 +9,8 @@ import java.util.LinkedList;
 public class Node {
 
      Point coord = new Point();
-     private LinkedList<Tag> traits = new LinkedList<Tag>();
-     private LinkedList<Node> neighbors = new LinkedList<Node>();
+     private LinkedList<Tag> tags = new LinkedList<Tag>();
+     private LinkedList<Node> nodes = new LinkedList<Node>();
 
     public Node(int x, int y){
         coord.setLocation(x,y);
@@ -18,15 +18,15 @@ public class Node {
 
 
     public void addTag(Tag t){
-        traits.add(t);
+        tags.add(t);
         if(!t.containsNode(this)){
             t.addNode(this);
         }
     }
 
     public void rmvTag(Tag t){
-        if(traits.contains(t)){
-            traits.remove(t);
+        if(tags.contains(t)){
+            tags.remove(t);
         }
         if(t.containsNode(this)){
            t.rmvNode(this);
@@ -34,26 +34,26 @@ public class Node {
     }
 
     public void addNode(Node n){
-        neighbors.add(n);
-        if(!n.neighbors.contains(this)){
+        nodes.add(n);
+        if(!n.nodes.contains(this)){
             n.addNode(this);
         }
     }
     public void rmvNode(Node n){
-        if(neighbors.contains(n)){
-            neighbors.remove(n);
+        if(nodes.contains(n)){
+            nodes.remove(n);
         }
-        if(n.neighbors.contains(this)){
+        if(n.nodes.contains(this)){
             n.rmvNode(this);
         }
     }
 
     public boolean containsNode(Node n){
-        return (this.neighbors.contains(n));
+        return (this.nodes.contains(n));
     }
 
     public boolean containsTag(Tag t){
-        return (this.traits.contains(t));
+        return (this.tags.contains(t));
     }
 
 

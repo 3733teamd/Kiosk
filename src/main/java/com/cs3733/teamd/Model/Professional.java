@@ -9,7 +9,7 @@ public class Professional {
     String name;
     String dept;
     Title title;
-    private LinkedList<Tag> locations = new LinkedList<Tag>();
+    private LinkedList<Tag> tags = new LinkedList<Tag>();
 
     public Professional(String name, Title title, String dept) {
         this.name = name;
@@ -18,15 +18,15 @@ public class Professional {
     }
 
     public void addTag(Tag t){
-        locations.add(t);
+        tags.add(t);
         if(!t.containsProf(this)){
             t.addProf(this);
         }
     }
 
     public void rmvTag(Tag t){
-        if(locations.contains(t)){
-            locations.remove(t);
+        if(tags.contains(t)){
+            tags.remove(t);
         }
         if(t.containsProf(this)){
             t.rmvProf(this);
@@ -34,7 +34,7 @@ public class Professional {
     }
 
     public boolean containsTag(Tag t){
-        return locations.contains(t);
+        return tags.contains(t);
     }
 
     @Override
