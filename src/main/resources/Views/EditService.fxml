@@ -70,7 +70,7 @@
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Button fx:id="submitRemoveService" layoutX="739.0" layoutY="567.0" mnemonicParsing="false" text="Submit">
+                  <Button fx:id="submitRemoveService" layoutX="740.0" layoutY="567.0" mnemonicParsing="false" onAction="#onSubmitRemove" text="Submit">
                      <font>
                         <Font size="26.0" />
                      </font>
@@ -93,12 +93,12 @@
                   </Label>
                   <ChoiceBox id="RoomSelect" fx:id="modifyRoomSelect" layoutX="564.0" layoutY="431.0" prefHeight="31.0" prefWidth="196.0" />
                   <ChoiceBox id="RoomSelect" fx:id="modifyServiceSelect" layoutX="312.0" layoutY="431.0" prefHeight="31.0" prefWidth="196.0" />
-                  <Button fx:id="submitModifyService" layoutX="830.0" layoutY="406.0" mnemonicParsing="false" text="Submit">
+                  <Button fx:id="submitModifyService" layoutX="830.0" layoutY="406.0" mnemonicParsing="false" onAction="#onSubmitModify" text="Submit">
                      <font>
                         <Font size="26.0" />
                      </font>
                   </Button>
-                  <Button fx:id="submitAddService" layoutX="729.0" layoutY="246.0" mnemonicParsing="false" text="Submit">
+                  <Button fx:id="submitAddService" layoutX="729.0" layoutY="246.0" mnemonicParsing="false" onAction="#onSubmitAdd" text="Submit">
                      <font>
                         <Font size="26.0" />
                      </font>
