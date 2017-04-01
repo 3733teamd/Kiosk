@@ -19,7 +19,7 @@ public class Node {
 
     public void addTag(Tag t){
         traits.add(t);
-        if(!t.locations.contains(this)){
+        if(!t.containsNode(this)){
             t.addNode(this);
         }
     }
@@ -28,8 +28,8 @@ public class Node {
         if(traits.contains(t)){
             traits.remove(t);
         }
-        if(t.locations.contains(this)){
-           t.locations.remove(this);
+        if(t.containsNode(this)){
+           t.rmvNode(this);
         }
     }
 
@@ -46,6 +46,14 @@ public class Node {
         if(n.neighbors.contains(this)){
             n.rmvNode(this);
         }
+    }
+
+    public boolean containsNode(Node n){
+        return (this.neighbors.contains(n));
+    }
+
+    public boolean containsTag(Tag t){
+        return (this.traits.contains(t));
     }
 
 
