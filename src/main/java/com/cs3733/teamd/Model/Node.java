@@ -9,8 +9,8 @@ import java.util.LinkedList;
 public class Node {
 
      Point coord = new Point();
-     LinkedList<Tag> traits = new LinkedList<Tag>();
-     LinkedList<Node> neighbors = new LinkedList<Node>();
+     private LinkedList<Tag> traits = new LinkedList<Tag>();
+     private LinkedList<Node> neighbors = new LinkedList<Node>();
 
     public Node(int x, int y){
         coord.setLocation(x,y);
@@ -25,7 +25,9 @@ public class Node {
     }
 
     public void rmvTag(Tag t){
-        traits.remove(t);
+        if(traits.contains(t)){
+            traits.remove(t);
+        }
         if(t.locations.contains(this)){
            t.locations.remove(this);
         }
@@ -38,7 +40,9 @@ public class Node {
         }
     }
     public void rmvNode(Node n){
-        neighbors.remove(n);
+        if(neighbors.contains(n)){
+            neighbors.remove(n);
+        }
         if(n.neighbors.contains(this)){
             n.rmvNode(this);
         }
