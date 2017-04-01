@@ -9,8 +9,8 @@ public class Tag {
 
 
      String trait;
-     LinkedList<Node> locations = new LinkedList<Node>();
-     LinkedList<Professional> occupants = new LinkedList<Professional>();
+     private LinkedList<Node> nodes = new LinkedList<Node>();
+     private LinkedList<Professional> profs = new LinkedList<Professional>();
 
     public Tag(String trait){
         this.trait = trait;
@@ -18,32 +18,44 @@ public class Tag {
 
     //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
     public void addNode(Node n){
-        locations.add(n);
-        if(!n.traits.contains(this)){
+        nodes.add(n);
+        if(!n.containsTag(this)){
             n.addTag(this);
         }
     }
 
 
     public void addProf(Professional p){
-        occupants.add(p);
-        if(!p.locations.contains(this)){
-            p.locations.add(this);
+        profs.add(p);
+        if(!p.containsTag(this)){
+            p.addTag(this);
         }
     }
 
     public void rmvProf(Professional p){
-        if (occupants.contains(p)){
-            occupants.remove(p);
-            p.locations.remove(this);
+        if (profs.contains(p)){
+            profs.remove(p);
+            if(p.containsTag(this)) {
+                p.rmvTag(this);
+            }
         }
     }
 
     public void rmvNode(Node n){
-        if (locations.contains(n)){
-            locations.remove(n);
-            n.traits.remove(this);
+        if (nodes.contains(n)){
+            nodes.remove(n);
+            if(n.containsTag(this)) {
+                n.rmvTag(this);
+            }
         }
+    }
+
+    public boolean containsNode(Node n){
+        return (this.nodes.contains(n));
+    }
+
+    public boolean containsProf(Professional p){
+        return (this.profs.contains(p));
     }
 
 
