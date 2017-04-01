@@ -46,4 +46,12 @@ public class AdminMenuController {
         Main.backRoot = Main.AdminMenuScene;
     }
 
+    @FXML
+    public void onEditServiceDirectory(ActionEvent actionEvent) throws IOException {
+        Main.window.hide();
+        Main.window.setScene(Main.EditServiceScene);
+        Main.window.show();
+        Main.backRoot = Main.AdminMenuScene;
+    }
+
 }
