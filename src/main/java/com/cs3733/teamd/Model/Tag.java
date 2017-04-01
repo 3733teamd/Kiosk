@@ -19,7 +19,7 @@ public class Tag {
     //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
     public void addNode(Node n){
         locations.add(n);
-        if(!n.traits.contains(this)){
+        if(!n.containsTag(this)){
             n.addTag(this);
         }
     }
@@ -27,8 +27,8 @@ public class Tag {
 
     public void addProf(Professional p){
         occupants.add(p);
-        if(!p.locations.contains(this)){
-            p.locations.add(this);
+        if(!p.containsTag(this)){
+            p.addTag(this);
         }
     }
 
