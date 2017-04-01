@@ -24,5 +24,25 @@ public class Node {
         }
     }
 
+    public void rmvTag(Tag t){
+        traits.remove(t);
+        if(t.locations.contains(this)){
+           t.locations.remove(this);
+        }
+    }
+
+    public void addNode(Node n){
+        neighbors.add(n);
+        if(!n.neighbors.contains(this)){
+            n.addNode(this);
+        }
+    }
+    public void rmvNode(Node n){
+        neighbors.remove(n);
+        if(n.neighbors.contains(this)){
+            n.rmvNode(this);
+        }
+    }
+
 
 }
