@@ -32,6 +32,20 @@ public class Tag {
         }
     }
 
+    public void rmvProf(Professional p){
+        if (occupants.contains(p)){
+            occupants.remove(p);
+            p.locations.remove(this);
+        }
+    }
+
+    public void rmvNode(Node n){
+        if (locations.contains(n)){
+            locations.remove(n);
+            n.traits.remove(this);
+        }
+    }
+
 
     public String toString(){
         return trait;
