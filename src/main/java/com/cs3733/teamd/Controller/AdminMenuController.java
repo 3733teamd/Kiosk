@@ -54,4 +54,12 @@ public class AdminMenuController {
         Main.backRoot = Main.AdminMenuScene;
     }
 
+    @FXML
+    public void onMenu(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.MainScene);
+        Main.window.show();
+        Main.backRoot = Main.LoginScene;
+    }
+
 }
