@@ -58,6 +58,10 @@ public class Tag {
         return (this.profs.contains(p));
     }
 
+    public LinkedList<Node> getNodes(){
+        return this.nodes;
+    }
+
 
     public String toString(){
         return tagName;
