@@ -16,6 +16,10 @@ public class Node {
         coord.setLocation(x,y);
     }
 
+    public double getDist(Node n){
+        return coord.distance(n.coord);
+    }
+
 
     public void addTag(Tag t){
         tags.add(t);
