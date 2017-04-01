@@ -37,6 +37,16 @@ public class Professional {
         return tags.contains(t);
     }
 
+    public LinkedList<Node> getNodes(){
+        LinkedList<Node> output = new LinkedList<Node>();
+
+        for(Tag t : tags){
+            output.addAll(t.getNodes());
+        }
+
+        return output;
+    }
+
     @Override
     public String toString(){
         return title.toString() + name + " (" + dept + ")";
