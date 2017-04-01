@@ -71,12 +71,12 @@
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="EditMap" layoutX="570.0" layoutY="370.0" mnemonicParsing="false" text="Edit Map ">
+                  <Button fx:id="EditMap" layoutX="570.0" layoutY="370.0" mnemonicParsing="false" onAction="#onEditMap" text="Edit Map ">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="EditDoctorDirectory" layoutX="504.0" layoutY="478.0" mnemonicParsing="false" text="Edit Doctor Directory">
+                  <Button fx:id="EditDoctorDirectory" layoutX="504.0" layoutY="478.0" mnemonicParsing="false" onAction="#onEditDoctorDirectory" text="Edit Doctor Directory">
                      <font>
                         <Font size="28.0" />
                      </font>
