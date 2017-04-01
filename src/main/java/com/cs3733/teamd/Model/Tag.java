@@ -9,8 +9,8 @@ public class Tag {
 
 
      String trait;
-     LinkedList<Node> locations = new LinkedList<Node>();
-     LinkedList<Professional> occupants = new LinkedList<Professional>();
+     private LinkedList<Node> locations = new LinkedList<Node>();
+     private LinkedList<Professional> occupants = new LinkedList<Professional>();
 
     public Tag(String trait){
         this.trait = trait;
@@ -35,15 +35,27 @@ public class Tag {
     public void rmvProf(Professional p){
         if (occupants.contains(p)){
             occupants.remove(p);
-            p.locations.remove(this);
+            if(p.locations.contains(this)) {
+                p.locations.remove(this);
+            }
         }
     }
 
     public void rmvNode(Node n){
         if (locations.contains(n)){
             locations.remove(n);
-            n.traits.remove(this);
+            if(n.traits.contains(this)) {
+                n.traits.remove(this);
+            }
         }
+    }
+
+    public boolean containsNode(Node n){
+        return (this.locations.contains(n));
+    }
+
+    public boolean containsProf(Professional p){
+        return (this.occupants.contains(p));
     }
 
 
