@@ -58,7 +58,7 @@ public class Pathfinder {
             openSet.remove(current);
             closedSet.add(current);
 
-            for(Node neighbor: current.getNeighbors()) {
+            for(Node neighbor: current.getNodes()) {
                 if (closedSet.contains(neighbor)) {
                     continue;
                 }
@@ -88,9 +88,7 @@ public class Pathfinder {
      * @return distance between a and b
      */
     public double distanceBetween(Node a, Node b){
-        return Math.sqrt(
-                Math.pow((double) a.getX() - b.getX(), 2) +
-                Math.pow((double) a.getY() - b.getY(), 2));
+        return a.getDist(b);
     }
 
     /**

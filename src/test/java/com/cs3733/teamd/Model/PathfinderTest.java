@@ -30,16 +30,17 @@ public class PathfinderTest {
         Node c = new Node(0, -1);
         Node d = new Node(3, -4);
 
-        a.addNeighbor(b); a.addNeighbor(c);
-        b.addNeighbor(d);
-        c.addNeighbor(d);
+        a.addNode(b); a.addNode(c);
+        b.addNode(a); b.addNode(d);
+        c.addNode(d); c.addNode(a);
+        d.addNode(b); d.addNode(c);
 
         Pathfinder pf = new Pathfinder(a,d);
         LinkedList<Node> calulatedPath = pf.shortestPath();
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(d); actualPath.add(c); actualPath.add(a); // backwards path
         for(Node n: calulatedPath){
-            System.out.println("x: " + n.getX() + " y:" + n.getY());
+
         }
         assertArrayEquals(calulatedPath.toArray(), actualPath.toArray());
     }
