@@ -2,9 +2,6 @@ package com.cs3733.teamd;
 
 import com.cs3733.teamd.Controller.MainController;
 import com.cs3733.teamd.Controller.MapMenuController;
-import com.cs3733.teamd.Model.HospitalProfessional;
-import com.cs3733.teamd.Model.HospitalProfessionalDatabaseProvider;
-import com.cs3733.teamd.Model.Location;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -143,44 +140,6 @@ public class Main extends Application {
 
         dropTables(connection);
         createTables(connection);
-
-        try {
-
-            List<Location> locations = new ArrayList<Location>();
-            locations.add(new Location(4, 1, "422F"));
-            locations.add(new Location(3, 1, "317B"));
-            locations.add(new Location(2, 1, "200"));
-            //locations.add(new Location(4, 1, "422C"));
-            HospitalProfessional hp = new HospitalProfessional("Dr. Amy", locations);
-
-            HospitalProfessionalDatabaseProvider.setProfessional(hp, connection);
-
-            List<HospitalProfessional> providers
-                    = HospitalProfessionalDatabaseProvider.getAllProfessionals(connection);
-
-            for(HospitalProfessional p: providers) {
-                System.out.println("Name: "+p.getName());
-                for(Location l: p.getLocations()) {
-                    System.out.println("Room:"+l.getRoom());
-                }
-            }
-            //HospitalService s2 = new HospitalService("Test Doctor", 4, "421D");
-            //HospitalServiceDatabaseProvider.addHospitalServiceToDb(s2,connection);
-
-            //List<HospitalService> services = HospitalServiceDatabaseProvider.loadHospitalServicesFromDb(connection);
-
-            /*for(HospitalService s: services) {
-                System.out.println("Name: "+s.getName()
-                                    +"\tFloor: "+s.getFloor()
-                                    +"\tRoom: "+s.getRoom());
-            }*/
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Java DB connection established!");
 
         // launch window
         launch(args);
