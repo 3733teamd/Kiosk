@@ -17,7 +17,8 @@ public class ThreeEntityTest {
         Professional p = new Professional("Bob", Professional.Title.DR,"Bones");
         Tag t = new Tag("Testing");
         p.addTag(t);
-        assertTrue(t.containsProf(p) && p.containsTag(t));
+        assertTrue(t.containsProf(p));
+        assertTrue(p.containsTag(t));
     }
 
     @Test
