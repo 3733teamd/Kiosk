@@ -1,17 +1,16 @@
 package com.cs3733.teamd;
 
-import com.cs3733.teamd.Controller.MainController;
-import com.cs3733.teamd.Controller.MapMenuController;
+import com.cs3733.teamd.Database.DBHandler;
+import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Tag;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -74,73 +73,40 @@ public class Main extends Application {
         window.show();
 
     }
-    public static void dropTables(Connection connection){
-        String dropServicesSql = "DROP TABLE SERVICES";
-        String dropLocationsSql = "DROP TABLE LOCATIONS";
-        String dropProvidersSql = "DROP TABLE PROVIDERS";
-        try {
-            Statement s = connection.createStatement();
-            s.execute(dropLocationsSql);
-            //s.execute(dropServicesSql);
-            s.execute(dropProvidersSql);
-        } catch (SQLException e) {
-            System.err.println("Failed to drop tables, most likely because they do not exist");
-            //e.printStackTrace();
-        }
-    }
-
-    public static void createTables(Connection connection){
-        String createProvidersSql = "CREATE TABLE PROVIDERS"
-                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
-                "        (START WITH 1, INCREMENT BY 1),"
-                + "name VARCHAR(50))";
-
-        String createLocationsSql = "CREATE TABLE LOCATIONS"
-                + "(id INTEGER GENERATED ALWAYS AS IDENTITY" +
-                "        (START WITH 1, INCREMENT BY 1),"
-                + "floor INTEGER,"
-                + "room VARCHAR(20),"
-                + "p_id INTEGER)";
-        try {
-            Statement s = connection.createStatement();
-            s.execute(createLocationsSql);
-            s.execute(createProvidersSql);
-        } catch (SQLException e) {
-            System.err.println("Failed to create tables");
-            e.printStackTrace();
-        }
-    }
 
     public static void main(String[] args) {
-        System.out.println("-------Embedded Java DB Connection Testing --------");
+
+        DBHandler database;
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Java DB Driver not found. Add the classpath to your module.");
-            System.out.println("For IntelliJ do the following:");
-            System.out.println("File | Project Structure, Modules, Dependency tab");
-            System.out.println("Add by clicking on the green plus icon on the right of the window");
-            System.out.println("Select JARs or directories. Go to the folder where the Java JDK is installed");
-            System.out.println("Select the folder java/jdk1.8.xxx/db/lib where xxx is the version.");
-            System.out.println("Click OK, compile the code and run it.");
-            e.printStackTrace();
+            database = new DBHandler();
+        } catch (Exception e) {
+            System.err.print("Could not construct DBHandler.\nExiting...\n");
             return;
         }
 
-        System.out.println("Java DB driver registered!");
-        Connection connection = null;
 
         try {
-            // substitute your database name for myDB
-            connection = DriverManager.getConnection("jdbc:derby:db;create=true");
-        } catch (SQLException e) {
-            System.out.println("Connection failed. Check output console.");
+            database.Setup();
+        } catch (Exception e) {
             e.printStackTrace();
+            System.err.print("Could not setup database.\nExiting...\n");
             return;
         }
 
-        dropTables(connection);
-        createTables(connection);
+        ArrayList<Node> nodes;
+        ArrayList<Tag> tags;
+        ArrayList<Professional> professionals;
+        try {
+            database.Load();
+            nodes = database.nodes;
+            tags = database.tags;
+            professionals = database.professionals;
+            database.Close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print("Could not load data from database.\nExiting...\n");
+            return;
+        }
 
         // launch window
         launch(args);

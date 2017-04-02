@@ -251,7 +251,7 @@ public class DBHandler {
 
         //Mass insert from file for initial data
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(getClass().getResourceAsStream("/DBInitialImports.txt")))) {
+                new InputStreamReader(getClass().getResourceAsStream("/DatabaseImports/DBInitialImports.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 s.execute(line);
