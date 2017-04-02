@@ -67,7 +67,7 @@
                   </Button>
                   <ImageView fx:id="mapImage" fitHeight="500.0" fitWidth="676.0" layoutX="14.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../FloorImages/4_thefourthfloor.png" />
+                        <Image url="@../floor_imgs/4_thefourthfloor_cropped.png" />
                      </image></ImageView>
                   <TextArea fx:id="textDirectionsDisplay" editable="false" layoutX="735.0" layoutY="188.0" prefHeight="426.0" prefWidth="476.0" text="Text Directions are Here">
                      <font>

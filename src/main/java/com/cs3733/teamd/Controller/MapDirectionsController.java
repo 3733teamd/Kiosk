@@ -38,10 +38,10 @@ public class MapDirectionsController {
     {
         GraphicsContext gc = MapCanvas.getGraphicsContext2D();
         LinkedList<Node> path = new LinkedList<Node>();
-        path.add(new Node(100, 100));
-        path.add(new Node(200, 100));
-        path.add(new Node(100, 200));
-        path.add(new Node(200, 200));
+        path.add(new Node(328, 310));
+        path.add(new Node(328, 113));
+        path.add(new Node(358, 113));
+        path.add(new Node(358, 98));
 
         drawShapes(gc, path);
 
@@ -104,7 +104,7 @@ public class MapDirectionsController {
         Node previous = null;
         gc.setLineWidth(2);
         int pathlength = path.size();
-        int radius = 5;
+        int radius = 3;
         for  (int i = 0; i < pathlength; i++){
             Node current = path.getFirst();
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
