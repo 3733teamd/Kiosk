@@ -69,12 +69,12 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <Label layoutX="540.0" layoutY="298.0" prefHeight="134.0" prefWidth="209.0" text="Room Number Service Provided" textAlignment="CENTER" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="540.0" layoutY="334.0" prefHeight="134.0" prefWidth="209.0" text="Select Section" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="RoomSelect" layoutX="546.0" layoutY="432.0" prefHeight="31.0" prefWidth="196.0">
+                  <ChoiceBox id="RoomSelect" fx:id="LocationSelect" layoutX="546.0" layoutY="432.0" prefHeight="31.0" prefWidth="196.0">
                      <tooltip>
                         <Tooltip text="Select a Room" />
                      </tooltip>
@@ -85,6 +85,7 @@
                      </tooltip>
                   </ChoiceBox>
                   <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit">
+
                      <font>
                         <Font size="26.0" />
                      </font>
