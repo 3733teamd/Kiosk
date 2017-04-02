@@ -1,8 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.Location;
-import com.cs3733.teamd.Model.Professional;
+
 import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
