@@ -4,6 +4,7 @@ import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 //import javafx.application.Application;
@@ -11,11 +12,14 @@ import javafx.scene.Group;
 //import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 //import javafx.stage.Stage;
 import com.cs3733.teamd.Model.Node;
+import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -33,9 +37,16 @@ public class MapDirectionsController {
     public ImageView mapImage;
     public TextArea textDirectionsDisplay;
     public Canvas MapCanvas;
+    public AnchorPane pane;
+    public Text menu;
+    //public Label instructv;
+    //public Label instructt;
+
 
     @FXML private void initialize()
     {
+        setText();
+
         GraphicsContext gc = MapCanvas.getGraphicsContext2D();
         LinkedList<Node> path = new LinkedList<Node>();
         path.add(new Node(328, 310));
@@ -135,4 +146,25 @@ public class MapDirectionsController {
                 new double[]{210, 210, 240, 240}, 4);*/
     }
 
+
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+        menu.setText(Main.bundle.getString("MapMenu"));
+        //instructv.setText(Main.bundle.getString("instruct2"));
+        //instructt.setText(Main.bundle.getString("instruct2"));
+        System.out.print(Main.Langugage);
+
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-100);
+            //menu.setTranslateX(-175);
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+        }
+    }
 }

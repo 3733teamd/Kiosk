@@ -44,11 +44,11 @@ public class MainController  {
        languageEnglish = !languageEnglish;
        if(languageEnglish ==false) {
            Main.Langugage = "Spanish";
-           Main.bundle = ResourceBundle.getBundle("MyLabels", new Locale("es", "SP"));
+           Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
        }
        else{
            Main.Langugage = "English";
-           Main.bundle = ResourceBundle.getBundle("MyLabels", new Locale("en", "US"));
+           Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
        }
 
         Main.window.hide();
@@ -96,6 +96,14 @@ public class MainController  {
         tapL.setText(Main.bundle.getString("tapL"));
         tapM.setText(Main.bundle.getString("tapM"));
         tapB.setText(Main.bundle.getString("tapB"));
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-50);
+            //menu.setTranslateX(-175);
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+        }
 
     }
 

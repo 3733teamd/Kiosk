@@ -46,6 +46,7 @@ public class Main extends Application {
     public static Scene EditMapScene;
 
     public static Locale local = new Locale("en", "US");
+    public static Locale spanish = new Locale("es","SP");
     public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
     @Override
     public void start(Stage primaryStage) throws Exception{

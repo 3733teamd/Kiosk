@@ -27,47 +27,47 @@
             <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
-                  <Text fx:id="instruct" layoutX="568.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="instruct" layoutX="203.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <Text fx:id="hospital" layoutX="413.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faulkner Hospital" wrappingWidth="483.93603515625" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="hospital" layoutX="203.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faulkner Hospital" wrappingWidth="483.93603515625" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="51.0" />
                      </font>
                   </Text>
-                  <Text fx:id="kiosk" layoutX="513.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pathfinding Kiosk" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="kiosk" layoutX="203.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pathfinding Kiosk" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <Text fx:id="tapS" layoutX="413.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Search to begin creation of a route" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="tapS" layoutX="203.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Search to begin creation of a route" textAlignment="CENTER" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text fx:id="tapL" layoutX="383.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Login to access administrative functions" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="tapL" layoutX="203.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Login to access administrative functions" textAlignment="CENTER" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text fx:id="tapB" layoutX="349.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Back at any point to return to previous screen" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="tapB" layoutX="203.0" layoutY="531.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Back at any point to return to previous screen" textAlignment="CENTER" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text fx:id="tapM" layoutX="345.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Menu at any point to return to this main menu" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
+                  <Text fx:id="tapM" layoutX="203.0" layoutY="595.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Menu at any point to return to this main menu" textAlignment="CENTER" AnchorPane.leftAnchor="203.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text fx:id="menu" layoutX="437.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" textAlignment="CENTER">
+                  <Text fx:id="menu" layoutX="405.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" textAlignment="CENTER">
                      <font>
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Button fx:id="largerTextButton" layoutX="1053.0" layoutY="196.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
+                  <Button fx:id="largerTextButton" layoutX="1053.0" layoutY="196.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -98,7 +98,7 @@
                   </Button>
                   <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
                      <font>
-                        <Font size="23.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
                </children>
