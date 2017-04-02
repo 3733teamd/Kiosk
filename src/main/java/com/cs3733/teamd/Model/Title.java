@@ -1,8 +1,6 @@
 package com.cs3733.teamd.Model;
 
-/**
- * Created by kicknickr on 4/2/2017.
- */
+
 public enum Title {
     RN ("RN", "Advanced Practice Nurse"),
     CPNP ("CPNP", "Certified Pediatric Nurse Practioner"),
