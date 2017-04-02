@@ -1,6 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,6 +31,26 @@ public class EditServiceController {
     public ChoiceBox modifyServiceSelect;
     public ChoiceBox modifyRoomSelect;
     public ChoiceBox removeServiceSelect;
+
+    private String newService;
+    private String modifiedRoom;
+    private String modifiedService;
+    private String removedService;
+
+    // some room/service samples
+    static ObservableList<String> roomsList =
+            FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
+    static ObservableList<String> serviceList =
+            FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
+
+    @FXML
+    private void initialize(){
+//        RoomSelect.setValue("Select Room");
+        modifyRoomSelect.setItems(roomsList);
+//        ServiceSelect.setValue("Select Service");
+        modifyServiceSelect.setItems(serviceList);
+        removeServiceSelect.setItems(serviceList);
+    }
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
@@ -61,5 +83,40 @@ public class EditServiceController {
         Main.backRoot = Main.LoginScene;
     }
 
+    @FXML
+    public void onSubmitAdd(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+        newService = addService.getText();
+        System.out.print("new service: " + newService);
+
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+    @FXML
+    public void onSubmitModify(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+
+        modifiedRoom = modifyRoomSelect.getValue().toString();
+        modifiedService = modifyServiceSelect.getValue().toString();
+        System.out.print("modified service: " + modifiedService);
+        System.out.print("modified room: " + modifiedRoom);
+
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+
+    @FXML
+    public void onSubmitRemove(ActionEvent actionEvent) throws  IOException{
+        Main.window.hide();
+
+        removedService = removeServiceSelect.getValue().toString();
+        System.out.print("removed service: " + removedService);
+
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
 
 }

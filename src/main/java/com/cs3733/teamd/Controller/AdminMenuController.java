@@ -55,6 +55,21 @@ public class AdminMenuController {
     }
 
     @FXML
+    public void onEditMap(ActionEvent actionEvent) throws IOException {
+        Main.window.hide();
+        Main.window.setScene(Main.EditMapScene);
+        Main.window.show();
+        Main.backRoot = Main.AdminMenuScene;
+    }
+    @FXML
+    public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
+        Main.window.hide();
+        Main.window.setScene(Main.EditDoctorScene);
+        Main.window.show();
+        Main.backRoot = Main.AdminMenuScene;
+    }
+
+    @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
         Main.window.setScene(Main.MainScene);

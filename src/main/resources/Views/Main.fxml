@@ -27,42 +27,42 @@
             <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
-                  <Text layoutX="568.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:">
+                  <Text fx:id="instruct" layoutX="568.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <Text layoutX="413.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faulkner Hospital" textAlignment="CENTER" wrappingWidth="483.93603515625">
+                  <Text fx:id="hospital" layoutX="413.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faulkner Hospital" wrappingWidth="483.93603515625" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="51.0" />
                      </font>
                   </Text>
-                  <Text layoutX="513.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Pathfinding Kiosk">
+                  <Text fx:id="kiosk" layoutX="513.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pathfinding Kiosk" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Text>
-                  <Text layoutX="413.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Search to begin creation of a route" textAlignment="CENTER">
+                  <Text fx:id="tapS" layoutX="413.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Search to begin creation of a route" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text layoutX="383.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Login to access administrative functions" textAlignment="CENTER">
+                  <Text fx:id="tapL" layoutX="383.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Login to access administrative functions" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text layoutX="349.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Back at any point to return to previous screen" textAlignment="CENTER">
+                  <Text fx:id="tapB" layoutX="349.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Back at any point to return to previous screen" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text layoutX="345.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Menu at any point to return to this main menu" textAlignment="CENTER">
+                  <Text fx:id="tapM" layoutX="345.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tap Menu at any point to return to this main menu" textAlignment="CENTER" AnchorPane.leftAnchor="200.0">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Text>
-                  <Text layoutX="437.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" textAlignment="CENTER">
+                  <Text fx:id="menu" layoutX="437.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu" textAlignment="CENTER">
                      <font>
                         <Font size="91.0" />
                      </font>
@@ -72,7 +72,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="SpanishButton" layoutX="1076.0" layoutY="128.0" mnemonicParsing="false" text="Spanish">
+                  <Button fx:id="SpanishButton" layoutX="1076.0" layoutY="128.0" mnemonicParsing="false" onAction="#onSpanish" text="Spanish">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -84,21 +84,21 @@
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="LoginButton" layoutX="-10.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
+                  <Button fx:id="LoginButton" layoutX="-9.0" layoutY="664.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="136.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" wrapText="true">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fill="#007bedd6" layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
+                  <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="%search">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Button>
                   <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="23.0" />
                      </font>
                   </Button>
                </children>
