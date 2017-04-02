@@ -1,5 +1,7 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Controller.MainController;
+import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Model.HospitalProfessional;
 import com.cs3733.teamd.Model.HospitalProfessionalDatabaseProvider;
 import com.cs3733.teamd.Model.Location;
@@ -13,10 +15,13 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 public class Main extends Application {
 
-    public static String Langugage;
+    public static String Langugage="English";
     public static Stage window;
 
     public static Parent rootMain;
@@ -42,18 +47,21 @@ public class Main extends Application {
     public static Scene EditServiceScene;
     public static Scene EditDoctorScene;
     public static Scene EditMapScene;
+
+    public static Locale local = new Locale("en", "US");
+    public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Langugage = "English";
+
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"));
-        rootLogin = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
-        rootMapMenu = FXMLLoader.load(getClass().getResource("/Views/MapMenu.fxml"));
-        rootMapDirections = FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"));
-        rootAdminMenu = FXMLLoader.load(getClass().getResource("/Views/AdminMenu.fxml"));
-        rootEditService = FXMLLoader.load(getClass().getResource("/Views/EditService.fxml"));
-        rootEditDoctor = FXMLLoader.load(getClass().getResource("/Views/EditDoctor.fxml"));
-        rootEditMap = FXMLLoader.load(getClass().getResource("/Views/EditMap.fxml"));
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"), bundle);
+        rootLogin = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"), bundle);
+        rootMapMenu = FXMLLoader.load(getClass().getResource("/Views/MapMenu.fxml"),bundle);
+        rootMapDirections = FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);
+        rootAdminMenu = FXMLLoader.load(getClass().getResource("/Views/AdminMenu.fxml"),bundle);
+        rootEditService = FXMLLoader.load(getClass().getResource("/Views/EditService.fxml"),bundle);
+        rootEditDoctor = FXMLLoader.load(getClass().getResource("/Views/EditDoctor.fxml"),bundle);
+        rootEditMap = FXMLLoader.load(getClass().getResource("/Views/EditMap.fxml"),bundle);
 
         MainScene=new Scene(rootMain, 1300, 800);
         LoginScene=new Scene(rootLogin, 1300, 800);
@@ -63,7 +71,6 @@ public class Main extends Application {
         EditDoctorScene=new Scene(rootEditDoctor, 1300, 800);
         EditServiceScene=new Scene(rootEditService, 1300, 800);
         EditMapScene=new Scene(rootEditMap, 1300, 800);
-
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
@@ -177,9 +184,6 @@ public class Main extends Application {
 
         // launch window
         launch(args);
-
-
-
 
     }
 }

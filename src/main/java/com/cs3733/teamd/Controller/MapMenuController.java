@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class MapMenuController {
 
     public Button SubmitButton;
 
+    public AnchorPane pane;
+
     @FXML
     public ChoiceBox RoomSelect;
     @FXML
@@ -39,7 +42,10 @@ public class MapMenuController {
         RoomSelect.setItems(roomsList);
         ServiceSelect.setValue("Select Service");
         ServiceSelect.setItems(serviceList);
+
+        setText();
     }
+
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
@@ -72,6 +78,15 @@ public class MapMenuController {
         Main.window.setScene(Main.MapDirectionsScene);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
+    }
+
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+
     }
 
 }
