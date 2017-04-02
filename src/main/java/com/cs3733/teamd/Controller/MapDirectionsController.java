@@ -14,8 +14,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 //import javafx.stage.Stage;
+import com.cs3733.teamd.Model.Node;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by Allyk on 3/26/2017.
@@ -35,7 +37,13 @@ public class MapDirectionsController {
     @FXML private void initialize()
     {
         GraphicsContext gc = MapCanvas.getGraphicsContext2D();
-        drawShapes(gc);
+        LinkedList<Node> path = new LinkedList<Node>();
+        path.add(new Node(100, 100));
+        path.add(new Node(200, 100));
+        path.add(new Node(100, 200));
+        path.add(new Node(200, 200));
+
+        drawShapes(gc, path);
 
         if (Main.roomSelected == "Select Room") {
             if (Main.serviceSelected == "Allergy"){
@@ -90,11 +98,25 @@ public class MapDirectionsController {
         Main.backRoot = Main.MapDirectionsScene;
     }
 
-    private void drawShapes(GraphicsContext gc) {
+    private void drawShapes(GraphicsContext gc, LinkedList<Node> path) {
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
-        gc.setLineWidth(1);
-        gc.strokeLine(40, 10, 10, 40);
+        Node previous = null;
+        gc.setLineWidth(2);
+        int pathlength = path.size();
+        int radius = 5;
+        for  (int i = 0; i < pathlength; i++){
+            Node current = path.getFirst();
+            gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
+            if(previous != null){
+                gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
+                        current.getX() + radius, current.getY() + radius);
+            }
+            //System.out.printf(current.getX() + "" + current.getY());
+            previous = current;
+            path.pop();
+        }
+        /*gc.strokeLine(40, 10, 10, 40);
         gc.fillOval(10, 60, 30, 30);
         gc.strokeOval(60, 60, 30, 30);
         gc.fillRoundRect(110, 60, 30, 30, 10, 10);
@@ -110,7 +132,7 @@ public class MapDirectionsController {
         gc.strokePolygon(new double[]{60, 90, 60, 90},
                 new double[]{210, 210, 240, 240}, 4);
         gc.strokePolyline(new double[]{110, 140, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);
+                new double[]{210, 210, 240, 240}, 4);*/
     }
 
 }

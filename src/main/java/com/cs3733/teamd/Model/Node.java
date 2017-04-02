@@ -57,6 +57,14 @@ public class Node {
         }
     }
 
+    public int getX(){
+        return this.coord.x;
+    }
+
+    public int getY(){
+        return this.coord.y;
+    }
+
     public boolean containsNode(Node n){
         return (this.nodes.contains(n));
     }
