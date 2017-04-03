@@ -1,5 +1,6 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
@@ -85,12 +86,12 @@ public class Main extends Application {
         }
 
 
-        try {
+        /*try {
             database.Setup();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print("Could not setup database.\nMaybe tables already created\n");
-        }
+        }*/
 
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;
@@ -100,11 +101,22 @@ public class Main extends Application {
             nodes = database.nodes;
             tags = database.tags;
             professionals = database.professionals;
+
+
             database.Close();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print("Could not load data from database.\nExiting...\n");
             return;
+        }
+
+        try {
+            MapMenuController mapMenuController = new MapMenuController();
+            mapMenuController.roomDropDown.addAll(tags);
+            System.out.println(mapMenuController.roomDropDown.get(0));
+            mapMenuController.LocationSelect.setValue(mapMenuController.roomDropDown);
+        }catch(Exception e){
+
         }
 
         // launch window

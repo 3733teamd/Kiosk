@@ -27,7 +27,7 @@ public class MapMenuController {
 
 
     LinkedList<Tag> visibleLocations = new LinkedList<Tag>();
-    static ObservableList<Tag> roomDropDown = FXCollections.observableArrayList();
+    public static ObservableList<Tag> roomDropDown = FXCollections.observableArrayList();
     public Button largerTextButton;
     public Button SearchButton;
     public Button LoginButton;
@@ -54,7 +54,7 @@ public class MapMenuController {
         //ServiceSelect.setItems(serviceList);
 
         setText();
-        visibleLocations.add(new Tag("Example Tag"));
+        //visibleLocations.add(new Tag("Example Tag"));
         roomDropDown.addAll(visibleLocations);
         LocationSelect.setItems(roomDropDown);
     }
@@ -116,7 +116,8 @@ public class MapMenuController {
         }
     }
 
+    /*
     public void submitSearch(ActionEvent actionEvent) {
         Tag desiredTag = (Tag) LocationSelect.getValue();
-    }
+    }*/
 }
