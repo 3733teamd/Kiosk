@@ -4,6 +4,9 @@ import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -21,6 +24,9 @@ public class AdminMenuController {
     public Button EditServiceDirectory;
     public Button EditMap;
     public Button EditDoctorDirectory;
+
+    public AnchorPane pane;
+    public Text menu;
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
@@ -76,5 +82,34 @@ public class AdminMenuController {
         Main.window.show();
         Main.backRoot = Main.LoginScene;
     }
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+        menu.setText(Main.bundle.getString("AdminMenu"));
+        EditDoctorDirectory.setText(Main.bundle.getString("EditDD"));
+        EditServiceDirectory.setText(Main.bundle.getString("EditSD"));
+        EditMap.setText(Main.bundle.getString("EditM"));
+
+
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-250);
+            //menu.setTranslateX(-175);
+            EditDoctorDirectory.setLayoutX(440);
+            EditServiceDirectory.setLayoutX(440);
+            EditMap.setLayoutX(530);
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            EditDoctorDirectory.setLayoutX(520);
+            EditServiceDirectory.setLayoutX(520);
+            EditMap.setLayoutX(590);
+            menu.setX(0);
+        }
+    }
+
+
 
 }

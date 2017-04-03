@@ -81,10 +81,20 @@ public class LoginController {
         LoginButton.setText(Main.bundle.getString("login"));
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
-        menu.setText(" ");
-        user.setText(" ");
-        pass.setText(" ");
+        menu.setText(Main.bundle.getString("login"));
+        user.setText(Main.bundle.getString("username"));
+        pass.setText(Main.bundle.getString("password"));
         loginSubmitButton.setText(Main.bundle.getString("login"));
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-170);
+            //loginSubmitButton.setLayoutX(555);
+            //menu.setTranslateX(-175);
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+            //loginSubmitButton.setLayoutX(600);
+        }
     }
 
 }

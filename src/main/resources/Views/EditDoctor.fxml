@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -19,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditDoctorController">
+<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditDoctorController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -29,14 +24,14 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <AnchorPane fx:id="pane" onMouseMoved="#setText" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="1308.0" />
             <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
-                  <Button fx:id="largerTextButton" layoutX="1109.0" layoutY="159.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
+                  <Button fx:id="largerTextButton" layoutX="1109.0" layoutY="159.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -48,9 +43,9 @@
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="LoginButton" layoutX="-10.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login">
+                  <Button fx:id="LoginButton" layoutX="-22.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
@@ -60,12 +55,12 @@
                         <Font size="29.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" layoutX="1173.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+                  <Button fx:id="BackButton" layoutX="1166.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
-                  <Text layoutX="228.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Doctor Directory" textAlignment="CENTER">
+                  <Text fx:id="menu" layoutX="228.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Doctor Directory" textAlignment="CENTER">
                      <font>
                         <Font size="91.0" />
                      </font>
@@ -75,14 +70,14 @@
                         <Font size="26.0" />
                      </font>
                   </Button>
-                  <Label layoutX="554.0" layoutY="524.0" prefHeight="56.0" prefWidth="208.0" text="Remove Doctor" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="remD" layoutX="314.0" layoutY="524.0" prefHeight="56.0" prefWidth="464.0" text="Remove Doctor" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
                   <ChoiceBox id="RoomSelect" fx:id="addRoomSelect" layoutX="558.0" layoutY="337.0" prefHeight="31.0" prefWidth="196.0" />
                   <ChoiceBox id="RoomSelect" fx:id="removeDoctorSelect" layoutX="310.0" layoutY="593.0" prefHeight="31.0" prefWidth="196.0" />
-                  <Label layoutX="508.0" layoutY="398.0" prefHeight="56.0" prefWidth="292.0" text="Modify Room Number" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="ModRN" layoutX="310.0" layoutY="393.0" prefHeight="56.0" prefWidth="559.0" text="Modify Room Number" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -104,7 +99,7 @@
                         <Tooltip text="Add Doctor Name" />
                      </tooltip>
                   </TextField>
-                  <Label layoutX="515.0" layoutY="148.0" prefHeight="44.0" prefWidth="299.0" text="Add Room to a Doctor" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="addRToD" layoutX="314.0" layoutY="148.0" prefHeight="44.0" prefWidth="529.0" text="Add Room to a Doctor" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -116,7 +111,7 @@
                         <Font size="26.0" />
                      </font>
                   </Button>
-                  <Label layoutX="569.0" layoutY="270.0" prefHeight="56.0" prefWidth="150.0" text="Add Doctor" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="addD" layoutX="314.0" layoutY="270.0" prefHeight="56.0" prefWidth="513.0" text="Add Doctor" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>

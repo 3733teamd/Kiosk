@@ -7,7 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -37,6 +41,13 @@ public class EditServiceController {
     private String modifiedService;
     private String removedService;
 
+    public AnchorPane pane;
+    public Text menu;
+    public Label ModRoomNumLabel;
+    public Label remServiceLabel;
+    public Label addServiceLabel;
+
+
     // some room/service samples
     static ObservableList<String> roomsList =
             FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
@@ -50,6 +61,7 @@ public class EditServiceController {
 //        ServiceSelect.setValue("Select Service");
         modifyServiceSelect.setItems(serviceList);
         removeServiceSelect.setItems(serviceList);
+
     }
 
     @FXML
@@ -118,5 +130,35 @@ public class EditServiceController {
         Main.window.show();
         Main.backRoot = Main.EditServiceScene;
     }
+
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+        menu.setText(Main.bundle.getString("EditSD"));
+
+        ModRoomNumLabel.setText(Main.bundle.getString("ModRN"));
+        addServiceLabel.setText(Main.bundle.getString("AddService"));
+        remServiceLabel.setText(Main.bundle.getString("RemService"));
+        submitRemoveService.setText(Main.bundle.getString("submit"));
+        submitModifyService.setText(Main.bundle.getString("submit"));
+        submitAddService.setText(Main.bundle.getString("submit"));
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-80);
+            menu.setFont(Font.font("System", 75));
+            //menu.setTranslateX(-175);
+
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+            menu.setFont(Font.font("System", 91));
+
+        }
+    }
+
+
 
 }

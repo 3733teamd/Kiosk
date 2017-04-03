@@ -81,7 +81,7 @@ public class MainController  {
         Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MainScene;
-        
+
     }
 
     public void setText(){

@@ -153,10 +153,10 @@ public class MapDirectionsController {
         LoginButton.setText(Main.bundle.getString("login"));
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
-        menu.setText(Main.bundle.getString("MapMenu"));
+        menu.setText(Main.bundle.getString("MapDirections"));
         //instructv.setText(Main.bundle.getString("instruct2"));
         //instructt.setText(Main.bundle.getString("instruct2"));
-        System.out.print(Main.Langugage);
+        //System.out.print(Main.Langugage);
 
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-100);
@@ -164,7 +164,7 @@ public class MapDirectionsController {
         }
         else if(Main.Langugage.equals("English") ){
             // menu.setTranslateX(-175);
-            menu.setX(0);
+            menu.setX(100);
         }
     }
 }

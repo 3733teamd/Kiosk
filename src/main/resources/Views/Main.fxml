@@ -84,9 +84,9 @@
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="LoginButton" layoutX="-9.0" layoutY="664.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="136.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" wrapText="true">
+                  <Button fx:id="LoginButton" layoutX="-9.0" layoutY="671.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="136.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font size="29.0" />
+                        <Font size="25.0" />
                      </font>
                   </Button>
                   <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />

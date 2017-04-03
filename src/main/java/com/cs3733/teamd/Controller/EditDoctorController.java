@@ -5,7 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -23,6 +27,7 @@ public class EditDoctorController {
     public Button submitRemoveDoctor;
     public Button submitModifyDoctor;
     public Button submitAddDoctor;
+    public Button submitAddRoomDoctor;
 
     public TextField addDoctorLabel;
 
@@ -30,7 +35,12 @@ public class EditDoctorController {
     public ChoiceBox modifyDoctorSelect;
     public ChoiceBox modifyRoomSelect;
     public ChoiceBox removeDoctorSelect;
-
+    public AnchorPane pane;
+    public Text menu;
+    public Label addRToD;
+    public Label addD;
+    public Label ModRN;
+    public Label remD;
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
@@ -62,6 +72,37 @@ public class EditDoctorController {
         Main.window.setScene(Main.MainScene);
         Main.window.show();
         Main.backRoot = Main.LoginScene;
+    }
+
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+        menu.setText(Main.bundle.getString("EditSD"));
+
+        submitRemoveDoctor.setText(Main.bundle.getString("submit"));
+        submitModifyDoctor.setText(Main.bundle.getString("submit"));
+        submitAddDoctor.setText(Main.bundle.getString("submit"));
+        submitAddRoomDoctor.setText(Main.bundle.getString("submit"));
+
+        addRToD.setText(Main.bundle.getString("AddRtoD"));
+        addD.setText(Main.bundle.getString("addDoctor"));
+        ModRN.setText(Main.bundle.getString("ModRN"));
+        remD.setText(Main.bundle.getString("remDoctor"));
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-80);
+            menu.setFont(Font.font("System", 75));
+            //menu.setTranslateX(-175);
+
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+            menu.setFont(Font.font("System", 91));
+
+        }
     }
 
 }

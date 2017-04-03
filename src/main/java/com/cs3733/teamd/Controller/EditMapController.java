@@ -4,8 +4,12 @@ import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -25,6 +29,12 @@ public class EditMapController {
     public Button removeRoomButton;
     public TextField xLocation;
     public TextField yLocation;
+
+    public AnchorPane pane;
+    public Text menu;
+    public Label name;
+    public Label yloc;
+    public Label xloc;
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
@@ -55,5 +65,33 @@ public class EditMapController {
         Main.window.setScene(Main.MainScene);
         Main.window.show();
         Main.backRoot = Main.LoginScene;
+    }
+
+    @FXML
+    public void setText(){
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        MenuButton.setText(Main.bundle.getString("menu"));
+        BackButton.setText(Main.bundle.getString("back"));
+        menu.setText(Main.bundle.getString("EditM"));
+
+        name.setText(Main.bundle.getString("name"));
+        yloc.setText(Main.bundle.getString("Xloc"));
+        xloc.setText(Main.bundle.getString("Yloc"));
+        addRoomButton.setText(Main.bundle.getString("AddRoom"));
+        removeRoomButton.setText(Main.bundle.getString("RemRoom"));
+
+        if(Main.Langugage.equals("Spanish") ){
+            menu.setX(-100);
+            //menu.setFont(Font.font("System", 75));
+            //menu.setTranslateX(-175);
+
+        }
+        else if(Main.Langugage.equals("English") ){
+            // menu.setTranslateX(-175);
+            menu.setX(0);
+            menu.setFont(Font.font("System", 91));
+
+        }
     }
 }
