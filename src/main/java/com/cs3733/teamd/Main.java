@@ -89,8 +89,7 @@ public class Main extends Application {
             database.Setup();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.print("Could not setup database.\nExiting...\n");
-            return;
+            System.err.print("Could not setup database.\nMaybe tables already created\n");
         }
 
         ArrayList<Node> nodes;
