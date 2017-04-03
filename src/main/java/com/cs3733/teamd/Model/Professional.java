@@ -1,20 +1,36 @@
 package com.cs3733.teamd.Model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
  * Created by Me on 3/31/2017.
  */
+//TODO Separate first and last name so names may be represented better
+//TODO represent full titles as well as acronyms.
+//TODO May require overiding a javaFX method for converting class to string instead of using toString in class
+//TODO Make general improvements to toString
 public class Professional {
     String name;
-    String dept;
-    Title title;
-    private LinkedList<Tag> tags = new LinkedList<Tag>();
+    private ArrayList<Title> titles = new ArrayList<>();
+    private LinkedList<Tag> tags = new LinkedList<>();
 
-    public Professional(String name, Title title, String dept) {
+    public Professional(String name) {
         this.name = name;
-        this.title = title;
-        this.dept = dept;
+        this.titles = titles;
+    }
+
+    public Professional(String name, ArrayList<Title> titles) {
+        this.name = name;
+        this.titles = titles;
+    }
+
+    public void setTitles(ArrayList<Title> titles) {
+        this.titles = titles;
+    }
+
+    public void addTitle(Title title) {
+        this.titles.add(title);
     }
 
     public void addTag(Tag t){
@@ -49,23 +65,7 @@ public class Professional {
 
     @Override
     public String toString(){
-        return title.toString() +" " + name + " (" + dept + ")";
-    }
-
-    //enum of viable titles
-    public enum Title{
-        DR("Dr.");
-        String text;
-
-        Title(String text){
-            this.text = text;
-        }
-
-        @Override
-        public String toString(){
-            return text;
-        }
-
+        return titles.toString() +" " + name;
     }
 
 
