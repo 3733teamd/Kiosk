@@ -41,6 +41,7 @@ public class EditDoctorController {
     public Label addD;
     public Label ModRN;
     public Label remD;
+    public TextField titleBox;
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
