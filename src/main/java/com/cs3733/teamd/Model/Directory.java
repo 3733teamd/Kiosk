@@ -33,23 +33,32 @@ public class Directory {
         return allProfs;
     }
 
-    public void createNewTag(){
+    public void createNewTag(String tagName){
+        Tag newTag = new Tag(tagName);
+        allTags.add(newTag);
+        //SAVE TO DATABASE
 
     }
-    public void createNewNode(){
-
+    public void createNewNode(int x, int y){
+        Node newNode = new Node(x,y);
+        allNodes.add(newNode);
+        //SAVE TO DATABASE
     }
-    public void creaNewProf(){
-
+    public void creaNewProf(String name, ArrayList<Title> titles){
+        Professional newProf = new Professional(name,titles);
+        allProfs.add(newProf);
+        //SAVE TO DATABASE
     }
-    public void deleteTag(){
-
+    public void deleteTag(Tag t){
+        allTags.remove(t);
+        //REMOVE FROM DATABSE
     }
-    public void deleteNode(){
-
+    public void deleteNode(Node n){
+        allNodes.remove(n);
+        //REMOVE FROM DATABASE
     }
-    public void deleteProf(){
-        
+    public void deleteProf(Professional p){
+        allProfs.remove(p);
+        //REMOVE FROM DATABASE
     }
-
 }
