@@ -170,65 +170,7 @@ public class DBHandler {
         ResultSet HCPTitleTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPTITLE);
         while (HCPTitleTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPTitleTupleRslt.getInt("HCP_ID"));
-            switch(HCPTitleTupleRslt.getString("Title_Acronym")) {
-                case "RN":
-                    pro.addTitle(RN);
-                    break;
-                case "CPNP":
-                    pro.addTitle(CPNP);
-                    break;
-                case "MS":
-                    pro.addTitle(MS);
-                    break;
-                case "MD":
-                    pro.addTitle(MD);
-                    break;
-                case "DNP":
-                    pro.addTitle(DNP);
-                    break;
-                case "DO":
-                    pro.addTitle(DO);
-                    break;
-                case "WHNP":
-                    pro.addTitle(WHNP);
-                    break;
-                case "PA-C":
-                    pro.addTitle(PAC);
-                    break;
-                case "Au.D":
-                    pro.addTitle(AuD);
-                    break;
-                case "DPM":
-                    pro.addTitle(DPM);
-                    break;
-                case "CCC-A":
-                    pro.addTitle(CCCA);
-                    break;
-                case "LDN":
-                    pro.addTitle(LDN);
-                    break;
-                case "PhD":
-                    pro.addTitle(PhD);
-                    break;
-                case "LICSW":
-                    pro.addTitle(LICSW);
-                    break;
-                case "RD":
-                    pro.addTitle(RD);
-                    break;
-                case "NP":
-                    pro.addTitle(NP);
-                    break;
-                case "PsyD":
-                    pro.addTitle(PsyD);
-                    break;
-                case "ABPP":
-                    pro.addTitle(ABPP);
-                    break;
-                default:
-                    System.err.println("Unrecognized label");
-            }
-
+            pro.addTitle(Title.valueOf(HCPTitleTupleRslt.getString("Title_Acronym")));
         }
         HCPTitleTupleRslt.close();
 
