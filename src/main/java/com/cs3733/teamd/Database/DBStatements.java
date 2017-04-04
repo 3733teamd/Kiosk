@@ -12,11 +12,12 @@ public final class DBStatements {
             "CREATE TABLE Node\n" +
                     "(\n" +
                     "\tID INTEGER PRIMARY KEY,\n" +
+                    "\tType VARCHAR(10) NOT NULL,\n" +
                     "\tX INTEGER NOT NULL,\n" +
                     "\tY INTEGER NOT NULL,\n" +
                     "\tBuilding VARCHAR(10) NOT NULL,\n" +
-                    "\tFloor INTEGER NOT NULL,\n" +
-                    "\tCONSTRAINT uq_Nd_IDType UNIQUE (ID)\n" +
+                    "\tFloor INTEGER NOT NULL\n" +
+                    /*"\tCONSTRAINT uq_Nd_IDType UNIQUE (ID)\n" + */
                     ")";
     public static final String CREATE_TABLE_ADJACENTNODE =
             "CREATE TABLE AdjacentNode\n" +
@@ -39,7 +40,7 @@ public final class DBStatements {
                     "(\n" +
                     "  nodeID INTEGER,\n" +
                     "  tagName VARCHAR(100) NOT NULL,\n" +
-                    " CONSTAINT pk_NdTg_nidtid PRIMARY KEY(nodeID, tagName)\n" +
+                    "  CONSTRAINT pk_NdTg_nidtid PRIMARY KEY(nodeID, tagName),\n" +
                     "  CONSTRAINT fk_node_id FOREIGN KEY (nodeID) REFERENCES Node(ID) initially deferred,\n" +
                     "  CONSTRAINT fk_tag_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred\n" +
                     ")";
@@ -59,7 +60,7 @@ public final class DBStatements {
                     "(\n" +
                     "  tagName VARCHAR(100) NOT NULL,\n" +
                     "  hcpID INTEGER NOT NULL,\n" +
-                    "  CONSTAINT pk_hcptg PRIMARY KEY(tagName, hcpID)\n" +
+                    "  CONSTRAINT pk_hcptg PRIMARY KEY(tagName, hcpID),\n" +
                     "  CONSTRAINT fk_node_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred,\n" +
                     "  CONSTRAINT fk_hcp_id FOREIGN KEY (hcpID) REFERENCES HCP(ID) initially deferred\n" +
                     ")";

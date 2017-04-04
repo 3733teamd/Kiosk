@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
@@ -236,25 +237,33 @@ public class DBHandler {
     /**
      * Setup all tables and constraints
      */
-    public void Setup() throws Exception {
+    public void Setup() throws SQLException, IOException {
 
         Statement s = con.createStatement();
 
         String[] createTables =
                 {
                         DBStatements.CREATE_TABLE_NODE,
+                        DBStatements.CREATE_TABLE_TAG,
+                        DBStatements.CREATE_TABLE_HCP,
                         DBStatements.CREATE_TABLE_ADJACENTNODE,
                         DBStatements.CREATE_TABLE_HCPTAG,
                         DBStatements.CREATE_TABLE_PROTITLE,
-                        DBStatements.CREATE_TABLE_HCP,
                         DBStatements.CREATE_TABLE_NODETAG,
-                        DBStatements.CREATE_TABLE_HCPTITLE,
+                        DBStatements.CREATE_TABLE_HCPTITLE
 
                 };
 
         //Create all tables
         for (String statement : createTables) {
+            System.out.println(statement);
+            try {
                 s.execute(statement);
+            } catch (SQLException se){
+                if(!se.getSQLState().equals("X0Y32")){
+                    se.printStackTrace();
+                }
+            }
         }
 
         //About to do mass insert
@@ -266,6 +275,7 @@ public class DBHandler {
                 new InputStreamReader(getClass().getResourceAsStream("/DatabaseImports/DBInitialImports.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
+                System.out.println(line);
                 s.execute(line);
             }
         }
