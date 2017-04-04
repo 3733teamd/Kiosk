@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
@@ -117,7 +116,7 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="titleBox" layoutX="447.0" layoutY="337.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="titleBox" layoutX="447.0" layoutY="337.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
          </children>

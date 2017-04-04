@@ -1,11 +1,14 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Controller.EditDoctorController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -111,6 +114,8 @@ public class Main extends Application {
             return;
         }
 
+
+        //Populate Search Menus
         try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
@@ -120,10 +125,14 @@ public class Main extends Application {
 
         }
 
+
+
+
         // launch window
         launch(args);
 
     }
+
 }
 
 

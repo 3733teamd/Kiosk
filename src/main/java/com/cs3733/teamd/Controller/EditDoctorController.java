@@ -3,6 +3,9 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -31,19 +34,24 @@ public class EditDoctorController {
 
     public TextField addDoctorLabel;
 
-    public ChoiceBox addRoomSelect;
-    public ChoiceBox modifyDoctorSelect;
-    public ChoiceBox modifyRoomSelect;
-    public ChoiceBox removeDoctorSelect;
     public AnchorPane pane;
     public Text menu;
     public Label addRToD;
     public Label addD;
     public Label ModRN;
     public Label remD;
-    public ComboBox titleBox;
+
+    public ChoiceBox addRoomSelect;
+    public ChoiceBox modifyDoctorSelect;
+    public ChoiceBox modifyRoomSelect;
+    public ChoiceBox removeDoctorSelect;
+    public ChoiceBox<Title> titleBox;
     public ChoiceBox addDoctorSelectRoom;
     public ChoiceBox addRoomToDoc;
+
+    @FXML private void initialize(){
+        titleBox.setItems(FXCollections.observableArrayList(Title.values()));
+    }
 
 
     @FXML
