@@ -1,17 +1,17 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by Allyk on 3/26/2017.
@@ -41,6 +41,8 @@ public class EditDoctorController {
     public Label addD;
     public Label ModRN;
     public Label remD;
+    public ComboBox titleBox;
+
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
@@ -73,36 +75,49 @@ public class EditDoctorController {
         Main.window.show();
         Main.backRoot = Main.LoginScene;
     }
+    @FXML
+    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
 
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
     @FXML
-    public void onSubmitRoom2Doc (ActionEvent actionEvent) throws IOException{
+    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditServiceScene;
     }
     @FXML
-    public void onSubmitAddDoc (ActionEvent actionEvent) throws IOException{
+    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
+
+
+
+        LinkedList<Tag> loT = new LinkedList<Tag>();
+        Tag t = (Tag) addRoomSelect.getValue();
+        loT.add(t);
+        Professional p = new Professional(addDoctorLabel.getText() );
+
+
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditServiceScene;
     }
     @FXML
-    public void onSubmitModRoom (ActionEvent actionEvent) throws IOException{
+    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditServiceScene;
     }
-    @FXML
-    public void onSubmitRmRoom (ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
-    }
-    @FXML
+
+
+
+
+        @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));

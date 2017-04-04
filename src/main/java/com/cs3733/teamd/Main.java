@@ -78,6 +78,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         DBHandler database;
+
         try {
             database = new DBHandler();
         } catch (Exception e) {

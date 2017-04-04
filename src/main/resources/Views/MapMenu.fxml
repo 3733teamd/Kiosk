@@ -71,7 +71,7 @@
                   </Label>
                   <ChoiceBox id="RoomSelect" fx:id="DestinationSelect" layoutX="547.0" layoutY="521.0" prefHeight="31.0" prefWidth="196.0">
                      <tooltip>
-                        <Tooltip text="Select a Room" />
+                        <Tooltip text="Destination" />
                      </tooltip>
                   </ChoiceBox>
                   <ChoiceBox id="RoomSelect" fx:id="StartSelect" layoutX="546.0" layoutY="402.0" prefHeight="31.0" prefWidth="196.0">
