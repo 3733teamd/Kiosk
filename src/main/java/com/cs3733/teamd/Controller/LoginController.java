@@ -32,7 +32,7 @@ public class LoginController {
     public Text menu;
     public Text user;
     public Text pass;
-    @FXML
+    @FXML   
     public void initialize(){
         setText();
     }
