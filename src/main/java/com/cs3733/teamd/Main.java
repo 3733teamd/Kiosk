@@ -91,7 +91,7 @@ public class Main extends Application {
 
 
         try {
-            database.Setup();
+            database.setup();
         } catch (SQLException e) {
             if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
                 System.out.println("Skipping setup as tables are already made");
@@ -108,13 +108,13 @@ public class Main extends Application {
         ArrayList<Tag> tags;
         ArrayList<Professional> professionals;
         try {
-            database.Load();
+            database.load();
             nodes = database.nodes;
             tags = database.tags;
             professionals = database.professionals;
 
 
-            database.Close();
+            database.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print("Could not load data from database.\nExiting...\n");

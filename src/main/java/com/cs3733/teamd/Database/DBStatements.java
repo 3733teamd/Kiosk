@@ -82,6 +82,9 @@ public final class DBStatements {
                     "  CONSTRAINT fk_HcpTit_acy FOREIGN KEY (Title_Acronym) REFERENCES ProTitle (Acronym) initially deferred\n" +
                     ")";
 
+    public static final String[] DATABASE_NAMES = {"Node", "AdjacentNode", "RoomNode", "SMP", "HCP", "HCPTitle", "ProTitle", "Tag"};
+
+/*
     public static final String DROP_TABLE_NODE = "DROP TABLE Node";
     public static final String DROP_TABLE_ADJACENTNODE = "DROP TABLE AdjacentNode";
     public static final String DROP_TABLE_ROOMNODE = "DROP TABLE RoomNode";
@@ -109,6 +112,7 @@ public final class DBStatements {
     public static final String SELECT_ALL_HCPTAG = "SELECT * FROM HCPTag";
     public static final String SELECT_ALL_PROTITLE = "SELECT * FROM ProTitle";
     public static final String SELECT_ALL_HCPTITLE = "SELECT * FROM HCPTitle";
+*/
 
 
     /**

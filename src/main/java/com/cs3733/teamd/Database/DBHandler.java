@@ -22,7 +22,7 @@ import static com.cs3733.teamd.Model.Title.*;
 public class DBHandler {
 
 
-    private Connection con;
+    private Connection connection;
     public ArrayList<Node> nodes = new ArrayList<>();
     public ArrayList<Tag> tags = new ArrayList<>();
     public ArrayList<Professional> professionals = new ArrayList<>();
@@ -32,7 +32,7 @@ public class DBHandler {
      * @param c: A valid connection to a database
      */
     public DBHandler(Connection c) {
-        this.con = c;
+        this.connection = c;
     }
 
     /**
@@ -40,18 +40,17 @@ public class DBHandler {
      * @throws Exception when the class cannot be constructed.
      */
     public DBHandler() throws Exception {
-        if(!EnvironmentTester()) {throw new Exception();}
-        Connection connection = null;
+        if(!environmentTester()) {throw new Exception();}
 
         try {
             // substitute your database name for myDB
-            con = DriverManager.getConnection("jdbc:derby:db;create=true");
+            connection = DriverManager.getConnection("jdbc:derby:db;create=true");
         } catch (SQLException e) {
-            System.err.println("Connection failed. Check output console.");
+            System.err.println("Connection failed. Check output connectionsole.");
             e.printStackTrace();
             throw new Exception();
         }
-        System.out.println("Java DB connection established!");
+        System.out.println("Java DB connectionnection established!");
 
     }
 
@@ -61,7 +60,7 @@ public class DBHandler {
      * DB libraries
      * @return whether or not the environment passes inspection
      */
-    private boolean EnvironmentTester() {
+    private boolean environmentTester() {
         System.out.println("-------Embedded Java DB Connection Testing --------");
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
@@ -69,7 +68,7 @@ public class DBHandler {
             System.out.println("Java DB Driver not found. Add the classpath to your module.\n" +
                     "For IntelliJ do the following:\n" +
                     "\tFile | Project Structure, Modules, Dependency tab\n" +
-                    "\tAdd by clicking on the green plus icon on the right of the window\n" +
+                    "\tAdd by clicking on the green plus iconnection on the right of the window\n" +
                     "\tSelect JARs or directories. Go to the folder where the Java JDK is installed\n" +
                     "\tSelect the folder java/jdk1.8.xxx/db/lib where xxx is the version.\n" +
                     "\tClick OK, compile the code and run it.");
@@ -84,11 +83,11 @@ public class DBHandler {
     /**
      * Load data from database
      */
-    public void Load() throws SQLException {
+    public void load() throws SQLException {
         //TODO loop through all entity tables creating hashmap with key of PK
         //TODO loop through all assoc tables using keys to fill out assoc attribs
 
-        Statement s = con.createStatement();
+        Statement s = connection.createStatement();
 
         Map<Integer, Node> nodeMap = new HashMap<>();
         Map<String, Tag> tagMap = new HashMap<>();
@@ -239,11 +238,11 @@ public class DBHandler {
     }
 
     /**
-     * Setup all tables and constraints
+     * Setup all tables and connectionstraints
      */
-    public void Setup() throws SQLException, IOException {
+    public void setup() throws SQLException, IOException {
 
-        Statement s = con.createStatement();
+        Statement s = connection.createStatement();
 
         String[] createTables =
                 {
@@ -272,7 +271,7 @@ public class DBHandler {
 
         //About to do mass insert
         //Disable auto commit so deferred constraints do not activate
-        con.setAutoCommit(false);
+        connection.setAutoCommit(false);
 
         //Mass insert from file for initial data
         try (BufferedReader br = new BufferedReader(
@@ -284,8 +283,8 @@ public class DBHandler {
             }
         }
 
-        //Inserts done, enable constraints (will check them aswell)
-        con.setAutoCommit(true);
+        //Inserts done, enable connectionstraints (will check them aswell)
+        connection.setAutoCommit(true);
 
         s.close();
 
@@ -293,37 +292,42 @@ public class DBHandler {
 
     /**
      * Empty all tables
+     * @throws SQLException
      */
-    public void Empty() {
-        try {
-            Statement s;
-            s = con.createStatement();
+    public void empty() throws SQLException {
 
-            con.setAutoCommit(false);
+        Statement s = connection.createStatement();
+        connection.setAutoCommit(false);
 
-            String[] emptyTables =
-                    {
-                            DBStatements.EMPTY_TABLE_ADJACENTNODE,
-                            DBStatements.EMPTY_TABLE_HCP,
-                            DBStatements.EMPTY_TABLE_HCPTAG,
-                            DBStatements.EMPTY_TABLE_HCPTITLE,
-                            DBStatements.EMPTY_TABLE_NODE,
-                            DBStatements.EMPTY_TABLE_PROTITLE,
-                            DBStatements.EMPTY_TABLE_TAG
-                    };
-
-            for (String statement : emptyTables) { s.execute(statement); }
-
-            con.setAutoCommit(true);
-
-            s.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (String name: DBStatements.DATABASE_NAMES){
+            s.execute("DELETE FROM " + name);
         }
+
+        connection.setAutoCommit(true);
+        s.close();
     }
 
-    public void Close() throws SQLException {
-        con.close();
+    /**
+     * Drops all tables
+     * @throws SQLException
+     */
+    public void drop() throws SQLException {
+        Statement s = connection.createStatement();
+        connection.setAutoCommit(false);
+
+        for (String name: DBStatements.DATABASE_NAMES){
+            s.execute("DROP TABLE " + name);
+        }
+
+        connection.setAutoCommit(true);
+        s.close();
+    }
+
+    /**
+     * Closes database connection
+     * @throws SQLException
+     */
+    public void close() throws SQLException {
+        connection.close();
     }
 }
