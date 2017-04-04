@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapController">
+<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -64,12 +70,12 @@
                      </font>
                   </Text>
                   <ImageView fx:id="mapImage" fitHeight="404.0" fitWidth="659.0" layoutX="608.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="addRoomButton" layoutX="168.0" layoutY="496.0" mnemonicParsing="false" text="Add Room">
+                  <Button fx:id="addRoomButton" layoutX="168.0" layoutY="496.0" mnemonicParsing="false" onAction="#onAddRoom" text="Add Room">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Button>
-                  <Button fx:id="removeRoomButton" layoutX="168.0" layoutY="579.0" mnemonicParsing="false" text="Remove Room">
+                  <Button fx:id="removeRoomButton" layoutX="168.0" layoutY="579.0" mnemonicParsing="false" onAction="#onRemoveRoom" text="Remove Room">
                      <font>
                         <Font size="28.0" />
                      </font>

@@ -66,6 +66,20 @@ public class EditMapController {
         Main.window.show();
         Main.backRoot = Main.LoginScene;
     }
+    @FXML
+
+    public void onAddRoom(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditMapScene;
+    }
+    public void onRemoveRoom (ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditMapScene;
+    }
 
     @FXML
     public void setText(){

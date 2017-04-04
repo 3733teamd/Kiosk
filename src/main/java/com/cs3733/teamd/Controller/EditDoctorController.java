@@ -75,6 +75,34 @@ public class EditDoctorController {
     }
 
     @FXML
+    public void onSubmitRoom2Doc (ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditDoctorScene;
+    }
+    @FXML
+    public void onSubmitAddDoc (ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditDoctorScene;
+    }
+    @FXML
+    public void onSubmitModRoom (ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditDoctorScene;
+    }
+    @FXML
+    public void onSubmitRmRoom (ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditDoctorScene;
+    }
+    @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
