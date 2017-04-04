@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -100,8 +99,8 @@ public class MapMenuController {
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
         Tag startTag = (Tag) StartSelect.getValue();
-        System.out.println("start" +startTag.tagName);
-        System.out.println("end" +destinationTag.tagName);
+        System.out.println("start:\t" +startTag.tagName);
+        System.out.println("end:\t" +destinationTag.tagName);
 
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 

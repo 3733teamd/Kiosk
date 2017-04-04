@@ -60,9 +60,9 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <ImageView fx:id="mapImage" fitHeight="564.0" fitWidth="804.0" layoutX="251.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="mapImage" fitHeight="500.0" fitWidth="1000.0" layoutX="195.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../floor_imgs/4_thefourthfloor_cropped.png" />
+                        <Image url="@../floor_imgs/Fk4x-Model.png" />
                      </image></ImageView>
                   <TextArea fx:id="textDirectionsDisplay" editable="false" layoutX="735.0" layoutY="188.0" opacity="0.0" prefHeight="426.0" prefWidth="476.0" text="Text Directions are Here">
                      <font>
@@ -74,7 +74,7 @@
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Canvas id="MapCanvas" fx:id="MapCanvas" height="500.0" layoutX="249.0" layoutY="136.0" width="804.0" />
+                  <Canvas id="MapCanvas" fx:id="MapCanvas" height="500.0" layoutX="193.0" layoutY="137.0" width="900.0" />
                </children>
             </AnchorPane>
          </children>

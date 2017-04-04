@@ -2,7 +2,6 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -24,6 +24,8 @@ import java.util.LinkedList;
 /**
  * Created by Allyk on 3/26/2017.
  */
+//TODO Erase paths when exiting this scene so it does not keep old
+//TODO Avoid using the onMouseMove. Redesign to use models instead.
 public class MapDirectionsController {
 
     public Button largerTextButton;
@@ -39,6 +41,11 @@ public class MapDirectionsController {
     public Text menu;
     public AnchorPane pane2;
 
+    public int imageW = 900;
+    public int imageH = 500;
+    public double scale = 8.4;
+    public int offset_x = 160*12;
+    public int offset_y = 80*12;
 
     //public Label instructv;
     //public Label instructt;
@@ -47,44 +54,7 @@ public class MapDirectionsController {
     @FXML private void initialize()
     {
         setText();
-
-         gc = MapCanvas.getGraphicsContext2D();
-        LinkedList<Node> path = new LinkedList<Node>();
-        path.add(new Node(328, 310));
-        path.add(new Node(328, 113));
-        path.add(new Node(358, 113));
-        path.add(new Node(358, 98));
-
-        //drawShapes(gc, path);
-
-        if (Main.roomSelected == "Select Room") {
-            if (Main.serviceSelected == "Allergy"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "Blood Test"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "ICU"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "Oranges"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "Emergency Room"){
-                // Map data goes here
-            }
-        }
-        if (Main.serviceSelected == "Select Service"){
-            if (Main.roomSelected == "3A"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "3B"){
-                // Map data goes here
-            }
-            if (Main.serviceSelected == "3C"){
-                // Map data goes here
-            }
-        }
+        gc = MapCanvas.getGraphicsContext2D();
     }
 
     @FXML
@@ -113,18 +83,24 @@ public class MapDirectionsController {
     @FXML
     private void draw(){
         plotPath(MapMenuController.pathNodes);
-        
     }
 
-    private void drawShapes(GraphicsContext gc, LinkedList<Node> path) {
+    private Point getConvertedPoint(Node node) {
+        int x = node.getX();
+        int y = node.getY();
+        Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
+        return p;
+    }
+
+    private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
-        Node previous = null;
-        gc.setLineWidth(10);
+        Point previous = null;
+        gc.setLineWidth(2);
         int pathlength = path.size();
         int radius = 3;
         for  (int i = 0; i < pathlength; i++){
-            Node current = path.getFirst();
+            Point current = path.getFirst();
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
             System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){
@@ -135,23 +111,6 @@ public class MapDirectionsController {
             previous = current;
             path.pop();
         }
-        /*gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-        gc.fillPolygon(new double[]{10, 40, 10, 40},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolygon(new double[]{60, 90, 60, 90},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolyline(new double[]{110, 140, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);*/
     }
 
 
@@ -181,7 +140,10 @@ public class MapDirectionsController {
 
        //System.out.println(path.get(0).toString());
 
-
-        drawShapes(gc, path);
+        LinkedList<Point> points = new LinkedList<>();
+        for (Node node: path) {
+            points.add(getConvertedPoint(node));
+        }
+        drawShapes(gc, points);
     }
 }
