@@ -82,6 +82,21 @@
                      </font>
                   </Text>
                   <Canvas id="MapCanvas" fx:id="MapCanvas" height="500.0" layoutX="193.0" layoutY="137.0" width="900.0" />
+                  <Label layoutX="215.0" layoutY="257.0" text="Red = Start" textFill="#f80101">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="215.0" layoutY="322.0" text="Green = Path" textFill="#1e8328">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="215.0" layoutY="382.0" text="Yellow = Goal" textFill="#e2f209">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

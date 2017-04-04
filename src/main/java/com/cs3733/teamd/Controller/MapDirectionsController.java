@@ -34,6 +34,10 @@ public class MapDirectionsController {
     public Button BackButton;
     public Button MenuButton;
 
+    public Label redKey;
+    public Label greenKey;
+    public Label yellowKey;
+
     public ImageView mapImage;
     public TextArea textDirectionsDisplay;
     public Canvas MapCanvas;
