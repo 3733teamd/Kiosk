@@ -14,11 +14,14 @@ public class Node {
     //DB key
     private int ID;
 
-    //called in RUNTIME, adds a new DB entry
     public Node(int x, int y){
-        coord.setLocation(x,y);
-        //add to DB
 
+        coord.setLocation(x,y);
+    }
+
+    public Node(int x, int y, int ID){
+        coord.setLocation(x,y);
+        this.ID = ID;
     }
 
 
