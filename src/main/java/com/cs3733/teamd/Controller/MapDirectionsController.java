@@ -66,6 +66,14 @@ public class MapDirectionsController {
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;
     }
+    @FXML
+
+    public void onMenu(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.MainScene);
+        Main.window.show();
+        Main.backRoot = Main.MapDirectionsScene;
+    }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
