@@ -37,22 +37,25 @@ public class MapDirectionsController {
     public Canvas MapCanvas;
     public AnchorPane pane;
     public Text menu;
+    public AnchorPane pane2;
+
+
     //public Label instructv;
     //public Label instructt;
-
+    public GraphicsContext gc;
 
     @FXML private void initialize()
     {
         setText();
 
-        GraphicsContext gc = MapCanvas.getGraphicsContext2D();
+         gc = MapCanvas.getGraphicsContext2D();
         LinkedList<Node> path = new LinkedList<Node>();
         path.add(new Node(328, 310));
         path.add(new Node(328, 113));
         path.add(new Node(358, 113));
         path.add(new Node(358, 98));
 
-        drawShapes(gc, path);
+        //drawShapes(gc, path);
 
         if (Main.roomSelected == "Select Room") {
             if (Main.serviceSelected == "Allergy"){
@@ -107,16 +110,22 @@ public class MapDirectionsController {
         Main.backRoot = Main.MapDirectionsScene;
     }
 
+    @FXML
+    private void draw(){
+        plotPath(MapMenuController.pathNodes);
+    }
+
     private void drawShapes(GraphicsContext gc, LinkedList<Node> path) {
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
         Node previous = null;
-        gc.setLineWidth(2);
+        gc.setLineWidth(10);
         int pathlength = path.size();
         int radius = 3;
         for  (int i = 0; i < pathlength; i++){
             Node current = path.getFirst();
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
+            System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){
                 gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
                         current.getX() + radius, current.getY() + radius);
@@ -167,12 +176,11 @@ public class MapDirectionsController {
     }
 
     public void plotPath(LinkedList<Node> path){
-        System.out.println(path.size());
+       // System.out.println(path.size());
 
-        System.out.println(path.get(0).toString());
+       //System.out.println(path.get(0).toString());
 
-        //GraphicsContext gc = MapCanvas.getGraphicsContext2D();
 
-        //this.drawShapes(gc, path);
+        drawShapes(gc, path);
     }
 }

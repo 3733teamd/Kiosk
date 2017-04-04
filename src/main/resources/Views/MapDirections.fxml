@@ -28,7 +28,7 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="1308.0" />
-            <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
+            <AnchorPane fx:id="pane2" layoutX="-12.0" layoutY="-12.0" onMouseMoved="#draw" prefHeight="800.0" prefWidth="1290.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
                   <Button fx:id="largerTextButton" layoutX="1115.0" layoutY="137.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
@@ -60,7 +60,7 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <ImageView fx:id="mapImage" fitHeight="500.0" fitWidth="676.0" layoutX="314.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="mapImage" fitHeight="564.0" fitWidth="804.0" layoutX="251.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../floor_imgs/4_thefourthfloor_cropped.png" />
                      </image></ImageView>
@@ -74,7 +74,7 @@
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Canvas id="MapCanvas" fx:id="MapCanvas" height="487.0" layoutX="315.0" layoutY="137.0" width="676.0" />
+                  <Canvas id="MapCanvas" fx:id="MapCanvas" height="500.0" layoutX="249.0" layoutY="136.0" width="804.0" />
                </children>
             </AnchorPane>
          </children>

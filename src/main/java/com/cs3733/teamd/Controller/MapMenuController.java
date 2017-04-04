@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -44,11 +45,11 @@ public class MapMenuController {
     public Label instruct;
     public Text menu;
 
-
     @FXML
     public ChoiceBox DestinationSelect;
     public ChoiceBox StartSelect;
 
+    static public LinkedList<Node> pathNodes= new LinkedList<>();
 
     @FXML
     private void initialize(){
@@ -99,10 +100,15 @@ public class MapMenuController {
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
         Tag startTag = (Tag) StartSelect.getValue();
+        System.out.println("start" +startTag.tagName);
+        System.out.println("end" +destinationTag.tagName);
+
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 
         MapDirectionsController mapDirectionsController = new MapDirectionsController();
-        mapDirectionsController.plotPath(pathfinder.shortestPath());
+       // mapDirectionsController.plotPath(pathfinder.shortestPath());
+        pathNodes =pathfinder.shortestPath();
+
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
 
