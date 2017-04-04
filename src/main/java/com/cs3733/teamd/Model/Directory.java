@@ -33,6 +33,23 @@ public class Directory {
         return allProfs;
     }
 
-  
+    public void createNewTag(){
+
+    }
+    public void createNewNode(){
+
+    }
+    public void creaNewProf(){
+
+    }
+    public void deleteTag(){
+
+    }
+    public void deleteNode(){
+
+    }
+    public void deleteProf(){
+        
+    }
 
 }
