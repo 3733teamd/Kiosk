@@ -25,13 +25,6 @@ import java.util.LinkedList;
  * Created by Allyk on 3/26/2017.
  */
 public class MapDirectionsController {
-    Node start;
-    Node destination;
-
-    MapDirectionsController(Tag s, Tag d){
-        this.start = s.getNodes().getFirst();
-        this.destination = d.getNodes().getFirst();
-    }
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -52,7 +45,6 @@ public class MapDirectionsController {
     {
         setText();
 
-        //Call PathFinding Algorithm
         GraphicsContext gc = MapCanvas.getGraphicsContext2D();
         LinkedList<Node> path = new LinkedList<Node>();
         path.add(new Node(328, 310));
@@ -174,7 +166,13 @@ public class MapDirectionsController {
         }
     }
 
-    private void plotPath(){
+    public void plotPath(LinkedList<Node> path){
+        System.out.println(path.size());
 
+        System.out.println(path.get(0).toString());
+
+        //GraphicsContext gc = MapCanvas.getGraphicsContext2D();
+
+        //this.drawShapes(gc, path);
     }
 }

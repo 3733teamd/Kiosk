@@ -114,6 +114,7 @@ public class Main extends Application {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
             mapMenuController.DestinationSelect.setValue(mapMenuController.roomDropDown);
+            mapMenuController.StartSelect.setValue(mapMenuController.roomDropDown);
         }catch(Exception e){
 
         }

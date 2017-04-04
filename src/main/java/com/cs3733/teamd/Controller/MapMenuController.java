@@ -1,6 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Pathfinder;
 import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,6 +61,7 @@ public class MapMenuController {
         //visibleLocations.add(new Tag("Example Tag"));
         roomDropDown.addAll(visibleLocations);
         DestinationSelect.setItems(roomDropDown);
+        StartSelect.setItems(roomDropDown);
     }
 
 
@@ -91,9 +94,18 @@ public class MapMenuController {
         //Main.roomSelected = RoomSelect.getValue().toString();
         //Main.serviceSelected = ServiceSelect.getValue().toString();
         Main.window.setScene(Main.MapDirectionsScene);
+
+
+        ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
+        Tag destinationTag = (Tag) DestinationSelect.getValue();
+        Tag startTag = (Tag) StartSelect.getValue();
+        Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
+
+        MapDirectionsController mapDirectionsController = new MapDirectionsController();
+        mapDirectionsController.plotPath(pathfinder.shortestPath());
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
-        Tag desiredTag = (Tag) DestinationSelect.getValue();
+
 
 //        MapDirectionsController mapDirectionsController = new MapDirectionsController();
                 //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
@@ -119,9 +131,4 @@ public class MapMenuController {
             menu.setX(0);
         }
     }
-
-    /*
-    public void submitSearch(ActionEvent actionEvent) {
-        Tag desiredTag = (Tag) LocationSelect.getValue();
-    }*/
 }
