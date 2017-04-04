@@ -11,6 +11,8 @@ public class Node {
     Point coord = new Point();
     private LinkedList<Tag> tags = new LinkedList<Tag>();
     private LinkedList<Node> nodes = new LinkedList<Node>();
+    //DB key
+
 
     public Node(int x, int y){
         coord.setLocation(x,y);

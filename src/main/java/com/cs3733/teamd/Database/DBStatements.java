@@ -12,12 +12,11 @@ public final class DBStatements {
             "CREATE TABLE Node\n" +
                     "(\n" +
                     "\tID INTEGER PRIMARY KEY,\n" +
-                    "\tLocationTypeID VARCHAR(4) NOT NULL ,\n" +
                     "\tX INTEGER NOT NULL,\n" +
                     "\tY INTEGER NOT NULL,\n" +
                     "\tBuilding VARCHAR(10) NOT NULL,\n" +
                     "\tFloor INTEGER NOT NULL,\n" +
-                    "\tCONSTRAINT uq_Nd_IDType UNIQUE (ID,LocationTypeID)\n" +
+                    "\tCONSTRAINT uq_Nd_IDType UNIQUE (ID)\n" +
                     ")";
     public static final String CREATE_TABLE_ADJACENTNODE =
             "CREATE TABLE AdjacentNode\n" +
@@ -29,21 +28,23 @@ public final class DBStatements {
                     "  CONSTRAINT fk_AdjNd_n2 FOREIGN KEY (N2) REFERENCES Node(ID) initially deferred\n" +
                     ")";
 
-    public static final String CREATE_TABLE_ROOMNODE =
-            "CREATE TABLE RoomNode\n" +
-                    "(\n" +
-                    "  ID INTEGER PRIMARY KEY,\n" +
-                    "  LocationTypeID VARCHAR(4) NOT NULL,\n" +
-                    "  Title VARCHAR(10) NOT NULL,\n" +
-                    "  CONSTRAINT fk_RmNd_IsA_IDLocType FOREIGN KEY (ID, LocationTypeID) REFERENCES Node(ID, LocationTypeID) initially deferred,\n" +
-                    "  CONSTRAINT ck_RmNd_is_rm CHECK (LocationTypeID IN ('ROOM'))\n" +
-                    ")";
-
-    public static final String CREATE_TABLE_SMP =
-            "CREATE TABLE SMP\n" +
+    public static final String CREATE_TABLE_TAG =
+            "CREATE TABLE Tag\n" +
                     "(\n" +
                     "  Name VARCHAR(100) PRIMARY KEY\n" +
                     ")";
+
+    public static final String CREATE_TABLE_NODETAG =
+            "CREATE TABLE NodeTag\n" +
+                    "(\n" +
+                    "  nodeID INTEGER,\n" +
+                    "  tagName VARCHAR(100) NOT NULL,\n" +
+                    " CONSTAINT pk_NdTg_nidtid PRIMARY KEY(nodeID, tagName)\n" +
+                    "  CONSTRAINT fk_node_id FOREIGN KEY (nodeID) REFERENCES Node(ID) initially deferred,\n" +
+                    "  CONSTRAINT fk_tag_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred\n" +
+                    ")";
+
+
 
     public static final String CREATE_TABLE_HCP =
             "CREATE TABLE HCP\n" +
@@ -53,24 +54,14 @@ public final class DBStatements {
                     "  Last_name VARCHAR(25) NOT NULL\n" +
                     ")";
 
-    public static final String CREATE_TABLE_SMPROOM =
-            "CREATE TABLE SMPRoom\n" +
+    public static final String CREATE_TABLE_HCPTAG =
+            "CREATE TABLE HCPTag\n" +
                     "(\n" +
-                    "  SMP_name VARCHAR(100),\n" +
-                    "  Room_ID INTEGER,\n" +
-                    "  CONSTRAINT pk_SmpRm_SmpRm PRIMARY KEY (SMP_name, Room_ID),\n" +
-                    "  CONSTRAINT fk_SmpRm_smp FOREIGN KEY (SMP_name) REFERENCES  SMP (Name) initially deferred,\n" +
-                    "  CONSTRAINT fk_SmpRm_rm FOREIGN KEY (Room_ID) REFERENCES  RoomNode (ID) initially deferred\n" +
-                    ")";
-
-    public static final String CREATE_TABLE_HCPROOM =
-            "CREATE TABLE HCPRoom\n" +
-                    "(\n" +
-                    "  HCP_ID INTEGER,\n" +
-                    "  Room_ID INTEGER,\n" +
-                    "  CONSTRAINT pk_HcpRm_SmpRm PRIMARY KEY (HCP_ID, Room_ID),\n" +
-                    "  CONSTRAINT fk_HcpRm_hcp FOREIGN KEY (HCP_ID) REFERENCES  HCP (ID) initially deferred,\n" +
-                    "  CONSTRAINT fk_HmpRm_rm FOREIGN KEY (Room_ID) REFERENCES  RoomNode (ID) initially deferred\n" +
+                    "  tagName VARCHAR(100) NOT NULL,\n" +
+                    "  hcpID INTEGER NOT NULL,\n" +
+                    "  CONSTAINT pk_hcptg PRIMARY KEY(tagName, hcpID)\n" +
+                    "  CONSTRAINT fk_node_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred,\n" +
+                    "  CONSTRAINT fk_hcp_id FOREIGN KEY (hcpID) REFERENCES HCP(ID) initially deferred\n" +
                     ")";
 
     public static final String CREATE_TABLE_PROTITLE =
@@ -95,28 +86,26 @@ public final class DBStatements {
     public static final String DROP_TABLE_ROOMNODE = "DROP TABLE RoomNode";
     public static final String DROP_TABLE_SMP = "DROP TABLE SMP";
     public static final String DROP_TABLE_HCP = "DROP TABLE HCP";
-    public static final String DROP_TABLE_SMPROOM = "DROP TABLE SMPRoom";
+
     public static final String DROP_TABLE_HCPROOM = "DROP TABLE HCPRoom";
     public static final String DROP_TABLE_PROTITLE = "DROP TABLE ProTitle";
     public static final String DROP_TABLE_HCPTITLE = "DROP TABLE HCPTitle";
 
     public static final String EMPTY_TABLE_NODE = "DELETE FROM Node";
     public static final String EMPTY_TABLE_ADJACENTNODE = "DELETE FROM AdjacentNode";
-    public static final String EMPTY_TABLE_ROOMNODE = "DELETE FROM RoomNode";
-    public static final String EMPTY_TABLE_SMP = "DELETE FROM SMP";
+    public static final String EMPTY_TABLE_NODETAG = "DELETE FROM NodeTag";
+    public static final String EMPTY_TABLE_TAG = "DELETE FROM Tag";
     public static final String EMPTY_TABLE_HCP = "DELETE FROM HCP";
-    public static final String EMPTY_TABLE_SMPROOM = "DELETE FROM SMPRoom";
-    public static final String EMPTY_TABLE_HCPROOM = "DELETE FROM HCPRoom";
+    public static final String EMPTY_TABLE_HCPTAG = "DELETE FROM HCPTag";
     public static final String EMPTY_TABLE_PROTITLE = "DELETE FROM ProTitle";
     public static final String EMPTY_TABLE_HCPTITLE = "DELETE FROM HCPTitle";
 
     public static final String SELECT_ALL_NODE = "SELECT * FROM Node";
     public static final String SELECT_ALL_ADJACENTNODE = "SELECT * FROM AdjacentNode";
-    public static final String SELECT_ALL_ROOMNODE = "SELECT * FROM RoomNode";
-    public static final String SELECT_ALL_SMP = "SELECT * FROM SMP";
+    public static final String SELECT_ALL_NODETAG = "SELECT * FROM NodeTag";
+    public static final String SELECT_ALL_TAG = "SELECT * FROM Tag";
     public static final String SELECT_ALL_HCP = "SELECT * FROM HCP";
-    public static final String SELECT_ALL_SMPROOM = "SELECT * FROM SMPRoom";
-    public static final String SELECT_ALL_HCPROOM = "SELECT * FROM HCPRoom";
+    public static final String SELECT_ALL_HCPTAG = "SELECT * FROM HCPTag";
     public static final String SELECT_ALL_PROTITLE = "SELECT * FROM ProTitle";
     public static final String SELECT_ALL_HCPTITLE = "SELECT * FROM HCPTitle";
 
