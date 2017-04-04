@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -87,12 +89,18 @@ public class Main extends Application {
         }
 
 
-        /*try {
+        try {
             database.Setup();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
+                System.out.println("Skipping setup as tables are already made");
+            } else {
+                System.err.println("ERROR: creation of database failed");
+            }
+        } catch (IOException e){
+            System.err.println("ERROR: reading in data file");
             e.printStackTrace();
-            System.err.print("Could not setup database.\nMaybe tables already created\n");
-        }*/
+        }
 
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;
