@@ -24,4 +24,15 @@ public class Directory {
     public ArrayList<Tag> getAllTags() {
         return allTags;
     }
+
+    public ArrayList<Node> getAllNodes() {
+        return allNodes;
+    }
+
+    public ArrayList<Professional> getAllProfs() {
+        return allProfs;
+    }
+
+  
+
 }
