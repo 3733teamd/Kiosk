@@ -60,8 +60,10 @@ public class MapMenuController {
 
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
-        roomDropDown.addAll(visibleLocations);
+        //roomDropDown.addAll(visibleLocations);
+        DestinationSelect.setValue(roomDropDown.get(0));
         DestinationSelect.setItems(roomDropDown);
+        StartSelect.setValue(roomDropDown.get(0));
         StartSelect.setItems(roomDropDown);
     }
 

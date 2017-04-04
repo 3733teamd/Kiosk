@@ -73,8 +73,40 @@ public class EditDoctorController {
         Main.window.show();
         Main.backRoot = Main.LoginScene;
     }
-
     @FXML
+    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+    @FXML
+    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+    @FXML
+    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+    @FXML
+    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.AdminMenuScene);
+        Main.window.show();
+        Main.backRoot = Main.EditServiceScene;
+    }
+
+
+
+
+        @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
