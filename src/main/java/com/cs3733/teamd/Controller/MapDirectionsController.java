@@ -60,6 +60,8 @@ public class MapDirectionsController {
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         Main.window.hide();
+        //clear canvas for further drawings
+        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;
@@ -68,6 +70,8 @@ public class MapDirectionsController {
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
+        //clear canvas for further drawings
+        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;
@@ -75,6 +79,8 @@ public class MapDirectionsController {
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
         Main.window.hide();
+        //clear canvas for further drawings
+        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;
@@ -93,12 +99,12 @@ public class MapDirectionsController {
     }
 
     private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.RED);
         gc.setStroke(Color.BLUE);
         Point previous = null;
         gc.setLineWidth(2);
         int pathlength = path.size();
-        int radius = 3;
+        int radius = 4;
         for  (int i = 0; i < pathlength; i++){
             Point current = path.getFirst();
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
@@ -110,6 +116,7 @@ public class MapDirectionsController {
             //System.out.printf(current.getX() + "" + current.getY());
             previous = current;
             path.pop();
+            gc.setFill(Color.GREEN);
         }
     }
 
