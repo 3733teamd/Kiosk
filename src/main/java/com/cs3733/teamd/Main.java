@@ -2,6 +2,7 @@ package com.cs3733.teamd;
 
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
+import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;

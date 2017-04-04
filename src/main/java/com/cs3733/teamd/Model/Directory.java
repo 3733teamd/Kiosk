@@ -11,11 +11,20 @@ import java.util.ArrayList;
  * Knows the DB Connection so it can SAVE ENTITIES
  */
 public class Directory {
+
+    private static Directory dir = new Directory();
+
+    public static Directory getInstance(){
+        return dir;
+    }
+
     private ArrayList<Node> allNodes = new ArrayList<Node>();
     private ArrayList<Tag> allTags = new ArrayList<Tag>();
     private ArrayList<Professional> allProfs = new ArrayList<Professional>();
 
-    public Directory(ArrayList<Node> nodes,ArrayList<Tag> tags, ArrayList<Professional> profs){
+    private Directory( ){}
+
+    public void initialize(ArrayList<Node> nodes,ArrayList<Tag> tags, ArrayList<Professional> profs){
         allNodes = nodes;
         allTags = tags;
         allProfs = profs;
