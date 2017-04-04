@@ -72,4 +72,9 @@ public class Node {
     public boolean containsTag(Tag t){
         return (this.tags.contains(t));
     }
+
+    @Override
+    public String toString(){
+        return "("+this.getX()+","+this.getY()+")";
+    }
 }
