@@ -12,10 +12,20 @@ public class Node {
     private LinkedList<Tag> tags = new LinkedList<Tag>();
     private LinkedList<Node> nodes = new LinkedList<Node>();
     //DB key
+    private int ID;
 
-
+    //called in RUNTIME, adds a new DB entry
     public Node(int x, int y){
         coord.setLocation(x,y);
+        //add to DB
+
+    }
+
+
+    //Called on STARTUP, loaded from DB entry
+    public Node(int x, int y, int ID){
+        coord.setLocation(x,y);
+        this.ID = ID;
     }
 
     public double getDist(Node n){

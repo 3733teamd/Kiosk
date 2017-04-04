@@ -3,6 +3,7 @@ package com.cs3733.teamd.Database;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -99,8 +100,9 @@ public class DBHandler {
         //LOAD NODES
         ResultSet nodeTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_NODE);
         while (nodeTupleRslt.next()) {
-            Node newNode = new Node(nodeTupleRslt.getInt("X"), nodeTupleRslt.getInt("Y"));
             int ID = nodeTupleRslt.getInt("ID");
+            //create new node
+            Node newNode = new Node(nodeTupleRslt.getInt("X"), nodeTupleRslt.getInt("Y"),ID);
             nodeMap.put(ID, newNode);
         }
         nodeTupleRslt.close();
@@ -118,9 +120,11 @@ public class DBHandler {
         //LOAD PROFESSIONALS
         ResultSet HCPTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCP);
         while (HCPTupleRslt.next()) {
-            Professional newPro = new Professional(
-                    HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"));
             int ID = HCPTupleRslt.getInt("ID");
+            ArrayList<Title> titles  = new ArrayList<Title>();
+            titles.add(Title.MD);
+            Professional newPro = new Professional(HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"),titles,ID);
+
             professionalMap.put(ID, newPro);
         }
         HCPTupleRslt.close();

@@ -18,7 +18,7 @@ public class ProfessionalTest {
 
     @Test
     public void testProfessionalNotNull() {
-        Professional p = new Professional("Test Person");
+        Professional p = new Professional("Test Person", Title.MD, ID);
         assertNotNull(p);
     }
 
@@ -30,7 +30,7 @@ public class ProfessionalTest {
 
     @Test
     public void testProfessionalSetTitles() {
-        Professional p = new Professional("John");
+        Professional p = new Professional("John", Title.MD, ID);
         assertEquals("[] John",p.toString());
         p.addTitle(Title.DO);
         assertEquals("[DO] John",p.toString());

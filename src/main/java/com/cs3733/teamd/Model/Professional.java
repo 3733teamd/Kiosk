@@ -12,17 +12,27 @@ import java.util.LinkedList;
 //TODO Make general improvements to toString
 public class Professional {
     String name;
+    private int ID;
     private ArrayList<Title> titles = new ArrayList<>();
     private LinkedList<Tag> tags = new LinkedList<>();
 
-    public Professional(String name) {
+    public Professional(String name, int ID) {
         this.name = name;
         this.titles = titles;
     }
 
+    //This is called during RUNTIME and adds itself to the DB
     public Professional(String name, ArrayList<Title> titles) {
         this.name = name;
         this.titles = titles;
+        //TODO: add to DB
+    }
+
+    //This is called during STARTUP when loaded from the db
+    public Professional(String name, ArrayList<Title> titles, int ID) {
+        this.name = name;
+        this.titles = titles;
+        this.ID = ID;
     }
 
     public void setTitles(ArrayList<Title> titles) {
