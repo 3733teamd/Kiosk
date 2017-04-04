@@ -105,7 +105,6 @@ public class Main extends Application {
             System.err.println("ERROR: reading in data file");
             e.printStackTrace();
         }
->>>>>>> master
 
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;
