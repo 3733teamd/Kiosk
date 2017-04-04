@@ -113,6 +113,7 @@ public class MapDirectionsController {
     @FXML
     private void draw(){
         plotPath(MapMenuController.pathNodes);
+        
     }
 
     private void drawShapes(GraphicsContext gc, LinkedList<Node> path) {
