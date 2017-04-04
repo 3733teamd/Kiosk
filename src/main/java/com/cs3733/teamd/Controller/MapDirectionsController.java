@@ -115,6 +115,9 @@ public class MapDirectionsController {
         int radius = 4;
         for  (int i = 0; i < pathlength; i++){
             Point current = path.getFirst();
+            if(i == pathlength-1){
+                gc.setFill(Color.YELLOW);
+            }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
             System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){
