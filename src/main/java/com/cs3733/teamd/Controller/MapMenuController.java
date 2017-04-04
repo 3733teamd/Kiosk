@@ -77,8 +77,8 @@ public class MapMenuController extends  AbsController{
         //Main.window.setScene(Main.MainScene);
         //Main.window.show();
        // Main.backRoot = Main.MapMenuScene; //
-        switchScreen(MMGpane, "/Views/Main.fxml");
-        backString = "/Views/MapMenu.fxml";
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/MapMenu.fxml");
+        //backString = "/Views/MapMenu.fxml";
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
@@ -86,9 +86,9 @@ public class MapMenuController extends  AbsController{
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;*/
-        switchScreen(MMGpane, "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapMenu.fxml");
 
-        backString = "/Views/MapMenu.fxml";
+        //backString = "/Views/MapMenu.fxml";
 
     }
 
@@ -98,9 +98,9 @@ public class MapMenuController extends  AbsController{
         Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;*/
-        switchScreen(MMGpane, backString);
-        System.out.println(backString);
-        backString= "/Views/MapMenu.fxml";
+        System.out.println(Main.backString);
+        switchScreen(MMGpane, Main.backString, "/Views/MapMenu.fxml");
+        ///backString= "/Views/MapMenu.fxml";
 
     }
 
@@ -122,16 +122,16 @@ public class MapMenuController extends  AbsController{
        // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
 
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;*/
+        //Main.window.show();
+        Main.backRoot = Main.MapMenuScene;
         //FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);
 
        // FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/MapDirections.fxml"),Main.bundle);
         //GridPane pane = (GridPane) loader.load();
        // MMGpane.getChildren().setAll(pane);
 
-        switchScreen(MMGpane, "/Views/MapDirections.fxml");
-        backString ="/Views/MapMenu.fxml";
+        switchScreen(MMGpane, "/Views/MapDirections.fxml", "/Views/MapMenu.fxml");
+       // backString ="/Views/MapMenu.fxml";
 
 
         //MapDirectionsController c= loader.getController(); //pass info

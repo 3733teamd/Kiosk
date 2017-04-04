@@ -69,8 +69,8 @@ public class MainController extends AbsController {
         //Main.window.show();
         //Main.backRoot = Main.MainScene;
 
-        switchScreen(MMGpane, "/Views/MapMenu.fxml");
-        backString = "/Views/Main.fxml";
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Main.fxml");
+        //backString = "/Views/Main.fxml";
     }
 
     @FXML
@@ -79,8 +79,8 @@ public class MainController extends AbsController {
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
         Main.backRoot = Main.MainScene;*/
-        switchScreen(MMGpane, "/Views/Login.fxml");
-        backString = "/Views/Main.fxml";
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Main.fxml");
+       // backString = "/Views/Main.fxml";
     }
 
     @FXML
@@ -89,8 +89,8 @@ public class MainController extends AbsController {
         Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MainScene;*/
-        switchScreen(MMGpane, backString);
-        backString = "/Views/Main.fxml";
+        switchScreen(MMGpane, Main.backString, "/Views/Main.fxml");
+        //backString = "/Views/Main.fxml";
 
 
 

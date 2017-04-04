@@ -73,17 +73,10 @@ public class MapDirectionsController extends AbsController{
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;*/
-        switchScreen(MMGpane, "/Views/MapMenu.fxml");
-        backString = "/Views/MapDirections.fxml";
+        switchScreen(MMGpane, "/Views/MapMenu.fxml",  "/Views/MapDirections.fxml");
+        //backString = "/Views/MapDirections.fxml";
     }
-    @FXML
 
-    public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;
-    }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
@@ -94,8 +87,8 @@ public class MapDirectionsController extends AbsController{
         Main.backRoot = Main.MapDirectionsScene;*/
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
 
-        switchScreen(MMGpane, "/Views/Login.fxml");
-        backString = "/Views/MapDirections.fxml";
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapDirections.fxml");
+       // backString = "/Views/MapDirections.fxml";
     }
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
@@ -105,8 +98,8 @@ public class MapDirectionsController extends AbsController{
         /*Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;*/
-        switchScreen(MMGpane, backString);
-        backString = "/Views/MapDirections.fxml";
+        switchScreen(MMGpane, Main.backString,  "/Views/MapDirections.fxml");
+        //backString = "/Views/MapDirections.fxml";
     }
 
     @FXML
@@ -115,8 +108,8 @@ public class MapDirectionsController extends AbsController{
         /*Main.window.setScene(Main.backRoot);
         Main.window.show();
         Main.backRoot = Main.MapDirectionsScene;*/
-        switchScreen(MMGpane, "/Views/Main.fxml");
-        backString = "/Views/MapDirections.fxml";
+        switchScreen(MMGpane, "/Views/Main.fxml",  "/Views/MapDirections.fxml");
+        //backString = "/Views/MapDirections.fxml";
     }
 
     @FXML

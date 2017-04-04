@@ -16,7 +16,7 @@ import java.util.LinkedList;
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class EditDoctorController {
+public class EditDoctorController extends  AbsController{
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -43,39 +43,48 @@ public class EditDoctorController {
     public Label remD;
     public ComboBox titleBox;
 
+    public AnchorPane MMGpane;
 
 
     
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditDoctorScene;*/
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+
     }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditDoctorScene;*/
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+
     }
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        Main.backRoot = Main.EditDoctorScene;*/
+        switchScreen(MMGpane, Main.backString, "/Views/EditDoctor.fxml");
+
     }
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.LoginScene;*/
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+
     }
     @FXML
     public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{

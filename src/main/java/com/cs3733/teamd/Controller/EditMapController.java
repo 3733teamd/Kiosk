@@ -22,7 +22,7 @@ import java.util.LinkedList;
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class EditMapController {
+public class EditMapController extends AbsController {
 
     LinkedList<Node> currentNodes = new LinkedList<Node>();
     public static ObservableList<Node> nodeDropDown = FXCollections.observableArrayList();
@@ -53,6 +53,8 @@ public class EditMapController {
     public Label nodeone;
     public Label nodetwo;
 
+    public AnchorPane MMGpane;
+
 
     @FXML
     public ChoiceBox StartNodeSelect;
@@ -73,33 +75,41 @@ public class EditMapController {
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditMapScene;
+        Main.backRoot = Main.EditMapScene;*/
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+
     }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.EditMapScene;
+        Main.backRoot = Main.EditMapScene;*/
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+
     }
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.EditMapScene;
+        Main.backRoot = Main.EditMapScene;*/
+        switchScreen(MMGpane, Main.backString, "/Views/EditMap.fxml");
+
     }
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.LoginScene;*/
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+
     }
 
     @FXML
@@ -170,10 +180,11 @@ public class EditMapController {
 
     @FXML
     public void onSubmitAdd(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
 
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
+
     }
 }

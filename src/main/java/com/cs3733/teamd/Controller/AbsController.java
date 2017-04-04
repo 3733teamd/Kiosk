@@ -11,14 +11,18 @@ import java.io.IOException;
  * Created by Allyk on 4/4/2017.
  */
 public abstract class AbsController {
-    String backString ="/Views/MapDirections.fxml";
 
-    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath) throws IOException{
+    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath, String currView) throws IOException{
+
         AnchorPane pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
+        Main.backString =currView;
+        System.out.println(Main.backString);
+
         pane = (AnchorPane) loader.load();
         gp.getChildren().setAll(pane);
         fitToParent(gp);
+
         return loader;
     }
     private void  fitToParent(AnchorPane gp){
