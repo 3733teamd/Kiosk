@@ -86,12 +86,12 @@ public class Main extends Application {
         }
 
 
-        /*try {
+        try {
             database.Setup();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print("Could not setup database.\nMaybe tables already created\n");
-        }*/
+        }
 
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;

@@ -89,12 +89,13 @@ public class DBHandler {
         Statement s = con.createStatement();
 
         Map<Integer, Node> nodeMap = new HashMap<>();
-        Map<Integer, Tag> tagMap = new HashMap<>();
+        Map<String, Tag> tagMap = new HashMap<>();
         Map<Integer, Professional> professionalMap = new HashMap<>();
 
 
         //STAGE 1: Creating Entities adding associations when possible
 
+        //LOAD NODES
         ResultSet nodeTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_NODE);
         while (nodeTupleRslt.next()) {
             Node newNode = new Node(nodeTupleRslt.getInt("X"), nodeTupleRslt.getInt("Y"));
@@ -103,15 +104,17 @@ public class DBHandler {
         }
         nodeTupleRslt.close();
 
-        ResultSet RoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_ROOMNODE);
+        //LOAD TAGS
+        ResultSet RoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_TAG);
         while (RoomTupleRslt.next()) {
-            Tag roomTag = new Tag(RoomTupleRslt.getString("Title"));
-            int ID = RoomTupleRslt.getInt("ID");
-            tagMap.put(ID, roomTag);
-            roomTag.addNode(nodeMap.get(ID)); //Association
+            String newName = RoomTupleRslt.getString("tagName");
+            Tag newTag = new Tag(newName);
+            tagMap.put(newName, newTag);
+            //newTag.addNode(nodeMap.get(ID)); //Association
         }
         RoomTupleRslt.close();
 
+        //LOAD PROFESSIONALS
         ResultSet HCPTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCP);
         while (HCPTupleRslt.next()) {
             Professional newPro = new Professional(
@@ -141,11 +144,21 @@ public class DBHandler {
         }
         AdjacentNodeTupleRslt.close();
 
+
+        // Associate tags and nodes
+        ResultSet NodeTapTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_NODETAG);
+        while (NodeTapTupleRslt.next()) {
+            Node n = nodeMap.get(NodeTapTupleRslt.getInt("nodeID"));
+            Tag tag = tagMap.get(NodeTapTupleRslt.getInt("tagName"));
+            n.addTag(tag);
+        }
+        HCPTupleRslt.close();
+
         // Associate professionals and tags
-        ResultSet HCPRoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPROOM);
+        ResultSet HCPRoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPTAG);
         while (HCPRoomTupleRslt.next()) {
-            Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("HCP_ID"));
-            Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("Room_ID"));
+            Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpID"));
+            Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("tagName"));
             pro.addTag(tag);
         }
         HCPTupleRslt.close();
@@ -231,13 +244,12 @@ public class DBHandler {
                 {
                         DBStatements.CREATE_TABLE_NODE,
                         DBStatements.CREATE_TABLE_ADJACENTNODE,
-                        DBStatements.CREATE_TABLE_ROOMNODE,
+                        DBStatements.CREATE_TABLE_HCPTAG,
                         DBStatements.CREATE_TABLE_PROTITLE,
                         DBStatements.CREATE_TABLE_HCP,
-                        DBStatements.CREATE_TABLE_HCPROOM,
+                        DBStatements.CREATE_TABLE_NODETAG,
                         DBStatements.CREATE_TABLE_HCPTITLE,
-                        DBStatements.CREATE_TABLE_SMP,
-                        DBStatements.CREATE_TABLE_SMPROOM
+
                 };
 
         //Create all tables
@@ -277,15 +289,13 @@ public class DBHandler {
 
             String[] emptyTables =
                     {
-                            DBStatements.EMPTY_TABLE_ROOMNODE,
                             DBStatements.EMPTY_TABLE_ADJACENTNODE,
                             DBStatements.EMPTY_TABLE_HCP,
-                            DBStatements.EMPTY_TABLE_HCPROOM,
+                            DBStatements.EMPTY_TABLE_HCPTAG,
                             DBStatements.EMPTY_TABLE_HCPTITLE,
                             DBStatements.EMPTY_TABLE_NODE,
                             DBStatements.EMPTY_TABLE_PROTITLE,
-                            DBStatements.EMPTY_TABLE_SMP,
-                            DBStatements.EMPTY_TABLE_SMPROOM
+                            DBStatements.EMPTY_TABLE_TAG
                     };
 
             for (String statement : emptyTables) { s.execute(statement); }
