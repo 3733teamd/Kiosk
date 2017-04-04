@@ -18,7 +18,9 @@ public class ProfessionalTest {
 
     @Test
     public void testProfessionalNotNull() {
-        Professional p = new Professional("Test Person", Title.MD, ID);
+        ArrayList<Title> titles = new ArrayList<Title>();
+        titles.add(Title.MD);
+        Professional p = new Professional("Test Person", titles);
         assertNotNull(p);
     }
 
@@ -30,7 +32,9 @@ public class ProfessionalTest {
 
     @Test
     public void testProfessionalSetTitles() {
-        Professional p = new Professional("John", Title.MD, ID);
+        ArrayList<Title> titles = new ArrayList<Title>();
+        titles.add(Title.MD);
+        Professional p = new Professional("John", titles);
         assertEquals("[] John",p.toString());
         p.addTitle(Title.DO);
         assertEquals("[DO] John",p.toString());
