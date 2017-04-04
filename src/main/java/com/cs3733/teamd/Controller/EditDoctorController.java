@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -42,15 +43,19 @@ public class EditDoctorController {
     public Label remD;
 
     public ChoiceBox addRoomSelect;
+    public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
+    public ChoiceBox<Title> titleBox;
+
     public ChoiceBox modifyDoctorSelect;
     public ChoiceBox modifyRoomSelect;
     public ChoiceBox removeDoctorSelect;
-    public ChoiceBox<Title> titleBox;
+
     public ChoiceBox addDoctorSelectRoom;
     public ChoiceBox addRoomToDoc;
 
     @FXML private void initialize(){
         titleBox.setItems(FXCollections.observableArrayList(Title.values()));
+        addRoomSelect.setItems(tagList);
     }
 
 

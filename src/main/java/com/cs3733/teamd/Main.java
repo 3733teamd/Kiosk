@@ -3,11 +3,13 @@ package com.cs3733.teamd;
 import com.cs3733.teamd.Controller.EditDoctorController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
+//import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 import com.cs3733.teamd.Model.Title;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -126,6 +128,14 @@ public class Main extends Application {
         }
 
 
+        try{
+            EditDoctorController editDoctorController = new EditDoctorController();
+            System.out.println(tags.size());
+            editDoctorController.tagList.addAll(tags);
+            editDoctorController.addRoomSelect.setItems(FXCollections.observableArrayList(editDoctorController.tagList));
+        }catch(Exception e){
+
+        }
 
 
         // launch window
