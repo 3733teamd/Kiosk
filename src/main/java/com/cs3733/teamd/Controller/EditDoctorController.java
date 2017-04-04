@@ -80,7 +80,7 @@ public class EditDoctorController {
         LoginButton.setText(Main.bundle.getString("login"));
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
-        menu.setText(Main.bundle.getString("EditSD"));
+        menu.setText(Main.bundle.getString("EditDD"));
 
         submitRemoveDoctor.setText(Main.bundle.getString("submit"));
         submitModifyDoctor.setText(Main.bundle.getString("submit"));
