@@ -49,7 +49,7 @@ public class MapMenuController {
     public ChoiceBox DestinationSelect;
     public ChoiceBox StartSelect;
 
-    static public LinkedList<Node> pathNodes= new LinkedList<>();
+    static public LinkedList<Node> pathNodes= new LinkedList<Node>();
 
     @FXML
     private void initialize(){
@@ -96,7 +96,7 @@ public class MapMenuController {
         Main.window.hide();
         //Main.roomSelected = RoomSelect.getValue().toString();
         //Main.serviceSelected = ServiceSelect.getValue().toString();
-        Main.window.setScene(Main.MapDirectionsScene);
+        //Main.window.setScene(Main.MapDirectionsScene);
 
 
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
@@ -110,7 +110,13 @@ public class MapMenuController {
         MapDirectionsController mapDirectionsController = new MapDirectionsController();
        // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
+        try {
+            mapDirectionsController.plotPath(pathNodes);
+        }catch(Exception e){
 
+        }
+
+        Main.window.setScene(Main.MapDirectionsScene);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
 

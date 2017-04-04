@@ -1,6 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by Allyk on 3/26/2017.
@@ -91,6 +94,15 @@ public class EditDoctorController {
     }
     @FXML
     public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
+
+
+
+        LinkedList<Tag> loT = new LinkedList<Tag>();
+        Tag t = (Tag) addRoomSelect.getValue();
+        loT.add(t);
+        Professional p = new Professional(addDoctorLabel.getText() );
+
+
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
