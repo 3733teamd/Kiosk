@@ -1,22 +1,23 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-//import com.cs3733.teamd.Model.Location;
-import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Pathfinder;
 import com.cs3733.teamd.Model.Tag;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.LinkedList;
+
+//import com.cs3733.teamd.Model.Location;
 
 
 public class MapMenuController {
@@ -26,8 +27,10 @@ public class MapMenuController {
             FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
 
 
+
+
     LinkedList<Tag> visibleLocations = new LinkedList<Tag>();
-    static ObservableList<Tag> roomDropDown = FXCollections.observableArrayList();
+    public static ObservableList<Tag> roomDropDown = FXCollections.observableArrayList();
     public Button largerTextButton;
     public Button SearchButton;
     public Button LoginButton;
@@ -43,7 +46,8 @@ public class MapMenuController {
 
 
     @FXML
-    public ChoiceBox LocationSelect;
+    public ChoiceBox DestinationSelect;
+    public ChoiceBox StartSelect;
 
 
     @FXML
@@ -54,9 +58,10 @@ public class MapMenuController {
         //ServiceSelect.setItems(serviceList);
 
         setText();
-        visibleLocations.add(new Tag("Example Tag"));
+        //visibleLocations.add(new Tag("Example Tag"));
         roomDropDown.addAll(visibleLocations);
-        LocationSelect.setItems(roomDropDown);
+        DestinationSelect.setItems(roomDropDown);
+        StartSelect.setItems(roomDropDown);
     }
 
 
@@ -89,9 +94,20 @@ public class MapMenuController {
         //Main.roomSelected = RoomSelect.getValue().toString();
         //Main.serviceSelected = ServiceSelect.getValue().toString();
         Main.window.setScene(Main.MapDirectionsScene);
+
+
+        ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
+        Tag destinationTag = (Tag) DestinationSelect.getValue();
+        Tag startTag = (Tag) StartSelect.getValue();
+        Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
+
+        MapDirectionsController mapDirectionsController = new MapDirectionsController();
+        mapDirectionsController.plotPath(pathfinder.shortestPath());
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
-        Tag desiredTag = (Tag) LocationSelect.getValue();
+
+
+//        MapDirectionsController mapDirectionsController = new MapDirectionsController();
                 //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
 
     }
@@ -114,9 +130,5 @@ public class MapMenuController {
            // menu.setTranslateX(-175);
             menu.setX(0);
         }
-    }
-
-    public void submitSearch(ActionEvent actionEvent) {
-        Tag desiredTag = (Tag) LocationSelect.getValue();
     }
 }

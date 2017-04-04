@@ -64,17 +64,17 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <Label fx:id="select" alignment="CENTER" contentDisplay="CENTER" layoutX="540.0" layoutY="298.0" prefHeight="134.0" prefWidth="209.0" text="Select Section" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="select" alignment="CENTER" contentDisplay="CENTER" layoutX="511.0" layoutY="433.0" prefHeight="69.0" prefWidth="266.0" text="Select Destination" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="LocationSelect" layoutX="546.0" layoutY="432.0" prefHeight="31.0" prefWidth="196.0">
+                  <ChoiceBox id="RoomSelect" fx:id="DestinationSelect" layoutX="547.0" layoutY="508.0" prefHeight="31.0" prefWidth="196.0">
                      <tooltip>
                         <Tooltip text="Select a Room" />
                      </tooltip>
                   </ChoiceBox>
-                  <ChoiceBox id="RoomSelect" fx:id="ServiceSelect" layoutX="546.0" layoutY="495.0" prefHeight="31.0" prefWidth="196.0">
+                  <ChoiceBox id="RoomSelect" fx:id="StartSelect" layoutX="546.0" layoutY="402.0" prefHeight="31.0" prefWidth="196.0">
                      <tooltip>
                         <Tooltip text="Select a Service" />
                      </tooltip>
@@ -90,6 +90,11 @@
                         <Font size="29.0" />
                      </font>
                   </Button>
+                  <Label fx:id="select1" alignment="CENTER" contentDisplay="CENTER" layoutX="521.0" layoutY="315.0" prefHeight="88.0" prefWidth="246.0" text="Starting Location" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

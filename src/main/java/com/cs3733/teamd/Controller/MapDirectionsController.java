@@ -1,27 +1,25 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
-//import javafx.application.Application;
-import javafx.scene.Group;
-//import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-//import javafx.stage.Stage;
-import com.cs3733.teamd.Model.Node;
 import javafx.scene.text.Text;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
+
+//import javafx.application.Application;
+//import javafx.scene.Scene;
+//import javafx.stage.Stage;
 
 /**
  * Created by Allyk on 3/26/2017.
@@ -166,5 +164,15 @@ public class MapDirectionsController {
             // menu.setTranslateX(-175);
             menu.setX(100);
         }
+    }
+
+    public void plotPath(LinkedList<Node> path){
+        System.out.println(path.size());
+
+        System.out.println(path.get(0).toString());
+
+        //GraphicsContext gc = MapCanvas.getGraphicsContext2D();
+
+        //this.drawShapes(gc, path);
     }
 }
