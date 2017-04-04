@@ -35,6 +35,9 @@ public class Professional {
         this.ID = ID;
     }
 
+    public void setID(int ID){
+        this.ID = ID;
+    }
     public void setTitles(ArrayList<Title> titles) {
         this.titles = titles;
     }
