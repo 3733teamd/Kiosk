@@ -42,6 +42,8 @@ public class EditDoctorController {
     public Label ModRN;
     public Label remD;
     public ComboBox titleBox;
+    public ChoiceBox addDoctorSelectRoom;
+    public ChoiceBox addRoomToDoc;
 
 
     @FXML
@@ -77,14 +79,18 @@ public class EditDoctorController {
     }
     @FXML
     public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        Professional p = (Professional) removeDoctorSelect.getValue(); //get doctor from choice box
+        //TODO: Find p in the Database, and remove
 
+        Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
         Main.backRoot = Main.EditServiceScene;
     }
     @FXML
     public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
+        //TODO: implement in the next iteration, and probably change the name of the fields/function as well
+
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
@@ -92,8 +98,6 @@ public class EditDoctorController {
     }
     @FXML
     public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-
-
 
         LinkedList<Tag> loT = new LinkedList<Tag>();
         Tag t = (Tag) addRoomSelect.getValue();
@@ -108,6 +112,13 @@ public class EditDoctorController {
     }
     @FXML
     public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
+        //Working with Room to add "addDoctorSelectRoom", and Doctor to receive room "addRoomToDoc"
+        Tag t = (Tag) addDoctorSelectRoom.getValue();
+        Professional p = (Professional) addRoomToDoc.getValue();
+
+        t.addProf(p); //add doctor to room, and vice versa
+        //TODO: Add to database
+
         Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
