@@ -5,10 +5,7 @@ import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -44,7 +41,8 @@ public class EditDoctorController {
     public Label addD;
     public Label ModRN;
     public Label remD;
-    public TextField titleBox;
+    public ComboBox titleBox;
+
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
