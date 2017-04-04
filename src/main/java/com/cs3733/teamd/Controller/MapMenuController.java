@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.LinkedList;
 //import com.cs3733.teamd.Model.Location;
 
 
-public class MapMenuController {
+public class MapMenuController extends  AbsController{
     static ObservableList<String> roomsList =
             FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
     static ObservableList<String> serviceList =
@@ -45,6 +46,8 @@ public class MapMenuController {
     public Label instruct;
     public Text menu;
 
+    public AnchorPane MMGpane;
+
     @FXML
     public ChoiceBox DestinationSelect;
     public ChoiceBox StartSelect;
@@ -57,10 +60,10 @@ public class MapMenuController {
        // RoomSelect.setItems(roomsList);
        // ServiceSelect.setValue("Select Service");
         //ServiceSelect.setItems(serviceList);
-
+        //backString= "/Views/MapMenu.fxml";
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
-        //roomDropDown.addAll(visibleLocations);
+        roomDropDown.addAll(visibleLocations);
         DestinationSelect.setValue(roomDropDown.get(0));
         DestinationSelect.setItems(roomDropDown);
         StartSelect.setValue(roomDropDown.get(0));
@@ -70,33 +73,41 @@ public class MapMenuController {
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene; //
+       // Main.window.hide();
+        //Main.window.setScene(Main.MainScene);
+        //Main.window.show();
+       // Main.backRoot = Main.MapMenuScene; //
+        switchScreen(MMGpane, "/Views/Main.fxml");
+        backString = "/Views/MapMenu.fxml";
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
+        Main.backRoot = Main.MapMenuScene;*/
+        switchScreen(MMGpane, "/Views/Login.fxml");
+
+        backString = "/Views/MapMenu.fxml";
+
     }
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
+        Main.backRoot = Main.MapMenuScene;*/
+        switchScreen(MMGpane, backString);
+        System.out.println(backString);
+        backString= "/Views/MapMenu.fxml";
+
     }
 
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
         //Main.roomSelected = RoomSelect.getValue().toString();
         //Main.serviceSelected = ServiceSelect.getValue().toString();
-        Main.window.setScene(Main.MapDirectionsScene);
 
 
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
@@ -111,12 +122,28 @@ public class MapMenuController {
        // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
 
+        /*Main.window.hide();
+        Main.window.setScene(Main.MapDirectionsScene);
         Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
+        Main.backRoot = Main.MapMenuScene;*/
+        //FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);
+
+       // FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/MapDirections.fxml"),Main.bundle);
+        //GridPane pane = (GridPane) loader.load();
+       // MMGpane.getChildren().setAll(pane);
+
+        switchScreen(MMGpane, "/Views/MapDirections.fxml");
+        backString ="/Views/MapMenu.fxml";
+
+
+        //MapDirectionsController c= loader.getController(); //pass info
 
 
 //        MapDirectionsController mapDirectionsController = new MapDirectionsController();
                 //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
+
+
+
 
     }
 

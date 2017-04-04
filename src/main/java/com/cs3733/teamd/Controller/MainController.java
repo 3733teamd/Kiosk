@@ -1,30 +1,28 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class MainController  {
+public class MainController extends AbsController {
     public Button largerTextButton;
     public Button SearchButton;
     public Button LoginButton;
     public Button BackButton;
     public Button MenuButton;
+    public Button SpanishButton;
 
     public Text menu;
     public Text hospital;
@@ -35,9 +33,15 @@ public class MainController  {
     public Text tapM;
     public Text tapB;
 
+    public AnchorPane MMGpane;
 
     private Boolean languageEnglish =true;
 
+    @FXML
+    public void initialize(){
+        //backString = "/Views/Main.fxml";
+
+    }
 
     @FXML
     public void onSpanish(ActionEvent actionEvent){
@@ -60,31 +64,40 @@ public class MainController  {
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.MainScene;
+        //Main.window.hide();
+        //Main.window.setScene(Main.MapMenuScene);
+        //Main.window.show();
+        //Main.backRoot = Main.MainScene;
+
+        switchScreen(MMGpane, "/Views/MapMenu.fxml");
+        backString = "/Views/Main.fxml";
     }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
-
+        Main.backRoot = Main.MainScene;*/
+        switchScreen(MMGpane, "/Views/Login.fxml");
+        backString = "/Views/Main.fxml";
     }
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.MainScene;
+        Main.backRoot = Main.MainScene;*/
+        switchScreen(MMGpane, backString);
+        backString = "/Views/Main.fxml";
+
+
 
     }
 
     public void setText(){
+        SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
         MenuButton.setText(Main.bundle.getString("menu"));

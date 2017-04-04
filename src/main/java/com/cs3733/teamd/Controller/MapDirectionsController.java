@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -26,7 +27,7 @@ import java.util.LinkedList;
  */
 //TODO Erase paths when exiting this scene so it does not keep old
 //TODO Avoid using the onMouseMove. Redesign to use models instead.
-public class MapDirectionsController {
+public class MapDirectionsController extends AbsController{
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -46,6 +47,8 @@ public class MapDirectionsController {
     public double scale = 8.4;
     public int offset_x = 160*12;
     public int offset_y = 80*12;
+    public AnchorPane MMGpane;
+
 
     //public Label instructv;
     //public Label instructt;
@@ -55,35 +58,53 @@ public class MapDirectionsController {
     {
         setText();
         gc = MapCanvas.getGraphicsContext2D();
+        draw();
     }
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        //clear canvas for further drawings
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
+/*Main.window.hide();
+        //clear canvas for further drawings
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;
+        Main.backRoot = Main.MapDirectionsScene;*/
+        switchScreen(MMGpane, "/Views/MapMenu.fxml");
+        backString = "/Views/MapDirections.fxml";
     }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         //clear canvas for further drawings
-        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;
+        Main.backRoot = Main.MapDirectionsScene;*/
+        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
+
+        switchScreen(MMGpane, "/Views/Login.fxml");
+        backString = "/Views/MapDirections.fxml";
     }
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        //Main.window.hide();
         //clear canvas for further drawings
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        Main.window.setScene(Main.backRoot);
+        /*Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;
+        Main.backRoot = Main.MapDirectionsScene;*/
+        switchScreen(MMGpane, backString);
+        backString = "/Views/MapDirections.fxml";
+    }
+
+    @FXML
+    public void onMenu(ActionEvent actionEvent) throws  IOException{
+        gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
+        /*Main.window.setScene(Main.backRoot);
+        Main.window.show();
+        Main.backRoot = Main.MapDirectionsScene;*/
+        switchScreen(MMGpane, "/Views/Main.fxml");
+        backString = "/Views/MapDirections.fxml";
     }
 
     @FXML

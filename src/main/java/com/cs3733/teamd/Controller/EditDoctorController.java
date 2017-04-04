@@ -42,6 +42,8 @@ public class EditDoctorController {
     public Label ModRN;
     public Label remD;
 
+
+    
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         Main.window.hide();
