@@ -73,35 +73,18 @@ public class MapMenuController extends  AbsController{
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
-       // Main.window.hide();
-        //Main.window.setScene(Main.MainScene);
-        //Main.window.show();
-       // Main.backRoot = Main.MapMenuScene; //
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/MapMenu.fxml");
         //backString = "/Views/MapMenu.fxml";
     }
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;*/
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapMenu.fxml");
-
-        //backString = "/Views/MapMenu.fxml";
-
     }
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;*/
         System.out.println(Main.backString);
         switchScreen(MMGpane, Main.backString, "/Views/MapMenu.fxml");
-        ///backString= "/Views/MapMenu.fxml";
-
     }
 
     @FXML
@@ -118,30 +101,15 @@ public class MapMenuController extends  AbsController{
 
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 
-        MapDirectionsController mapDirectionsController = new MapDirectionsController();
+       // MapDirectionsController mapDirectionsController = new MapDirectionsController();
        // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
-
-        //Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
-        //FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);
-
-       // FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/MapDirections.fxml"),Main.bundle);
-        //GridPane pane = (GridPane) loader.load();
-       // MMGpane.getChildren().setAll(pane);
 
         switchScreen(MMGpane, "/Views/MapDirections.fxml", "/Views/MapMenu.fxml");
        // backString ="/Views/MapMenu.fxml";
 
-
+//obtain data between
         //MapDirectionsController c= loader.getController(); //pass info
-
-
-//        MapDirectionsController mapDirectionsController = new MapDirectionsController();
-                //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
-
-
-
 
     }
 

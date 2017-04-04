@@ -13,7 +13,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
       <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="1310.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="558.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="1310.0" />
             <Text fx:id="instruct" layoutX="203.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" AnchorPane.leftAnchor="203.0">
                <font>
                   <Font size="33.0" />

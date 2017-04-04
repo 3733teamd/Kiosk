@@ -68,11 +68,6 @@ public class MapDirectionsController extends AbsController{
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-/*Main.window.hide();
-        //clear canvas for further drawings
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;*/
         switchScreen(MMGpane, "/Views/MapMenu.fxml",  "/Views/MapDirections.fxml");
         //backString = "/Views/MapDirections.fxml";
     }
@@ -80,36 +75,20 @@ public class MapDirectionsController extends AbsController{
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        //clear canvas for further drawings
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;*/
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapDirections.fxml");
-       // backString = "/Views/MapDirections.fxml";
     }
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        //Main.window.hide();
         //clear canvas for further drawings
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        /*Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;*/
         switchScreen(MMGpane, Main.backString,  "/Views/MapDirections.fxml");
-        //backString = "/Views/MapDirections.fxml";
     }
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws  IOException{
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        /*Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.MapDirectionsScene;*/
         switchScreen(MMGpane, "/Views/Main.fxml",  "/Views/MapDirections.fxml");
-        //backString = "/Views/MapDirections.fxml";
     }
 
     @FXML
@@ -117,14 +96,14 @@ public class MapDirectionsController extends AbsController{
         plotPath(MapMenuController.pathNodes);
     }
 
-    private Point getConvertedPoint(Node node) {
+    private Point getConvertedPoint(Node node) { //conversion from database to canvas
         int x = node.getX();
         int y = node.getY();
         Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         return p;
     }
 
-    private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
+    private void drawShapes(GraphicsContext gc, LinkedList<Point> path) { //draw path on canvas from List of Nodes generated from Pathfinder
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLUE);
         Point previous = null;
@@ -137,7 +116,7 @@ public class MapDirectionsController extends AbsController{
                 gc.setFill(Color.YELLOW);
             }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
-            System.out.println(current.getX()+ "  "+ current.getY());
+            //System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){
                 gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
                         current.getX() + radius, current.getY() + radius);
@@ -151,7 +130,7 @@ public class MapDirectionsController extends AbsController{
 
 
     @FXML
-    public void setText(){
+    public void setText(){ //translate to Spanish
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
         MenuButton.setText(Main.bundle.getString("menu"));
@@ -173,7 +152,6 @@ public class MapDirectionsController extends AbsController{
 
     public void plotPath(LinkedList<Node> path){
        // System.out.println(path.size());
-
        //System.out.println(path.get(0).toString());
 
         LinkedList<Point> points = new LinkedList<>();

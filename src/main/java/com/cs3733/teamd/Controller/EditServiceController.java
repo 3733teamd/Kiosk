@@ -67,33 +67,33 @@ public class EditServiceController {
 
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
+       /* Main.window.hide();
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.backRoot);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
 
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.MainScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.LoginScene;*/
     }
 
     @FXML
@@ -105,9 +105,9 @@ public class EditServiceController {
         //-------------------------------------------------------this is the tag that needs to be added to the database
         Tag t = new Tag(this.addService.getText());
 
-        Main.window.setScene(Main.AdminMenuScene);
+      /*  Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
     @FXML
     public void onSubmitModify(ActionEvent actionEvent) throws  IOException{
@@ -118,9 +118,9 @@ public class EditServiceController {
         System.out.print("modified service: " + modifiedService);
         System.out.print("modified room: " + modifiedRoom);
 
-        Main.window.setScene(Main.AdminMenuScene);
+       /* Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
 
     @FXML
@@ -130,9 +130,9 @@ public class EditServiceController {
         removedService = removeServiceSelect.getValue().toString();
         System.out.print("removed service: " + removedService);
 
-        Main.window.setScene(Main.AdminMenuScene);
+       /* Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
 
     @FXML

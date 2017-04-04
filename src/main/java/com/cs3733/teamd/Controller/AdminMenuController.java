@@ -62,10 +62,10 @@ public class AdminMenuController extends AbsController {
 
     @FXML
     public void onEditServiceDirectory(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
+        /*Main.window.hide();
         Main.window.setScene(Main.EditServiceScene);
         Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+        Main.backRoot = Main.AdminMenuScene;*/
     }
 
     @FXML

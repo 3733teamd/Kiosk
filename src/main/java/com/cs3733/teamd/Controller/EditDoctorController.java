@@ -90,16 +90,16 @@ public class EditDoctorController extends  AbsController{
     public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
 
-        Main.window.setScene(Main.AdminMenuScene);
+        /*Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
     @FXML
     public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
+       /* Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
     @FXML
     public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
@@ -112,17 +112,17 @@ public class EditDoctorController extends  AbsController{
         Professional p = new Professional(addDoctorLabel.getText() );
 
 
-        Main.window.hide();
+      /*  Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
     @FXML
     public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+       /* Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        Main.backRoot = Main.EditServiceScene;*/
     }
 
 
