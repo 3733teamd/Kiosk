@@ -57,7 +57,6 @@ public class Directory {
         allNodes.add(newNode);
         //SAVE TO DATABASE
         dbHandler.addNodeToDB(newNode);
-
     }
     public void creaNewProf(String name, ArrayList<Title> titles){
         Professional newProf = new Professional(name,titles);
