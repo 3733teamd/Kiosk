@@ -35,6 +35,10 @@ public class MapDirectionsController extends AbsController{
     public Button BackButton;
     public Button MenuButton;
 
+    public Label redKey;
+    public Label greenKey;
+    public Label yellowKey;
+
     public ImageView mapImage;
     public TextArea textDirectionsDisplay;
     public Canvas MapCanvas;
@@ -71,6 +75,14 @@ public class MapDirectionsController extends AbsController{
         Main.backRoot = Main.MapDirectionsScene;*/
         switchScreen(MMGpane, "/Views/MapMenu.fxml");
         backString = "/Views/MapDirections.fxml";
+    }
+    @FXML
+
+    public void onMenu(ActionEvent actionEvent) throws IOException{
+        Main.window.hide();
+        Main.window.setScene(Main.MainScene);
+        Main.window.show();
+        Main.backRoot = Main.MapDirectionsScene;
     }
 
     @FXML
@@ -128,6 +140,9 @@ public class MapDirectionsController extends AbsController{
         int radius = 4;
         for  (int i = 0; i < pathlength; i++){
             Point current = path.getFirst();
+            if(i == pathlength-1){
+                gc.setFill(Color.YELLOW);
+            }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
             System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){

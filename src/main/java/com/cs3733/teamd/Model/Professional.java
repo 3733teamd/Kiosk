@@ -25,6 +25,12 @@ public class Professional {
         this.titles = titles;
     }
 
+    public Professional(String name, ArrayList<Title> titles, LinkedList<Tag> tags) {
+        this.name = name;
+        this.titles = titles;
+        this.tags = tags;
+    }
+
     public void setTitles(ArrayList<Title> titles) {
         this.titles = titles;
     }

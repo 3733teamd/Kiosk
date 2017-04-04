@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -100,6 +101,9 @@ public class EditServiceController {
         Main.window.hide();
         newService = addService.getText();
         System.out.print("new service: " + newService);
+
+        //-------------------------------------------------------this is the tag that needs to be added to the database
+        Tag t = new Tag(this.addService.getText());
 
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();

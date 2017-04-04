@@ -52,7 +52,7 @@ public class MapMenuController extends  AbsController{
     public ChoiceBox DestinationSelect;
     public ChoiceBox StartSelect;
 
-    static public LinkedList<Node> pathNodes= new LinkedList<>();
+    static public LinkedList<Node> pathNodes= new LinkedList<Node>();
 
     @FXML
     private void initialize(){
@@ -63,7 +63,7 @@ public class MapMenuController extends  AbsController{
         //backString= "/Views/MapMenu.fxml";
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
-        roomDropDown.addAll(visibleLocations);
+        //roomDropDown.addAll(visibleLocations);
         DestinationSelect.setValue(roomDropDown.get(0));
         DestinationSelect.setItems(roomDropDown);
         StartSelect.setValue(roomDropDown.get(0));
@@ -122,8 +122,6 @@ public class MapMenuController extends  AbsController{
        // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
 
-        /*Main.window.hide();
-        Main.window.setScene(Main.MapDirectionsScene);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;*/
         //FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);

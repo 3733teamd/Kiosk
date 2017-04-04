@@ -1,5 +1,6 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Controller.EditMapController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
 import com.cs3733.teamd.Model.Node;
@@ -116,6 +117,18 @@ public class Main extends Application {
             mapMenuController.roomDropDown.addAll(tags);
             mapMenuController.DestinationSelect.setValue(mapMenuController.roomDropDown);
             mapMenuController.StartSelect.setValue(mapMenuController.roomDropDown);
+        }catch(Exception e){
+
+        }
+
+
+        try {
+            EditMapController editMapController = new EditMapController();
+            editMapController.nodeDropDown.addAll(nodes);
+            editMapController.StartNodeSelect.setValue(editMapController.nodeDropDown);
+            editMapController.ConnectionSelect.setValue(editMapController.nodeDropDown);
+            editMapController.tagDropDown.addAll(tags);
+            editMapController.TagBox.setValue(editMapController.tagDropDown);
         }catch(Exception e){
 
         }
