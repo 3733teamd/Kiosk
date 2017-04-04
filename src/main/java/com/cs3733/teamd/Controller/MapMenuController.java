@@ -40,7 +40,8 @@ public class MapMenuController {
     public Button SubmitButton;
 
     public AnchorPane pane;
-    public Label select;
+    public Label selectL;
+    public Label selectD;
     public Label instruct;
     public Text menu;
 
@@ -125,7 +126,8 @@ public class MapMenuController {
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("MapMenu"));
         instruct.setText(Main.bundle.getString("instruct2"));
-        select.setText(Main.bundle.getString("instruct3"));
+        selectL.setText(Main.bundle.getString("SelectL"));
+        selectD.setText(Main.bundle.getString("SelectD"));
         SubmitButton.setText(Main.bundle.getString("submit"));
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-175);
