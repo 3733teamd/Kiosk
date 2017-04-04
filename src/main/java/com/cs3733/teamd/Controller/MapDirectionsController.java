@@ -1,32 +1,37 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Tag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.ImageView;
-//import javafx.application.Application;
-import javafx.scene.Group;
-//import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-//import javafx.stage.Stage;
-import com.cs3733.teamd.Model.Node;
 import javafx.scene.text.Text;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.LinkedList;
+
+//import javafx.application.Application;
+//import javafx.scene.Scene;
+//import javafx.stage.Stage;
 
 /**
  * Created by Allyk on 3/26/2017.
  */
 public class MapDirectionsController {
+    Node start;
+    Node destination;
+
+    MapDirectionsController(Tag s, Tag d){
+        this.start = s.getNodes().getFirst();
+        this.destination = d.getNodes().getFirst();
+    }
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -47,6 +52,7 @@ public class MapDirectionsController {
     {
         setText();
 
+        //Call PathFinding Algorithm
         GraphicsContext gc = MapCanvas.getGraphicsContext2D();
         LinkedList<Node> path = new LinkedList<Node>();
         path.add(new Node(328, 310));
@@ -166,5 +172,9 @@ public class MapDirectionsController {
             // menu.setTranslateX(-175);
             menu.setX(0);
         }
+    }
+
+    private void plotPath(){
+
     }
 }

@@ -1,22 +1,21 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-//import com.cs3733.teamd.Model.Location;
-import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.LinkedList;
+
+//import com.cs3733.teamd.Model.Location;
 
 
 public class MapMenuController {
@@ -24,6 +23,8 @@ public class MapMenuController {
             FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
     static ObservableList<String> serviceList =
             FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
+
+
 
 
     LinkedList<Tag> visibleLocations = new LinkedList<Tag>();
@@ -43,7 +44,8 @@ public class MapMenuController {
 
 
     @FXML
-    public ChoiceBox LocationSelect;
+    public ChoiceBox DestinationSelect;
+    public ChoiceBox StartSelect;
 
 
     @FXML
@@ -56,7 +58,7 @@ public class MapMenuController {
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
         roomDropDown.addAll(visibleLocations);
-        LocationSelect.setItems(roomDropDown);
+        DestinationSelect.setItems(roomDropDown);
     }
 
 
@@ -91,7 +93,9 @@ public class MapMenuController {
         Main.window.setScene(Main.MapDirectionsScene);
         Main.window.show();
         Main.backRoot = Main.MapMenuScene;
-        Tag desiredTag = (Tag) LocationSelect.getValue();
+        Tag desiredTag = (Tag) DestinationSelect.getValue();
+
+//        MapDirectionsController mapDirectionsController = new MapDirectionsController();
                 //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
 
     }

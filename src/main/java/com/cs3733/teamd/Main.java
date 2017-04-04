@@ -113,8 +113,7 @@ public class Main extends Application {
         try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
-            System.out.println(mapMenuController.roomDropDown.get(0));
-            mapMenuController.LocationSelect.setValue(mapMenuController.roomDropDown);
+            mapMenuController.DestinationSelect.setValue(mapMenuController.roomDropDown);
         }catch(Exception e){
 
         }
