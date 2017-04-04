@@ -1,4 +1,4 @@
-package com.cs3733.teamd.Controller;
+package com.cs3733.teamd.Model;
 
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
