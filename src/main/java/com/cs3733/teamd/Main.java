@@ -81,6 +81,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         DBHandler database;
+        Directory dir = Directory.getInstance();
 
         try {
             database = new DBHandler();
@@ -120,6 +121,9 @@ public class Main extends Application {
             System.err.print("Could not load data from database.\nExiting...\n");
             return;
         }
+
+        //set up DIRECTORY
+        dir.initialize(nodes,tags,professionals,database);
 
         try {
             MapMenuController mapMenuController = new MapMenuController();

@@ -22,11 +22,7 @@ public class Node {
     }
 
 
-    //Called on STARTUP, loaded from DB entry
-    public Node(int x, int y, int ID){
-        coord.setLocation(x,y);
-        this.ID = ID;
-    }
+
 
     public double getDist(Node n){
         return coord.distance(n.coord);
@@ -38,6 +34,10 @@ public class Node {
         if(!t.containsNode(this)){
             t.addNode(this);
         }
+    }
+
+    public void setID(int ID){
+        this.ID = ID;
     }
 
     public void rmvTag(Tag t){
