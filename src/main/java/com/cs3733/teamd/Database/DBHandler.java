@@ -400,7 +400,7 @@ public class DBHandler {
         for(Node n : dir.getAllNodes()){
             for(Node edge : n.getNodes()){
                 //create adjacent node
-                s.execute("INSERT INTO AdjacentNode ("+n.getID()+","+edge.getID()+")");
+                s.execute("INSERT INTO AdjacentNode VALUES ("+n.getID()+","+edge.getID()+")");
             }
             //fills in NODETAG
             for(Tag t : n.getTags()){
@@ -410,7 +410,7 @@ public class DBHandler {
         //fill HCPTag
         for(Tag t : dir.getAllTags()){
             for(Professional p : t.getProfs()){
-    
+                s.execute("INSERT INTO HCPTag VALUES (" + t.getTagName() +","+p.get);
             }
         }
 
