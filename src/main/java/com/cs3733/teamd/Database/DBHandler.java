@@ -389,7 +389,7 @@ public class DBHandler {
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
-            s.execute("INSERT INTO Tag VALUES "+.toSql());
+            s.execute("INSERT INTO Tag VALUES "+p.toSql());
         }
         //for each tag
         for(Tag t : dir.getAllTags()){

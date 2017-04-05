@@ -47,7 +47,6 @@ public final class DBStatements {
             "CREATE TABLE HCP\n" +
                     "(\n" +
                     "  ID INTEGER PRIMARY KEY,\n" +
-                    "  First_name VARCHAR(25) NOT NULL,\n" +
                     "  Last_name VARCHAR(25) NOT NULL\n" +
                     ")";
 
