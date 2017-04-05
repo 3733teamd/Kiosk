@@ -44,6 +44,7 @@ public class LoginController extends AbsController{
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         /*Main.window.hide();
+
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();*/
         //Main.backRoot = Main.LoginScene;

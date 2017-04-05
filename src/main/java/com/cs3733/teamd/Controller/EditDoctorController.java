@@ -44,6 +44,7 @@ public class EditDoctorController extends  AbsController{
     public Label ModRN;
     public Label remD;
 
+    
 
     public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
     public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
@@ -113,44 +114,7 @@ public class EditDoctorController extends  AbsController{
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
 
     }
-    @FXML
-    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
 
-        /*Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
-    }
-    @FXML
-    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-       /* Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
-    }
-    @FXML
-    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-
-
-
-        LinkedList<Tag> loT = new LinkedList<Tag>();
-        Tag t = (Tag) addRoomSelect.getValue();
-        loT.add(t);
-        Professional p = new Professional(addDoctorLabel.getText() );
-
-
-      /*  Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
-    }
-    @FXML
-    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-       /* Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
-    }
 
 
 
