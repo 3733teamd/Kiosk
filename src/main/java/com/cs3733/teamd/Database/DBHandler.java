@@ -79,6 +79,99 @@ public class DBHandler {
         System.out.println("Java DB driver registered!");
         return true;
     }
+    public void delNode(Node node) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.DELETE_FROM_NODE);
+        ps.setInt(1, node.getID());
+    }
+
+    public void delProf(Professional prof) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.DELETE_FROM_HCP);
+        ps.setInt(1, prof.getID());
+    }
+
+    public void delTag(Tag tag) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.DELETE_FROM_TAG);
+        ps.setString(1, tag.getTagName());
+    }
+    public void addNodeToDB(Node node) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODE);
+        ps.setInt(1, node.getID());
+        ps.setInt(2, node.getX());
+        ps.setInt(3, node.getY());
+        ps.setString(4, "FLK");
+        ps.setInt(5, 4);
+        ps.execute();
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_ADJACENTNODE);
+        ps.setInt(1, node.getID());
+        for (Node neighboor: node.getNodes()) {
+            ps.setInt(2,neighboor.getID());
+            ps.execute();
+        }
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODETAG);
+        ps.setInt(1, node.getID());
+        for (Tag tag: node.getTags()) {
+            ps.setString(2,tag.tagName);
+            ps.execute();
+        }
+        connection.close();
+    }
+    public void addTagToDB(Tag tag) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_TAG);
+        ps.setString(1, tag.tagName);
+        ps.execute();
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTAG);
+        ps.setString(1, tag.tagName);
+        for (Professional prof: tag.getProfs()) {
+            ps.setInt(2, prof.getID());
+            ps.execute();
+        }
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODETAG);
+        ps.setString(2, tag.tagName);
+        for (Node node: tag.getNodes()) {
+            ps.setInt(1,node.getID());
+            ps.execute();
+        }
+        connection.close();
+    }
+    public void addProfToDB(Professional prof) throws SQLException {
+        PreparedStatement ps;
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCP);
+        ps.setInt(1, prof.getID());
+        //TODO NAMEING
+//        ps.setString(2, prof.);
+        ps.execute();
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTAG);
+        ps.setInt(2, prof.getID());
+        for (Tag tag: prof.getTags()) {
+            ps.setString(1, tag.tagName);
+            ps.execute();
+        }
+        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTITLE);
+        ps.setInt(1, prof.getID());
+        for (Title title: prof.getTitles()) {
+            ps.setString(2, title.acronym);
+            ps.execute();
+        }
+        connection.close();
+    }
+
+    public int generateKeyForNode() throws SQLException {
+        Statement s = connection.createStatement();
+        ResultSet maxIDRslt = s.executeQuery(DBStatements.MAX_ID_NODE);
+        int new_id = maxIDRslt.getInt("ID") + 1; //Add one to largest
+        return new_id;
+    }
+    public int generateKeyForProf() throws SQLException {
+        Statement s = connection.createStatement();
+        ResultSet maxIDRslt = s.executeQuery(DBStatements.MAX_ID_HCP);
+        int new_id = maxIDRslt.getInt("ID") + 1; //Add one to largest
+        return new_id;
+    }
 
     /**
      * Load data from database
@@ -109,7 +202,7 @@ public class DBHandler {
         //LOAD TAGS
         ResultSet RoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_TAG);
         while (RoomTupleRslt.next()) {
-            String newName = RoomTupleRslt.getString("tagName");
+            String newName = RoomTupleRslt.getString("Name");
             Tag newTag = new Tag(newName);
             tagMap.put(newName, newTag);
             //newTag.addNode(nodeMap.get(ID)); //Association
@@ -120,9 +213,7 @@ public class DBHandler {
         ResultSet HCPTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCP);
         while (HCPTupleRslt.next()) {
             int ID = HCPTupleRslt.getInt("ID");
-            ArrayList<Title> titles  = new ArrayList<Title>();
-            titles.add(Title.MD);
-            Professional newPro = new Professional(HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"),titles,ID);
+            Professional newPro = new Professional(HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"),ID);
 
             professionalMap.put(ID, newPro);
         }
@@ -170,7 +261,21 @@ public class DBHandler {
         ResultSet HCPTitleTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPTITLE);
         while (HCPTitleTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPTitleTupleRslt.getInt("HCP_ID"));
-            pro.addTitle(Title.valueOf(HCPTitleTupleRslt.getString("Title_Acronym")));
+            String title = HCPTitleTupleRslt.getString("Title_Acronym");
+            switch(title) {
+                case "PA-C":
+                    pro.addTitle(PAC);
+                    break;
+                case "Au.D":
+                    pro.addTitle(AuD);
+                    break;
+                case "CCC-A":
+                    pro.addTitle(CCCA);
+                    break;
+                default:
+                    pro.addTitle(Title.valueOf(title));
+                    break;
+            }
         }
         HCPTitleTupleRslt.close();
 

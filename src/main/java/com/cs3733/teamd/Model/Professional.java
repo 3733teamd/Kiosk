@@ -24,12 +24,12 @@ public class Professional {
         //TODO: add to DB
     }
 
-    //This is called during STARTUP when loaded from the db
-    public Professional(String name, ArrayList<Title> titles, int ID) {
+    //This is called during STARTUP when loaded from the db. Will load titles via addtitle.
+    public Professional(String name, int ID) {
         this.name = name;
-        this.titles = titles;
         this.ID = ID;
     }
+
 
     public void setID(int ID){
         this.ID = ID;
