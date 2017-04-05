@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -43,6 +44,15 @@ public class Directory {
 
     public ArrayList<Professional> getAllProfs() {
         return allProfs;
+    }
+
+    public void notifyUpdate() {
+        try {
+            dbHandler.save();
+        } catch (SQLException e) {
+            System.out.println("UNABLE TO PERSIST TO DATABASE");
+            e.printStackTrace();
+        }
     }
 
     /*
