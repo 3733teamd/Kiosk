@@ -15,6 +15,8 @@ public class Tag {
      public LinkedList<Professional> getProfs(){
          return profs;
      }
+
+
     public Tag(String trait){
         this.tagName = trait;
     }

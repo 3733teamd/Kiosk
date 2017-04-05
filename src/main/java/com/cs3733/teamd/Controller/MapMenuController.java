@@ -102,8 +102,8 @@ public class MapMenuController {
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
         Tag startTag = (Tag) StartSelect.getValue();
-        System.out.println("start:\t" +startTag.tagName);
-        System.out.println("end:\t" +destinationTag.tagName);
+        System.out.println("start:\t" +startTag.getTagName());
+        System.out.println("end:\t" +destinationTag.getTagName());
 
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 
