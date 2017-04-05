@@ -61,25 +61,28 @@ public class Directory {
     }
 
 
-    public void createNewTag(String tagName){
+    public Tag createNewTag(String tagName){
         Tag newTag = new Tag(tagName);
         allTags.add(newTag);
         //SAVE TO DATABASE
         notifyUpdate();
+        return  newTag;
     }
-    public void createNewNode(int x, int y){
+    public Node createNewNode(int x, int y){
         Node newNode = new Node(x,y);
         //newNode.setID(dbHandler.generateKeyForNode());
         allNodes.add(newNode);
         //SAVE TO DATABASE
         notifyUpdate();
+        return newNode;
     }
-    public void creaNewProf(String name, ArrayList<Title> titles){
+    public Professional creaNewProf(String name, ArrayList<Title> titles){
         Professional newProf = new Professional(name,titles);
         //newProf.setID(dbHandler.generateKeyForProf());
         allProfs.add(newProf);
         //SAVE TO DATABASE
         notifyUpdate();
+        return  newProf;
     }
     public void deleteTag(Tag t){
         allTags.remove(t);
