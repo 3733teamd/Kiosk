@@ -56,11 +56,6 @@ public class MapMenuController extends  AbsController{
 
     @FXML
     private void initialize(){
-       // RoomSelect.setValue("Select Room");
-       // RoomSelect.setItems(roomsList);
-       // ServiceSelect.setValue("Select Service");
-        //ServiceSelect.setItems(serviceList);
-        //backString= "/Views/MapMenu.fxml";
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
         roomDropDown.addAll(visibleLocations);
@@ -70,28 +65,28 @@ public class MapMenuController extends  AbsController{
         StartSelect.setItems(roomDropDown);
     }
 
-
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/MapMenu.fxml");
-        //backString = "/Views/MapMenu.fxml";
     }
+
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapMenu.fxml");
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
         System.out.println(Main.backString);
         switchScreen(MMGpane, Main.backString, "/Views/MapMenu.fxml");
     }
 
+    //Submit button
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws  IOException{
-        //Main.roomSelected = RoomSelect.getValue().toString();
-        //Main.serviceSelected = ServiceSelect.getValue().toString();
-
 
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
@@ -101,16 +96,9 @@ public class MapMenuController extends  AbsController{
 
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 
-       // MapDirectionsController mapDirectionsController = new MapDirectionsController();
-       // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
 
         switchScreen(MMGpane, "/Views/MapDirections.fxml", "/Views/MapMenu.fxml");
-       // backString ="/Views/MapMenu.fxml";
-
-//obtain data between
-        //MapDirectionsController c= loader.getController(); //pass info
-
     }
 
     @FXML

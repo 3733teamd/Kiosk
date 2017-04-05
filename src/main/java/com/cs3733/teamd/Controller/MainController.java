@@ -39,10 +39,12 @@ public class MainController extends AbsController {
 
     @FXML
     public void initialize(){
+
         //backString = "/Views/Main.fxml";
         setText();
     }
 
+    //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent){
        languageEnglish = !languageEnglish;
@@ -62,40 +64,25 @@ public class MainController extends AbsController {
         setText();
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException{
-        //Main.window.hide();
-        //Main.window.setScene(Main.MapMenuScene);
-        //Main.window.show();
-        //Main.backRoot = Main.MainScene;
-
         switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Main.fxml");
-        //backString = "/Views/Main.fxml";
     }
 
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.MainScene;*/
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Main.fxml");
-       // backString = "/Views/Main.fxml";
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.MainScene;*/
         switchScreen(MMGpane, Main.backString, "/Views/Main.fxml");
-        //backString = "/Views/Main.fxml";
-
-
-
     }
 
+    //Spanish translation
     public void setText(){
         SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
@@ -112,10 +99,8 @@ public class MainController extends AbsController {
         tapB.setText(Main.bundle.getString("tapB"));
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-50);
-            //menu.setTranslateX(-175);
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(0);
         }
 
