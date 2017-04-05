@@ -282,10 +282,12 @@ public class DBHandler {
      */
     public void setup() throws SQLException, IOException {
         DatabaseMetaData meta = connection.getMetaData();
-        ResultSet res = meta.getTables(null, null, "Tag", null);
+        ResultSet res = meta.getTables(null, null, "%", null);
 
+        boolean empty = !res.next();
+        System.out.println(empty);
         //if no tables
-        if(!res.next()) {
+        if(empty) {
 
             Statement s = connection.createStatement();
             for (Table table : Table.values()) {
