@@ -22,6 +22,7 @@ import java.util.LinkedList;
  */
 public class EditDoctorController extends  AbsController{
 
+    public Label submitFeedback;
     LinkedList<String> userOptionList = new LinkedList<String>();
 
     public Button largerTextButton;
