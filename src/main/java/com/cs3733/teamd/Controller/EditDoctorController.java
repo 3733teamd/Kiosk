@@ -22,6 +22,8 @@ import java.util.LinkedList;
  */
 public class EditDoctorController {
 
+    LinkedList<String> userOptionList = new LinkedList<String>();
+
     public Button largerTextButton;
     public Button SearchButton;
     public Button LoginButton;
@@ -42,20 +44,31 @@ public class EditDoctorController {
     public Label ModRN;
     public Label remD;
 
-    public ChoiceBox addRoomSelect;
+
+    public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
     public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
+    public static ObservableList<Professional> professionalList = FXCollections.observableArrayList();
     public ChoiceBox<Title> titleBox;
+    public ChoiceBox modifyOptions;
+    public ChoiceBox modifyProf;
+    public ChoiceBox modifySection;
+    public ChoiceBox modifyTitle;
 
-    public ChoiceBox modifyDoctorSelect;
-    public ChoiceBox modifyRoomSelect;
-    public ChoiceBox removeDoctorSelect;
-
-    public ChoiceBox addDoctorSelectRoom;
-    public ChoiceBox addRoomToDoc;
 
     @FXML private void initialize(){
-        titleBox.setItems(FXCollections.observableArrayList(Title.values()));
-        addRoomSelect.setItems(tagList);
+        editProfOptions.add("Add To");
+        editProfOptions.add("Update");
+
+        //modifyTitle.setValue(Title.values()[0]);
+        modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
+        //modifySection.setValue(tagList.get(0));
+        modifySection.setItems(tagList);
+        //modifyProf.setValue((professionalList.get(0)));
+        modifyProf.setItems(professionalList);
+        //modifyOptions.setValue(editProfOptions.get(0));
+        modifyOptions.setItems(editProfOptions);
+
+
     }
 
 
@@ -90,55 +103,6 @@ public class EditDoctorController {
         Main.window.show();
         Main.backRoot = Main.LoginScene;
     }
-    @FXML
-    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
-        Professional p = (Professional) removeDoctorSelect.getValue(); //get doctor from choice box
-        //TODO: Find p in the Database, and remove
-
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
-        //TODO: implement in the next iteration, and probably change the name of the fields/function as well
-
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-
-        LinkedList<Tag> loT = new LinkedList<Tag>();
-        Tag t = (Tag) addRoomSelect.getValue();
-        loT.add(t);
-        Professional p = new Professional(addDoctorLabel.getText() );
-
-
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-        //Working with Room to add "addDoctorSelectRoom", and Doctor to receive room "addRoomToDoc"
-        Tag t = (Tag) addDoctorSelectRoom.getValue();
-        Professional p = (Professional) addRoomToDoc.getValue();
-
-        t.addProf(p); //add doctor to room, and vice versa
-        //TODO: Add to database
-
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-
-
 
 
         @FXML
@@ -172,4 +136,32 @@ public class EditDoctorController {
         }
     }
 
+    public void professionalSubmit(ActionEvent actionEvent) {
+        String optionChoice = (String) modifyOptions.getValue();
+        Professional currentProf = (Professional) modifyProf.getValue();
+        Tag currentSection = (Tag) modifySection.getValue();
+        Title currentTitle = (Title) modifyTitle.getValue();
+
+
+        if(optionChoice == "Add To") {
+            if(currentSection != null) {
+                currentProf.addTag(currentSection);
+            }
+            if(currentTitle != null){
+                currentProf.addTitle(currentTitle);
+            }
+
+        }else if(optionChoice == "Update") {
+            if(currentSection != null) {
+                currentProf.rmvAllTags();
+                currentProf.addTag(currentSection);
+            }
+            if(currentTitle != null){
+                currentProf.rmvAllTitles();
+                currentProf.addTitle(currentTitle);
+            }
+        }
+
+
+    }
 }

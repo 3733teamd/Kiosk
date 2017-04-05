@@ -12,8 +12,13 @@ import java.util.LinkedList;
 //TODO Make general improvements to toString
 public class Professional {
     String name;
-    private ArrayList<Title> titles = new ArrayList<>();
-    private LinkedList<Tag> tags = new LinkedList<>();
+    private ArrayList<Title> titles = new ArrayList<Title>();
+    private LinkedList<Tag> tags = new LinkedList<Tag>();
+
+
+
+
+
 
     public Professional(String name) {
         this.name = name;
@@ -46,6 +51,10 @@ public class Professional {
         }
     }
 
+    public LinkedList<Tag> getTags() {
+        return tags;
+    }
+
     public void rmvTag(Tag t){
         if(tags.contains(t)){
             tags.remove(t);
@@ -53,6 +62,14 @@ public class Professional {
         if(t.containsProf(this)){
             t.rmvProf(this);
         }
+    }
+
+    public void rmvAllTitles(){
+        titles = new ArrayList<Title>();
+    }
+
+    public void rmvAllTags(){
+        tags = new LinkedList<Tag>();
     }
 
     public boolean containsTag(Tag t){
@@ -73,7 +90,6 @@ public class Professional {
     public String toString(){
         return titles.toString() +" " + name;
     }
-
 
 
 }

@@ -135,11 +135,12 @@ public class Main extends Application {
         }
 
 
+        //Populate EditDoctor Scene
         try{
             EditDoctorController editDoctorController = new EditDoctorController();
             System.out.println(tags.size());
             editDoctorController.tagList.addAll(tags);
-            editDoctorController.addRoomSelect.setItems(FXCollections.observableArrayList(editDoctorController.tagList));
+            editDoctorController.professionalList.addAll(professionals);
         }catch(Exception e){
 
         }
