@@ -188,7 +188,7 @@ public class DBHandler {
         //STAGE 1: Creating Entities adding associations when possible
 
         //LOAD NODES
-        ResultSet nodeTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_NODE);
+        ResultSet nodeTupleRslt = s.executeQuery(Table.Nodes.selectAllStatement());
         while (nodeTupleRslt.next()) {
             int ID = nodeTupleRslt.getInt("ID");
             //create new node
@@ -198,7 +198,7 @@ public class DBHandler {
         nodeTupleRslt.close();
 
         //LOAD TAGS
-        ResultSet RoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_TAG);
+        ResultSet RoomTupleRslt = s.executeQuery(Table.Tags.selectAllStatement());
         while (RoomTupleRslt.next()) {
             String newName = RoomTupleRslt.getString("Name");
             Tag newTag = new Tag(newName);
@@ -208,7 +208,7 @@ public class DBHandler {
         RoomTupleRslt.close();
 
         //LOAD PROFESSIONALS
-        ResultSet HCPTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCP);
+        ResultSet HCPTupleRslt = s.executeQuery(Table.HCPs.selectAllStatement());
         while (HCPTupleRslt.next()) {
             int ID = HCPTupleRslt.getInt("ID");
             Professional newPro = new Professional(HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"),ID);
@@ -217,19 +217,10 @@ public class DBHandler {
         }
         HCPTupleRslt.close();
 
-//        ResultSet SMPTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_SMP);
-//        while (HCPTupleRslt.next()) {
-//            Professional newSMP = new Professional(
-//                    SMPTupleRslt.getString("Name"));
-//
-//        }
-//        HCPTupleRslt.close();
-
-
         //STAGE 2: Add remaining associations
 
         //Put adjacent nodes in nodes
-        ResultSet AdjacentNodeTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_ADJACENTNODE);
+        ResultSet AdjacentNodeTupleRslt = s.executeQuery(Table.AdjacentNodes.selectAllStatement());
         while (AdjacentNodeTupleRslt.next()) {
             Node N1 = nodeMap.get(AdjacentNodeTupleRslt.getInt("N1"));
             Node N2 = nodeMap.get(AdjacentNodeTupleRslt.getInt("N2"));
@@ -239,7 +230,7 @@ public class DBHandler {
 
 
         // Associate tags and nodes
-        ResultSet NodeTapTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_NODETAG);
+        ResultSet NodeTapTupleRslt = s.executeQuery(Table.NodeTags.selectAllStatement());
         while (NodeTapTupleRslt.next()) {
             Node n = nodeMap.get(NodeTapTupleRslt.getInt("nodeID"));
             Tag tag = tagMap.get(NodeTapTupleRslt.getInt("tagName"));
@@ -248,7 +239,7 @@ public class DBHandler {
         HCPTupleRslt.close();
 
         // Associate professionals and tags
-        ResultSet HCPRoomTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPTAG);
+        ResultSet HCPRoomTupleRslt = s.executeQuery(Table.HCPTags.selectAllStatement());
         while (HCPRoomTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpID"));
             Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("tagName"));
@@ -256,7 +247,7 @@ public class DBHandler {
         }
         HCPTupleRslt.close();
 
-        ResultSet HCPTitleTupleRslt = s.executeQuery(DBStatements.SELECT_ALL_HCPTITLE);
+        ResultSet HCPTitleTupleRslt = s.executeQuery(Table.HCPTitles.selectAllStatement());
         while (HCPTitleTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPTitleTupleRslt.getInt("HCP_ID"));
             String title = HCPTitleTupleRslt.getString("Title_Acronym");
