@@ -249,7 +249,7 @@ public class DBHandler {
      * @param text
      */
     private void executeStatement(Statement s, String text) throws SQLException {
-        System.out.println(text);
+        //System.out.println(text);
         s.execute(text);
     }
 
