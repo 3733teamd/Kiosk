@@ -284,8 +284,14 @@ public class DBHandler {
         DatabaseMetaData meta = connection.getMetaData();
         ResultSet res = meta.getTables(null, null, "%", null);
 
-        boolean empty = !res.next();
-        System.out.println(empty);
+        boolean empty = true;
+
+        while (res.next()){
+            System.out.println(res.getString("TABLE_NAME"));
+            if(!res.getString("TABLE_NAME").contains("SYS")){
+                empty = false;
+            }
+        }
         //if no tables
         if(empty) {
 
