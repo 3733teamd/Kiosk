@@ -45,6 +45,7 @@ public class EditDoctorController extends  AbsController{
     public Label remD;
 
 
+
     public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
     public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
     public static ObservableList<Professional> professionalList = FXCollections.observableArrayList();
@@ -103,32 +104,6 @@ public class EditDoctorController extends  AbsController{
 
     }
 
-    //Remove Doctor button
-    @FXML
-    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-    }
-
-    @FXML
-    //Modify Doctor button
-    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-       }
-
-    @FXML
-    //Add Doctor button
-    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-        LinkedList<Tag> loT = new LinkedList<Tag>();
-        Tag t = (Tag) addRoomSelect.getValue();
-        loT.add(t);
-        Professional p = new Professional(addDoctorLabel.getText() );
-    }
-
-    @FXML
-    //Add Room to Doctor button
-    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-
-    }
 
 
 

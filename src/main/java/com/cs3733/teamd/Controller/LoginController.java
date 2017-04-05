@@ -46,6 +46,7 @@ public class LoginController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws IOException {
               switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
         /*Main.window.hide();
+
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();*/
         //Main.backRoot = Main.LoginScene;
