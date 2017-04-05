@@ -1,9 +1,6 @@
 package com.cs3733.teamd.Database;
 
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
-import com.cs3733.teamd.Model.Title;
+import com.cs3733.teamd.Model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -271,6 +268,26 @@ public class DBHandler {
      */
     public void close() throws SQLException {
         connection.close();
+    }
+
+    //saves dir into the database
+    public void save(){
+        Directory dir = Directory.getInstance();
+        //wipe everything but titles
+        
+        //for each node
+        for(Node n: dir.getAllNodes()){
+
+        }
+        //for each prof.
+        for(Professional p : dir.getAllProfs()){
+
+        }
+        //for each tag
+        for(Tag t : dir.getAllTags()){
+
+        }
+
     }
 
 
