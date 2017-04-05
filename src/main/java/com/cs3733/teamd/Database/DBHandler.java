@@ -407,6 +407,12 @@ public class DBHandler {
                 //add a nodetag
             }
         }
+        //fill HCPTag
+        for(Tag t : dir.getAllTags()){
+            for(Professional p : t.getProfs()){
+    
+            }
+        }
 
 
     }

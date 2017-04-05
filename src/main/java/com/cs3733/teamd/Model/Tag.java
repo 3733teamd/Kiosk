@@ -12,6 +12,9 @@ public class Tag {
      private LinkedList<Node> nodes = new LinkedList<Node>();
      private LinkedList<Professional> profs = new LinkedList<Professional>();
 
+     public LinkedList<Professional> getProfs(){
+         return profs;
+     }
     public Tag(String trait){
         this.tagName = trait;
     }
