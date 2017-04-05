@@ -13,7 +13,7 @@ public final class DBStatements {
                     "(\n" +
                     "\tID INTEGER PRIMARY KEY,\n" +
                     "\tX INTEGER NOT NULL,\n" +
-                    "\tY INTEGER NOT NULL,\n" +
+                    "\tY INTEGER NOT NULL\n" +
                     ")";
     public static final String CREATE_TABLE_ADJACENTNODE =
             "CREATE TABLE AdjacentNode\n" +
@@ -92,7 +92,7 @@ public final class DBStatements {
     public static final String MAX_ID_NODE = "SELECT MAX(ID) FROM NODE";
     public static final String MAX_ID_HCP = "SELECT MAX(ID) FROM HCP";
 
-    public static final String INSERT_INTO_NODE = "INSERT INTO Node VALUES(?, ?, ?, ?, ?)";
+    public static final String INSERT_INTO_NODE = "INSERT INTO Node VALUES(?, ?, ?)";
     public static final String INSERT_INTO_ADJACENTNODE = "INSERT INTO AdjacentNode VALUES(?, ?)";
     public static final String INSERT_INTO_NODETAG = "INSERT INTO NodeTag VALUES(?, ?)";
     public static final String INSERT_INTO_TAG = "INSERT INTO Tag VALUES(?)";

@@ -281,6 +281,7 @@ public class DBHandler {
         Statement s = connection.createStatement();
         for (Table table: Table.values()){
             try {
+                System.out.println(table.createStatement());
                 s.execute(table.createStatement());
             } catch (SQLException se){
                 if(!se.getSQLState().equals("X0Y32")){
