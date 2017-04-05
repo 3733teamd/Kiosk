@@ -281,44 +281,43 @@ public class DBHandler {
      * Setup all tables and connectionstraints
      */
     public void setup() throws SQLException, IOException {
-        //deletes all tables
-        try {
-            drop();
-        } catch (Exception e) {
-            System.out.println("Nothing to drop");
-        }
+        DatabaseMetaData meta = connection.getMetaData();
+        ResultSet res = meta.getTables(null, null, "Tag", null);
 
-        Statement s = connection.createStatement();
-        for (Table table: Table.values()){
-            try {
-                System.out.println(table.createStatement());
-                s.execute(table.createStatement());
-            } catch (SQLException se){
-                if(!se.getSQLState().equals("X0Y32")){
-                    se.printStackTrace();
+        //if no tables
+        if(!res.next()) {
+
+            Statement s = connection.createStatement();
+            for (Table table : Table.values()) {
+                try {
+                    System.out.println(table.createStatement());
+                    s.execute(table.createStatement());
+                } catch (SQLException se) {
+                    if (!se.getSQLState().equals("X0Y32")) {
+                        se.printStackTrace();
+                    }
                 }
             }
-        }
 
-        //About to do mass insert
-        //Disable auto commit so deferred constraints do not activate
-        connection.setAutoCommit(false);
+            //About to do mass insert
+            //Disable auto commit so deferred constraints do not activate
+            connection.setAutoCommit(false);
 
-        //Mass insert from file for initial data
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(getClass().getResourceAsStream("/DatabaseImports/DBInitialImports.txt")))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                s.execute(line);
+            //Mass insert from file for initial data
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(getClass().getResourceAsStream("/DatabaseImports/DBInitialImports.txt")))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                    s.execute(line);
+                }
             }
+
+            //Inserts done, enable connectionstraints (will check them aswell)
+            connection.setAutoCommit(true);
+
+            s.close();
         }
-
-        //Inserts done, enable connectionstraints (will check them aswell)
-        connection.setAutoCommit(true);
-
-        s.close();
-
     }
 
     /**
