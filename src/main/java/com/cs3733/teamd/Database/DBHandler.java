@@ -400,8 +400,7 @@ public class DBHandler {
         for(Node n : dir.getAllNodes()){
             for(Node edge : n.getNodes()){
                 //create adjacent node
-
-
+                s.execute("INSERT INTO AdjacentNode "+n.)
             }
             //fills in NODETAG
             for(Tag t : n.getTags()){

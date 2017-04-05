@@ -14,6 +14,9 @@ public class Node {
     //DB key
     private int ID;
 
+    public int getID(){
+        return ID;
+    }
 
     public LinkedList<Tag> getTags(){
         return tags;

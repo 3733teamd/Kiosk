@@ -78,7 +78,7 @@ public class Professional {
     }
 
     public String toSql(){
-        return("("+ID+","++")");
+        return("("+ID+","+name+")");
     }
 
 }
