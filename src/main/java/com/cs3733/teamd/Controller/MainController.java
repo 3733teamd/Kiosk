@@ -40,6 +40,8 @@ public class MainController extends AbsController {
     @FXML
     public void initialize(){
 
+        //backString = "/Views/Main.fxml";
+        setText();
     }
 
     //Spanish button to change language to Spanish

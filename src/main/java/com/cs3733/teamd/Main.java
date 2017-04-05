@@ -63,7 +63,6 @@ public class Main extends Application {
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
-
     }
 
     public static void main(String[] args) {

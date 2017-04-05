@@ -30,6 +30,11 @@ public class AdminMenuController extends AbsController {
     public AnchorPane MMGpane;
 
     @FXML
+    public void initialize(){
+        setText();
+    }
+
+    @FXML
     //search button
     public void onSearch(ActionEvent actionEvent) throws IOException {
         switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/LoginMenu.fxml");

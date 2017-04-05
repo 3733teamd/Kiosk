@@ -39,8 +39,8 @@ public class EditDoctorController extends  AbsController{
 
     public AnchorPane pane;
     public Text menu;
-    public Label addRToD;
-    public Label addD;
+    public Label AddProf;
+    public Label ModProf;
     public Label ModRN;
     public Label remD;
 
@@ -70,6 +70,7 @@ public class EditDoctorController extends  AbsController{
         modifyOptions.setValue(editProfOptions.get(0));
         modifyOptions.setItems(editProfOptions);
 
+        setText();
 
     }
 
@@ -115,7 +116,8 @@ public class EditDoctorController extends  AbsController{
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("EditDD"));
-
+        AddProf.setText(Main.bundle.getString("addProf"));
+        ModProf.setText(Main.bundle.getString("modProf"));
         /*submitRemoveDoctor.setText(Main.bundle.getString("submit"));
         submitModifyDoctor.setText(Main.bundle.getString("submit"));
         submitAddDoctor.setText(Main.bundle.getString("submit"));
