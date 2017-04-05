@@ -55,41 +55,41 @@ public class Directory {
         }
     }
 
-    /*
+
     public void createNewTag(String tagName){
         Tag newTag = new Tag(tagName);
         allTags.add(newTag);
         //SAVE TO DATABASE
-        dbHandler.addTagToDB(newTag);
+        notifyUpdate();
     }
     public void createNewNode(int x, int y){
         Node newNode = new Node(x,y);
-        newNode.setID(dbHandler.generateKeyForNode());
+        //newNode.setID(dbHandler.generateKeyForNode());
         allNodes.add(newNode);
         //SAVE TO DATABASE
-        dbHandler.addNodeToDB(newNode);
+        notifyUpdate();
     }
     public void creaNewProf(String name, ArrayList<Title> titles){
         Professional newProf = new Professional(name,titles);
-        newProf.setID(dbHandler.generateKeyForProf());
+        //newProf.setID(dbHandler.generateKeyForProf());
         allProfs.add(newProf);
         //SAVE TO DATABASE
-        dbHandler.addProfToDB(newProf);
+        notifyUpdate();
     }
     public void deleteTag(Tag t){
         allTags.remove(t);
         //REMOVE FROM DATABSE
-        dbHandler.deleteTag(t);
+        notifyUpdate();
     }
     public void deleteNode(Node n){
         allNodes.remove(n);
         //REMOVE FROM DATABASE
-        dbHandler.deleteNode(n);
+        notifyUpdate();
     }
     public void deleteProf(Professional p){
         allProfs.remove(p);
         //REMOVE FROM DATABASE
-        dbHandler.deleteProf(p);
+        notifyUpdate();
     }
-    */
+
 }
