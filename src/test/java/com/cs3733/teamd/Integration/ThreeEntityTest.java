@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class ThreeEntityTest {
     @Test
     public void addTagToProf(){
-        Professional p = new Professional("Bob", new ArrayList<>(Arrays.asList(new Title[]{Title.AuD})));
+        Professional p = new Professional("Bob", new ArrayList<>(Arrays.asList(new Title[]{Title.AuD})), 10);
         Tag t = new Tag("Testing");
         p.addTag(t);
         assertTrue(t.containsProf(p));

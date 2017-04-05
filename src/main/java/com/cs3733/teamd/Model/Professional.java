@@ -21,10 +21,10 @@ public class Professional {
         return ID;
     }
     //This is called during RUNTIME and adds itself to the DB
-    public Professional(String name, ArrayList<Title> titles) {
+    public Professional(String name, ArrayList<Title> titles, int ID) {
         this.name = name;
         this.titles = titles;
-        //TODO: add to DB
+        this.ID = ID;
     }
 
     //This is called during STARTUP when loaded from the db. Will load titles via addtitle.

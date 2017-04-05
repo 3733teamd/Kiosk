@@ -119,9 +119,6 @@ public class Main extends Application {
         //set up DIRECTORY
         dir.initialize(nodes,tags,professionals,database);
 
-        dir.createNewTag("TESTINGTESTINT123");
-
-
         //Populate Search Menus
         try {
             MapMenuController mapMenuController = new MapMenuController();
