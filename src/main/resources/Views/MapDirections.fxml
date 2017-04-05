@@ -75,12 +75,12 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="210.0" layoutY="366.0" text="Green = Path" textFill="#0c8623">
+            <Label layoutX="210.0" layoutY="417.0" text="Green = Destination" textFill="#0c8623">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="210.0" layoutY="417.0" text="Yellow =  Destination" textFill="#c1f500">
+            <Label layoutX="210.0" layoutY="365.0" text="Blue =  Path" textFill="#3c00f5">
                <font>
                   <Font size="30.0" />
                </font>

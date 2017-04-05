@@ -106,13 +106,14 @@ public class MapDirectionsController extends AbsController{
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLUE);
         Point previous = null;
-        gc.setLineWidth(2);
+        gc.setLineWidth(3);
         int pathlength = path.size();
-        int radius = 4;
+        int radius = 7;
         for  (int i = 0; i < pathlength; i++){
             Point current = path.getFirst();
             if(i == pathlength-1){
-                gc.setFill(Color.YELLOW);
+                radius = 7;
+                gc.setFill(Color.GREEN);
             }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
             if(previous != null){
@@ -121,7 +122,8 @@ public class MapDirectionsController extends AbsController{
             }
             previous = current;
             path.pop();
-            gc.setFill(Color.GREEN);
+            gc.setFill(Color.BLUE);
+            radius = 5;
         }
     }
 
