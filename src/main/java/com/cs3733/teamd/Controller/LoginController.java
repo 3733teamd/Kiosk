@@ -48,7 +48,6 @@ public class LoginController extends AbsController{
         Main.window.show();*/
         //Main.backRoot = Main.LoginScene;
 
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
     }
 
     @FXML
@@ -83,10 +82,10 @@ public class LoginController extends AbsController{
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
         Main.backRoot = Main.LoginScene;*/
+        if(username.equals("dev")&&password.equals("dev")) {
+            switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
 
-        switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
-
-
+        }
     }
 
     @FXML
