@@ -79,6 +79,18 @@ public class Node {
         }
     }
 
+    public void destroyNode(){
+        for(Node neighbor : nodes){
+            neighbor.removeNeighbor(this);
+        }
+    }
+
+    public void removeNeighbor(Node n){
+        if(this.nodes.contains(n)){
+            this.nodes.remove(n);
+        }
+    }
+
     public int getX(){
         return this.coord.x;
     }
