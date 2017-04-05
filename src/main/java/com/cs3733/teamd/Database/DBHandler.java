@@ -389,28 +389,35 @@ public class DBHandler {
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
-            s.execute("INSERT INTO Tag VALUES "+p.toSql());
+            s.execute("INSERT INTO HCP VALUES "+p.toSql());
         }
         //for each tag
         for(Tag t : dir.getAllTags()){
-
+            s.execute("INSERT INTO Tag VALUES ("
+                    + t.getTagName() + ")");
         }
 
         //fill in adjacentNode
         for(Node n : dir.getAllNodes()){
             for(Node edge : n.getNodes()){
                 //create adjacent node
-                s.execute("INSERT INTO AdjacentNode ("+n.getID()+","+edge.getID()+")");
+                s.execute("INSERT INTO AdjacentNode VALUES ("+n.getID()+","+edge.getID()+")");
             }
             //fills in NODETAG
             for(Tag t : n.getTags()){
                 //add a nodetag
+                s.execute("INSERT INTO NodeTag VALUES ("
+                    + n.getID() + ", "
+                    + t.getTagName() + ")");
             }
         }
         //fill HCPTag
         for(Tag t : dir.getAllTags()){
             for(Professional p : t.getProfs()){
-    
+                s.execute("INSERT INTO HCPTag VALUES ("
+                    +t.getTagName()
+                    +","
+                    +p.getID() + ")");
             }
         }
 
