@@ -44,7 +44,7 @@
                         <Font size="29.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" layoutX="1170.0" layoutY="-13.0" mnemonicParsing="false" onAction="#onBack" prefHeight="151.0" prefWidth="128.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back" textAlignment="RIGHT" wrapText="true">
+                  <Button fx:id="BackButton" layoutX="1170.0" layoutY="1.0" mnemonicParsing="false" onAction="#onBack" prefHeight="121.0" prefWidth="128.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back" textAlignment="RIGHT" wrapText="true">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -73,8 +73,13 @@
                   <ChoiceBox fx:id="modifyProf" layoutX="366.0" layoutY="445.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="modifySection" layoutX="569.0" layoutY="445.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="modifyTitle" layoutX="764.0" layoutY="445.0" prefWidth="150.0" />
-                  <Button layoutX="1027.0" layoutY="445.0" mnemonicParsing="false" onAction="#professionalSubmit" text="Submit" />
+                  <Button fx:id="modProfButton" layoutX="1027.0" layoutY="445.0" mnemonicParsing="false" onAction="#professionalSubmit" text="Submit" />
                   <Button fx:id="addProfButton" layoutX="839.0" layoutY="219.0" mnemonicParsing="false" onAction="#addProfToSystem" text="Button" />
+                  <Label fx:id="EDinstruct" layoutX="259.0" layoutY="525.0" prefHeight="136.0" prefWidth="770.0" text="Select add to add the selected objects onto the doctor. Select update to update the selected fields to the Doctor.  Select Remove to remove the selected doctor." textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

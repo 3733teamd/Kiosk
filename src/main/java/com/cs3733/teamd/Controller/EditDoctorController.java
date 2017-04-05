@@ -30,8 +30,8 @@ public class EditDoctorController extends  AbsController{
     public Button BackButton;
     public Button MenuButton;
 
-    public Button submitRemoveDoctor;
-    public Button submitModifyDoctor;
+    public Button addProfButton;
+    public Button modProfButton;
     public Button submitAddDoctor;
     public Button submitAddRoomDoctor;
 
@@ -43,7 +43,7 @@ public class EditDoctorController extends  AbsController{
     public Label ModProf;
     public Label ModRN;
     public Label remD;
-
+    public Label EDinstruct;
 
 
     public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
@@ -118,6 +118,10 @@ public class EditDoctorController extends  AbsController{
         menu.setText(Main.bundle.getString("EditDD"));
         AddProf.setText(Main.bundle.getString("addProf"));
         ModProf.setText(Main.bundle.getString("modProf"));
+        EDinstruct.setText(Main.bundle.getString("Edinstruct"));
+        addProfButton.setText(Main.bundle.getString("submit"));
+        modProfButton.setText(Main.bundle.getString("submit"));
+        addDoctorLabel.setPromptText(Main.bundle.getString("dn"));
         /*submitRemoveDoctor.setText(Main.bundle.getString("submit"));
         submitModifyDoctor.setText(Main.bundle.getString("submit"));
         submitAddDoctor.setText(Main.bundle.getString("submit"));
