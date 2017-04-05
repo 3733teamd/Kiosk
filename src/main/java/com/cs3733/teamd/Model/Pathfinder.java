@@ -78,7 +78,10 @@ public class Pathfinder {
             }
         }
         // no path
-        return null;
+        //return null;
+
+        /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
+        return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
     }
 
     /**
