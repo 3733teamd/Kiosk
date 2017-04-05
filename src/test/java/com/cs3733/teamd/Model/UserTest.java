@@ -53,4 +53,16 @@ public class UserTest {
 
         assertTrue(u.hasRole("admin"));
     }
+
+    @Test
+    public void hashWorks() {
+        try{
+            String outputString = User.calculateHash("test");
+            assertEquals("098f6bcd4621d373cade4e832627b4f6", outputString);
+        }
+        catch(Exception e){
+            fail("Exception thrown");
+        }
+
+    }
 }

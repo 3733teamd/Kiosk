@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Model;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.List;
 
 /**
@@ -28,5 +30,29 @@ public class User {
 
     public void addRole(String role) {
         roles.add(role);
+    }
+
+    /**
+     * Calculates the Hash of an input string
+     * @param input - String to be hashed
+     * @return - MD5 hash of the string
+     */
+    public static String calculateHash(String input) throws Exception {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(input.getBytes(),0,input.length());
+
+        return toHexString(m.digest());
+    }
+
+    private static String toHexString(byte[] bytes) {
+        if (bytes == null) {
+            throw new IllegalArgumentException("byte array must not be null");
+        }
+        StringBuffer hex = new StringBuffer(bytes.length * 2);
+        for (int i = 0; i < bytes.length; i++) {
+            hex.append(Character.forDigit((bytes[i] & 0XF0) >> 4, 16));
+            hex.append(Character.forDigit((bytes[i] & 0X0F), 16));
+        }
+        return hex.toString();
     }
 }
