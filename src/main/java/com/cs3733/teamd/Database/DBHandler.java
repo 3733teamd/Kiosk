@@ -84,8 +84,10 @@ public class DBHandler {
         System.out.println("Java DB driver registered!");
         return true;
     }
+
     /**
-     * Load data from database
+     * Load data from the Database into the classes Java objects
+     * @throws SQLException
      */
     public void load() throws SQLException {
         //TODO loop through all entity tables creating hashmap with key of PK
@@ -237,6 +239,11 @@ public class DBHandler {
         return empty;
     }
 
+    /**
+     * Create the tables in the Database
+     * @param s - SQL Statement Object
+     * @throws SQLException
+     */
     public void setupTables(Statement s) throws SQLException {
         for (Table table : Table.values()) {
             executeStatement(s, table.createStatement());
@@ -249,7 +256,11 @@ public class DBHandler {
      * @param text
      */
     private void executeStatement(Statement s, String text) throws SQLException {
-        //System.out.println(text);
+        // What log level are we at?
+        if(ApplicationConfiguration.getInstance().getSqlLoggingLevel()
+                == ApplicationConfiguration.SQL_LOG_LEVEL.FULL) {
+            System.out.println(text);
+        }
         s.execute(text);
     }
 
