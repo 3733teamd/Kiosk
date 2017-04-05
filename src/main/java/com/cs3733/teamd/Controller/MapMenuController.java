@@ -22,10 +22,6 @@ import java.util.LinkedList;
 
 
 public class MapMenuController extends  AbsController{
-    static ObservableList<String> roomsList =
-            FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
-    static ObservableList<String> serviceList =
-            FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
 
 
 

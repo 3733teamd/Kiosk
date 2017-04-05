@@ -42,9 +42,7 @@ public class Main extends Application {
     public static Scene backRoot;
     public static String roomSelected = "Select Room";
     public static String serviceSelected = "Select Service";
-
-
-
+    
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
 
 
