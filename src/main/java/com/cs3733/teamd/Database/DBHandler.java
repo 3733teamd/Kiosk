@@ -19,6 +19,10 @@ import static com.cs3733.teamd.Model.Title.*;
 public class DBHandler {
 
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     private Connection connection;
     public ArrayList<Node> nodes = new ArrayList<>();
     public ArrayList<Tag> tags = new ArrayList<>();
@@ -48,11 +52,11 @@ public class DBHandler {
             // substitute your database name for myDB
             connection = DriverManager.getConnection("jdbc:derby:db;create=true");
         } catch (SQLException e) {
-            System.err.println("Connection failed. Check output connectionsole.");
+            System.err.println("Connection failed. Check output console.");
             e.printStackTrace();
             throw new Exception();
         }
-        System.out.println("Java DB connectionnection established!");
+        System.out.println("Java DB connection established!");
     }
 
 
@@ -80,101 +84,6 @@ public class DBHandler {
         System.out.println("Java DB driver registered!");
         return true;
     }
-    /*
-    public void delNode(Node node) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.DELETE_FROM_NODE);
-        ps.setInt(1, node.getID());
-    }
-
-    public void delProf(Professional prof) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.DELETE_FROM_HCP);
-        ps.setInt(1, prof.getID());
-    }
-
-    public void delTag(Tag tag) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.DELETE_FROM_TAG);
-        ps.setString(1, tag.getTagName());
-    }
-    public void addNodeToDB(Node node) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODE);
-        ps.setInt(1, node.getID());
-        ps.setInt(2, node.getX());
-        ps.setInt(3, node.getY());
-        ps.setString(4, "FLK");
-        ps.setInt(5, 4);
-        ps.execute();
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_ADJACENTNODE);
-        ps.setInt(1, node.getID());
-        for (Node neighboor: node.getNodes()) {
-            ps.setInt(2,neighboor.getID());
-            ps.execute();
-        }
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODETAG);
-        ps.setInt(1, node.getID());
-        for (Tag tag: node.getTags()) {
-            ps.setString(2,tag.tagName);
-            ps.execute();
-        }
-        connection.close();
-    }
-    public void addTagToDB(Tag tag) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_TAG);
-        ps.setString(1, tag.tagName);
-        ps.execute();
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTAG);
-        ps.setString(1, tag.tagName);
-        for (Professional prof: tag.getProfs()) {
-            ps.setInt(2, prof.getID());
-            ps.execute();
-        }
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_NODETAG);
-        ps.setString(2, tag.tagName);
-        for (Node node: tag.getNodes()) {
-            ps.setInt(1,node.getID());
-            ps.execute();
-        }
-        connection.close();
-    }
-    public void addProfToDB(Professional prof) throws SQLException {
-        PreparedStatement ps;
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCP);
-        ps.setInt(1, prof.getID());
-        //TODO NAMEING
-//        ps.setString(2, prof.);
-        ps.execute();
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTAG);
-        ps.setInt(2, prof.getID());
-        for (Tag tag: prof.getTags()) {
-            ps.setString(1, tag.tagName);
-            ps.execute();
-        }
-        ps = connection.prepareStatement(DBStatements.INSERT_INTO_HCPTITLE);
-        ps.setInt(1, prof.getID());
-        for (Title title: prof.getTitles()) {
-            ps.setString(2, title.acronym);
-            ps.execute();
-        }
-        connection.close();
-    }
-
-    public int generateKeyForNode() throws SQLException {
-        Statement s = connection.createStatement();
-        ResultSet maxIDRslt = s.executeQuery(DBStatements.MAX_ID_NODE);
-        int new_id = maxIDRslt.getInt("ID") + 1; //Add one to largest
-        return new_id;
-    }
-    public int generateKeyForProf() throws SQLException {
-        Statement s = connection.createStatement();
-        ResultSet maxIDRslt = s.executeQuery(DBStatements.MAX_ID_HCP);
-        int new_id = maxIDRslt.getInt("ID") + 1; //Add one to largest
-        return new_id;
-    }
-*/
     /**
      * Load data from database
      */
@@ -281,7 +190,38 @@ public class DBHandler {
      * Setup all tables and connectionstraints
      */
     public void setup() throws SQLException, IOException {
-        DatabaseMetaData meta = connection.getMetaData();
+        // DOES THE TABLE EXIST???
+        boolean empty = tablesExists(connection);
+        //if no tables
+        if(empty) {
+            System.out.println("No database found, creating tables");
+            Statement s = connection.createStatement();
+            // Setup the tables
+            try {
+                setupTables(s);
+            } catch (SQLException se) {
+                if (!se.getSQLState().equals("X0Y32")) {
+                    se.printStackTrace();
+                }
+            }
+
+
+            //About to do mass insert
+            //Disable auto commit so deferred constraints do not activate
+            connection.setAutoCommit(false);
+
+            //Mass insert from file for initial data
+            loadDbEntriesFromFile(s, "/DatabaseImports/DBInitialImports.txt");
+
+            //Inserts done, enable connectionstraints (will check them aswell)
+            connection.setAutoCommit(true);
+
+            s.close();
+        }
+    }
+
+    private boolean tablesExists(Connection c) throws SQLException {
+        DatabaseMetaData meta = c.getMetaData();
         ResultSet res = meta.getTables(null, null, "%", null);
 
         boolean empty = true;
@@ -293,40 +233,41 @@ public class DBHandler {
                 break;
             }
         }
-        //if no tables
-        if(empty) {
-            System.out.println("No database found, creating tables");
-            Statement s = connection.createStatement();
-            for (Table table : Table.values()) {
-                try {
-                    System.out.println(table.createStatement());
-                    s.execute(table.createStatement());
-                } catch (SQLException se) {
-                    if (!se.getSQLState().equals("X0Y32")) {
-                        se.printStackTrace();
-                    }
-                }
-            }
 
-            //About to do mass insert
-            //Disable auto commit so deferred constraints do not activate
-            connection.setAutoCommit(false);
+        return empty;
+    }
 
-            //Mass insert from file for initial data
-            try (BufferedReader br = new BufferedReader(
-                    new InputStreamReader(getClass().getResourceAsStream("/DatabaseImports/DBInitialImports.txt")))) {
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                    s.execute(line);
-                }
-            }
-
-            //Inserts done, enable connectionstraints (will check them aswell)
-            connection.setAutoCommit(true);
-
-            s.close();
+    public void setupTables(Statement s) throws SQLException {
+        for (Table table : Table.values()) {
+            executeStatement(s, table.createStatement());
         }
+    }
+
+    /**
+     * Log's all SQL events
+     * @param s
+     * @param text
+     */
+    private void executeStatement(Statement s, String text) throws SQLException {
+        System.out.println(text);
+        s.execute(text);
+    }
+
+    /**
+     * Load's a file of SQL statements and executes them
+     * @param s - SQL Statement object
+     * @param filename - What is the name of the file that contains the DB statements
+     * @throws IOException
+     * @throws SQLException
+     */
+    public void loadDbEntriesFromFile(Statement s, String filename) throws IOException, SQLException {
+        BufferedReader br =
+                new BufferedReader(
+                        new InputStreamReader(getClass().getResourceAsStream(filename)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                executeStatement(s, line);
+            }
     }
 
     /**
@@ -339,7 +280,7 @@ public class DBHandler {
         connection.setAutoCommit(false);
 
         for (Table table: Table.values()){
-            s.execute(table.emptyStatement());
+            executeStatement(s, table.emptyStatement());
         }
 
         connection.setAutoCommit(true);
