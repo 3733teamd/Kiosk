@@ -28,7 +28,6 @@ public enum Table {
 
     HCPs ("HCP", "(\n" +
             "  ID INTEGER PRIMARY KEY,\n" +
-            "  First_name VARCHAR(25) NOT NULL,\n" +
             "  Last_name VARCHAR(25) NOT NULL\n" +
             ")"),
 

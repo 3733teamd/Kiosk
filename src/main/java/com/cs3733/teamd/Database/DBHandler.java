@@ -39,6 +39,11 @@ public class DBHandler {
     public DBHandler() throws Exception {
         if(!environmentTester()) {throw new Exception();}
 
+        open();
+
+    }
+
+    public void open() throws Exception {
         try {
             // substitute your database name for myDB
             connection = DriverManager.getConnection("jdbc:derby:db;create=true");
@@ -48,7 +53,6 @@ public class DBHandler {
             throw new Exception();
         }
         System.out.println("Java DB connectionnection established!");
-
     }
 
 
@@ -211,7 +215,7 @@ public class DBHandler {
         ResultSet HCPTupleRslt = s.executeQuery(Table.HCPs.selectAllStatement());
         while (HCPTupleRslt.next()) {
             int ID = HCPTupleRslt.getInt("ID");
-            Professional newPro = new Professional(HCPTupleRslt.getString("First_name") + " " + HCPTupleRslt.getString("Last_name"),ID);
+            Professional newPro = new Professional(HCPTupleRslt.getString("Last_name") ,ID);
 
             professionalMap.put(ID, newPro);
         }
@@ -377,16 +381,19 @@ public class DBHandler {
         //for each node
         for(Node n: dir.getAllNodes()){
             //add to Node
-            s.execute("INSERT INTO Nodes VALUES "+n.toSql());
+            s.execute("INSERT INTO Node VALUES "+n.toSql());
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
+            System.out.println(p.toSql());
             s.execute("INSERT INTO HCP VALUES "+p.toSql());
         }
         //for each tag
         for(Tag t : dir.getAllTags()){
-            s.execute("INSERT INTO Tag VALUES ("
-                    + t.getTagName() + ")");
+            String sql = "INSERT INTO Tag VALUES ('"
+                    + t.getTagName() + "')";
+            System.out.println(sql);
+            s.execute(sql);
         }
 
         //fill in adjacentNode
@@ -399,16 +406,16 @@ public class DBHandler {
             for(Tag t : n.getTags()){
                 //add a nodetag
                 s.execute("INSERT INTO NodeTag VALUES ("
-                    + n.getID() + ", "
-                    + t.getTagName() + ")");
+                    + n.getID() + ", '"
+                    + t.getTagName() + "')");
             }
         }
         //fill HCPTag
         for(Tag t : dir.getAllTags()){
             for(Professional p : t.getProfs()){
-                s.execute("INSERT INTO HCPTag VALUES ("
+                s.execute("INSERT INTO HCPTag VALUES ('"
                     +t.getTagName()
-                    +","
+                    +"',"
                     +p.getID() + ")");
             }
         }

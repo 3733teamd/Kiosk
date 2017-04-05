@@ -48,8 +48,13 @@ public class Directory {
 
     public void notifyUpdate() {
         try {
+            dbHandler.open();
             dbHandler.save();
+            dbHandler.close();
         } catch (SQLException e) {
+            System.out.println("UNABLE TO PERSIST TO DATABASE");
+            e.printStackTrace();
+        } catch(Exception e) {
             System.out.println("UNABLE TO PERSIST TO DATABASE");
             e.printStackTrace();
         }
