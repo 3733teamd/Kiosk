@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 import com.cs3733.teamd.Model.Title;
@@ -22,6 +23,8 @@ import java.util.LinkedList;
  */
 public class EditDoctorController extends  AbsController{
 
+    Directory dir = Directory.getInstance();
+    public Label submitFeedback;
     LinkedList<String> userOptionList = new LinkedList<String>();
 
     public Button largerTextButton;
@@ -60,11 +63,14 @@ public class EditDoctorController extends  AbsController{
         editProfOptions.add("Add To");
         editProfOptions.add("Update");
         editProfOptions.add("Remove");
+        addDoctorLabel.setText("");
+        submitFeedback.setText("");
 
         //modifyTitle.setValue(Title.values()[0]);
         modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
         //modifySection.setValue(tagList.get(0));
-        modifySection.setItems(tagList);
+        //modifySection.setItems(tagList);
+        modifySection.setItems(FXCollections.observableArrayList(dir.getAllTags()));
         modifyProf.setValue((professionalList.get(0)));
         modifyProf.setItems(professionalList);
         modifyOptions.setValue(editProfOptions.get(0));
@@ -172,6 +178,9 @@ public class EditDoctorController extends  AbsController{
         }else if(optionChoice == "Remove"){
             /////remove current prof from directory
         }
+        dir.notifyUpdate();
+        initialize();
+        submitFeedback.setText("Successfull modification of " + currentProf);
 
 
     }
@@ -180,5 +189,11 @@ public class EditDoctorController extends  AbsController{
         String profName = (String) addDoctorLabel.getText();
         Professional currentProf = new Professional(profName, 420);
         System.out.println(currentProf.toString());
+        int id = 384983 + (int)(Math.random()*3849320);
+
+        dir.creaNewProf(profName, new ArrayList<Title>(),id);
+
+        initialize();
+        submitFeedback.setText("Successfull creation of " + profName);
     }
 }
