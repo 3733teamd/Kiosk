@@ -61,6 +61,7 @@ public class EditDoctorController extends  AbsController{
         editProfOptions.add("Add To");
         editProfOptions.add("Update");
         editProfOptions.add("Remove");
+        submitFeedback.setText("");
 
         //modifyTitle.setValue(Title.values()[0]);
         modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
@@ -174,6 +175,9 @@ public class EditDoctorController extends  AbsController{
             /////remove current prof from directory
         }
 
+        initialize();
+        submitFeedback.setText("Successfull modification of " + currentProf);
+
 
     }
 
@@ -181,5 +185,9 @@ public class EditDoctorController extends  AbsController{
         String profName = (String) addDoctorLabel.getText();
         Professional currentProf = new Professional(profName, 420);
         System.out.println(currentProf.toString());
+
+
+        initialize();
+        submitFeedback.setText("Successfull creation of " + profName);
     }
 }
