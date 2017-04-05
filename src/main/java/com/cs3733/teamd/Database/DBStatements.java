@@ -56,7 +56,6 @@ public final class DBStatements {
                     "  tagName VARCHAR(100) ON DELETE CASCADE,\n" +
                     "  hcpID INTEGER ON DELETE CASCADE,\n" +
                     "  CONSTRAINT pk_hcptg PRIMARY KEY(tagName, hcpID),\n" +
-                    "  CONSTRAINT fk_node_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred,\n" +
                     "  CONSTRAINT fk_hcp_id FOREIGN KEY (hcpID) REFERENCES HCP(ID) initially deferred\n" +
                     ")";
 

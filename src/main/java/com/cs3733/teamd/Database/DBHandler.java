@@ -233,7 +233,7 @@ public class DBHandler {
         ResultSet NodeTapTupleRslt = s.executeQuery(Table.NodeTags.selectAllStatement());
         while (NodeTapTupleRslt.next()) {
             Node n = nodeMap.get(NodeTapTupleRslt.getInt("nodeID"));
-            Tag tag = tagMap.get(NodeTapTupleRslt.getInt("tagName"));
+            Tag tag = tagMap.get(NodeTapTupleRslt.getString("tagName"));
             n.addTag(tag);
         }
         HCPTupleRslt.close();
@@ -242,7 +242,7 @@ public class DBHandler {
         ResultSet HCPRoomTupleRslt = s.executeQuery(Table.HCPTags.selectAllStatement());
         while (HCPRoomTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpID"));
-            Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("tagName"));
+            Tag tag = tagMap.get(HCPRoomTupleRslt.getString("tagName"));
             pro.addTag(tag);
         }
         HCPTupleRslt.close();
@@ -277,7 +277,8 @@ public class DBHandler {
      * Setup all tables and connectionstraints
      */
     public void setup() throws SQLException, IOException {
-
+        //deletes all tables
+        drop();
         Statement s = connection.createStatement();
         for (Table table: Table.values()){
             try {
@@ -368,6 +369,7 @@ public class DBHandler {
 
     //saves dir into the database
     public void save() throws SQLException{
+
         Directory dir = Directory.getInstance();
         Statement s = connection.createStatement();
         //wipe everything

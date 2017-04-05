@@ -12,10 +12,7 @@ public enum Table {
 
     AdjacentNodes ("AdjacentNode", "(\n" +
             "  N1 INTEGER NOT NULL,\n" +
-            "  N2 INTEGER NOT NULL,\n" +
-            "  CONSTRAINT pk_AdjNd_n1n2 PRIMARY KEY (N1,N2),\n" +
-            "  CONSTRAINT fk_AdjNd_n1 FOREIGN KEY (N1) REFERENCES Node(ID) initially deferred,\n" +
-            "  CONSTRAINT fk_AdjNd_n2 FOREIGN KEY (N2) REFERENCES Node(ID) initially deferred\n" +
+            "  N2 INTEGER NOT NULL\n" +
             ")"),
 
     Tags ("Tag", "(\n" +
@@ -26,10 +23,7 @@ public enum Table {
 
     NodeTags ("NodeTag", "(\n" +
             "  nodeID INTEGER,\n" +
-            "  tagName VARCHAR(100) NOT NULL,\n" +
-            "  CONSTRAINT pk_NdTg_nidtid PRIMARY KEY(nodeID, tagName),\n" +
-            "  CONSTRAINT fk_node_id FOREIGN KEY (nodeID) REFERENCES Node(ID) initially deferred,\n" +
-            "  CONSTRAINT fk_tag_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred\n" +
+            "  tagName VARCHAR(100) NOT NULL\n" +
             ")"),
 
     HCPs ("HCP", "(\n" +
@@ -40,10 +34,7 @@ public enum Table {
 
     HCPTags ("HCPTag", "(\n" +
             "  tagName VARCHAR(100) NOT NULL,\n" +
-            "  hcpID INTEGER NOT NULL,\n" +
-            "  CONSTRAINT pk_hcptg PRIMARY KEY(tagName, hcpID),\n" +
-            "  CONSTRAINT fk_node_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred,\n" +
-            "  CONSTRAINT fk_hcp_id FOREIGN KEY (hcpID) REFERENCES HCP(ID) initially deferred\n" +
+            "  hcpID INTEGER NOT NULL\n" +
             ")"),
 
     ProfessionalTitles ("ProTitle",  "(\n" +
@@ -53,11 +44,8 @@ public enum Table {
 
     HCPTitles ("HCPTitle", "(\n" +
             "  HCP_ID INTEGER,\n" +
-            "  Title_Acronym VARCHAR(5),\n" +
-            "  CONSTRAINT pk_HcpTit_HcpAcy PRIMARY KEY (HCP_ID, Title_Acronym),\n" +
-            "  CONSTRAINT fk_HcpTit_hcp FOREIGN KEY (HCP_ID) REFERENCES HCP (ID) initially deferred,\n" +
-            "  CONSTRAINT fk_HcpTit_acy FOREIGN KEY (Title_Acronym) REFERENCES ProTitle (Acronym) initially deferred\n" +
-            ")");
+            "  Title_Acronym VARCHAR(5)\n" +
+   ")" );
 
     String name;
     String schema;

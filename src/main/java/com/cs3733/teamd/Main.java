@@ -125,6 +125,7 @@ public class Main extends Application {
         //set up DIRECTORY
         dir.initialize(nodes,tags,professionals,database);
 
+        dir.createNewTag("TESTINGTESTINT123");
         try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
