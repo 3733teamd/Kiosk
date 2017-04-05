@@ -31,9 +31,9 @@ public class ProfessionalTest {
         ArrayList<Title> titles = new ArrayList<Title>();
         titles.add(Title.MD);
         Professional p = new Professional("John", titles,10);
-        assertEquals("[] John",p.toString());
+        assertEquals("[MD] John",p.toString());
         p.addTitle(Title.DO);
-        assertEquals("[DO] John",p.toString());
+        assertEquals("[MD, DO] John",p.toString());
 
     }
 }

@@ -78,7 +78,7 @@ public class Pathfinder {
             }
         }
         // no path
-        //return null;
+        //return null; // or maybe new LinkedList<Node>()
 
         /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
         return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
