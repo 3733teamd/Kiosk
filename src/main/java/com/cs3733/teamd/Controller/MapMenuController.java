@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -20,11 +21,7 @@ import java.util.LinkedList;
 //import com.cs3733.teamd.Model.Location;
 
 
-public class MapMenuController {
-    static ObservableList<String> roomsList =
-            FXCollections.observableArrayList( "Select Room", "3A", "3B","3C" );
-    static ObservableList<String> serviceList =
-            FXCollections.observableArrayList( "Select Service", "Allergy", "Blood Test","ICU","Oranges", "Emergency Room" );
+public class MapMenuController extends  AbsController{
 
 
 
@@ -45,59 +42,47 @@ public class MapMenuController {
     public Label instruct;
     public Text menu;
 
+    public AnchorPane MMGpane;
+
     @FXML
     public ChoiceBox DestinationSelect;
     public ChoiceBox StartSelect;
 
-    static public LinkedList<Node> pathNodes= new LinkedList<>();
+    static public LinkedList<Node> pathNodes= new LinkedList<Node>();
 
     @FXML
     private void initialize(){
-       // RoomSelect.setValue("Select Room");
-       // RoomSelect.setItems(roomsList);
-       // ServiceSelect.setValue("Select Service");
-        //ServiceSelect.setItems(serviceList);
-
         setText();
         //visibleLocations.add(new Tag("Example Tag"));
-        //roomDropDown.addAll(visibleLocations);
+        roomDropDown.addAll(visibleLocations);
         DestinationSelect.setValue(roomDropDown.get(0));
         DestinationSelect.setItems(roomDropDown);
         StartSelect.setValue(roomDropDown.get(0));
         StartSelect.setItems(roomDropDown);
     }
 
-
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene; //
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/MapMenu.fxml");
     }
+
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapMenu.fxml");
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
+        System.out.println(Main.backString);
+        switchScreen(MMGpane, Main.backString, "/Views/MapMenu.fxml");
     }
 
+    //Submit button
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        //Main.roomSelected = RoomSelect.getValue().toString();
-        //Main.serviceSelected = ServiceSelect.getValue().toString();
-        Main.window.setScene(Main.MapDirectionsScene);
-
 
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
@@ -107,17 +92,9 @@ public class MapMenuController {
 
         Pathfinder pathfinder = new Pathfinder(startTag.getNodes().getFirst(), destinationTag.getNodes().getFirst());
 
-        MapDirectionsController mapDirectionsController = new MapDirectionsController();
-       // mapDirectionsController.plotPath(pathfinder.shortestPath());
         pathNodes =pathfinder.shortestPath();
 
-        Main.window.show();
-        Main.backRoot = Main.MapMenuScene;
-
-
-//        MapDirectionsController mapDirectionsController = new MapDirectionsController();
-                //  <Button fx:id="SubmitButton" layoutX="585.0" layoutY="571.0" mnemonicParsing="false" onAction="#submitSearch" text="Submit">
-
+        switchScreen(MMGpane, "/Views/MapDirections.fxml", "/Views/MapMenu.fxml");
     }
 
     @FXML

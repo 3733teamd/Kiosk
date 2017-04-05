@@ -1,16 +1,23 @@
 package com.cs3733.teamd;
 
+import com.cs3733.teamd.Controller.EditMapController;
+import com.cs3733.teamd.Controller.EditDoctorController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
 import com.cs3733.teamd.Model.Directory;
+
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,46 +43,26 @@ public class Main extends Application {
     public static Scene backRoot;
     public static String roomSelected = "Select Room";
     public static String serviceSelected = "Select Service";
-
-
-
+    
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
-    public static Scene LoginScene;
-    public static Scene MapMenuScene;
-    public static Scene MapDirectionsScene;
-    public static Scene AdminMenuScene;
-    public static Scene EditServiceScene;
-    public static Scene EditDoctorScene;
-    public static Scene EditMapScene;
+
 
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");
     public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
+    public static String backString = "/Views/Main.fxml";
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         window=primaryStage;
         rootMain = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"), bundle);
-        rootLogin = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"), bundle);
-        rootMapMenu = FXMLLoader.load(getClass().getResource("/Views/MapMenu.fxml"),bundle);
-        rootMapDirections = FXMLLoader.load(getClass().getResource("/Views/MapDirections.fxml"),bundle);
-        rootAdminMenu = FXMLLoader.load(getClass().getResource("/Views/AdminMenu.fxml"),bundle);
-        rootEditService = FXMLLoader.load(getClass().getResource("/Views/EditService.fxml"),bundle);
-        rootEditDoctor = FXMLLoader.load(getClass().getResource("/Views/EditDoctor.fxml"),bundle);
-        rootEditMap = FXMLLoader.load(getClass().getResource("/Views/EditMap.fxml"),bundle);
 
         MainScene=new Scene(rootMain, 1300, 800);
-        LoginScene=new Scene(rootLogin, 1300, 800);
-        MapMenuScene=new Scene(rootMapMenu, 1300, 800);
-        MapDirectionsScene=new Scene(rootMapDirections, 1300, 800);
-        AdminMenuScene=new Scene(rootAdminMenu, 1300, 800);
-        EditDoctorScene=new Scene(rootEditDoctor, 1300, 800);
-        EditServiceScene=new Scene(rootEditService, 1300, 800);
-        EditMapScene=new Scene(rootEditMap, 1300, 800);
+
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
-
     }
 
     public static void main(String[] args) {
@@ -90,7 +77,6 @@ public class Main extends Application {
             return;
         }
 
-
         try {
             database.setup();
         } catch (SQLException e) {
@@ -104,6 +90,13 @@ public class Main extends Application {
             System.err.println("ERROR: reading in data file");
             e.printStackTrace();
         }
+
+//        try {
+//            database.Setup();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.err.print("Could not setup database.\nMaybe tables already created\n");
+//        }
 
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;
@@ -122,10 +115,14 @@ public class Main extends Application {
             return;
         }
 
+
         //set up DIRECTORY
         dir.initialize(nodes,tags,professionals,database);
 
         dir.createNewTag("TESTINGTESTINT123");
+
+
+        //Populate Search Menus
         try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
@@ -135,10 +132,23 @@ public class Main extends Application {
 
         }
 
+
+        //Populate EditDoctor Scene
+        try{
+            EditDoctorController editDoctorController = new EditDoctorController();
+            System.out.println(tags.size());
+            editDoctorController.tagList.addAll(tags);
+            editDoctorController.professionalList.addAll(professionals);
+        }catch(Exception e){
+
+        }
+
+
         // launch window
         launch(args);
 
     }
+
 }
 
 

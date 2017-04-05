@@ -13,8 +13,9 @@ import java.util.LinkedList;
 public class Professional {
     String name;
     private int ID;
-    private ArrayList<Title> titles = new ArrayList<>();
-    private LinkedList<Tag> tags = new LinkedList<>();
+    private ArrayList<Title> titles = new ArrayList<Title>();
+    private LinkedList<Tag> tags = new LinkedList<Tag>();
+
 
     public int getID() {
         return ID;
@@ -32,10 +33,16 @@ public class Professional {
         this.ID = ID;
     }
 
-
     public void setID(int ID){
         this.ID = ID;
     }
+
+    public Professional(String name, ArrayList<Title> titles, LinkedList<Tag> tags) {
+        this.name = name;
+        this.titles = titles;
+        this.tags = tags;
+    }
+
     public void setTitles(ArrayList<Title> titles) {
         this.titles = titles;
     }
@@ -51,6 +58,10 @@ public class Professional {
         }
     }
 
+    public LinkedList<Tag> getTags() {
+        return tags;
+    }
+
     public void rmvTag(Tag t){
         if(tags.contains(t)){
             tags.remove(t);
@@ -58,6 +69,14 @@ public class Professional {
         if(t.containsProf(this)){
             t.rmvProf(this);
         }
+    }
+
+    public void rmvAllTitles(){
+        titles = new ArrayList<Title>();
+    }
+
+    public void rmvAllTags(){
+        tags = new LinkedList<Tag>();
     }
 
     public boolean containsTag(Tag t){

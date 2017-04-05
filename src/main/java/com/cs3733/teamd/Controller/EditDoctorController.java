@@ -1,22 +1,28 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Professional;
+import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class EditDoctorController {
+public class EditDoctorController extends  AbsController{
+
+    LinkedList<String> userOptionList = new LinkedList<String>();
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -24,88 +30,85 @@ public class EditDoctorController {
     public Button BackButton;
     public Button MenuButton;
 
-    public Button submitRemoveDoctor;
-    public Button submitModifyDoctor;
+    public Button addProfButton;
+    public Button modProfButton;
     public Button submitAddDoctor;
     public Button submitAddRoomDoctor;
 
     public TextField addDoctorLabel;
 
-    public ChoiceBox addRoomSelect;
-    public ChoiceBox modifyDoctorSelect;
-    public ChoiceBox modifyRoomSelect;
-    public ChoiceBox removeDoctorSelect;
     public AnchorPane pane;
     public Text menu;
-    public Label addRToD;
-    public Label addD;
+    public Label AddProf;
+    public Label ModProf;
     public Label ModRN;
     public Label remD;
+    public Label EDinstruct;
 
+
+    public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
+    public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
+    public static ObservableList<Professional> professionalList = FXCollections.observableArrayList();
+    public ChoiceBox<Title> titleBox;
+    public ChoiceBox modifyOptions;
+    public ChoiceBox modifyProf;
+    public ChoiceBox modifySection;
+    public ChoiceBox modifyTitle;
+
+
+    @FXML private void initialize(){
+        editProfOptions.add("Add To");
+        editProfOptions.add("Update");
+        editProfOptions.add("Remove");
+
+        //modifyTitle.setValue(Title.values()[0]);
+        modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
+        //modifySection.setValue(tagList.get(0));
+        modifySection.setItems(tagList);
+        modifyProf.setValue((professionalList.get(0)));
+        modifyProf.setItems(professionalList);
+        modifyOptions.setValue(editProfOptions.get(0));
+        modifyOptions.setItems(editProfOptions);
+
+        setText();
+
+    }
+
+    public AnchorPane MMGpane;
+
+
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+
     }
 
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;
+        switchScreen(MMGpane, Main.backString, "/Views/EditDoctor.fxml");
+
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
-    }
-    @FXML
-    public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
 
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
-    @FXML
-    public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
     }
 
 
 
 
+    //Spanish translation
         @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
@@ -113,16 +116,21 @@ public class EditDoctorController {
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("EditDD"));
-
-        submitRemoveDoctor.setText(Main.bundle.getString("submit"));
+        AddProf.setText(Main.bundle.getString("addProf"));
+        ModProf.setText(Main.bundle.getString("modProf"));
+        EDinstruct.setText(Main.bundle.getString("Edinstruct"));
+        addProfButton.setText(Main.bundle.getString("submit"));
+        modProfButton.setText(Main.bundle.getString("submit"));
+        addDoctorLabel.setPromptText(Main.bundle.getString("dn"));
+        /*submitRemoveDoctor.setText(Main.bundle.getString("submit"));
         submitModifyDoctor.setText(Main.bundle.getString("submit"));
         submitAddDoctor.setText(Main.bundle.getString("submit"));
-        submitAddRoomDoctor.setText(Main.bundle.getString("submit"));
+        submitAddRoomDoctor.setText(Main.bundle.getString("submit"));*/
 
-        addRToD.setText(Main.bundle.getString("AddRtoD"));
+        /*addRToD.setText(Main.bundle.getString("AddRtoD"));
         addD.setText(Main.bundle.getString("addDoctor"));
         ModRN.setText(Main.bundle.getString("ModRN"));
-        remD.setText(Main.bundle.getString("remDoctor"));
+        remD.setText(Main.bundle.getString("remDoctor"));*/
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-80);
             menu.setFont(Font.font("System", 75));
@@ -137,4 +145,40 @@ public class EditDoctorController {
         }
     }
 
+    public void professionalSubmit(ActionEvent actionEvent) {
+        String optionChoice = (String) modifyOptions.getValue();
+        Professional currentProf = (Professional) modifyProf.getValue();
+        Tag currentSection = (Tag) modifySection.getValue();
+        Title currentTitle = (Title) modifyTitle.getValue();
+
+
+        if(optionChoice == "Add To") {
+            if(currentSection != null) {
+                currentProf.addTag(currentSection);
+            }
+            if(currentTitle != null){
+                currentProf.addTitle(currentTitle);
+            }
+
+        }else if(optionChoice == "Update") {
+            if(currentSection != null) {
+                currentProf.rmvAllTags();
+                currentProf.addTag(currentSection);
+            }
+            if(currentTitle != null){
+                currentProf.rmvAllTitles();
+                currentProf.addTitle(currentTitle);
+            }
+        }else if(optionChoice == "Remove"){
+            /////remove current prof from directory
+        }
+
+
+    }
+
+    public void addProfToSystem(ActionEvent actionEvent) {
+        String profName = (String) addDoctorLabel.getText();
+        Professional currentProf = new Professional(profName, 420);
+        System.out.println(currentProf.toString());
+    }
 }

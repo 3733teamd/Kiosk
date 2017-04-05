@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class LoginController {
+public class LoginController extends AbsController{
 
     public Button largerTextButton;
 
@@ -32,35 +33,42 @@ public class LoginController {
     public Text menu;
     public Text user;
     public Text pass;
-    @FXML
+
+    public AnchorPane MMGpane;
+
+    @FXML   
     public void initialize(){
         setText();
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
+              switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+        /*Main.window.hide();
+
         Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.window.show();*/
+        //Main.backRoot = Main.LoginScene;
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        switchScreen(MMGpane, Main.backString, "/Views/Login.fxml");
+
     }
 
+    //Submit button
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws  IOException {
         username = UserNameField.getText();
@@ -68,13 +76,18 @@ public class LoginController {
         System.out.print(username);
         System.out.print(password);
 
-        Main.window.hide();
+        switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
+        /*Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        Main.backRoot = Main.LoginScene;*/
+        if(username.equals("dev")&&password.equals("dev")) {
+            switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
 
+        }
     }
 
+    //Spanish translation
     @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
@@ -87,13 +100,9 @@ public class LoginController {
         loginSubmitButton.setText(Main.bundle.getString("login"));
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-170);
-            //loginSubmitButton.setLayoutX(555);
-            //menu.setTranslateX(-175);
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(0);
-            //loginSubmitButton.setLayoutX(600);
         }
     }
 

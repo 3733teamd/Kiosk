@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,56 +57,45 @@ public class EditServiceController {
 
     @FXML
     private void initialize(){
-//        RoomSelect.setValue("Select Room");
         modifyRoomSelect.setItems(roomsList);
-//        ServiceSelect.setValue("Select Service");
         modifyServiceSelect.setItems(serviceList);
         removeServiceSelect.setItems(serviceList);
 
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
-    }
+   }
 
+   //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
     }
+
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
     }
 
-    //TODO: update database
+
     @FXML
     public void onSubmitAdd(ActionEvent actionEvent) throws  IOException{
         Main.window.hide();
         newService = addService.getText();
         System.out.print("new service: " + newService);
 
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
+        //-------------------------------------------------------this is the tag that needs to be added to the database
+        Tag t = new Tag(this.addService.getText());
+
     }
+
+    //Modify button
     @FXML
     public void onSubmitModify(ActionEvent actionEvent) throws  IOException{
         Main.window.hide();
@@ -115,23 +105,18 @@ public class EditServiceController {
         System.out.print("modified service: " + modifiedService);
         System.out.print("modified room: " + modifiedRoom);
 
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
     }
 
+    //Remove button
     @FXML
     public void onSubmitRemove(ActionEvent actionEvent) throws  IOException{
         Main.window.hide();
 
         removedService = removeServiceSelect.getValue().toString();
         System.out.print("removed service: " + removedService);
-
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;
     }
 
+    //Spanish translation
     @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
@@ -149,11 +134,9 @@ public class EditServiceController {
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-80);
             menu.setFont(Font.font("System", 75));
-            //menu.setTranslateX(-175);
 
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(0);
             menu.setFont(Font.font("System", 91));
 

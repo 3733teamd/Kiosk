@@ -16,9 +16,8 @@ public class Tag {
          return profs;
      }
 
-
-    public Tag(String trait){
-        this.tagName = trait;
+    public Tag(String name){
+        this.tagName = name;
     }
 
     public String getTagName(){
@@ -28,6 +27,7 @@ public class Tag {
     public void setTagName(String s){
         tagName = s;
     }
+
 
     //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
     public void addNode(Node n){

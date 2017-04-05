@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class AdminMenuController {
+public class AdminMenuController extends AbsController {
 
     public Button largerTextButton;
     public Button SearchButton;
@@ -27,62 +27,60 @@ public class AdminMenuController {
 
     public AnchorPane pane;
     public Text menu;
+    public AnchorPane MMGpane;
 
     @FXML
+    public void initialize(){
+        setText();
+    }
+
+    @FXML
+    //search button
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+
     }
 
     @FXML
+    //login button
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+        switchScreen(MMGpane, Main.backString, "/Views/AdminMenu.fxml");
+
     }
 
     @FXML
+    //Edit Service Directory button - not used
     public void onEditServiceDirectory(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.EditServiceScene);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+
     }
 
     @FXML
+    //Edit Map button
     public void onEditMap(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.EditMapScene);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
-    }
-    @FXML
-    public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
-        Main.window.hide();
-        Main.window.setScene(Main.EditDoctorScene);
-        Main.window.show();
-        Main.backRoot = Main.AdminMenuScene;
+        switchScreen(MMGpane, "/Views/EditMap.fxml", "/Views/AdminMenu.fxml");
     }
 
     @FXML
+    //Edit Doctor Directory button
+    public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
+        switchScreen(MMGpane, "/Views/EditDoctor.fxml", "/Views/AdminMenu.fxml");
+    }
+
+    @FXML
+    //Menu button
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+
     }
     @FXML
+    //translate to Spanish
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
@@ -96,16 +94,8 @@ public class AdminMenuController {
 
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-250);
-            //menu.setTranslateX(-175);
-            EditDoctorDirectory.setLayoutX(440);
-            EditServiceDirectory.setLayoutX(440);
-            EditMap.setLayoutX(530);
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
-            EditDoctorDirectory.setLayoutX(520);
-            EditServiceDirectory.setLayoutX(520);
-            EditMap.setLayoutX(590);
             menu.setX(0);
         }
     }

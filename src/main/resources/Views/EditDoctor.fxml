@@ -6,56 +6,45 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" prefHeight="800.0" prefWidth="1300.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditDoctorController">
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditDoctorController">
    <children>
-      <AnchorPane fx:id="pane" onMouseMoved="#setText" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" layoutX="-31.0" layoutY="-14.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="1308.0" />
-            <AnchorPane layoutX="-12.0" layoutY="-12.0" prefHeight="800.0" prefWidth="1290.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
+            <AnchorPane layoutX="-0.0" prefHeight="800.0" prefWidth="1300.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutX="-17.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1322.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutY="118.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
                   <Button fx:id="largerTextButton" layoutX="1109.0" layoutY="159.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Circle fill="#007bedd6" layoutX="1242.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="MenuButton" layoutX="1182.0" layoutY="683.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
+                  <Circle fill="#007bedd6" layoutX="1239.0" layoutY="740.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="MenuButton" layoutX="1179.0" layoutY="676.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Button>
-                  <Circle fill="#007bedd6" layoutX="59.0" layoutY="743.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="LoginButton" layoutX="-22.0" layoutY="686.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
+                  <Circle fill="#007bedd6" layoutX="59.0" layoutY="740.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="LoginButton" layoutX="-22.0" layoutY="683.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <Circle fill="#007bedd6" layoutX="1243.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fill="#007bedd6" layoutX="61.0" layoutY="61.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
+                  <Circle fill="#007bedd6" layoutX="1238.0" layoutY="59.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#007bedd6" layoutX="57.0" layoutY="58.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="SearchButton" layoutX="-22.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
                      <font>
                         <Font size="29.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" layoutX="1166.0" layoutY="-8.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="139.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+                  <Button fx:id="BackButton" layoutX="1170.0" layoutY="1.0" mnemonicParsing="false" onAction="#onBack" prefHeight="121.0" prefWidth="128.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back" textAlignment="RIGHT" wrapText="true">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -65,55 +54,30 @@
                         <Font size="91.0" />
                      </font>
                   </Text>
-                  <Button fx:id="submitRemoveDoctor" layoutX="832.0" layoutY="580.0" mnemonicParsing="false" onAction="#submitRemoveDoctor" text="Submit">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="remD" layoutX="314.0" layoutY="524.0" prefHeight="56.0" prefWidth="464.0" text="Remove Doctor" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="addRoomSelect" layoutX="558.0" layoutY="337.0" prefHeight="31.0" prefWidth="196.0" />
-                  <ChoiceBox id="RoomSelect" fx:id="removeDoctorSelect" layoutX="310.0" layoutY="593.0" prefHeight="31.0" prefWidth="196.0" />
-                  <Label fx:id="ModRN" layoutX="310.0" layoutY="393.0" prefHeight="56.0" prefWidth="559.0" text="Modify Room Number" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="modifyRoomSelect" layoutX="566.0" layoutY="467.0" prefHeight="31.0" prefWidth="196.0" />
-                  <ChoiceBox id="RoomSelect" fx:id="modifyDoctorSelect" layoutX="310.0" layoutY="467.0" prefHeight="31.0" prefWidth="196.0" />
-                  <Button fx:id="submitModifyDoctor" layoutX="832.0" layoutY="442.0" mnemonicParsing="false" onAction="#submitModifyDoctor" text="Submit">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="submitAddDoctor" layoutX="832.0" layoutY="326.0" mnemonicParsing="false" onAction="#submitAddDoctor" text="Submit">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="addDoctorLabel" layoutX="314.0" layoutY="337.0" promptText="Doctors Name">
+                  <TextField fx:id="addDoctorLabel" layoutX="163.0" layoutY="219.0" prefHeight="0.0" prefWidth="580.0" promptText="Doctors Name">
                      <tooltip>
                         <Tooltip text="Add Doctor Name" />
                      </tooltip>
                   </TextField>
-                  <Label fx:id="addRToD" layoutX="314.0" layoutY="148.0" prefHeight="44.0" prefWidth="529.0" text="Add Room to a Doctor" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="AddProf" layoutX="157.0" layoutY="155.0" prefHeight="44.0" prefWidth="529.0" text="Add Professional" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <ChoiceBox id="RoomSelect" fx:id="addDoctorSelectRoom" layoutX="310.0" layoutY="216.0" prefHeight="31.0" prefWidth="196.0" />
-                  <ChoiceBox id="RoomSelect" fx:id="addRoomToDoc" layoutX="567.0" layoutY="216.0" prefHeight="31.0" prefWidth="196.0" />
-                  <Button fx:id="submitAddRoomDoctor" layoutX="832.0" layoutY="204.0" mnemonicParsing="false" onAction="#submitAddRoomDoctor" text="Submit">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="addD" layoutX="314.0" layoutY="270.0" prefHeight="56.0" prefWidth="513.0" text="Add Doctor" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="ModProf" layoutX="161.0" layoutY="326.0" prefHeight="56.0" prefWidth="513.0" text="Modify Professional" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="28.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="modifyOptions" layoutX="165.0" layoutY="445.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="modifyProf" layoutX="366.0" layoutY="445.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="modifySection" layoutX="569.0" layoutY="445.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="modifyTitle" layoutX="764.0" layoutY="445.0" prefWidth="150.0" />
+                  <Button fx:id="modProfButton" layoutX="1027.0" layoutY="445.0" mnemonicParsing="false" onAction="#professionalSubmit" text="Submit" />
+                  <Button fx:id="addProfButton" layoutX="839.0" layoutY="219.0" mnemonicParsing="false" onAction="#addProfToSystem" text="Button" />
+                  <Label fx:id="EDinstruct" layoutX="259.0" layoutY="525.0" prefHeight="136.0" prefWidth="770.0" text="Select add to add the selected objects onto the doctor. Select update to update the selected fields to the Doctor.  Select Remove to remove the selected doctor." textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="24.0" />
                      </font>
                   </Label>
                </children>
@@ -121,4 +85,4 @@
          </children>
       </AnchorPane>
    </children>
-</GridPane>
+</AnchorPane>
