@@ -20,6 +20,9 @@ public class Directory {
         return dir;
     }
 
+    int nextNodeID;
+    int nextProfID;
+
     private ArrayList<Node> allNodes = new ArrayList<Node>();
     private ArrayList<Tag> allTags = new ArrayList<Tag>();
     private ArrayList<Professional> allProfs = new ArrayList<Professional>();
@@ -32,6 +35,8 @@ public class Directory {
         allTags = tags;
         allProfs = profs;
         this.dbHandler = dbHandler;
+        this.nextNodeID = nextNodeID;
+        this.nextProfID = nextProfID;
     }
 
     public ArrayList<Tag> getAllTags() {
@@ -68,16 +73,18 @@ public class Directory {
         notifyUpdate();
         return  newTag;
     }
-    public Node createNewNode(int x, int y){
-        Node newNode = new Node(x,y);
+    public Node createNewNode(int x, int y, int ID){
+        Node newNode = new Node(x,y,ID);
+
         //newNode.setID(dbHandler.generateKeyForNode());
         allNodes.add(newNode);
         //SAVE TO DATABASE
         notifyUpdate();
         return newNode;
     }
-    public Professional creaNewProf(String name, ArrayList<Title> titles){
-        Professional newProf = new Professional(name,titles);
+    public Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
+        Professional newProf = new Professional(name,titles,ID);
+        nextProfID++;
         //newProf.setID(dbHandler.generateKeyForProf());
         allProfs.add(newProf);
         //SAVE TO DATABASE
