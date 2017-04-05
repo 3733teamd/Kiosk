@@ -7,8 +7,7 @@ public enum Table {
     Nodes ("Node", "(\n" +
             " ID INTEGER PRIMARY KEY,\n" +
             "  X INTEGER NOT NULL,\n" +
-            "  Y INTEGER NOT NULL,\n" +
-            "  CONSTRAINT uq_Nd_IDType UNIQUE (ID)\n" +
+            "  Y INTEGER NOT NULL\n" +
             ")"),
 
     AdjacentNodes ("AdjacentNode", "(\n" +
