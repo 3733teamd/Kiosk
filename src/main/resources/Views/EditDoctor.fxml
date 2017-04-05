@@ -85,6 +85,5 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <Button mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>
