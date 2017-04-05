@@ -41,8 +41,10 @@ public class LoginController extends AbsController{
         setText();
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
+              switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
         /*Main.window.hide();
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();*/
@@ -50,27 +52,21 @@ public class LoginController extends AbsController{
 
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;*/
-
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
 
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;*/
         switchScreen(MMGpane, Main.backString, "/Views/Login.fxml");
 
     }
 
+    //Submit button
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws  IOException {
         username = UserNameField.getText();
@@ -78,6 +74,7 @@ public class LoginController extends AbsController{
         System.out.print(username);
         System.out.print(password);
 
+        switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
         /*Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
@@ -88,6 +85,7 @@ public class LoginController extends AbsController{
         }
     }
 
+    //Spanish translation
     @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
@@ -100,13 +98,9 @@ public class LoginController extends AbsController{
         loginSubmitButton.setText(Main.bundle.getString("login"));
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-170);
-            //loginSubmitButton.setLayoutX(555);
-            //menu.setTranslateX(-175);
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(0);
-            //loginSubmitButton.setLayoutX(600);
         }
     }
 

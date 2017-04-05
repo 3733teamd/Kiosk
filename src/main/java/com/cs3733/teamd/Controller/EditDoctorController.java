@@ -74,87 +74,65 @@ public class EditDoctorController extends  AbsController{
 
     public AnchorPane MMGpane;
 
+
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        /*Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;*/
         switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
 
     }
 
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;*/
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
 
     }
 
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.EditDoctorScene;*/
         switchScreen(MMGpane, Main.backString, "/Views/EditDoctor.fxml");
 
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;*/
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
 
     }
+
+    //Remove Doctor button
     @FXML
     public void submitRemoveDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
-
-        /*Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
     }
+
     @FXML
+    //Modify Doctor button
     public void submitModifyDoctor(ActionEvent actionEvent) throws IOException{
         Main.window.hide();
-       /* Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
-    }
+       }
+
     @FXML
+    //Add Doctor button
     public void submitAddDoctor(ActionEvent actionEvent) throws IOException{
-
-
-
         LinkedList<Tag> loT = new LinkedList<Tag>();
         Tag t = (Tag) addRoomSelect.getValue();
         loT.add(t);
         Professional p = new Professional(addDoctorLabel.getText() );
-
-
-      /*  Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
     }
+
     @FXML
+    //Add Room to Doctor button
     public void submitAddRoomDoctor(ActionEvent actionEvent) throws IOException{
-       /* Main.window.hide();
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
+
     }
 
 
 
-
+    //Spanish translation
         @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
