@@ -99,6 +99,10 @@ public class Directory {
     public void deleteNode(Node n){
         allNodes.remove(n);
 
+
+
+        n.destroyNode();
+
         //REMOVE FROM DATABASE
         notifyUpdate();
     }
