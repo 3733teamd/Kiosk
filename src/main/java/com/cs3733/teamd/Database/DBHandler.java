@@ -282,7 +282,12 @@ public class DBHandler {
      */
     public void setup() throws SQLException, IOException {
         //deletes all tables
-        drop();
+        try {
+            drop();
+        } catch (Exception e) {
+            System.out.println("Nothing to drop");
+        }
+
         Statement s = connection.createStatement();
         for (Table table: Table.values()){
             try {
