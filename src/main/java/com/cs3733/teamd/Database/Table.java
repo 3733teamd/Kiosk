@@ -52,7 +52,7 @@ public enum Table {
             "  CONSTRAINT fk_hcp_id FOREIGN KEY (hcpID) REFERENCES HCP(ID) initially deferred\n" +
             ")"),
 
-    ProfessionalTiles ("ProTitle",  "(\n" +
+    ProfessionalTitles ("ProTitle",  "(\n" +
             "  Acronym VARCHAR(5) PRIMARY KEY,\n" +
             "  Full_title VARCHAR(50) NOT NULL\n" +
             ")"),

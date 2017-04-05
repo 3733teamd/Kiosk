@@ -288,25 +288,9 @@ public class DBHandler {
     public void setup() throws SQLException, IOException {
 
         Statement s = connection.createStatement();
-
-        String[] createTables =
-                {
-                        DBStatements.CREATE_TABLE_NODE,
-                        DBStatements.CREATE_TABLE_TAG,
-                        DBStatements.CREATE_TABLE_HCP,
-                        DBStatements.CREATE_TABLE_ADJACENTNODE,
-                        DBStatements.CREATE_TABLE_HCPTAG,
-                        DBStatements.CREATE_TABLE_PROTITLE,
-                        DBStatements.CREATE_TABLE_NODETAG,
-                        DBStatements.CREATE_TABLE_HCPTITLE
-
-                };
-
-        //Create all tables
-        for (String statement : createTables) {
-            System.out.println(statement);
+        for (Table table: Table.values()){
             try {
-                s.execute(statement);
+                s.execute(table.createStatement());
             } catch (SQLException se){
                 if(!se.getSQLState().equals("X0Y32")){
                     se.printStackTrace();
@@ -344,10 +328,24 @@ public class DBHandler {
         Statement s = connection.createStatement();
         connection.setAutoCommit(false);
 
-        for (String name: DBStatements.DATABASE_NAMES){
-            s.execute("DELETE FROM " + name);
+        for (Table table: Table.values()){
+            s.execute(table.emptyStatement())
         }
 
+        connection.setAutoCommit(true);
+        s.close();
+    }
+
+    public void emptyExceptTitles() throws SQLException {
+        Statement s = connection.createStatement();
+        connection.setAutoCommit(false);
+
+        for (Table table : Table.values()){
+            if(table != Table.ProfessionalTitles){
+                s.execute(table.emptyStatement());
+
+            }
+        }
         connection.setAutoCommit(true);
         s.close();
     }
@@ -360,8 +358,8 @@ public class DBHandler {
         Statement s = connection.createStatement();
         connection.setAutoCommit(false);
 
-        for (String name: DBStatements.DATABASE_NAMES){
-            s.execute("DROP TABLE " + name);
+        for (Table table: Table.values()){
+            s.execute(table.dropStatement())
         }
 
         connection.setAutoCommit(true);
@@ -381,7 +379,7 @@ public class DBHandler {
         Directory dir = Directory.getInstance();
         Statement s = connection.createStatement();
         //wipe everything
-        empty();
+        emptyExceptTitles();
         //for each node
         for(Node n: dir.getAllNodes()){
             //add to Node
