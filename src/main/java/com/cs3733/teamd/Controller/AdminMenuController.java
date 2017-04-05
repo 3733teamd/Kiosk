@@ -30,13 +30,18 @@ public class AdminMenuController extends AbsController {
     public AnchorPane MMGpane;
 
     @FXML
+    public void initialize(){
+        setText();
+    }
+
+    @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         /*Main.window.hide();
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();
         Main.backRoot = Main.AdminMenuScene;*/
 
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
 
     }
 
@@ -46,7 +51,7 @@ public class AdminMenuController extends AbsController {
         Main.window.setScene(Main.LoginScene);
         Main.window.show();
         Main.backRoot = Main.AdminMenuScene;*/
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
 
     }
 

@@ -48,6 +48,7 @@ public class LoginController extends AbsController{
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();*/
         //Main.backRoot = Main.LoginScene;
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
 
     }
 

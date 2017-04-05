@@ -40,7 +40,7 @@ public class MainController extends AbsController {
     @FXML
     public void initialize(){
         //backString = "/Views/Main.fxml";
-
+        setText();
     }
 
     @FXML
