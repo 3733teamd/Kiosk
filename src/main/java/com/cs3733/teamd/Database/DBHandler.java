@@ -271,13 +271,14 @@ public class DBHandler {
     }
 
     //saves dir into the database
-    public void save(){
+    public void save() throws SQLException{
         Directory dir = Directory.getInstance();
-        //wipe everything but titles
-        
+        Statement s = connection.createStatement();
+        //wipe everything
+        empty();
         //for each node
         for(Node n: dir.getAllNodes()){
-
+            //add to Node
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
@@ -287,6 +288,15 @@ public class DBHandler {
         for(Tag t : dir.getAllTags()){
 
         }
+
+        //fill in adjacentNode
+        for(Node n : dir.getAllNodes()){
+            for(Node edge : n.getNodes()){
+                //create adjacent node
+
+            }
+        }
+
 
     }
 
