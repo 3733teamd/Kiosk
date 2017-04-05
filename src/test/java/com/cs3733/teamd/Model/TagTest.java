@@ -17,7 +17,7 @@ public class TagTest {
     @Test
     public void testTagNameChanged(){
         Tag t = new Tag("Wrong");
-        t.tagName = "Right";
-        assertEquals("Right",t.tagName);
+        t.setTagName("Right");
+        assertEquals("Right",t.getTagName());
     }
 }

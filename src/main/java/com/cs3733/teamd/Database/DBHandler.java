@@ -329,7 +329,7 @@ public class DBHandler {
         connection.setAutoCommit(false);
 
         for (Table table: Table.values()){
-            s.execute(table.emptyStatement())
+            s.execute(table.emptyStatement());
         }
 
         connection.setAutoCommit(true);
@@ -359,7 +359,7 @@ public class DBHandler {
         connection.setAutoCommit(false);
 
         for (Table table: Table.values()){
-            s.execute(table.dropStatement())
+            s.execute(table.dropStatement());
         }
 
         connection.setAutoCommit(true);
