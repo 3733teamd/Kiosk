@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
@@ -223,7 +224,7 @@ public class DBHandler {
     /**
      * Setup all tables and constraints
      */
-    public void Setup() throws Exception {
+    public void Setup() throws SQLException, IOException {
 
         Statement s = con.createStatement();
 

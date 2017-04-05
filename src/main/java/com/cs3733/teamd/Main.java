@@ -1,17 +1,24 @@
 package com.cs3733.teamd;
 
 import com.cs3733.teamd.Controller.EditMapController;
+import com.cs3733.teamd.Controller.EditDoctorController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
+//import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,9 +28,15 @@ public class Main extends Application {
 
     public static String Langugage="English";
     public static Stage window;
-    public static String backString;// ="/Views/MapDirections.fxml";
 
     public static Parent rootMain;
+    public static Parent rootLogin;
+    public static Parent rootMapMenu;
+    public static Parent rootMapDirections;
+    public static Parent rootAdminMenu;
+    public static Parent rootEditService;
+    public static Parent rootEditDoctor;
+    public static Parent rootEditMap;
 
     public static Scene backRoot;
     public static String roomSelected = "Select Room";
@@ -62,6 +75,18 @@ public class Main extends Application {
             return;
         }
 
+        try {
+            database.Setup();
+        } catch (SQLException e) {
+            if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
+                System.out.println("Skipping setup as tables are already made");
+            } else {
+                System.err.println("ERROR: creation of database failed");
+            }
+        } catch (IOException e){
+            System.err.println("ERROR: reading in data file");
+            e.printStackTrace();
+        }
 
 //        try {
 //            database.Setup();
@@ -87,6 +112,8 @@ public class Main extends Application {
             return;
         }
 
+
+        //Populate Search Menus
         try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
@@ -97,21 +124,22 @@ public class Main extends Application {
         }
 
 
-        try {
-            EditMapController editMapController = new EditMapController();
-            editMapController.nodeDropDown.addAll(nodes);
-            editMapController.StartNodeSelect.setValue(editMapController.nodeDropDown);
-            editMapController.ConnectionSelect.setValue(editMapController.nodeDropDown);
-            editMapController.tagDropDown.addAll(tags);
-            editMapController.TagBox.setValue(editMapController.tagDropDown);
+        //Populate EditDoctor Scene
+        try{
+            EditDoctorController editDoctorController = new EditDoctorController();
+            System.out.println(tags.size());
+            editDoctorController.tagList.addAll(tags);
+            editDoctorController.professionalList.addAll(professionals);
         }catch(Exception e){
 
         }
+
 
         // launch window
         launch(args);
 
     }
+
 }
 
 
