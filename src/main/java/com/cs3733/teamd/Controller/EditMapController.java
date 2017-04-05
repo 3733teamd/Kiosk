@@ -61,11 +61,11 @@ public class EditMapController extends AbsController {
     public ChoiceBox ConnectionSelect;
     public ChoiceBox TagBox;
 
+    //initialize scene and data
     @FXML
     private void initialize(){
 
         setText();
-        //visibleLocations.add(new Tag("Example Tag"));
         nodeDropDown.addAll(currentNodes);
         StartNodeSelect.setItems(nodeDropDown);
         ConnectionSelect.setItems(nodeDropDown);
@@ -73,83 +73,52 @@ public class EditMapController extends AbsController {
         TagBox.setItems(tagDropDown);
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        /*Main.window.hide();
-        Main.window.setScene(Main.MapMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditMapScene;*/
         switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
 
     }
 
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.LoginScene);
-        Main.window.show();
-        Main.backRoot = Main.EditMapScene;*/
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
 
     }
+
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.backRoot);
-        Main.window.show();
-        Main.backRoot = Main.EditMapScene;*/
         switchScreen(MMGpane, Main.backString, "/Views/EditMap.fxml");
 
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        /*Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
-        Main.backRoot = Main.LoginScene;*/
         switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
 
     }
 
+    //Add Room button
     @FXML
-
-
     public void onAddRoom(ActionEvent actionEvent) throws IOException{
-        /*int newxlocation = Integer.parseInt(xLocation.getText());
-        int newylocation = Integer.parseInt(yLocation.getText());
-        Tag typeTag = (Tag) TagBox.getValue();
-        Node newNode = new Node(newxlocation, newylocation);
-        newNode.addTag(typeTag);
-        //nodes.add(newNode);
-        Main.window.hide();
-        Main.window.setScene(Main.EditMapScene);
-        Main.window.show();*/
-    }
-    public void onRemoveRoom (ActionEvent actionEvent) throws IOException{
-        /*int newxlocation = Integer.parseInt(xLocation.getText());
-        int newylocation = Integer.parseInt(yLocation.getText());
-        Tag typeTag = (Tag) TagBox.getValue();
-        Node newNode = new Node(newxlocation, newylocation);
-        newNode.addTag(typeTag);
-        //nodes.remove(newNode);
-        Main.window.hide();
-        Main.window.setScene(Main.EditMapScene);
-        Main.window.show();*/
-    }
-    public void onAddConnection(ActionEvent actionEvent) throws IOException{
-        /*//((Node) StartNodeSelect.getValue()).addNode( (Node) ConnectionSelect.getValue());
-        Main.window.hide();
-        Main.window.setScene(Main.EditMapScene);
-        Main.window.show();*/
-    }
-    public void onRemoveConnection (ActionEvent actionEvent) throws IOException{
-        /*//((Node) StartNodeSelect.getValue()).rmvNode( (Node) ConnectionSelect.getValue());
-        Main.window.hide();
-        Main.window.setScene(Main.EditMapScene);
-        Main.window.show();*/
     }
 
+    //Remove Room button
+    public void onRemoveRoom (ActionEvent actionEvent) throws IOException{
+    }
+
+      //Add Connection button
+    public void onAddConnection(ActionEvent actionEvent) throws IOException{
+    }
+
+    //Remove Connection button
+    public void onRemoveConnection (ActionEvent actionEvent) throws IOException{
+    }
+
+    //Spanish translation
     @FXML
     public void setText(){
         SearchButton.setText(Main.bundle.getString("search"));
@@ -158,7 +127,6 @@ public class EditMapController extends AbsController {
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("EditM"));
 
-//        name.setText(Main.bundle.getString("name"));
         yloc.setText(Main.bundle.getString("Xloc"));
         xloc.setText(Main.bundle.getString("Yloc"));
         addRoomButton.setText(Main.bundle.getString("AddRoom"));
@@ -166,25 +134,17 @@ public class EditMapController extends AbsController {
 
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-100);
-            //menu.setFont(Font.font("System", 75));
-            //menu.setTranslateX(-175);
-
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(0);
             menu.setFont(Font.font("System", 91));
 
         }
     }
 
+    //Add button
     @FXML
     public void onSubmitAdd(ActionEvent actionEvent) throws  IOException{
-        /*Main.window.hide();
-
-        Main.window.setScene(Main.AdminMenuScene);
-        Main.window.show();
-        Main.backRoot = Main.EditServiceScene;*/
 
     }
 }

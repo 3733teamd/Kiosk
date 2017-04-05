@@ -18,7 +18,6 @@ public class Tag {
 
 
 
-
     //adds a node, and adds this tag to the other node, ENFORCES MUTUAL KNOWLEDGE
     public void addNode(Node n){
         nodes.add(n);

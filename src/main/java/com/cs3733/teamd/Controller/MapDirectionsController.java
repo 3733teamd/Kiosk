@@ -52,9 +52,6 @@ public class MapDirectionsController extends AbsController{
     public int offset_y = 80*12;
     public AnchorPane MMGpane;
 
-
-    //public Label instructv;
-    //public Label instructt;
     public GraphicsContext gc;
 
     @FXML private void initialize()
@@ -64,19 +61,21 @@ public class MapDirectionsController extends AbsController{
         draw();
     }
 
+    //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         switchScreen(MMGpane, "/Views/MapMenu.fxml",  "/Views/MapDirections.fxml");
-        //backString = "/Views/MapDirections.fxml";
     }
 
-
+    //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
         switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapDirections.fxml");
     }
+
+    //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
         //clear canvas for further drawings
@@ -84,6 +83,7 @@ public class MapDirectionsController extends AbsController{
         switchScreen(MMGpane, Main.backString,  "/Views/MapDirections.fxml");
     }
 
+    //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws  IOException{
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
@@ -115,12 +115,10 @@ public class MapDirectionsController extends AbsController{
                 gc.setFill(Color.YELLOW);
             }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
-            //System.out.println(current.getX()+ "  "+ current.getY());
             if(previous != null){
                 gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
                         current.getX() + radius, current.getY() + radius);
             }
-            //System.out.printf(current.getX() + "" + current.getY());
             previous = current;
             path.pop();
             gc.setFill(Color.GREEN);
@@ -135,24 +133,16 @@ public class MapDirectionsController extends AbsController{
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("MapDirections"));
-        //instructv.setText(Main.bundle.getString("instruct2"));
-        //instructt.setText(Main.bundle.getString("instruct2"));
-        //System.out.print(Main.Langugage);
 
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-100);
-            //menu.setTranslateX(-175);
         }
         else if(Main.Langugage.equals("English") ){
-            // menu.setTranslateX(-175);
             menu.setX(100);
         }
     }
 
     public void plotPath(LinkedList<Node> path){
-       // System.out.println(path.size());
-       //System.out.println(path.get(0).toString());
-
         LinkedList<Point> points = new LinkedList<>();
         for (Node node: path) {
             points.add(getConvertedPoint(node));
