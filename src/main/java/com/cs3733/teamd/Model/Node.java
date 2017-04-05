@@ -14,6 +14,10 @@ public class Node {
     //DB key
     private int ID;
 
+
+    public LinkedList<Tag> getTags(){
+        return tags;
+    }
     public Node(int x, int y){
 
         coord.setLocation(x,y);

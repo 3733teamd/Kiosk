@@ -295,6 +295,11 @@ public class DBHandler {
                 //create adjacent node
 
             }
+            //fills in NODETAG
+            for(Tag t : n.getTags()){
+                //add a nodetag
+
+            }
         }
 
 
