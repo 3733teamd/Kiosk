@@ -32,14 +32,14 @@ public class AdminMenuController extends AbsController {
     @FXML
     //search button
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/LoginMenu.fxml");
 
     }
 
     @FXML
     //login button
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/LoginMenu.fxml");
 
     }
 
@@ -71,7 +71,7 @@ public class AdminMenuController extends AbsController {
     @FXML
     //Menu button
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/LoginMenu.fxml");
 
     }
     @FXML
