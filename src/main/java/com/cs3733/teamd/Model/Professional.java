@@ -17,9 +17,8 @@ public class Professional {
     private LinkedList<Tag> tags = new LinkedList<>();
 
     public int getID() {
-        return ID:
+        return ID;
     }
-
     //This is called during RUNTIME and adds itself to the DB
     public Professional(String name, ArrayList<Title> titles) {
         this.name = name;
