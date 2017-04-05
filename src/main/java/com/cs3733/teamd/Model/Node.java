@@ -96,4 +96,8 @@ public class Node {
     public String toString(){
         return "("+this.getX()+","+this.getY()+")";
     }
+
+    public String toSql(){
+        return("("+ID+","+coord.x+","+coord.y+")");
+    }
 }

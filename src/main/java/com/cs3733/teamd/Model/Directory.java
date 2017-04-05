@@ -45,6 +45,7 @@ public class Directory {
         return allProfs;
     }
 
+    /*
     public void createNewTag(String tagName){
         Tag newTag = new Tag(tagName);
         allTags.add(newTag);
@@ -80,4 +81,5 @@ public class Directory {
         //REMOVE FROM DATABASE
         dbHandler.deleteProf(p);
     }
+    */
 }

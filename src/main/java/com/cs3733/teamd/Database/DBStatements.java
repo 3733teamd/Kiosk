@@ -12,11 +12,8 @@ public final class DBStatements {
             "CREATE TABLE Node\n" +
                     "(\n" +
                     "\tID INTEGER PRIMARY KEY,\n" +
-                    "\tType VARCHAR(10) NOT NULL,\n" +
                     "\tX INTEGER NOT NULL,\n" +
                     "\tY INTEGER NOT NULL,\n" +
-                    "\tBuilding VARCHAR(10) NOT NULL,\n" +
-                    "\tFloor INTEGER NOT NULL\n" +
                     ")";
     public static final String CREATE_TABLE_ADJACENTNODE =
             "CREATE TABLE AdjacentNode\n" +

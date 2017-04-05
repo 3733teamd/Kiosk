@@ -77,7 +77,9 @@ public class Professional {
         return titles.toString() +" " + name;
     }
 
-
+    public String toSql(){
+        return("("+ID+","+")");
+    }
 
 }
 

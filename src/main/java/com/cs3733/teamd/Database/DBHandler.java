@@ -76,6 +76,7 @@ public class DBHandler {
         System.out.println("Java DB driver registered!");
         return true;
     }
+    /*
     public void delNode(Node node) throws SQLException {
         PreparedStatement ps;
         ps = connection.prepareStatement(DBStatements.DELETE_FROM_NODE);
@@ -169,7 +170,7 @@ public class DBHandler {
         int new_id = maxIDRslt.getInt("ID") + 1; //Add one to largest
         return new_id;
     }
-
+*/
     /**
      * Load data from database
      */
@@ -384,10 +385,11 @@ public class DBHandler {
         //for each node
         for(Node n: dir.getAllNodes()){
             //add to Node
+            s.execute("INSERT INTO Nodes VALUES "+n.toSql());
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
-
+            s.execute("INSERT INTO Tag VALUES "+.toSql());
         }
         //for each tag
         for(Tag t : dir.getAllTags()){
@@ -399,11 +401,11 @@ public class DBHandler {
             for(Node edge : n.getNodes()){
                 //create adjacent node
 
+
             }
             //fills in NODETAG
             for(Tag t : n.getTags()){
                 //add a nodetag
-
             }
         }
 
