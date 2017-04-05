@@ -6,11 +6,8 @@ package com.cs3733.teamd.Database;
 public enum Table {
     Nodes ("Node", "(\n" +
             " ID INTEGER PRIMARY KEY,\n" +
-            "  Type VARCHAR(10) NOT NULL,\n" +
             "  X INTEGER NOT NULL,\n" +
             "  Y INTEGER NOT NULL,\n" +
-            "  Building VARCHAR(10) NOT NULL,\n" +
-            "  Floor INTEGER NOT NULL\n" +
             "  CONSTRAINT uq_Nd_IDType UNIQUE (ID)\n" +
             ")"),
 
