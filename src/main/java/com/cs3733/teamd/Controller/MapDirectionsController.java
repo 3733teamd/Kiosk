@@ -25,7 +25,6 @@ import java.util.LinkedList;
 /**
  * Created by Allyk on 3/26/2017.
  */
-//TODO Erase paths when exiting this scene so it does not keep old
 //TODO Avoid using the onMouseMove. Redesign to use models instead.
 public class MapDirectionsController extends AbsController{
 
