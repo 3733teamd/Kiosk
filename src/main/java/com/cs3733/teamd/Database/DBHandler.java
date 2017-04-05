@@ -286,15 +286,16 @@ public class DBHandler {
 
         boolean empty = true;
 
-        while (res.next()){
-            System.out.println(res.getString("TABLE_NAME"));
+        while (res.next()){ // Look for tables that are not SYSTEM tables
             if(!res.getString("TABLE_NAME").contains("SYS")){
                 empty = false;
+                System.out.println("Found existing database");
+                break;
             }
         }
         //if no tables
         if(empty) {
-
+            System.out.println("No database found, creating tables");
             Statement s = connection.createStatement();
             for (Table table : Table.values()) {
                 try {
