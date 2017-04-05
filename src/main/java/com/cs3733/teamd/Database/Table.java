@@ -19,11 +19,9 @@ public enum Table {
             ")"),
 
     Tags ("Tag", "(\n" +
-            "  nodeID INTEGER,\n" +
-            "  tagName VARCHAR(100) NOT NULL,\n" +
-            "  CONSTRAINT pk_NdTg_nidtid PRIMARY KEY(nodeID, tagName),\n" +
-            "  CONSTRAINT fk_node_id FOREIGN KEY (nodeID) REFERENCES Node(ID) initially deferred,\n" +
-            "  CONSTRAINT fk_tag_id FOREIGN KEY (tagName) REFERENCES Tag(Name) initially deferred\n" +
+
+            "  Name VARCHAR(100) PRIMARY KEY\n" +
+
             ")"),
 
     NodeTags ("NodeTag", "(\n" +
