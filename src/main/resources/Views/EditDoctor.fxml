@@ -80,7 +80,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="submitFeedback" alignment="CENTER" layoutX="527.0" layoutY="344.0" prefHeight="21.0" prefWidth="418.0" text="Label" />
+                  <Label fx:id="submitFeedback" alignment="CENTER" layoutX="527.0" layoutY="344.0" prefHeight="21.0" prefWidth="460.0" text="Label" />
                </children>
             </AnchorPane>
          </children>
