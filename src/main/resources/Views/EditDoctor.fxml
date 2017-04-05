@@ -85,6 +85,7 @@
                   <ChoiceBox fx:id="modifySection" layoutX="569.0" layoutY="445.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="modifyTitle" layoutX="764.0" layoutY="445.0" prefWidth="150.0" />
                   <Button layoutX="1027.0" layoutY="445.0" mnemonicParsing="false" onAction="#professionalSubmit" text="Submit" />
+                  <Button fx:id="addProfButton" layoutX="839.0" layoutY="219.0" mnemonicParsing="false" onAction="#addProfToSystem" text="Button" />
                </children>
             </AnchorPane>
          </children>

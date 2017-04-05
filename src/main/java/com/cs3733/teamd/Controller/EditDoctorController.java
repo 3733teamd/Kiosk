@@ -58,14 +58,15 @@ public class EditDoctorController {
     @FXML private void initialize(){
         editProfOptions.add("Add To");
         editProfOptions.add("Update");
+        editProfOptions.add("Remove");
 
         //modifyTitle.setValue(Title.values()[0]);
         modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
         //modifySection.setValue(tagList.get(0));
         modifySection.setItems(tagList);
-        //modifyProf.setValue((professionalList.get(0)));
+        modifyProf.setValue((professionalList.get(0)));
         modifyProf.setItems(professionalList);
-        //modifyOptions.setValue(editProfOptions.get(0));
+        modifyOptions.setValue(editProfOptions.get(0));
         modifyOptions.setItems(editProfOptions);
 
 
@@ -113,15 +114,15 @@ public class EditDoctorController {
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("EditDD"));
 
-        submitRemoveDoctor.setText(Main.bundle.getString("submit"));
+        /*submitRemoveDoctor.setText(Main.bundle.getString("submit"));
         submitModifyDoctor.setText(Main.bundle.getString("submit"));
         submitAddDoctor.setText(Main.bundle.getString("submit"));
-        submitAddRoomDoctor.setText(Main.bundle.getString("submit"));
+        submitAddRoomDoctor.setText(Main.bundle.getString("submit"));*/
 
-        addRToD.setText(Main.bundle.getString("AddRtoD"));
+        /*addRToD.setText(Main.bundle.getString("AddRtoD"));
         addD.setText(Main.bundle.getString("addDoctor"));
         ModRN.setText(Main.bundle.getString("ModRN"));
-        remD.setText(Main.bundle.getString("remDoctor"));
+        remD.setText(Main.bundle.getString("remDoctor"));*/
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-80);
             menu.setFont(Font.font("System", 75));
@@ -160,8 +161,16 @@ public class EditDoctorController {
                 currentProf.rmvAllTitles();
                 currentProf.addTitle(currentTitle);
             }
+        }else if(optionChoice == "Remove"){
+            /////remove current prof from directory
         }
 
 
+    }
+
+    public void addProfToSystem(ActionEvent actionEvent) {
+        String profName = (String) addDoctorLabel.getText();
+        Professional currentProf = new Professional(profName);
+        System.out.println(currentProf.toString());
     }
 }
