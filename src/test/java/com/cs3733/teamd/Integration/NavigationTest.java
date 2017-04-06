@@ -9,7 +9,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -61,7 +60,7 @@ public class NavigationTest {
         Statement s = null;
         try {
             s = handler.getConnection().createStatement();
-            handler.loadDbEntriesFromFile(s, "/DatabaseImports/DBInitialImports.txt");
+            handler.loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/DBInitialImports.txt");
             handler.load();
         } catch (SQLException e) {
             e.printStackTrace();

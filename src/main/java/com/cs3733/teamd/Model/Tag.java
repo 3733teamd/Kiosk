@@ -12,12 +12,19 @@ public class Tag {
      private LinkedList<Node> nodes = new LinkedList<Node>();
      private LinkedList<Professional> profs = new LinkedList<Professional>();
 
+    public int getId() {
+        return id;
+    }
+
+    private int id;
+
      public LinkedList<Professional> getProfs(){
          return profs;
      }
 
-    public Tag(String name){
-        this.tagName = name;
+    public Tag(String name, int id){
+         this.tagName = name;
+         this.id = id;
     }
 
     public String getTagName(){

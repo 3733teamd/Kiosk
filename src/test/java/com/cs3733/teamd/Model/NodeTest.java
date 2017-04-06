@@ -12,8 +12,8 @@ import static org.junit.Assert.assertTrue;
 public class NodeTest {
     @Test
     public void testNodeDist(){
-        Node n1 = new Node(1,2);
-        Node n2 = new Node(1,3);
+        Node n1 = new Node(1,2,4);
+        Node n2 = new Node(1,3,4 );
         assertEquals(n1.getDist(n2),1, .005);
     }
 

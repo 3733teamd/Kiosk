@@ -1,9 +1,11 @@
 package com.cs3733.teamd.Database;
 
+import com.cs3733.teamd.Model.Node;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -87,7 +89,8 @@ public class DBHandlerTest {
         Statement s = null;
         try {
             s = handler.getConnection().createStatement();
-            handler.loadDbEntriesFromFile(s, "/DatabaseImports/DBInitialImports.txt");
+            handler.loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/DBInitialImports.txt");
+            handler.load();
         } catch (SQLException e) {
             e.printStackTrace();
             fail();
@@ -96,6 +99,44 @@ public class DBHandlerTest {
             fail();
         }
 
+        dropSchemas(handler);
+    }
+
+    @Test
+    public void testLoadAdjacentNodes() {
+        DBHandler handler = getTestHandler();
+        createSchemas(handler);
+        Statement s = null;
+        try {
+            s = handler.getConnection().createStatement();
+            handler.loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/AdjacentNodeTestData.txt");
+            handler.load();
+            List<Node> nodes = handler.nodes;
+            for(Node n: nodes) {
+                if(n.getID() == 1) {
+                    assertEquals(2, n.getNodes().size());
+                    for(Node n2: n.getNodes()) {
+                        assertTrue( "ID is: "+n2.getID(),n2.getID() == 2 || n2.getID() == 5);
+                    }
+                } else if(n.getID() == 2) {
+                    assertEquals(1, n.getNodes().size());
+                } else if(n.getID() == 5) {
+                    assertEquals(1, n.getNodes().size());
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            dropSchemas(handler);
+            fail();
+        } catch (IOException e) {
+            e.printStackTrace();
+            dropSchemas(handler);
+            fail();
+        } catch(AssertionError e) {
+            dropSchemas(handler);
+            fail();
+        }
         dropSchemas(handler);
     }
 

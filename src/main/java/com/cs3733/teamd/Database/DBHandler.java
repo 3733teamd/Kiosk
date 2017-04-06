@@ -96,8 +96,9 @@ public class DBHandler {
         Statement s = connection.createStatement();
 
         Map<Integer, Node> nodeMap = new HashMap<>();
-        Map<String, Tag> tagMap = new HashMap<>();
+        Map<Integer, Tag> tagMap = new HashMap<>();
         Map<Integer, Professional> professionalMap = new HashMap<>();
+        Map<Integer, Title> professionalTitleMap = new HashMap<>();
 
 
         //STAGE 1: Creating Entities adding associations when possible
@@ -105,9 +106,13 @@ public class DBHandler {
         //LOAD NODES
         ResultSet nodeTupleRslt = s.executeQuery(Table.Nodes.selectAllStatement());
         while (nodeTupleRslt.next()) {
-            int ID = nodeTupleRslt.getInt("ID");
+            int ID = nodeTupleRslt.getInt("id");
             //create new node
-            Node newNode = new Node(nodeTupleRslt.getInt("X"), nodeTupleRslt.getInt("Y"),ID);
+            Node newNode = new Node(
+                    nodeTupleRslt.getInt("x"),
+                    nodeTupleRslt.getInt("y"),
+                    nodeTupleRslt.getInt("floor"),
+                    ID);
             nodeMap.put(ID, newNode);
         }
         nodeTupleRslt.close();
@@ -115,9 +120,10 @@ public class DBHandler {
         //LOAD TAGS
         ResultSet RoomTupleRslt = s.executeQuery(Table.Tags.selectAllStatement());
         while (RoomTupleRslt.next()) {
-            String newName = RoomTupleRslt.getString("Name");
-            Tag newTag = new Tag(newName);
-            tagMap.put(newName, newTag);
+            String newName = RoomTupleRslt.getString("name");
+            int id = RoomTupleRslt.getInt("id");
+            Tag newTag = new Tag(newName, id);
+            tagMap.put(id, newTag);
             //newTag.addNode(nodeMap.get(ID)); //Association
         }
         RoomTupleRslt.close();
@@ -125,9 +131,10 @@ public class DBHandler {
         //LOAD PROFESSIONALS
         ResultSet HCPTupleRslt = s.executeQuery(Table.HCPs.selectAllStatement());
         while (HCPTupleRslt.next()) {
-            int ID = HCPTupleRslt.getInt("ID");
-            Professional newPro = new Professional(HCPTupleRslt.getString("Last_name") ,ID);
-
+            int ID = HCPTupleRslt.getInt("id");
+            Professional newPro = new Professional(
+                    HCPTupleRslt.getString("lastName"),
+                    ID);
             professionalMap.put(ID, newPro);
         }
         HCPTupleRslt.close();
@@ -137,8 +144,8 @@ public class DBHandler {
         //Put adjacent nodes in nodes
         ResultSet AdjacentNodeTupleRslt = s.executeQuery(Table.AdjacentNodes.selectAllStatement());
         while (AdjacentNodeTupleRslt.next()) {
-            Node N1 = nodeMap.get(AdjacentNodeTupleRslt.getInt("N1"));
-            Node N2 = nodeMap.get(AdjacentNodeTupleRslt.getInt("N2"));
+            Node N1 = nodeMap.get(AdjacentNodeTupleRslt.getInt("n1"));
+            Node N2 = nodeMap.get(AdjacentNodeTupleRslt.getInt("n2"));
             N1.addNode(N2); //This handles both directions
         }
         AdjacentNodeTupleRslt.close();
@@ -147,25 +154,58 @@ public class DBHandler {
         // Associate tags and nodes
         ResultSet NodeTapTupleRslt = s.executeQuery(Table.NodeTags.selectAllStatement());
         while (NodeTapTupleRslt.next()) {
-            Node n = nodeMap.get(NodeTapTupleRslt.getInt("nodeID"));
-            Tag tag = tagMap.get(NodeTapTupleRslt.getString("tagName"));
-            n.addTag(tag);
+            int nodeId = NodeTapTupleRslt.getInt("nodeId");
+            Node n = nodeMap.get(nodeId);
+            int tagId = NodeTapTupleRslt.getInt("tagId");
+            Tag tag = tagMap.get(tagId);
+            if(n == null) {
+                System.out.println("Node ID("+nodeId+") does not exist!");
+            } else if (tag == null) {
+                System.out.println("Tag ID("+tagId+") does not exist!");
+            } else {
+                n.addTag(tag);
+            }
         }
         HCPTupleRslt.close();
 
         // Associate professionals and tags
         ResultSet HCPRoomTupleRslt = s.executeQuery(Table.HCPTags.selectAllStatement());
         while (HCPRoomTupleRslt.next()) {
-            Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpID"));
-            Tag tag = tagMap.get(HCPRoomTupleRslt.getString("tagName"));
+            Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpId"));
+            Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("tagId"));
             pro.addTag(tag);
         }
         HCPTupleRslt.close();
 
+        // Load the professional titles
+        ResultSet professtionalTitles = s.executeQuery(Table.ProfessionalTitles.selectAllStatement());
+        while(professtionalTitles.next()) {
+            int id = professtionalTitles.getInt("id");
+            String acronym = professtionalTitles.getString("acronym");
+            String fullTitle = professtionalTitles.getString("fullTitle");
+            Title t;
+            switch(acronym) {
+                case "PA-C":
+                    t = PAC;
+                    break;
+                case "Au.D":
+                    t = AuD;
+                    break;
+                case "CCC-A":
+                    t = CCCA;
+                    break;
+                default:
+                    t = Title.valueOf(acronym);
+                    break;
+            }
+            professionalTitleMap.put(id, t);
+        }
+        professtionalTitles.close();
+        // Add titles to HCP
         ResultSet HCPTitleTupleRslt = s.executeQuery(Table.HCPTitles.selectAllStatement());
         while (HCPTitleTupleRslt.next()) {
-            Professional pro = professionalMap.get(HCPTitleTupleRslt.getInt("HCP_ID"));
-            String title = HCPTitleTupleRslt.getString("Title_Acronym");
+            Professional pro = professionalMap.get(HCPTitleTupleRslt.getInt("hcpId"));
+            String title = professionalTitleMap.get(HCPTitleTupleRslt.getInt("titleId")).toString();
             switch(title) {
                 case "PA-C":
                     pro.addTitle(PAC);
@@ -213,7 +253,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFile(s, "/DatabaseImports/DBInitialImports.txt");
+            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/DBInitialImports.txt");
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
@@ -271,13 +311,15 @@ public class DBHandler {
      * @throws IOException
      * @throws SQLException
      */
-    public void loadDbEntriesFromFile(Statement s, String filename) throws IOException, SQLException {
+    public void loadDbEntriesFromFileIntoDb(Statement s, String filename) throws IOException, SQLException {
         BufferedReader br =
                 new BufferedReader(
                         new InputStreamReader(getClass().getResourceAsStream(filename)));
             String line;
             while ((line = br.readLine()) != null) {
-                executeStatement(s, line);
+                if(line.length() > 0) {
+                    executeStatement(s, line);
+                }
             }
     }
 

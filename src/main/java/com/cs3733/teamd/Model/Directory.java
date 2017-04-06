@@ -68,20 +68,20 @@ public class Directory implements DirectoryInterface {
 
 
     public Tag createNewTag(String tagName){
-        Tag newTag = new Tag(tagName);
-        allTags.add(newTag);
+        //Tag newTag = new Tag(tagName);
+        //allTags.add(newTag);
         //SAVE TO DATABASE
-        notifyUpdate();
-        return  newTag;
+        //notifyUpdate();
+        return  null;
     }
     public Node createNewNode(int x, int y, int ID){
-        Node newNode = new Node(x,y,ID);
+        //Node newNode = new Node(x,y,ID);
 
         //newNode.setID(dbHandler.generateKeyForNode());
-        allNodes.add(newNode);
+        //allNodes.add(newNode);
         //SAVE TO DATABASE
         notifyUpdate();
-        return newNode;
+        return null;
     }
     public Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
         Professional newProf = new Professional(name,titles,ID);
@@ -90,7 +90,7 @@ public class Directory implements DirectoryInterface {
         allProfs.add(newProf);
         //SAVE TO DATABASE
         notifyUpdate();
-        return  newProf;
+        return  null;
     }
     public void deleteTag(Tag t){
         allTags.remove(t);
