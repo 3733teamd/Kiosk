@@ -8,6 +8,7 @@ import com.cs3733.teamd.Model.Tag;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Used by CONTROLLERS to store ALL ENTITIES
@@ -24,9 +25,9 @@ public class Directory implements DirectoryInterface {
     int nextNodeID;
     int nextProfID;
 
-    private ArrayList<Node> allNodes = new ArrayList<Node>();
-    private ArrayList<Tag> allTags = new ArrayList<Tag>();
-    private ArrayList<Professional> allProfs = new ArrayList<Professional>();
+    private List<Node> allNodes = new ArrayList<Node>();
+    private List<Tag> allTags = new ArrayList<Tag>();
+    private List<Professional> allProfs = new ArrayList<Professional>();
     private DBHandler dbHandler;
 
     private Directory( ){}
@@ -38,18 +39,6 @@ public class Directory implements DirectoryInterface {
         this.dbHandler = dbHandler;
         this.nextNodeID = nextNodeID;
         this.nextProfID = nextProfID;
-    }
-
-    public ArrayList<Tag> getAllTags() {
-        return allTags;
-    }
-
-    public ArrayList<Node> getAllNodes() {
-        return allNodes;
-    }
-
-    public ArrayList<Professional> getAllProfs() {
-        return allProfs;
     }
 
     public void notifyUpdate() {
@@ -100,11 +89,32 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public Node saveNode(int x, int y, int floor) {
-        return null;
+        int id = this.dbHandler.saveNode(x,y,floor);
+        if(id == -1) {
+            return null;
+        } else {
+            Node n = new Node(x,y,floor,id);
+            this.allNodes.add(n);
+            return n;
+        }
+
     }
     @Override
     public boolean deleteNode(Node n){
-        return false;
+        // Can not delete nodes with neighbors
+        if(n.getNodes().size() > 0) {
+            return false;
+        }
+        boolean dbResult = dbHandler.deleteNode(n.getID());
+        if(dbResult) {
+            this.allNodes = this.allNodes.stream().filter(node -> {
+                return node.getID() != n.getID();
+            }).collect(Collectors.toList());
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
@@ -179,17 +189,17 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public List<Node> getNodes() {
-        return null;
+        return this.allNodes;
     }
 
     @Override
     public List<Tag> getTags() {
-        return null;
+        return this.allTags;
     }
 
     @Override
     public List<Professional> getProfessionals() {
-        return null;
+        return this.allProfs;
     }
 
     @Override
