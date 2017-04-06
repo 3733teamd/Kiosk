@@ -68,19 +68,75 @@ public interface DirectoryInterface {
      */
     boolean removeTag(Tag t);
 
+    /**
+     * Create a professional and persist it to database with only the name parameter
+     * @param name - Name of the prof
+     * @return - the Porf object
+     */
     Professional saveProfessional(String name);
+    /**
+     * Create a professional and persist it to database with a full list of params
+     * @param name - Name of the prof
+     * @param titles - the titles used by the prof
+     * @param tags - the tags the prof is in
+     * @return - the Porf object
+     */
     Professional saveProfessional(String name, List<Title> titles, List<Tag> tags);
+    /**
+     * Update a Professional object and persist it to database
+     * @param p - prof to update
+     * @return - true if succesful, false if failed
+     */
     boolean updateProfessional(Professional p);
+    /**
+     * Remove a Professional object and persist it to database
+     * @param p - prof to remove
+     * @return - true if succesful, false if failed
+     */
     boolean removeProfessional(Professional p);
-
+    /**
+     * Adds a tag to a prof, and vice-versa
+     * @param p - prof to link
+     * @param t - tag to link
+     * @return - true if succesful, false if failed
+     */
     boolean addTagToProfessional(Professional p, Tag t);
+    /**
+     * remove a tag from a prof, and vice-versa
+     * @param p - prof to unlink
+     * @param t - tag to unlink
+     * @return - true if succesful, false if failed
+     */
     boolean removeTagFromProfessional(Professional p, Tag t);
-
+    /**
+     * Adds a title to a prof
+     * @param p - prof to add the title to
+     * @param t - title to be added
+     * @return - true if succesful, false if failed
+     */
     boolean addTitleToProfessional(Professional p, Title t);
+    /**
+     * removes a title from a prof
+     * @param p - the prof to lose his title
+     * @param t - the title to be lost
+     * @return - true if succesful, false if failed
+     */
     boolean removeTitleFromProfessional(Professional p, Title t);
 
+    /**
+     * gets all nodes
+     * @return - the list of all current nodes
+     */
     List<Node> getNodes();
+    /**
+     * gets all tags
+     * @return - the list of all current tags
+     */
     List<Tag> getTags();
+    /**
+     * gets all profs
+     * @return - the list of all current profs
+     */
     List<Professional> getProfessionals();
 
     User loginUser(String username, String password);
