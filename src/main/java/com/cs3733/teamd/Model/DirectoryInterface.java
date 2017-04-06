@@ -82,4 +82,7 @@ public interface DirectoryInterface {
     List<Node> getNodes();
     List<Tag> getTags();
     List<Professional> getProfessionals();
+
+    User loginUser(String username, String password);
+    User getCurrentUser();
 }

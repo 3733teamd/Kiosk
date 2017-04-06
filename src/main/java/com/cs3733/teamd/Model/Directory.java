@@ -7,12 +7,13 @@ import com.cs3733.teamd.Model.Tag;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Used by CONTROLLERS to store ALL ENTITIES
  * Knows the DB Connection so it can SAVE ENTITIES
  */
-public class Directory {
+public class Directory implements DirectoryInterface {
 
     private static Directory dir = new Directory();
 
@@ -96,16 +97,111 @@ public class Directory {
         //REMOVE FROM DATABSE
         notifyUpdate();
     }
-    public void deleteNode(Node n){
-        allNodes.remove(n);
 
-
-
-        n.destroyNode();
-
-        //REMOVE FROM DATABASE
-        notifyUpdate();
+    @Override
+    public Node saveNode(int x, int y, int floor) {
+        return null;
     }
+    @Override
+    public boolean deleteNode(Node n){
+        return false;
+    }
+
+    @Override
+    public boolean updateNode(Node n) {
+        return false;
+    }
+
+    @Override
+    public boolean saveEdge(Node n1, Node n2) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteEdge(Node n1, Node n2) {
+        return false;
+    }
+
+    @Override
+    public Tag addTag(String name) {
+        return null;
+    }
+
+    @Override
+    public boolean updateTag(Tag t) {
+        return false;
+    }
+
+    @Override
+    public boolean removeTag(Tag t) {
+        return false;
+    }
+
+    @Override
+    public Professional saveProfessional(String name) {
+        return null;
+    }
+
+    @Override
+    public Professional saveProfessional(String name, List<Title> titles, List<Tag> tags) {
+        return null;
+    }
+
+    @Override
+    public boolean updateProfessional(Professional p) {
+        return false;
+    }
+
+    @Override
+    public boolean removeProfessional(Professional p) {
+        return false;
+    }
+
+    @Override
+    public boolean addTagToProfessional(Professional p, Tag t) {
+        return false;
+    }
+
+    @Override
+    public boolean removeTagFromProfessional(Professional p, Tag t) {
+        return false;
+    }
+
+    @Override
+    public boolean addTitleToProfessional(Professional p, Title t) {
+        return false;
+    }
+
+    @Override
+    public boolean removeTitleFromProfessional(Professional p, Title t) {
+        return false;
+    }
+
+    @Override
+    public List<Node> getNodes() {
+        return null;
+    }
+
+    @Override
+    public List<Tag> getTags() {
+        return null;
+    }
+
+    @Override
+    public List<Professional> getProfessionals() {
+        return null;
+    }
+
+    @Override
+    public User loginUser(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return null;
+    }
+
     public void deleteProf(Professional p){
         allProfs.remove(p);
         //REMOVE FROM DATABASE
