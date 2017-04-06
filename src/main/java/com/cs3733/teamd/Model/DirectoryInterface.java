@@ -108,11 +108,34 @@ public interface DirectoryInterface {
      * @return - true if succesful, false if failed
      */
     boolean removeTagFromProfessional(Professional p, Tag t);
-
+    /**
+     * Adds a title to a prof
+     * @param p - prof to add the title to
+     * @param t - title to be added
+     * @return - true if succesful, false if failed
+     */
     boolean addTitleToProfessional(Professional p, Title t);
+    /**
+     * removes a title from a prof
+     * @param p - the prof to lose his title
+     * @param t - the title to be lost
+     * @return - true if succesful, false if failed
+     */
     boolean removeTitleFromProfessional(Professional p, Title t);
 
+    /**
+     * gets all nodes
+     * @return - the list of all current nodes
+     */
     List<Node> getNodes();
+    /**
+     * gets all tags
+     * @return - the list of all current tags
+     */
     List<Tag> getTags();
+    /**
+     * gets all profs
+     * @return - the list of all current profs
+     */
     List<Professional> getProfessionals();
 }
