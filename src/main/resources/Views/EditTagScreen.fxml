@@ -46,14 +46,14 @@
                      <children>
                         <HBox prefHeight="74.0" prefWidth="260.0">
                            <children>
-                              <TextField prefHeight="49.0" prefWidth="259.0" promptText="Search">
+                              <TextField fx:id="searchTagBar" prefHeight="49.0" prefWidth="259.0" promptText="Search">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </TextField>
                            </children>
                         </HBox>
-                        <TextArea prefHeight="542.0" prefWidth="260.0" promptText=".......">
+                        <TextArea fx:id="tagTextArea" prefHeight="542.0" prefWidth="260.0" promptText=".......">
                            <font>
                               <Font size="24.0" />
                            </font>
