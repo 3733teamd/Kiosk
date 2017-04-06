@@ -1,5 +1,6 @@
-package com.cs3733.teamd.Controller;
+package com.cs3733.teamd.Controller.IterationOne;
 
+import com.cs3733.teamd.Controller.AbsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ import java.util.LinkedList;
  * Created by Allyk on 3/26/2017.
  */
 //TODO Avoid using the onMouseMove. Redesign to use models instead.
-public class MapDirectionsController extends AbsController{
+public class MapDirectionsController extends AbsController {
 
     public Button largerTextButton;
     public Button SearchButton;
