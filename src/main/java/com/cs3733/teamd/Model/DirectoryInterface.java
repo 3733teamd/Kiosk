@@ -68,12 +68,45 @@ public interface DirectoryInterface {
      */
     boolean removeTag(Tag t);
 
+    /**
+     * Create a professional and persist it to database with only the name parameter
+     * @param name - Name of the prof
+     * @return - the Porf object
+     */
     Professional saveProfessional(String name);
+    /**
+     * Create a professional and persist it to database with a full list of params
+     * @param name - Name of the prof
+     * @param titles - the titles used by the prof
+     * @param tags - the tags the prof is in
+     * @return - the Porf object
+     */
     Professional saveProfessional(String name, List<Title> titles, List<Tag> tags);
+    /**
+     * Update a Professional object and persist it to database
+     * @param p - prof to update
+     * @return - true if succesful, false if failed
+     */
     boolean updateProfessional(Professional p);
+    /**
+     * Remove a Professional object and persist it to database
+     * @param p - prof to remove
+     * @return - true if succesful, false if failed
+     */
     boolean removeProfessional(Professional p);
-
+    /**
+     * Adds a tag to a prof, and vice-versa
+     * @param p - prof to link
+     * @param t - tag to link
+     * @return - true if succesful, false if failed
+     */
     boolean addTagToProfessional(Professional p, Tag t);
+    /**
+     * remove a tag from a prof, and vice-versa
+     * @param p - prof to unlink
+     * @param t - tag to unlink
+     * @return - true if succesful, false if failed
+     */
     boolean removeTagFromProfessional(Professional p, Tag t);
 
     boolean addTitleToProfessional(Professional p, Title t);
