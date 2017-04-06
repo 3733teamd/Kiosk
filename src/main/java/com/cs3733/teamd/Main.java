@@ -28,17 +28,6 @@ public class Main extends Application {
     public static Stage window;
 
     public static Parent rootMain;
-    public static Parent rootLogin;
-    public static Parent rootMapMenu;
-    public static Parent rootMapDirections;
-    public static Parent rootAdminMenu;
-    public static Parent rootEditService;
-    public static Parent rootEditDoctor;
-    public static Parent rootEditMap;
-
-    public static Scene backRoot;
-    public static String roomSelected = "Select Room";
-    public static String serviceSelected = "Select Service";
     
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
 
