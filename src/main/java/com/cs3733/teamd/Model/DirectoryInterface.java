@@ -52,7 +52,7 @@ public interface DirectoryInterface {
      * @param name - Name of the tag
      * @return - The tag object
      */
-    Tag addTag(String name);
+    Tag saveTag(String name);
 
     /**
      * Update a tag object and persist it to database

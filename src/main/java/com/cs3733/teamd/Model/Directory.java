@@ -65,7 +65,6 @@ public class Directory implements DirectoryInterface {
     }
     public Node createNewNode(int x, int y, int ID){
         //Node newNode = new Node(x,y,ID);
-
         //newNode.setID(dbHandler.generateKeyForNode());
         //allNodes.add(newNode);
         //SAVE TO DATABASE
@@ -135,8 +134,15 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public Tag addTag(String name) {
-        return null;
+    public Tag saveTag(String name) {
+        int id = this.dbHandler.saveTag(name);
+        if(id == -1) {
+            return null;
+        } else {
+            Tag t = new Tag(name,id);
+            this.allTags.add(t);
+            return t;
+        }
     }
 
     @Override
