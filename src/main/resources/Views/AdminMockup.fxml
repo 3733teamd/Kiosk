@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.MainController">
+   <children>
+      <VBox prefHeight="800.0" prefWidth="1292.0">
+         <children>
+            <AnchorPane prefHeight="67.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="1291.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="8.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="3.0">
+                                 <image>
+                                    <Image url="@../floor_imgs/hoslogo.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Faulkner Hospital Location Finder" wrappingWidth="1245.99998742342">
+                           <font>
+                              <Font name="Tahoma" size="31.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </AnchorPane>
+            <HBox prefHeight="28.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Destination:" textAlignment="CENTER" wrappingWidth="250.0">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Text>
+                  <TextField prefHeight="45.0" prefWidth="255.0" />
+                  <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="205.0" text="Submit">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Floor:" textAlignment="CENTER" wrappingWidth="119.0">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Text>
+                  <Slider max="4.0" prefHeight="40.0" prefWidth="325.0" />
+                  <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#onLogin" prefHeight="44.0" prefWidth="176.0" text="Login" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#onSpanish" prefHeight="44.0" prefWidth="183.0" text="Spanish">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #e9ebee;">
+               <children>
+                  <ImageView fitHeight="711.0" fitWidth="1280.0" layoutX="11.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                     <image>
+                        <Image url="@../floor_imgs/Fk4x-Model.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
