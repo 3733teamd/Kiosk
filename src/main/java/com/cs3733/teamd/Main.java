@@ -1,7 +1,7 @@
 package com.cs3733.teamd;
 
-import com.cs3733.teamd.Controller.Iteration1Controllers.EditDoctorController;
-import com.cs3733.teamd.Controller.Iteration1Controllers.MapMenuController;
+import com.cs3733.teamd.Controller.IterationOne.EditDoctorController;
+import com.cs3733.teamd.Controller.IterationOne.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
 import com.cs3733.teamd.Model.Directory;
 

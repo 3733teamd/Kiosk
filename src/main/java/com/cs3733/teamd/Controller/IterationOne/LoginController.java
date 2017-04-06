@@ -1,5 +1,6 @@
-package com.cs3733.teamd.Controller.Iteration1Controllers;
+package com.cs3733.teamd.Controller.IterationOne;
 
+import com.cs3733.teamd.Controller.AbsController;
 import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by Allyk on 3/26/2017.
  */
-public class LoginController extends AbsController{
+public class LoginController extends AbsController {
 
     public Button largerTextButton;
 

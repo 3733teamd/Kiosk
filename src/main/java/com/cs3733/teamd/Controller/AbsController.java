@@ -1,4 +1,4 @@
-package com.cs3733.teamd.Controller.Iteration1Controllers;
+package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import javafx.fxml.FXMLLoader;
