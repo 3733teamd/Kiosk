@@ -50,7 +50,7 @@
             </Button>
             <ImageView fx:id="mapImage" fitHeight="500.0" fitWidth="1000.0" layoutX="195.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../floor_imgs/Fk4x-Model.png" />
+                  <Image url="@../../floor_imgs/Fk4x-Model.png" />
                </image>
             </ImageView>
             <TextArea fx:id="textDirectionsDisplay" editable="false" layoutX="663.0" layoutY="188.0" opacity="0.0" prefHeight="426.0" prefWidth="476.0" text="Text Directions are Here">

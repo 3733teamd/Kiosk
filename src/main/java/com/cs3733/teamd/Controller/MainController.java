@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -67,19 +66,19 @@ public class MainController extends AbsController {
     //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Main.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Main.fxml");
     }
 
     //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Main.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/Main.fxml");
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, Main.backString, "/Views/Main.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/Main.fxml");
     }
 
     //Spanish translation

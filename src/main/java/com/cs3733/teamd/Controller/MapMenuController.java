@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -64,20 +63,20 @@ public class MapMenuController extends  AbsController{
     //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/MapMenu.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/MapMenu.fxml");
     }
 
     //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapMenu.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/MapMenu.fxml");
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
         System.out.println(Main.backString);
-        switchScreen(MMGpane, Main.backString, "/Views/MapMenu.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/MapMenu.fxml");
     }
 
     //Submit button
@@ -94,7 +93,7 @@ public class MapMenuController extends  AbsController{
 
         pathNodes =pathfinder.shortestPath();
 
-        switchScreen(MMGpane, "/Views/MapDirections.fxml", "/Views/MapMenu.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapDirections.fxml", "/Views/Iteration1/MapMenu.fxml");
     }
 
     @FXML

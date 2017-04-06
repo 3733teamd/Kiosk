@@ -1,6 +1,5 @@
 package com.cs3733.teamd;
 
-import com.cs3733.teamd.Controller.EditMapController;
 import com.cs3733.teamd.Controller.EditDoctorController;
 import com.cs3733.teamd.Controller.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
@@ -9,10 +8,7 @@ import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
-import com.cs3733.teamd.Model.Title;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,13 +46,13 @@ public class Main extends Application {
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");
     public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
-    public static String backString = "/Views/Main.fxml";
+    public static String backString = "/Views/Iteration1/Main.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"), bundle);
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/Iteration1/Main.fxml"), bundle);
 
         MainScene=new Scene(rootMain, 1300, 800);
 

@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -65,14 +64,14 @@ public class MapDirectionsController extends AbsController{
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        switchScreen(MMGpane, "/Views/MapMenu.fxml",  "/Views/MapDirections.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/MapDirections.fxml");
     }
 
     //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/MapDirections.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/MapDirections.fxml");
     }
 
     //Back button
@@ -80,14 +79,14 @@ public class MapDirectionsController extends AbsController{
     public void onBack(ActionEvent actionEvent) throws  IOException{
         //clear canvas for further drawings
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        switchScreen(MMGpane, Main.backString,  "/Views/MapDirections.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/MapDirections.fxml");
     }
 
     //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws  IOException{
         gc.clearRect(0, 0, MapCanvas.getWidth(), MapCanvas.getHeight());
-        switchScreen(MMGpane, "/Views/Main.fxml",  "/Views/MapDirections.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/MapDirections.fxml");
     }
 
     @FXML

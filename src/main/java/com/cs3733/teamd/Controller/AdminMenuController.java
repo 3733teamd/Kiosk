@@ -4,7 +4,6 @@ import com.cs3733.teamd.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -37,21 +36,21 @@ public class AdminMenuController extends AbsController {
     @FXML
     //search button
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     @FXML
     //login button
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, Main.backString, "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/AdminMenu.fxml");
 
     }
 
@@ -64,19 +63,19 @@ public class AdminMenuController extends AbsController {
     @FXML
     //Edit Map button
     public void onEditMap(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/EditMap.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/EditMap.fxml", "/Views/Iteration1/AdminMenu.fxml");
     }
 
     @FXML
     //Edit Doctor Directory button
     public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/EditDoctor.fxml", "/Views/AdminMenu.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/EditDoctor.fxml", "/Views/Iteration1/AdminMenu.fxml");
     }
 
     @FXML
     //Menu button
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/Login.fxml");
 
     }
     @FXML

@@ -76,28 +76,28 @@ public class EditMapController extends AbsController {
     //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Login.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, Main.backString, "/Views/EditMap.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/EditMap.fxml");
 
     }
 
     //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 

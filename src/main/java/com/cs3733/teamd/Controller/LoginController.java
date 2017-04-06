@@ -44,27 +44,27 @@ public class LoginController extends AbsController{
     //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException {
-              switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+              switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
         /*Main.window.hide();
 
         Main.window.setScene(Main.MapMenuScene);
         Main.window.show();*/
         //Main.backRoot = Main.LoginScene;
-        switchScreen(MMGpane, "/Views/MapMenu.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     //Menu button
     @FXML
     public void onMenu(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Main.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/Login.fxml");
 
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, Main.backString, "/Views/Login.fxml");
+        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/Login.fxml");
 
     }
 
@@ -76,13 +76,13 @@ public class LoginController extends AbsController{
         System.out.print(username);
         System.out.print(password);
 
-        switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
+        switchScreen(MMGpane, "/Views/Iteration1/AdminMenu.fxml", "/Views/Iteration1/Login.fxml");
         /*Main.window.hide();
         Main.window.setScene(Main.AdminMenuScene);
         Main.window.show();
         Main.backRoot = Main.LoginScene;*/
         if(username.equals("dev")&&password.equals("dev")) {
-            switchScreen(MMGpane, "/Views/AdminMenu.fxml", "/Views/Login.fxml");
+            switchScreen(MMGpane, "/Views/Iteration1/AdminMenu.fxml", "/Views/Iteration1/Login.fxml");
 
         }
     }
