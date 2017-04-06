@@ -471,4 +471,18 @@ public class DBHandler {
             return false;
         }
     }
+
+    public boolean updateNode(int x, int y, int id) {
+        String sqlUpdate = "UPDATE Node SET x=?, y=? WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+            statement.setInt(1, x);
+            statement.setInt(2, y);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            return false;
+        }
+    }
 }

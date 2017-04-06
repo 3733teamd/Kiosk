@@ -119,7 +119,9 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean updateNode(Node n) {
-        return false;
+        boolean dbResult = dbHandler.updateNode(n.getX(), n.getY(), n.getID());
+
+        return dbResult;
     }
 
     @Override
