@@ -90,13 +90,8 @@ public class MainController extends AbsController {
         MenuButton.setText(Main.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
         menu.setText(Main.bundle.getString("mainmenu"));
-        hospital.setText(Main.bundle.getString("hospital"));
-        kiosk.setText(Main.bundle.getString("kiosk"));
-        instruct.setText(Main.bundle.getString("instruct"));
-        tapS.setText(Main.bundle.getString("tapS"));
-        tapL.setText(Main.bundle.getString("tapL"));
-        tapM.setText(Main.bundle.getString("tapM"));
-        tapB.setText(Main.bundle.getString("tapB"));
+
+
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-50);
         }
