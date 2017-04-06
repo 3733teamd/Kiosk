@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -13,23 +14,26 @@
 
 <AnchorPane fx:id="MMGpane" onMouseMoved="#setText" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.IterationOne.EditMapController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="800.0" layoutX="2.0" stroke="BLACK" strokeType="INSIDE" width="1312.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-2.0" />
-      <AnchorPane maxWidth="1309.0" prefHeight="800.0" prefWidth="1309.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <AnchorPane prefHeight="800.0" prefWidth="1300.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1312.0" AnchorPane.leftAnchor="-11.0" AnchorPane.rightAnchor="-1.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0">
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis></Rectangle>
             <Button fx:id="largerTextButton" layoutX="1096.0" layoutY="128.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Circle fill="#007bedd6" layoutX="1242.0" layoutY="740.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button fx:id="MenuButton" layoutX="1173.0" layoutY="678.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
+            <Circle fill="#007bedd6" layoutX="1239.0" layoutY="739.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="MenuButton" layoutX="1180.0" layoutY="679.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Circle fill="#007bedd6" layoutX="57.0" layoutY="738.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
-            <Button fx:id="LoginButton" layoutX="-24.0" layoutY="681.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="114.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
+            <Circle fill="#007bedd6" layoutX="60.0" layoutY="739.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="LoginButton" layoutX="-18.0" layoutY="679.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="121.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="25.0" />
                </font>
@@ -41,7 +45,7 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button fx:id="BackButton" layoutX="1165.0" layoutY="-13.0" mnemonicParsing="false" onAction="#onBack" prefHeight="143.0" prefWidth="135.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back" textAlignment="RIGHT" wrapText="true">
+            <Button fx:id="BackButton" layoutX="1166.0" layoutY="-6.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back" textAlignment="RIGHT" wrapText="true">
                <font>
                   <Font size="25.0" />
                </font>

@@ -103,7 +103,7 @@ public class MapDirectionsController extends AbsController {
     }
 
     private void drawShapes(GraphicsContext gc, LinkedList<Point> path) { //draw path on canvas from List of Nodes generated from Pathfinder
-        gc.setFill(Color.RED);
+        gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
         Point previous = null;
         gc.setLineWidth(3);
@@ -113,7 +113,7 @@ public class MapDirectionsController extends AbsController {
             Point current = path.getFirst();
             if(i == pathlength-1){
                 radius = 7;
-                gc.setFill(Color.GREEN);
+                gc.setFill(Color.RED);
             }
             gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
             if(previous != null){

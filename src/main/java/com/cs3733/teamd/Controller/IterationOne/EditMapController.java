@@ -2,6 +2,7 @@ package com.cs3733.teamd.Controller.IterationOne;
 
 import com.cs3733.teamd.Controller.AbsController;
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -25,10 +27,11 @@ import java.util.LinkedList;
  */
 public class EditMapController extends AbsController {
 
-    LinkedList<Node> currentNodes = new LinkedList<Node>();
+    Directory dir = Directory.getInstance();
+    ArrayList<Node> currentNodes = dir.getAllNodes();
     public static ObservableList<Node> nodeDropDown = FXCollections.observableArrayList();
 
-    LinkedList<Tag> currentTags = new LinkedList<Tag>();
+    ArrayList<Tag> currentTags = dir.getAllTags();
     public static ObservableList<Tag> tagDropDown = FXCollections.observableArrayList();
 
     public Button largerTextButton;
@@ -50,9 +53,9 @@ public class EditMapController extends AbsController {
     public Label name;
     public Label yloc;
     public Label xloc;
-    public Label nodetype;
-    public Label nodeone;
-    public Label nodetwo;
+    public Label nodeLabel;
+    public Label NodeOne;
+    public Label NodeTwo;
 
     public AnchorPane MMGpane;
 
@@ -69,9 +72,12 @@ public class EditMapController extends AbsController {
         setText();
         nodeDropDown.addAll(currentNodes);
         StartNodeSelect.setItems(nodeDropDown);
+        StartNodeSelect.setValue(nodeDropDown.get(0));
         ConnectionSelect.setItems(nodeDropDown);
+        ConnectionSelect.setValue(nodeDropDown.get(0));
         tagDropDown.addAll(currentTags);
         TagBox.setItems(tagDropDown);
+        TagBox.setValue(tagDropDown.get(0));
     }
 
     //Search button
@@ -105,6 +111,13 @@ public class EditMapController extends AbsController {
     //Add Room button
     @FXML
     public void onAddRoom(ActionEvent actionEvent) throws IOException{
+
+        int newxlocation = Integer.parseInt(xloc.getText());
+        int newylocation = Integer.parseInt(yloc.getText());
+        Tag typeTag = (Tag) TagBox.getValue();
+
+        //Node newNode = dir.createNewNode(newxlocation, newylocation);
+
     }
 
     //Remove Room button
@@ -132,7 +145,16 @@ public class EditMapController extends AbsController {
         xloc.setText(Main.bundle.getString("Yloc"));
         addRoomButton.setText(Main.bundle.getString("AddRoom"));
         removeRoomButton.setText(Main.bundle.getString("RemRoom"));
+        nodeLabel.setText(Main.bundle.getString("nodeType"));
+        NodeOne.setText(Main.bundle.getString("n1"));
+        NodeTwo.setText(Main.bundle.getString("n2"));
 
+        addRoomButton.setText(Main.bundle.getString("AddRoom"));
+        removeRoomButton.setText(Main.bundle.getString("RemRoom"));
+
+        addConnectionButton.setText(Main.bundle.getString("ac"));
+        removeConnectionButton.setText(Main.bundle.getString("rc"));
+        
         if(Main.Langugage.equals("Spanish") ){
             menu.setX(-100);
         }

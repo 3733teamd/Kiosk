@@ -48,6 +48,7 @@ public class Main extends Application {
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
+        //window.setFullScreen(true);
     }
 
     public static void main(String[] args) {
@@ -105,25 +106,36 @@ public class Main extends Application {
         dir.initialize(nodes,tags,professionals,database);
 
         //Populate Search Menus
-        try {
+        /*try {
             MapMenuController mapMenuController = new MapMenuController();
             mapMenuController.roomDropDown.addAll(tags);
             mapMenuController.DestinationSelect.setValue(mapMenuController.roomDropDown);
             mapMenuController.StartSelect.setValue(mapMenuController.roomDropDown);
         }catch(Exception e){
 
-        }
+        }*/
 
+        //Populate Search Menus
+        /*try {
+            EditMapController editMapController = new EditMapController();
+            editMapController.nodeDropDown.addAll(nodes);
+            //editMapController.StartNodeSelect.setValue(editMapController.nodeDropDown);
+            //editMapController.ConnectionSelect.setValue(editMapController.nodeDropDown);
+            editMapController.tagDropDown.addAll(tags);
+            editMapController.TagBox.setValue(editMapController.tagDropDown);
+        }catch(Exception e){
+
+        }*/
 
         //Populate EditDoctor Scene
-        try{
+        /*try{
             EditDoctorController editDoctorController = new EditDoctorController();
             System.out.println(tags.size());
             editDoctorController.tagList.addAll(tags);
             editDoctorController.professionalList.addAll(professionals);
         }catch(Exception e){
 
-        }
+        }*/
 
 
         // launch window

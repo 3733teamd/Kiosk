@@ -18,14 +18,20 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
-/**
+/** directory dir = dir.getInstance()
+ * dir.getAllNodes()
+ * dir.create...
+ * dir.destroy
+ *
+ * dir.updateDB()
  * Created by Allyk on 3/26/2017.
  */
 public class EditDoctorController extends AbsController {
 
     Directory dir = Directory.getInstance();
-    public Label submitFeedback;
+    public Label successFeedback;
     LinkedList<String> userOptionList = new LinkedList<String>();
 
     public Button largerTextButton;
@@ -53,6 +59,7 @@ public class EditDoctorController extends AbsController {
     public ObservableList<String> editProfOptions = FXCollections.observableArrayList();
     public static ObservableList<Tag> tagList = FXCollections.observableArrayList();
     public static ObservableList<Professional> professionalList = FXCollections.observableArrayList();
+    //public static ObservableList<Title> titleList = FXCollections.observableArrayList();
     public ChoiceBox<Title> titleBox;
     public ChoiceBox modifyOptions;
     public ChoiceBox modifyProf;
@@ -61,21 +68,25 @@ public class EditDoctorController extends AbsController {
 
 
     @FXML private void initialize(){
+
         editProfOptions.add("Add To");
         editProfOptions.add("Update");
         editProfOptions.add("Remove");
+
         addDoctorLabel.setText("");
-        submitFeedback.setText("");
 
         //modifyTitle.setValue(Title.values()[0]);
         modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
-        //modifySection.setValue(tagList.get(0));
-        //modifySection.setItems(tagList);
         modifySection.setItems(FXCollections.observableArrayList(dir.getAllTags()));
+        //modifySection.setValue(tagList.get(0));
+
+
+        //modifySection.setItems(tagList);
         modifyProf.setValue((professionalList.get(0)));
         modifyProf.setItems(professionalList);
         modifyOptions.setValue(editProfOptions.get(0));
         modifyOptions.setItems(editProfOptions);
+        successFeedback.setText("");
 
         setText();
 
@@ -159,6 +170,9 @@ public class EditDoctorController extends AbsController {
         Title currentTitle = (Title) modifyTitle.getValue();
 
 
+
+
+
         if(optionChoice == "Add To") {
             if(currentSection != null) {
                 currentProf.addTag(currentSection);
@@ -179,22 +193,20 @@ public class EditDoctorController extends AbsController {
         }else if(optionChoice == "Remove"){
             /////remove current prof from directory
         }
-        dir.notifyUpdate();
+
         initialize();
-        submitFeedback.setText("Successfull modification of " + currentProf);
+        successFeedback.setText("Successfully modified " + currentProf.toString());
 
 
     }
 
     public void addProfToSystem(ActionEvent actionEvent) {
         String profName = (String) addDoctorLabel.getText();
-        Professional currentProf = new Professional(profName, 420);
-        System.out.println(currentProf.toString());
-        int id = 384983 + (int)(Math.random()*3849320);
-
-        dir.creaNewProf(profName, new ArrayList<Title>(),id);
-
+        int ID = 3384737 + (int) Math.random()*393939393;
+        Professional currentProf = new Professional(profName, ID);
         initialize();
-        submitFeedback.setText("Successfull creation of " + profName);
+        //successFeedback.setText("Successfully added " + currentProf.toString());
+
+        //System.out.println(currentProf.toString());
     }
 }

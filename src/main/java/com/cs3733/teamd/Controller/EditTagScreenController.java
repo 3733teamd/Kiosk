@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Ryan on 4/6/2017.
  */
-public class EditTagController {
+public class EditTagScreenController {
     Directory dir = Directory.getInstance();
     public TextArea tagTextArea;
     public TextField searchTagBar;
