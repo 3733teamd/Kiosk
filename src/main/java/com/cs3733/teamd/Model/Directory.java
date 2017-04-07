@@ -125,12 +125,24 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean saveEdge(Node n1, Node n2) {
-        return false;
+        boolean dbResult = dbHandler.addEdge(n1.getID(), n2.getID());
+        if(!dbResult) {
+            return false;
+        } else {
+            n1.addNode(n2);
+            return true;
+        }
     }
 
     @Override
     public boolean deleteEdge(Node n1, Node n2) {
-        return false;
+        boolean dbResult = dbHandler.removeEdge(n1.getID(), n2.getID());
+        if(!dbResult) {
+            return false;
+        } else {
+            n1.removeNeighbor(n2);
+            return true;
+        }
     }
 
     @Override
@@ -202,22 +214,48 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean addTagToProfessional(Professional p, Tag t) {
-        return false;
+        boolean dbResult = dbHandler.addTagToProfessional(t.getId(), p.getID());
+        if(dbResult) {
+            p.addTag(t);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean removeTagFromProfessional(Professional p, Tag t) {
-        return false;
+        boolean dbResult = dbHandler.removeTagFromProfessional(t.getId(), p.getID());
+        if(dbResult) {
+            p.rmvTag(t);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean addTitleToProfessional(Professional p, Title t) {
-        return false;
+        // TODO: FIX ID
+        boolean dbResult = dbHandler.addTitleToProfessional(1, p.getID());
+        if(dbResult) {
+            p.addTitle(t);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean removeTitleFromProfessional(Professional p, Title t) {
-        return false;
+        // TODO: FIX ID
+        boolean dbResult = dbHandler.removeTitleFromProfessional(1, p.getID());
+        if(dbResult) {
+            p.rmvTitle(t);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

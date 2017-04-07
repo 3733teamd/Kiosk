@@ -593,4 +593,88 @@ public class DBHandler {
             return false;
         }
     }
+
+    public boolean addEdge(int nodeId1, int nodeId2) {
+        String sqlInsert = "INSERT INTO AdjacentNode VALUES (?, ?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, nodeId1);
+            statement.setInt(2, nodeId2);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeEdge(int nodeId1, int nodeId2) {
+        String sqlDelete = "DELETE FROM AdjacentNode WHERE n1=? OR n1=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, nodeId1);
+            statement.setInt(2, nodeId2);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addTagToProfessional(int tagId, int professionalId) {
+        String sqlInsert = "INSERT INTO HcpTag VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, tagId);
+            statement.setInt(2, professionalId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeTagFromProfessional(int tagId, int professionalId) {
+        String sqlDelete = "DELETE FROM HcpTag WHERE tagId=? AND hcpId=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, tagId);
+            statement.setInt(2,professionalId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addTitleToProfessional(int titleId, int professionalId) {
+        String sqlInsert = "INSERT INTO HCPTag VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, professionalId);
+            statement.setInt(2, titleId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeTitleFromProfessional(int titleId, int professionalId) {
+        String sqlDelete = "DELETE FROM HCPTag WHERE titleId=? AND hcpId=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, titleId);
+            statement.setInt(2,professionalId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -71,6 +71,10 @@ public class Professional {
         }
     }
 
+    public void rmvTitle(Title t) {
+        titles.remove(t);
+    }
+
     public void rmvAllTitles(){
         titles = new ArrayList<Title>();
     }
