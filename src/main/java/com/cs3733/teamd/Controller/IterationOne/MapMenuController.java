@@ -62,23 +62,23 @@ public class MapMenuController extends AbsController {
     }
 
     //Menu button
-    @FXML
-    public void onMenu(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/MapMenu.fxml");
-    }
-
-    //Login button
-    @FXML
-    public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/MapMenu.fxml");
-    }
-
-    //Back button
-    @FXML
-    public void onBack(ActionEvent actionEvent) throws  IOException{
-        System.out.println(Main.backString);
-        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/MapMenu.fxml");
-    }
+//    @FXML
+//    public void onMenu(ActionEvent actionEvent) throws IOException {
+//        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/MapMenu.fxml");
+//    }
+//
+//    //Login button
+//    @FXML
+//    public void onLogin(ActionEvent actionEvent) throws IOException{
+//        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/MapMenu.fxml");
+//    }
+//
+//    //Back button
+//    @FXML
+//    public void onBack(ActionEvent actionEvent) throws  IOException{
+//        System.out.println(Main.backString);
+//        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/MapMenu.fxml");
+//    }
 
     //Submit button
     @FXML
@@ -94,7 +94,7 @@ public class MapMenuController extends AbsController {
 
         pathNodes =pathfinder.shortestPath();
 
-        switchScreen(MMGpane, "/Views/Iteration1/MapDirections.fxml", "/Views/Iteration1/MapMenu.fxml");
+       // switchScreen(MMGpane, "/Views/Iteration1/MapDirections.fxml", "/Views/Iteration1/MapMenu.fxml");
     }
 
     @FXML

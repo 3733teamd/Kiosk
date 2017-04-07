@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class Node {
 
-    Point coord = new Point();
+    public Point coord = new Point();
     private LinkedList<Tag> tags = new LinkedList<Tag>();
     private LinkedList<Node> nodes = new LinkedList<Node>();
     //DB key

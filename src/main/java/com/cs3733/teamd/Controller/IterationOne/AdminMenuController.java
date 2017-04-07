@@ -34,51 +34,51 @@ public class AdminMenuController extends AbsController {
         setText();
     }
 
-    @FXML
-    //search button
-    public void onSearch(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
+//    @FXML
+//    //search button
+//    public void onSearch(ActionEvent actionEvent) throws IOException {
+//        switchScreen(MMGpane, "/Views/Iteration1/MapMenu.fxml", "/Views/Iteration1/Login.fxml");
+//
+//    }
+//
+//    @FXML
+//    //login button
+//    public void onLogin(ActionEvent actionEvent) throws IOException{
+//        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/Login.fxml");
+//
+//    }
+//
+//    //Back button
+//    @FXML
+//    public void onBack(ActionEvent actionEvent) throws  IOException{
+//        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/AdminMenu.fxml");
+//
+//    }
 
-    }
-
-    @FXML
-    //login button
-    public void onLogin(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Iteration1/Login.fxml", "/Views/Iteration1/Login.fxml");
-
-    }
-
-    //Back button
-    @FXML
-    public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, Main.backString, "/Views/Iteration1/AdminMenu.fxml");
-
-    }
-
-    @FXML
-    //Edit Service Directory button - not used
-    public void onEditServiceDirectory(ActionEvent actionEvent) throws IOException {
-
-    }
-
-    @FXML
-    //Edit Map button
-    public void onEditMap(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/Iteration1/EditMap.fxml", "/Views/Iteration1/AdminMenu.fxml");
-    }
-
-    @FXML
-    //Edit Doctor Directory button
-    public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/Iteration1/EditDoctor.fxml", "/Views/Iteration1/AdminMenu.fxml");
-    }
-
-    @FXML
-    //Menu button
-    public void onMenu(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/Login.fxml");
-
-    }
+//    @FXML
+//    //Edit Service Directory button - not used
+//    public void onEditServiceDirectory(ActionEvent actionEvent) throws IOException {
+//
+//    }
+//
+//    @FXML
+//    //Edit Map button
+//    public void onEditMap(ActionEvent actionEvent) throws IOException {
+//        switchScreen(MMGpane, "/Views/Iteration1/EditMap.fxml", "/Views/Iteration1/AdminMenu.fxml");
+//    }
+//
+//    @FXML
+//    //Edit Doctor Directory button
+//    public void onEditDoctorDirectory(ActionEvent actionEvent) throws IOException {
+//        switchScreen(MMGpane, "/Views/Iteration1/EditDoctor.fxml", "/Views/Iteration1/AdminMenu.fxml");
+//    }
+//
+//    @FXML
+//    //Menu button
+//    public void onMenu(ActionEvent actionEvent) throws IOException{
+//        switchScreen(MMGpane, "/Views/Iteration1/Main.fxml", "/Views/Iteration1/Login.fxml");
+//
+//    }
     @FXML
     //translate to Spanish
     public void setText(){

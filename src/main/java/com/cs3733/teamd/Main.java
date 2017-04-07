@@ -35,15 +35,15 @@ public class Main extends Application {
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");
     public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
-    //public static String backString = "/Views/Iteration1/Main.fxml";
+    public static String backString;// = "/Views/Iteration1/Main.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("/Views/Iteration1/Main.fxml"), bundle);
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/EditMapScreen.fxml"), bundle);
 
-        MainScene=new Scene(rootMain, 1300, 800);
+        MainScene=new Scene(rootMain, 1291, 800);
 
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);

@@ -13,9 +13,36 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.apache.derby:derby:10.13.1.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
-    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-M4" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M4" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/junit-4.12.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/hamcrest-core-1.3.jar!/" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/AlgorithmsHomeworkTwoaWheeler2/AlgorithmsHW2/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/Marketing/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/TDDPairProgramming/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/TDD/src/test/java" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/code/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/dragtest/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/guiTesting/src" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/resourcebundleexample/resourcebundleexample/src/main/java" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/CS3733/resourcebundleexample/resourcebundleexample/src/test/java" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/WheelerAlgorithmsHomeWorkOne/Question 1 Executable Progam" />
+          <root url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/WheelerAlgorithmsHomeWorkOne/Question 4 Executable Program" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

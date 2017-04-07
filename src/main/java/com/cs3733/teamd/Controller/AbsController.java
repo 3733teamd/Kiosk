@@ -12,12 +12,12 @@ import java.io.IOException;
  */
 public abstract class AbsController {
 
-    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath, String currView) throws IOException{
+    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath) throws IOException{
 
         AnchorPane pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
-        Main.backString =currView;
-        System.out.println(Main.backString);
+        //Main.backString =currView;
+       // System.out.println(Main.backString);
 
         pane = (AnchorPane) loader.load();
         gp.getChildren().setAll(pane);

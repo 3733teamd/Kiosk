@@ -45,12 +45,12 @@ public class UserScreenController extends AbsController{
     //Search button
     @FXML
     public void onSearch(ActionEvent actionEvent) throws IOException{
-        switchScreen(MMGpane, "/Views/UserScreen.fxml", "/Views/UserScreen.fxml");
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     //Login button
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/LoginScreen.fxml", "/Views/UserScreen.fxml");
+        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
     //Spanish translation
