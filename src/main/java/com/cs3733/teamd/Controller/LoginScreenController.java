@@ -17,8 +17,13 @@ public class LoginScreenController extends AbsController {
     public TextField username;
     public PasswordField password;
     public Button SubmitButton;
+    public Button BackButton;
     public AnchorPane MMGpane;
-
+    //Back button
+    @FXML
+    public void onBack(ActionEvent actionEvent) throws  IOException{
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+    }
     //Submit button
     @FXML
     public void onSubmit(ActionEvent actionEvent) throws IOException {

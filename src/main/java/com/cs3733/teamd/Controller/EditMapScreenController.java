@@ -95,7 +95,7 @@ public class EditMapScreenController extends AbsController{
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
