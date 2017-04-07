@@ -166,22 +166,38 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public Professional saveProfessional(String name) {
-        return null;
+        int id = this.dbHandler.saveProfessional(name);
+        if(id == -1) {
+            return null;
+        } else {
+            Professional p = new Professional(name,id);
+            this.allProfs.add(p);
+            return p;
+        }
     }
 
     @Override
     public Professional saveProfessional(String name, List<Title> titles, List<Tag> tags) {
-        return null;
+     return null;
     }
 
     @Override
     public boolean updateProfessional(Professional p) {
-        return false;
+        boolean dbResult = dbHandler.updateProfessional(p.name,p.getID());
+        return dbResult;
     }
 
     @Override
     public boolean removeProfessional(Professional p) {
-        return false;
+        // Can not delete nodes with neighbors
+
+        boolean dbResult = dbHandler.deleteProfessional(p.getID());
+        if(dbResult) {
+            this.allProfs.remove(p);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
