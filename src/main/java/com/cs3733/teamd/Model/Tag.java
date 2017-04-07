@@ -18,6 +18,10 @@ public class Tag {
 
     private int id;
 
+    public int getID(){
+        return id;
+    }
+
      public LinkedList<Professional> getProfs(){
          return profs;
      }

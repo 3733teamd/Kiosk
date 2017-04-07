@@ -514,4 +514,29 @@ public class DBHandler {
             return -1;
         }
     }
+
+    public boolean deleteTag(int id) {
+        String sqlDelete = "DELETE FROM Tag WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            return false;
+        }
+    }
+
+    public boolean updateTag(String name, int id) {
+        String sqlUpdate = "UPDATE Tag SET name=?, WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+            statement.setString(1, name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            return false;
+        }
+    }
 }

@@ -66,7 +66,7 @@ public interface DirectoryInterface {
      * @param t - Tag to update
      * @return - true if successful, false if failure
      */
-    boolean removeTag(Tag t);
+    boolean deleteTag(Tag t);
 
     /**
      * Create a professional and persist it to database with only the name parameter

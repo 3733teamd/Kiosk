@@ -70,7 +70,7 @@ public class EditDoctorController extends  AbsController{
         modifyTitle.setItems(FXCollections.observableArrayList(Title.values()));
         //modifySection.setValue(tagList.get(0));
         //modifySection.setItems(tagList);
-        modifySection.setItems(FXCollections.observableArrayList(dir.getAllTags()));
+        modifySection.setItems(FXCollections.observableArrayList(dir.getTags()));
         modifyProf.setValue((professionalList.get(0)));
         modifyProf.setItems(professionalList);
         modifyOptions.setValue(editProfOptions.get(0));

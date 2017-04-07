@@ -80,12 +80,14 @@ public class Directory implements DirectoryInterface {
         notifyUpdate();
         return  null;
     }
+
+    /*
     public void deleteTag(Tag t){
         allTags.remove(t);
         //REMOVE FROM DATABSE
         notifyUpdate();
     }
-
+*/
     @Override
     public Node saveNode(int x, int y, int floor) {
         int id = this.dbHandler.saveNode(x,y,floor);
@@ -147,12 +149,23 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean updateTag(Tag t) {
-        return false;
+        boolean dbResult = dbHandler.updateTag(t.getTagName(),t.getId());
+        return dbResult;
     }
 
     @Override
-    public boolean removeTag(Tag t) {
-        return false;
+    public boolean deleteTag(Tag t) {
+        // Can not delete nodes with neighbors
+
+        boolean dbResult = dbHandler.deleteTag(t.getID());
+        if(dbResult) {
+            this.allTags = this.allTags.stream().filter(tag -> {
+                return tag.getID() != t.getID();
+            }).collect(Collectors.toList());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
