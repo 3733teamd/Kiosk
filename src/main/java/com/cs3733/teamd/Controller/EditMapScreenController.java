@@ -1,7 +1,9 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Directory;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -38,6 +40,7 @@ public class EditMapScreenController extends AbsController{
     public Slider floorSlider;
     public Button LoginButton;
     public Button SpanishButton;
+    public Button BackButton;
     public Button addNode;
     public Button connectNode;
     public Label xLoc;
@@ -45,7 +48,7 @@ public class EditMapScreenController extends AbsController{
     public ImageView floorMap;
     public TextArea tagList;
     public TextArea neighborsList;
-    public AnchorPane pane;
+    public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
 
@@ -89,19 +92,23 @@ public class EditMapScreenController extends AbsController{
         TextFields.bindAutoCompletion(addTag,sug);
     }
 
-
+    //Back button
+    @FXML
+    public void onBack(ActionEvent actionEvent) throws  IOException{
+        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+    }
     @FXML
     public void Logout() throws IOException{
-        switchScreen(pane, "/Views/UserScreen.fxml");
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 
     @FXML
     public void toEditProf() throws  IOException{
-        switchScreen(pane, "/Views/EditDoctorScreen.fxml");
+        switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
     }
     @FXML
     public void toEditTag() throws  IOException{
-        switchScreen(pane, "/Views/EditTagScreen.fxml");
+        switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
     @FXML
     public void toSpanish(){
