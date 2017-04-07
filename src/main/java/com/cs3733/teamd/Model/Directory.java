@@ -108,9 +108,7 @@ public class Directory implements DirectoryInterface {
         }
         boolean dbResult = dbHandler.deleteNode(n.getID());
         if(dbResult) {
-            this.allNodes = this.allNodes.stream().filter(node -> {
-                return node.getID() != n.getID();
-            }).collect(Collectors.toList());
+            this.allNodes.remove(n);
             return true;
         }
         else {
@@ -159,9 +157,7 @@ public class Directory implements DirectoryInterface {
 
         boolean dbResult = dbHandler.deleteTag(t.getID());
         if(dbResult) {
-            this.allTags = this.allTags.stream().filter(tag -> {
-                return tag.getID() != t.getID();
-            }).collect(Collectors.toList());
+            this.allTags.remove(t);
             return true;
         } else {
             return false;
