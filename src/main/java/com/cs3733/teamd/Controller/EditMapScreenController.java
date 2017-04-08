@@ -23,6 +23,7 @@ import org.controlsfx.control.textfield.TextFields;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -62,7 +63,7 @@ public class EditMapScreenController extends AbsController{
     };
     public Node s1 = new Node(1,1,0);
     public Node s2 = new Node(1,1,0);
-    public Circle select1 =createCircle(s1,1,Color.TRANSPARENT);
+    public Circle select1; //=createCircle(s1,1,Color.TRANSPARENT);
     public Circle select2=createCircle(s2,1,Color.TRANSPARENT);
 
     public int s;
@@ -70,9 +71,9 @@ public class EditMapScreenController extends AbsController{
     public Circle scirc;
     public Boolean switchS =true;
     private states state =states.select;
-    public double floor;
+    public int floor =4;
 
-    private ArrayList<Node> temp =new ArrayList<>();
+    private List<Node> nodeList = dir.getNodes();
 
     int i=50;
 
@@ -99,7 +100,7 @@ public class EditMapScreenController extends AbsController{
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
                 //floorSlider.setText(String.format("%.2f", new_val));
-                floor= (double)new_val;
+                floor= (int)new_val;
                 System.out.println("floor"+floor);
             }
 
@@ -136,9 +137,9 @@ public class EditMapScreenController extends AbsController{
     public void addNode(){
         Circle circ = createCircle(new Node(50,50,i), 5, Color.RED);
         imagePane.getChildren().add(circ);
-        Node newn = new Node((int)circ.getCenterX(), (int)circ.getCenterY(), i);
-        temp.add(newn);
-        i++;
+        Node newn = dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
+        nodeList.add(newn);
+
         //add to directory
     }
 
@@ -184,8 +185,7 @@ public class EditMapScreenController extends AbsController{
                 //System.out.println("s2:" +select2.getCenterX());
                 switchS=true;
             }
-            System.out.println(temp);
-            System.out.println(temp.get(0).getX());
+
         });
         circle.setOnMouseReleased((t)->{
             state=states.select;
@@ -193,7 +193,7 @@ public class EditMapScreenController extends AbsController{
                 circle.setFill(Color.RED);
            // }
             updatePosition();
-            System.out.println(temp.get(0).getNodes());
+
 
         });
 
@@ -220,7 +220,7 @@ public class EditMapScreenController extends AbsController{
     }
 
 
-    private Line connect(Circle c1, Circle c2) {
+    private Line connect(Node c1, Node c2) {
         Line line = new Line();
 
         line.startXProperty().bind(c1.centerXProperty());
@@ -237,33 +237,12 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void updatePosition(){
-        for(Node n: temp){
-//            if(n.getID()==s){
-//                n.=scirc.getCenterX();
-//            } //set to xLoc and yLoc?
-            System.out.println("Id" +s1.getID());
 
-            if(n.getID()==s){
-                Node a = new Node(new Integer(xLoc.getText()), new Integer(yLoc.getText()), s);
-               // n.coord.x= (new Integer(xLoc.getText()));
-              // n.coord.y=( new Integer(yLoc.getText()));
-            }
-        }
     }
 
 
     private void updateNeighbors(){ //doesn't work
-        for(Node n:temp){
-            System.out.println("Id" +s1.getID());
-            if(n.getID() ==s1.getID()){
-                for(Node a:temp){
-                    if(n.getID() ==sa){
-                        n.addNode(a);
-                        a.addNode(n);
-                    }
-                }
-            }
-        }
+
     }
 
 

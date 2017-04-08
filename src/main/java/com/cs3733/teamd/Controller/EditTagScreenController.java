@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -28,7 +29,7 @@ public class EditTagScreenController extends AbsController {
         switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
     }
     private void intitalize(){
-        ArrayList<Tag> allTags = dir.getAllTags();
+        List<Tag> allTags = dir.getTags();
         String fillBox;
 
     }

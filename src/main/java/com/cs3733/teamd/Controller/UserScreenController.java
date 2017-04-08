@@ -77,14 +77,14 @@ public class UserScreenController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws IOException{
         Main.DestinationSelected = TypeDestination.getText();
         Directory dir = Directory.getInstance();
-        int numtags = dir.getAllTags().size();
-        int numnodes = dir.getAllNodes().size();
+        int numtags = dir.getTags().size();
+        int numnodes = dir.getNodes().size();
         Tag curtag;
         for(int itr = 0; itr < numtags; itr++){
-            curtag = dir.getAllTags().get(itr);
+            curtag = dir.getTags().get(itr);
             if(Main.DestinationSelected.equals(curtag.getTagName())){
                 Pathfinder pathfinder =
-                        new Pathfinder(dir.getAllNodes().get(numnodes-1),
+                        new Pathfinder(dir.getNodes().get(numnodes-1),
                                         curtag.getNodes().getFirst());
 
                 pathNodes = pathfinder.shortestPath();

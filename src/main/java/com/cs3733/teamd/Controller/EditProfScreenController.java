@@ -1,6 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.Professional;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 
 import java.io.IOException;
@@ -39,7 +42,7 @@ public class EditProfScreenController extends AbsController {
     private TableView<String> ProfessionalTable;
 
     @FXML
-    private TableColumn<ObservableList<String>, String> ProfessionalsList;
+    private TableColumn<String[], String> ProfessionalsList;
 
     @FXML
     private Button addNewProf;
@@ -85,13 +88,23 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
-        ObservableList list = FXCollections.observableList(drop);
+        /*ObservableList list = FXCollections.observableList(drop);
        // ProfessionalsList.setCellValueFactory(new PropertyValueFactory<>(acronyms));
        /// list.add(new Professional("Abb",12));
         ///ProfessionalTable.setItems(list);
         ///ProfessionalsList.setCellFactory(new PropertyValueFactory("name"));
        // ProfessionalTable.getColumns().setAll(ProfessionalsList);
-
+        ProfessionalsList.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
+                String[] x = p.getValue();
+                if (x != null && x.length>0) {
+                    return new SimpleStringProperty(x[0]);
+                } else {
+                    return new SimpleStringProperty("<no name>");
+                }
+            }
+        });*/
     }
 
     @FXML
