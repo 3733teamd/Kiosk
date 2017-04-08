@@ -19,7 +19,7 @@ public class ThreeEntityTest {
     @Test
     public void addTagToProf(){
         Professional p = new Professional("Bob", new ArrayList<>(Arrays.asList(new Title[]{Title.AuD})), 10);
-        Tag t = new Tag("Testing");
+        Tag t = new Tag("Testing",2);
         p.addTag(t);
         assertTrue(t.containsProf(p));
         assertTrue(p.containsTag(t));
@@ -27,16 +27,16 @@ public class ThreeEntityTest {
 
     @Test
     public void addNodeToNode(){
-        Node n1 = new Node(1,2);
-        Node n2 = new Node(1,3);
+        Node n1 = new Node(1,2,4);
+        Node n2 = new Node(1,3,4);
         n1.addNode(n2);
         assertTrue(n2.containsNode(n1));
     }
 
     @Test
     public void addTagToNode(){
-        Node n = new Node(1,2);
-        Tag t = new Tag("Testing");
+        Node n = new Node(1,2,4);
+        Tag t = new Tag("Testing",4);
         n.addTag(t);
         assertTrue(t.containsNode(n));
     }

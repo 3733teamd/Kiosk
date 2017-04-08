@@ -22,6 +22,7 @@ public enum Title {
     ABPP ("ABPP", "American Board of Professional Psychology");
     String acronym;
     String fullTitle;
+    int id;
     Title(String acronym, String fullTitle){
         this.acronym = acronym;
         this.fullTitle = fullTitle;

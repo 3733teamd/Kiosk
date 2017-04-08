@@ -91,7 +91,7 @@ public class EditServiceController {
         System.out.print("new service: " + newService);
 
         //-------------------------------------------------------this is the tag that needs to be added to the database
-        Tag t = new Tag(this.addService.getText());
+        //Tag t = new Tag(this.addService.getText());
 
     }
 

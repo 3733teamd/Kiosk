@@ -22,6 +22,38 @@ public class Pathfinder {
         this.end = end;
     }
 
+    public boolean hasPath() {
+        LinkedList<Node> nodes = shortestPath();
+        boolean hasStart = false;
+        boolean hasEnd = false;
+        for(Node n: nodes) {
+            if(start.getID() == n.getID()) {
+                hasStart = true;
+            }
+            if(end.getID() == n.getID()) {
+                hasEnd = true;
+            }
+        }
+        return hasStart && hasEnd;
+    }
+
+    /**
+     * Finds node in the openSet with lowest heuristic value
+     * @param openSet
+     * @param costThrough
+     * @return
+     */
+    private Node lowestCostThrough(List<Node> openSet, Map<Node, Double> costThrough){
+        Node lowest = openSet.get(0);
+
+        for(Node n: openSet){
+            if(costThrough.get(n) < costThrough.get(lowest)){
+                lowest = n;
+            }
+        }
+        return lowest;
+    }
+
     /**
      * Gives shortest path
      * @return a linked list of nodes from start to end
@@ -48,8 +80,8 @@ public class Pathfinder {
         costThrough.put(start, heuristic(start, end));
 
         while (!openSet.isEmpty()){
-            // TODO: get node with lowest heuristic value
-            Node current = openSet.get(0);
+
+            Node current = lowestCostThrough(openSet, costThrough);
 
             if(current.equals(end)){
                 return reconstructPath(cameFrom, current);
@@ -100,10 +132,9 @@ public class Pathfinder {
      * @param b Second Node
      * @return calculated cost
      */
-    private double heuristic(Node a, Node b){
+    private int heuristic(Node a, Node b){
         // returns 0 for now
-        // TODO: add an actual heuristic function
-        return 0.0;
+        return Math.abs(a.getFloor() - b.getFloor());
     }
 
     /**

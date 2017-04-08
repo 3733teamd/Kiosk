@@ -2,6 +2,7 @@ package com.cs3733.teamd.Model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Me on 3/31/2017.
@@ -13,8 +14,8 @@ import java.util.LinkedList;
 public class Professional {
     String name;
     private int ID;
-    private ArrayList<Title> titles = new ArrayList<Title>();
-    private LinkedList<Tag> tags = new LinkedList<Tag>();
+    private List<Title> titles = new ArrayList<Title>();
+    private List<Tag> tags = new LinkedList<Tag>();
 
 
     public int getID() {
@@ -51,6 +52,10 @@ public class Professional {
         this.titles.add(title);
     }
 
+    public List<Title> getTitles() {
+        return titles;
+    }
+
     public void addTag(Tag t){
         tags.add(t);
         if(!t.containsProf(this)){
@@ -58,7 +63,7 @@ public class Professional {
         }
     }
 
-    public LinkedList<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
@@ -69,6 +74,10 @@ public class Professional {
         if(t.containsProf(this)){
             t.rmvProf(this);
         }
+    }
+
+    public void rmvTitle(Title t) {
+        titles.remove(t);
     }
 
     public void rmvAllTitles(){

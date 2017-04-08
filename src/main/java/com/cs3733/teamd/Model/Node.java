@@ -14,6 +14,12 @@ public class Node {
     //DB key
     private int ID;
 
+    public int getFloor() {
+        return floor;
+    }
+
+    private int floor;
+
     public int getID(){
         return ID;
     }
@@ -21,12 +27,13 @@ public class Node {
     public LinkedList<Tag> getTags(){
         return tags;
     }
-    public Node(int x, int y){
-
+    public Node(int x, int y, int floor){
+        this.floor = floor;
         coord.setLocation(x,y);
     }
 
-    public Node(int x, int y, int ID){
+    public Node(int x, int y, int floor, int ID){
+        this.floor = floor;
         coord.setLocation(x,y);
         this.ID = ID;
     }

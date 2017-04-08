@@ -11,9 +11,10 @@ public final class DBStatements {
     public static final String CREATE_TABLE_NODE =
             "CREATE TABLE Node\n" +
                     "(\n" +
-                    "\tID INTEGER PRIMARY KEY,\n" +
-                    "\tX INTEGER NOT NULL,\n" +
-                    "\tY INTEGER NOT NULL\n" +
+                    "\tid INTEGER PRIMARY KEY,\n" +
+                    "\tx INTEGER NOT NULL,\n" +
+                    "\ty INTEGER NOT NULL,\n" +
+                    "\tfloor INTEGER NOT NULL" +
                     ")";
     public static final String CREATE_TABLE_ADJACENTNODE =
             "CREATE TABLE AdjacentNode\n" +
