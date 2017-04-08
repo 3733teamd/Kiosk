@@ -10,13 +10,13 @@ import static org.junit.Assert.assertEquals;
 public class TagTest {
     @Test
     public void testTagToString(){
-        Tag t = new Tag("Testing");
+        Tag t = new Tag("Testing",2);
         assertEquals("Testing",t.toString());
     }
 
     @Test
     public void testTagNameChanged(){
-        Tag t = new Tag("Wrong");
+        Tag t = new Tag("Wrong",2);
         t.setTagName("Right");
         assertEquals("Right",t.getTagName());
     }

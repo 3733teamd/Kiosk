@@ -106,8 +106,6 @@ public class Main extends Application {
             nodes = database.nodes;
             tags = database.tags;
             professionals = database.professionals;
-
-
             database.close();
         } catch (Exception e) {
             e.printStackTrace();

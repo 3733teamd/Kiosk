@@ -22,6 +22,21 @@ public class Pathfinder {
         this.end = end;
     }
 
+    public boolean hasPath() {
+        LinkedList<Node> nodes = shortestPath();
+        boolean hasStart = false;
+        boolean hasEnd = false;
+        for(Node n: nodes) {
+            if(start.getID() == n.getID()) {
+                hasStart = true;
+            }
+            if(end.getID() == n.getID()) {
+                hasEnd = true;
+            }
+        }
+        return hasStart && hasEnd;
+    }
+
     /**
      * Gives shortest path
      * @return a linked list of nodes from start to end

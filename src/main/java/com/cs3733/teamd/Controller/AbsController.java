@@ -16,7 +16,7 @@ public abstract class AbsController {
 
         AnchorPane pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
-        Main.backString =currView;
+        Main.backString = currView;
         System.out.println(Main.backString);
 
         pane = (AnchorPane) loader.load();
