@@ -6,8 +6,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -22,28 +20,20 @@
                     <children>
                         <HBox prefHeight="40.0" prefWidth="1291.0">
                             <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                    <children>
-                                        <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="8.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="3.0">
-                                            <image>
-                                                <Image url="@../floor_imgs/hoslogo.png" />
-                                            </image>
-                                        </ImageView>
-                                    </children>
-                                </AnchorPane>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Faulkner Hospital Location Finder" wrappingWidth="1245.99998742342">
+                                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Professionals" wrappingWidth="1245.99998742342">
                                     <font>
                                         <Font name="Tahoma" size="31.0" />
                                     </font>
                                 </Text>
                             </children>
                         </HBox>
-                  <Button fx:id="submitButton" layoutX="1173.0" mnemonicParsing="false" onAction="#onBack" prefHeight="55.0" prefWidth="131.0" text="Submit">
+                  <Button fx:id="submitButton" layoutX="1173.0" mnemonicParsing="false" onAction="#onBack" prefHeight="65.0" prefWidth="131.0" text="Submit">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" layoutX="1042.0" mnemonicParsing="false" onAction="#onBack" prefHeight="55.0" prefWidth="131.0" text="⇦ Back">
+                  <Button fx:id="BackButton" layoutX="1042.0" mnemonicParsing="false" onAction="#onBack" prefHeight="65.0" prefWidth="131.0" text="⇦ Back">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -58,12 +48,12 @@
                         <VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="325.0">
                             <children>
                         <TextField fx:id="searchProfessionalBar" promptText="Search Professionals" />
-                        <TableView fx:id="ProfessionalTable" prefHeight="632.0" prefWidth="264.0">
+                        <TableView fx:id="ProfessionalTable" editable="true" prefHeight="632.0" prefWidth="264.0">
                           <columns>
                             <TableColumn fx:id="ProfessionalsList" prefWidth="277.0" text="Professionals" />
                           </columns>
                         </TableView>
-                        <Button fx:id="addNewProf" mnemonicParsing="false" prefHeight="68.0" prefWidth="264.0" text="Add New Professional">
+                        <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="68.0" prefWidth="282.0" text="Add New Professional">
                            <font>
                               <Font size="22.0" />
                            </font>
@@ -85,38 +75,38 @@
                         </AnchorPane>
                         <SplitPane dividerPositions="0.23106796116504855, 0.5, 0.7495145631067961">
                            <items>
-                              <TableView prefHeight="659.0" prefWidth="411.0">
+                              <TableView editable="true" prefHeight="659.0" prefWidth="411.0">
                                 <columns>
                                   <TableColumn fx:id="allTitleTable" prefWidth="234.0" text="All Titles" />
                                 </columns>
                               </TableView>
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                  <children>
-                                    <TableView prefHeight="380.0" prefWidth="269.0">
+                                    <TableView editable="true" prefHeight="380.0" prefWidth="269.0">
                                       <columns>
                                         <TableColumn fx:id="currentTitleTable" prefWidth="280.0" text="Current Titles" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="searchTitle" promptText="Choose a Title" />
-                                    <Button fx:id="addTitle" mnemonicParsing="false" prefHeight="57.0" prefWidth="143.0" text="Add Title" />
-                                    <Button fx:id="deleteTitle" mnemonicParsing="false" prefHeight="57.0" prefWidth="142.0" text="Delete Title" />
+                                    <Button fx:id="addTitle" mnemonicParsing="false" onAction="#AddTitle" prefHeight="57.0" prefWidth="143.0" text="Add Title" />
+                                    <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#DeleteTitle" prefHeight="57.0" prefWidth="142.0" text="Delete Title" />
                                  </children>
                               </VBox>
-                              <TableView prefHeight="682.0" prefWidth="425.0">
+                              <TableView editable="true" prefHeight="682.0" prefWidth="425.0">
                                 <columns>
                                   <TableColumn fx:id="allTags" prefWidth="257.0" text="Tags List" />
                                 </columns>
                               </TableView>
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="372.0">
                                  <children>
-                                    <TableView prefHeight="380.0" prefWidth="254.0">
+                                    <TableView editable="true" prefHeight="380.0" prefWidth="254.0">
                                       <columns>
                                         <TableColumn fx:id="currentTags" prefWidth="248.0" text="Current Tags" />
                                       </columns>
                                     </TableView>
                                     <TextField fx:id="chooseTag" promptText="Choose a Tag" />
-                                    <Button fx:id="addTag" mnemonicParsing="false" prefHeight="57.0" prefWidth="118.0" text="Add Tag" />
-                                    <Button fx:id="deleteTag" mnemonicParsing="false" prefHeight="57.0" prefWidth="118.0" text="Delete Tag" />
+                                    <Button fx:id="addTag" mnemonicParsing="false" onAction="#AddTag" prefHeight="57.0" prefWidth="118.0" text="Add Tag" />
+                                    <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#DeleteTag" prefHeight="57.0" prefWidth="118.0" text="Delete Tag" />
                                  </children>
                               </VBox>
                            </items>

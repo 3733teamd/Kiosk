@@ -1,11 +1,15 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Model.Professional;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -15,6 +19,10 @@ import java.io.IOException;
  * Created by Anh Dao on 4/6/2017.
  */
 public class EditProfScreenController extends AbsController {
+
+
+    public static ObservableList<Professional> drop = FXCollections.observableArrayList();
+
     @FXML
     private AnchorPane pane;
 
@@ -28,10 +36,10 @@ public class EditProfScreenController extends AbsController {
     private TextField searchProfessionalBar;
 
     @FXML
-    private TableView<?> ProfessionalTable;
+    private TableView<String> ProfessionalTable;
 
     @FXML
-    private TableColumn<?, ?> ProfessionalsList;
+    private TableColumn<ObservableList<String>, String> ProfessionalsList;
 
     @FXML
     private Button addNewProf;
@@ -77,6 +85,12 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
+        ObservableList list = FXCollections.observableList(drop);
+       // ProfessionalsList.setCellValueFactory(new PropertyValueFactory<>(acronyms));
+       /// list.add(new Professional("Abb",12));
+        ///ProfessionalTable.setItems(list);
+        ///ProfessionalsList.setCellFactory(new PropertyValueFactory("name"));
+       // ProfessionalTable.getColumns().setAll(ProfessionalsList);
 
     }
 
@@ -109,6 +123,8 @@ public class EditProfScreenController extends AbsController {
     void addNewProf(ActionEvent event) {
 
     }
+
+
 
 
 }
