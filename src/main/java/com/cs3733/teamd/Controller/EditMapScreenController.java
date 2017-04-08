@@ -224,8 +224,8 @@ public class EditMapScreenController extends AbsController{
 
             if(n.getID()==s){
                 Node a = new Node(new Integer(xLoc.getText()), new Integer(yLoc.getText()), s);
-                n.coord.x= (new Integer(xLoc.getText()));
-                n.coord.y=( new Integer(yLoc.getText()));
+               // n.coord.x= (new Integer(xLoc.getText()));
+              // n.coord.y=( new Integer(yLoc.getText()));
             }
         }
     }

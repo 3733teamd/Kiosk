@@ -44,14 +44,6 @@
         <jarDirectory url="file://$USER_HOME$/Desktop/College/CD2016-2017/Dterm" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/College/CD2016-2017/Dterm/controlsfx-8.40.12/controlsfx-8.40.12.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="org.controlsfx:controlsfx-samples:8.40.12" level="project" />
   </component>
 </module>
