@@ -3,6 +3,8 @@ package com.cs3733.teamd.Database;
 import com.cs3733.teamd.Model.Node;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Before;
+import org.junit.After;
 
 import java.io.IOException;
 import java.sql.*;
@@ -19,7 +21,7 @@ public class DBHandlerTest {
      * Return's the DBHandler for the test
      * @return
      */
-    private DBHandler getTestHandler() {
+    private static DBHandler getTestHandler() {
         DBHandler handler = null;
         try {
             Connection c = DriverManager.getConnection("jdbc:derby:test_db;create=true");
@@ -30,31 +32,30 @@ public class DBHandlerTest {
         }
         return handler;
     }
-
-    @Test
-    public void regularDatabaseCanBeOpened() {
-        try {
-            DBHandler handler = new DBHandler();
-            handler.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
+        @Test
+        public void regularDatabaseCanBeOpened() {
+            try {
+                DBHandler handler = new DBHandler();
+                handler.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                fail(e.getMessage());
+            }
         }
-    }
 
-    @Test
-    public void testDatabaseCanBeOpened() {
-        try {
-            DBHandler handler = getTestHandler();
-            handler.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
+        @Test
+        public void testDatabaseCanBeOpened() {
+            try {
+                DBHandler handler = getTestHandler();
+                handler.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                fail(e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+                fail(e.getMessage());
+            }
         }
-    }
 
     private void createSchemas(DBHandler d) {
         Connection c = d.getConnection();
