@@ -211,28 +211,28 @@ public class UserScreenController extends AbsController{
                     if(cnmorsig == 2){
                         // oc is movement to the right
                         if(oldcurx >= 0){
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left ");
+                                TextDirections.set(i, "Turn right ");
                             }
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right ");
+                                TextDirections.set(i, "Turn left ");
                             }
                         }
                         // oc is movement to the left
                         if(oldcurx < 0){
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right ");
+                                TextDirections.set(i, "Turn left ");
                             }
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left ");
+                                TextDirections.set(i, "Turn right ");
                             }
                         }
                     }
@@ -242,42 +242,42 @@ public class UserScreenController extends AbsController{
                 if(ocmorsig == 2){
                     // cnx more significant than cny
                     if(cnmorsig == 1){
-                        // oc is movement downwards
+                        // oc is movement upwards
                         if(oldcury >= 0){
                             // cn is movement to the right
                             if(curnextx >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right ");
+                                TextDirections.set(i, "Turn left ");
                             }
                             // cn is movement to the left
                             if(curnextx < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left ");
+                                TextDirections.set(i, "Turn right ");
                             }
                         }
-                        // oc is movement upwards
+                        // oc is movement downwards
                         if(oldcury < 0){
                             // ocn is movement to the right
                             if(curnextx >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left ");
+                                TextDirections.set(i, "Turn right ");
                             }
                             // cn is movement to the left
                             if(curnextx < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right ");
+                                TextDirections.set(i, "Turn left ");
                             }
                         }
                     }
                     // cny more significant than cnx
                     if(cnmorsig == 2){
-                        // oc is movement downwards
+                        // oc is movement upwards
                         if(oldcury >= 0){
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 // turn around case
                             }
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 if(curdir != "Straight"){
                                     curdir = "Straight";
@@ -285,16 +285,16 @@ public class UserScreenController extends AbsController{
                                 }
                             }
                         }
-                        // oc is movement upwards
+                        // oc is movement downwards
                         if(oldcury < 0){
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 if(curdir != "Straight"){
                                     curdir = "Straight";
                                     TextDirections.set(i, "Go straight until end of hallway ");
                                 }
                             }
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 //turn around case
                             }
@@ -332,28 +332,28 @@ public class UserScreenController extends AbsController{
                     if(cnmorsig == 2){
                         // oc is movement to the right
                         if(oldcurx >= 0){
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left mid-hallway ");
+                                TextDirections.set(i, "Turn right mid-hallway ");
                             }
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right mid-hallway ");
+                                TextDirections.set(i, "Turn left mid-hallway ");
                             }
                         }
                         // oc is movement to the left
                         if(oldcurx < 0){
-                            // cn is movement downwards
+                            // cn is movement upwards
                             if(curnexty >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right mid-hallway ");
+                                TextDirections.set(i, "Turn left mid-hallway ");
                             }
-                            // cn is movement upwards
+                            // cn is movement downwards
                             if(curnexty < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left mid-hallway ");
+                                TextDirections.set(i, "Turn right mid-hallway ");
                             }
                         }
                     }
@@ -363,30 +363,30 @@ public class UserScreenController extends AbsController{
                 if(ocmorsig == 2){
                     // cnx more significant than cny
                     if(cnmorsig == 1){
-                        // oc is movement downwards
+                        // oc is movement upwards
                         if(oldcury >= 0){
                             // cn is movement to the right
                             if(curnextx >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right mid-hallway ");
+                                TextDirections.set(i, "Turn left mid-hallway ");
                             }
                             // cn is movement to the left
                             if(curnextx < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left mid-hallway ");
+                                TextDirections.set(i, "Turn right mid-hallway ");
                             }
                         }
-                        // oc is movement upwards
+                        // oc is movement downwards
                         if(oldcury < 0){
                             // ocn is movement to the right
                             if(curnextx >= 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn left mid-hallway ");
+                                TextDirections.set(i, "Turn right mid-hallway ");
                             }
                             // cn is movement to the left
                             if(curnextx < 0){
                                 curdir = "";
-                                TextDirections.set(i, "Turn right mid-hallway ");
+                                TextDirections.set(i, "Turn left mid-hallway ");
                             }
                         }
                     }
@@ -408,9 +408,24 @@ public class UserScreenController extends AbsController{
         String output = "";
         //iterate through to find directions that are not blanks
         for( int stritr = 0; stritr < pathlength; stritr++){
-            String tempstr  = TextDirections.get(stritr);
-            if(tempstr != ""){
-                output = output + tempstr;
+            String tempstr;
+            if(stritr == 0){
+                tempstr  = TextDirections.get(stritr);
+                if(tempstr != "i"){
+                    output = output + tempstr;
+                }
+            }
+            if(stritr > 0 && stritr < pathlength - 1) {
+                tempstr = TextDirections.get(stritr);
+                if (tempstr != "i") {
+                    output = output + tempstr;
+                }
+            }
+            if(stritr == pathlength-1){
+                tempstr  = TextDirections.get(stritr);
+                if(tempstr != "i"){
+                    output = output + tempstr;
+                }
             }
         }
         // print output to show path directions
