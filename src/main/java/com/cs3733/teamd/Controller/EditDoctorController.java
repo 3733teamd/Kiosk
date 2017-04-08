@@ -193,7 +193,7 @@ public class EditDoctorController extends  AbsController{
 
         dir.creaNewProf(profName, new ArrayList<Title>(),id);
 
-        initialize();
         submitFeedback.setText("Successfull creation of " + profName);
+        addDoctorLabel.setText("");
     }
 }
