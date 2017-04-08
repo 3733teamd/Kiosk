@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import org.controlsfx.control.textfield.TextFields;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 //TODO deleate connections
 //TODO update/ add
@@ -55,12 +57,11 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane imagePane;
     public TextField addTag;
 
+    HashMap<Circle, Node> nodes;
+
 
     double orgSceneX, orgSceneY;
 
-    public enum states{
-        add,select
-    };
     public Node s1 = new Node(1,1,0);
     public Node s2 = new Node(1,1,0);
     public Circle select1; //=createCircle(s1,1,Color.TRANSPARENT);
@@ -70,10 +71,10 @@ public class EditMapScreenController extends AbsController{
     public int sa;
     public Circle scirc;
     public Boolean switchS =true;
-    private states state =states.select;
     public int floor =4;
 
     private List<Node> nodeList = dir.getNodes();
+    private List<Tag> ListofTags =dir.getTags();
 
     int i=50;
 
@@ -93,7 +94,7 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
-        TextFields.bindAutoCompletion(addTag,sug);
+        TextFields.bindAutoCompletion(addTag,ListofTags);
 
 
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -105,6 +106,8 @@ public class EditMapScreenController extends AbsController{
             }
 
         });
+
+        drawfloorNodes();
     }
 
 
@@ -137,8 +140,8 @@ public class EditMapScreenController extends AbsController{
     public void addNode(){
         Circle circ = createCircle(new Node(50,50,i), 5, Color.RED);
         imagePane.getChildren().add(circ);
-        Node newn = dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
-        nodeList.add(newn);
+        //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
+        //nodeList.add(newn);
 
         //add to directory
     }
@@ -154,9 +157,11 @@ public class EditMapScreenController extends AbsController{
 
 
     private Circle createCircle(Node n, double r, Color color) {
-        Circle circle = new Circle(n.getX(), n.getY(), r, color);
+
+        Circle circle = new Circle(n.getX()/10, n.getY()/10, r, color);
 
         circle.setCursor(Cursor.HAND);
+        //nodes.put(circle, n);
 
         circle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
@@ -185,12 +190,11 @@ public class EditMapScreenController extends AbsController{
                 //System.out.println("s2:" +select2.getCenterX());
                 switchS=true;
             }
-
+//            System.out.println(nodes.get(c).getX());
         });
         circle.setOnMouseReleased((t)->{
-            state=states.select;
             //if(select1!=circle ||select2!=circle){
-                circle.setFill(Color.RED);
+            circle.setFill(Color.RED);
            // }
             updatePosition();
 
@@ -199,7 +203,6 @@ public class EditMapScreenController extends AbsController{
 
         circle.setOnMouseDragged((t) -> {
             //if(state ==states.add) {
-            state=states.add;
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
 
@@ -220,7 +223,7 @@ public class EditMapScreenController extends AbsController{
     }
 
 
-    private Line connect(Node c1, Node c2) {
+    private Line connect(Circle c1, Circle c2) {
         Line line = new Line();
 
         line.startXProperty().bind(c1.centerXProperty());
@@ -245,6 +248,18 @@ public class EditMapScreenController extends AbsController{
 
     }
 
+    private void drawfloorNodes(){
+        for(Node n: nodeList){
+            if(n.getFloor()==floor){
+                Circle circ = createCircle(n, 5, Color.RED);
+                imagePane.getChildren().add(circ);
+                System.out.println(circ.getCenterX());
+               // nodes.put(circ, n);
+            }
+        }
+
+
+    }
 
 
 

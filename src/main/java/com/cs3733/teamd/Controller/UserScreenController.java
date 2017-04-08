@@ -12,43 +12,55 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.*;
-import java.awt.Color;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.List;
 
 /**
  * Created by Anh Dao on 4/6/2017.
  */
 public class UserScreenController extends AbsController{
+    Directory dir = Directory.getInstance();
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
     public TextField TypeDestination;
     public Canvas MapCanvas;
-
     public int imageW = 1091;
     public int imageH = 693;
     public double scale = 8.4;
     public int offset_x = 160*12;
     public int offset_y = 80*12;
     public AnchorPane MMGpane;
+    @FXML
+    private TextArea directions;
 
     private Boolean languageEnglish =true;
     public GraphicsContext gc;
     private static LinkedList<Node> pathNodes;
+    private List<Tag> nodeList = dir.getTags();
 
+    String output = "";
     @FXML private void initialize()
     {
+        TextFields.bindAutoCompletion(TypeDestination,nodeList);
+
         setText();
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
             draw();
         }
+
+        directions.setText(output);
     }
 
 
@@ -405,7 +417,7 @@ public class UserScreenController extends AbsController{
             gc.setFill(javafx.scene.paint.Color.BLUE);
             radius = 5;
         }
-        String output = "";
+        //String output = "";
         //iterate through to find directions that are not blanks
         for( int stritr = 0; stritr < pathlength; stritr++){
             String tempstr;
