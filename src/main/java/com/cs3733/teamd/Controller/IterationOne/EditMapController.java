@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Allyk on 3/26/2017.
@@ -28,10 +29,10 @@ import java.util.LinkedList;
 public class EditMapController extends AbsController {
 
     Directory dir = Directory.getInstance();
-    ArrayList<Node> currentNodes = dir.getAllNodes();
+    List<Node> currentNodes = dir.getNodes();
     public static ObservableList<Node> nodeDropDown = FXCollections.observableArrayList();
 
-    ArrayList<Tag> currentTags = dir.getAllTags();
+    List<Tag> currentTags = dir.getTags();
     public static ObservableList<Tag> tagDropDown = FXCollections.observableArrayList();
 
     public Button largerTextButton;

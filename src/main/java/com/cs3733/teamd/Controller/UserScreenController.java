@@ -77,14 +77,14 @@ public class UserScreenController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws IOException{
         Main.DestinationSelected = TypeDestination.getText();
         Directory dir = Directory.getInstance();
-        int numtags = dir.getAllTags().size();
-        int numnodes = dir.getAllNodes().size();
+        int numtags = dir.getTags().size();
+        int numnodes = dir.getNodes().size();
         Tag curtag;
         for(int itr = 0; itr < numtags; itr++){
-            curtag = dir.getAllTags().get(itr);
+            curtag = dir.getTags().get(itr);
             if(Main.DestinationSelected.equals(curtag.getTagName())){
                 Pathfinder pathfinder =
-                        new Pathfinder(dir.getAllNodes().get(numnodes-1),
+                        new Pathfinder(dir.getNodes().get(numnodes-1),
                                         curtag.getNodes().getFirst());
 
                 pathNodes = pathfinder.shortestPath();
@@ -131,6 +131,8 @@ public class UserScreenController extends AbsController{
         LinkedList<String> TextDirections = new LinkedList<String>();
         gc.setLineWidth(3);
         int pathlength = path.size();
+        //holder for straight indicator
+        String curdir = "";
         for (int str = 0; str < pathlength; str++){
             TextDirections.add("");
         }
@@ -152,16 +154,14 @@ public class UserScreenController extends AbsController{
                 String temp = "Starting at and facing the kiosk ";
                 TextDirections.set(i, temp);
             }
-            //holder for straight indicator
-            String curdir = "";
             // every node between first and second to last
             if(i > 0 && i+2 < pathlength) {
                 double oldnodex = path.get(i - 1).getX();
                 double oldnodey = path.get(i - 1).getY();
                 double currentnodex = path.get(i).getX();
                 double currentnodey = path.get(i).getY();
-                double nextnodex = path.get(i).getX();
-                double nextnodey = path.get(i).getY();
+                double nextnodex = path.get(i+1).getX();
+                double nextnodey = path.get(i+1).getY();
 
                 double oldcurx = currentnodex - oldnodex;
                 double oldcury = currentnodey - oldnodey;
@@ -308,8 +308,8 @@ public class UserScreenController extends AbsController{
                 double oldnodey = path.get(i - 1).getY();
                 double currentnodex = path.get(i).getX();
                 double currentnodey = path.get(i).getY();
-                double nextnodex = path.get(i).getX();
-                double nextnodey = path.get(i).getY();
+                double nextnodex = path.get(i + 1).getX();
+                double nextnodey = path.get(i + 1).getY();
 
                 double oldcurx = currentnodex - oldnodex;
                 double oldcury = currentnodey - oldnodey;
@@ -432,8 +432,8 @@ public class UserScreenController extends AbsController{
         System.out.println(output);
     }
 
-
     public int moresig(double x, double y){
+        //System.out.println("Xvalue = " + x + " Yvalue = " + y);
         if(x >= 0){
             if(y >= 0){
                 if(x >= y){
