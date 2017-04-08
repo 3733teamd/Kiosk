@@ -125,11 +125,6 @@ public class EditProfScreenController extends AbsController {
     }
 
     @FXML
-    void DeleteTag(ActionEvent event) {
-
-    }
-
-    @FXML
     void DeleteTitle(ActionEvent event) {
 
     }
@@ -140,12 +135,7 @@ public class EditProfScreenController extends AbsController {
     }
 
     @FXML
-    void deleteProf(ActionEvent event) {
-
-    }
-
-    @FXML
-    void modifyName(ActionEvent event) {
+    void deleteTag(ActionEvent event) {
 
     }
 
