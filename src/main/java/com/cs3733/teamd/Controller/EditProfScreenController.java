@@ -3,14 +3,12 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Title;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
@@ -35,19 +33,16 @@ public class EditProfScreenController extends AbsController {
     private Button BackButton;
 
     @FXML
+    private ListView<?> allProfList;
+
+    @FXML
     private TextField searchProfessionalBar;
-
-    @FXML
-    private TableView<String> ProfessionalTable;
-
-    @FXML
-    private TableColumn<ObservableList<String>, String> ProfessionalsList;
 
     @FXML
     private Button addNewProf;
 
     @FXML
-    private Button deleteButton;
+    private Button deletePorf;
 
     @FXML
     private TextField ProfName;
@@ -56,10 +51,10 @@ public class EditProfScreenController extends AbsController {
     private Button modifyName;
 
     @FXML
-    private TableColumn<?, ?> allTitleTable;
+    private ListView<Title> allTitleList;
 
     @FXML
-    private TableColumn<?, ?> currentTitleTable;
+    private ListView<Title> curTitleList;
 
     @FXML
     private TextField searchTitle;
@@ -71,13 +66,13 @@ public class EditProfScreenController extends AbsController {
     private Button deleteTitle;
 
     @FXML
-    private TableColumn<?, ?> allTags;
+    private ListView<Tag> allTagsList;
 
     @FXML
-    private TableColumn<?, ?> currentTags;
+    private ListView<Tag> curTagsList;
 
     @FXML
-    private TextField chooseTag;
+    private TextField searchTitle1;
 
     @FXML
     private Button addTag;
