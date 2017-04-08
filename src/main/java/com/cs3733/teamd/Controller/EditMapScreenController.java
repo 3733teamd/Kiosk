@@ -3,6 +3,8 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Directory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 //TODO neighbors
 //TODO add inital nodes
 //TODO floor changes
-//TODO
+//TODO starting location, tag starting location
 /**
  * Created by Anh Dao on 4/6/2017.
  */
@@ -68,6 +70,7 @@ public class EditMapScreenController extends AbsController{
     public Circle scirc;
     public Boolean switchS =true;
     private states state =states.select;
+    public double floor;
 
     private ArrayList<Node> temp =new ArrayList<>();
 
@@ -90,7 +93,19 @@ public class EditMapScreenController extends AbsController{
         });
 
         TextFields.bindAutoCompletion(addTag,sug);
+
+
+        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                //floorSlider.setText(String.format("%.2f", new_val));
+                floor= (double)new_val;
+                System.out.println("floor"+floor);
+            }
+            
+        });
     }
+
 
     //Back button
     @FXML
@@ -114,6 +129,8 @@ public class EditMapScreenController extends AbsController{
     public void toSpanish(){
 
     }
+
+
 
     @FXML
     public void addNode(){
@@ -199,10 +216,7 @@ public class EditMapScreenController extends AbsController{
 
             //}
         });
-
-
         return circle;
-
     }
 
 
@@ -231,8 +245,8 @@ public class EditMapScreenController extends AbsController{
 
             if(n.getID()==s){
                 Node a = new Node(new Integer(xLoc.getText()), new Integer(yLoc.getText()), s);
-                n.coord.x= (new Integer(xLoc.getText()));
-                n.coord.y=( new Integer(yLoc.getText()));
+               // n.coord.x= (new Integer(xLoc.getText()));
+              // n.coord.y=( new Integer(yLoc.getText()));
             }
         }
     }
