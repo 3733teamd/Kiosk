@@ -19,7 +19,7 @@ public class ApplicationConfiguration {
     }
 
     public SQL_LOG_LEVEL getSqlLoggingLevel() {
-        return SQL_LOG_LEVEL.FULL;
+        return SQL_LOG_LEVEL.NONE;
     }
 
     public enum SQL_LOG_LEVEL {

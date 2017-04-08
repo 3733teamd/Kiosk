@@ -528,7 +528,7 @@ public class DBHandler {
     }
 
     public boolean updateTag(String name, int id) {
-        String sqlUpdate = "UPDATE Tag SET name=?, WHERE id=?";
+        String sqlUpdate = "UPDATE Tag SET name=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, name);
@@ -582,7 +582,7 @@ public class DBHandler {
     }
 
     public boolean updateProfessional(String name, int id) {
-        String sqlUpdate = "UPDATE HCP SET name=?, WHERE id=?";
+        String sqlUpdate = "UPDATE HCP SET lastName=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, name);
