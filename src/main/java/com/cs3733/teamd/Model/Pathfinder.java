@@ -132,7 +132,7 @@ public class Pathfinder {
      * @param b Second Node
      * @return calculated cost
      */
-    private int heuristic(Node a, Node b){
+    private double heuristic(Node a, Node b){
         // returns 0 for now
         return Math.abs(a.getFloor() - b.getFloor());
     }
