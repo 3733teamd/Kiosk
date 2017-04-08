@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Professional;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 
 
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class EditProfScreenController extends AbsController {
     private TableView<String> ProfessionalTable;
 
     @FXML
-    private TableColumn<String[], String> ProfessionalsList;
+    private TableColumn<ObservableList<String>, String> ProfessionalsList;
 
     @FXML
     private Button addNewProf;
@@ -88,12 +87,20 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
-        /*ObservableList list = FXCollections.observableList(drop);
+
+        Directory dir = Directory.getInstance();
+
+        ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
+        allTagsList.setItems(tagObjList);
+
+
+        ObservableList list = FXCollections.observableList(drop);
        // ProfessionalsList.setCellValueFactory(new PropertyValueFactory<>(acronyms));
        /// list.add(new Professional("Abb",12));
         ///ProfessionalTable.setItems(list);
         ///ProfessionalsList.setCellFactory(new PropertyValueFactory("name"));
        // ProfessionalTable.getColumns().setAll(ProfessionalsList);
+      /*
         ProfessionalsList.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
@@ -136,6 +143,17 @@ public class EditProfScreenController extends AbsController {
     void addNewProf(ActionEvent event) {
 
     }
+
+    @FXML
+    void deleteProf(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modifyName(ActionEvent event) {
+
+    }
+
 
 
 
