@@ -102,30 +102,7 @@ public class MapDirectionsController extends AbsController {
         return p;
     }
 
-    private void drawShapes(GraphicsContext gc, LinkedList<Point> path) { //draw path on canvas from List of Nodes generated from Pathfinder
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        Point previous = null;
-        gc.setLineWidth(3);
-        int pathlength = path.size();
-        int radius = 7;
-        for  (int i = 0; i < pathlength; i++){
-            Point current = path.getFirst();
-            if(i == pathlength-1){
-                radius = 7;
-                gc.setFill(Color.RED);
-            }
-            gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
-            if(previous != null){
-                gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
-                        current.getX() + radius, current.getY() + radius);
-            }
-            previous = current;
-            path.pop();
-            gc.setFill(Color.BLUE);
-            radius = 5;
-        }
-    }
+    private void drawShapes(){};
 
 
     @FXML
@@ -149,6 +126,9 @@ public class MapDirectionsController extends AbsController {
         for (Node node: path) {
             points.add(getConvertedPoint(node));
         }
-        drawShapes(gc, points);
+        //drawShapes(gc, points);
     }
+
 }
+
+

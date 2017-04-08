@@ -87,6 +87,7 @@ public class MapMenuController extends AbsController {
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
         Tag startTag = (Tag) StartSelect.getValue();
+        Main.DestinationSelected = DestinationSelect.getValue().toString();
         System.out.println("start:\t" +startTag.getTagName());
         System.out.println("end:\t" +destinationTag.getTagName());
 
