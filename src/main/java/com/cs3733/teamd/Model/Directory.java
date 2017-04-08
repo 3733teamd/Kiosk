@@ -102,9 +102,14 @@ public class Directory implements DirectoryInterface {
     }
     @Override
     public boolean deleteNode(Node n){
+
         // Can not delete nodes with neighbors
-        if(n.getNodes().size() > 0) {
+        if((n.getNodes().size() > 0)) {
             return false;
+        }
+        //delete all node-tags
+        for(Tag t : n.getTags()){
+            removeNodeTag(n,t);
         }
         boolean dbResult = dbHandler.deleteNode(n.getID());
         if(dbResult) {
@@ -140,7 +145,7 @@ public class Directory implements DirectoryInterface {
         if(!dbResult) {
             return false;
         } else {
-            n1.removeNeighbor(n2);
+            n1.rmvNode(n2);
             return true;
         }
     }
@@ -165,7 +170,7 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean deleteTag(Tag t) {
-        // Can not delete nodes with neighbors
+        // Can not delete tags with neighbors
 
         boolean dbResult = dbHandler.deleteTag(t.getID());
         if(dbResult) {
@@ -188,6 +193,7 @@ public class Directory implements DirectoryInterface {
         }
     }
 
+    //TODO: implement this
     @Override
     public Professional saveProfessional(String name, List<Title> titles, List<Tag> tags) {
      return null;
@@ -228,6 +234,28 @@ public class Directory implements DirectoryInterface {
         boolean dbResult = dbHandler.removeTagFromProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.rmvTag(t);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addNodeTag(Node n, Tag t) {
+        boolean dbResult = dbHandler.addNodeTag(n.getID(), t.getID());
+        if(dbResult) {
+            n.addTag(t);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeNodeTag(Node n, Tag t) {
+        boolean dbResult = dbHandler.removeNodeTag(n.getID(), t.getID());
+        if(dbResult) {
+            n.rmvTag(t);
             return true;
         } else {
             return false;

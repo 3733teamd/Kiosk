@@ -677,4 +677,32 @@ public class DBHandler {
             return false;
         }
     }
+
+    public boolean addNodeTag(int nodeId, int tagId) {
+        String sqlInsert = "INSERT INTO NodeTag VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, nodeId);
+            statement.setInt(2, tagId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeNodeTag(int nodeId, int tagId) {
+        String sqlDelete = "DELETE FROM NodeTag WHERE nodeId=? AND tagId=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, nodeId);
+            statement.setInt(2, tagId);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

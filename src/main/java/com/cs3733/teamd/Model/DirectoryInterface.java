@@ -124,6 +124,21 @@ public interface DirectoryInterface {
     boolean removeTitleFromProfessional(Professional p, Title t);
 
     /**
+     * gets rid of node-tag pairing
+     * @param n the node to be removed
+     * @param t the tag to be removed
+     * @return - true if succesful, false if failed
+     */
+    boolean removeNodeTag(Node n, Tag t);
+    /**
+     * addsd node-tag pairing
+     * @param n the node to be added
+     * @param t the tag to be added
+     * @return - true if succesful, false if failed
+     */
+    boolean addNodeTag(Node n, Tag t);
+
+    /**
      * gets all nodes
      * @return - the list of all current nodes
      */
