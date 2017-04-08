@@ -31,6 +31,7 @@ public class Main extends Application {
     
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
 
+    public static String DestinationSelected = "";
 
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");
@@ -92,7 +93,6 @@ public class Main extends Application {
             nodes = database.nodes;
             tags = database.tags;
             professionals = database.professionals;
-
 
             database.close();
         } catch (Exception e) {

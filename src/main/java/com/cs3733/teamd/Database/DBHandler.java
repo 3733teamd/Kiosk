@@ -394,7 +394,9 @@ public class DBHandler {
         //for each node
         for(Node n: dir.getAllNodes()){
             //add to Node
-            s.execute("INSERT INTO Node VALUES "+n.toSql());
+            String sql = "INSERT INTO Node VALUES "+n.toSql();
+            System.out.println(sql);
+            s.execute(sql);
         }
         //for each prof.
         for(Professional p : dir.getAllProfs()){
