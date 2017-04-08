@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -59,7 +57,7 @@
               <items>
                 <AnchorPane maxWidth="300.0" minWidth="200.0">
                      <children>
-                        <TextField layoutX="2.0" prefHeight="77.0" prefWidth="274.0" promptText="Select Tag..." AnchorPane.bottomAnchor="653.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+                        <TextField fx:id="searchTagBar" layoutX="2.0" prefHeight="77.0" prefWidth="274.0" promptText="Select Tag..." AnchorPane.bottomAnchor="653.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -78,11 +76,7 @@
                           <items>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label prefHeight="54.0" prefWidth="233.0" text="Enter New Tag Name">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
+                                    <TextField fx:id="tagName" prefHeight="57.0" prefWidth="356.0" />
                                     <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Confirm Tag Name">
                                        <font>
                                           <Font size="20.0" />
@@ -98,22 +92,14 @@
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <SplitPane orientation="VERTICAL" prefHeight="684.0" prefWidth="251.0">
-                                      <items>
-                                          <TableView prefHeight="682.0" prefWidth="498.0">
-                                            <columns>
-                                              <TableColumn prefWidth="244.0" text="All Professionals" />
-                                            </columns>
-                                          </TableView>
-                                      </items>
+                                    <SplitPane fx:id="allProfessionals" orientation="VERTICAL" prefHeight="684.0" prefWidth="251.0">
+                                       <items>
+                                          <ListView fx:id="allProffessionals" prefHeight="200.0" prefWidth="200.0" />
+                                       </items>
                                     </SplitPane>
-                                    <SplitPane dividerPositions="0.7521994134897361, 0.8284457478005866, 0.8914956011730205, 0.9486803519061584" orientation="VERTICAL" prefHeight="684.0" prefWidth="239.0">
+                                    <SplitPane dividerPositions="0.7521994134897361, 0.8284457478005866, 0.8914956011730205, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="239.0">
                                       <items>
-                                          <TableView prefHeight="630.0" prefWidth="224.0">
-                                             <columns>
-                                                <TableColumn prefWidth="244.0" text="Current Professionals" />
-                                             </columns>
-                                          </TableView>
+                                          <ListView fx:id="currentProfessionals" prefHeight="200.0" prefWidth="200.0" />
                                           <TextField prefHeight="15.0" prefWidth="237.0" promptText="Search Professionals...">
                                              <font>
                                                 <Font size="20.0" />

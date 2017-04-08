@@ -22,6 +22,8 @@ public class LoginScreenController extends AbsController {
     public AnchorPane MMGpane;
     public Label errorIndicator;
 
+
+
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
