@@ -33,7 +33,7 @@ public class EditProfScreenController extends AbsController {
     private Button BackButton;
 
     @FXML
-    private ListView<?> allProfList;
+    private ListView<Professional> allProfList;
 
     @FXML
     private TextField searchProfessionalBar;
@@ -87,6 +87,9 @@ public class EditProfScreenController extends AbsController {
 
         ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
         allTagsList.setItems(tagObjList);
+
+        ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
+        allProfList.setItems(profObjList);
 
 
         ObservableList list = FXCollections.observableList(drop);
