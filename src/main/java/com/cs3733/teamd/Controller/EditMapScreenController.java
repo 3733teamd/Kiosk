@@ -102,7 +102,7 @@ public class EditMapScreenController extends AbsController{
                 floor= (double)new_val;
                 System.out.println("floor"+floor);
             }
-            
+
         });
     }
 
