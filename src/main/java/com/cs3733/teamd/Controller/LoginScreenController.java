@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,7 +37,11 @@ public class LoginScreenController extends AbsController {
        String user = username.getText();
        String pass = password.getText();
 
-       if ( (user.equals("admin")) && pass.equals("red")){
+       Directory dir = Directory.getInstance();
+
+       User u = dir.loginUser(user,pass);
+
+       if (u != null){
            System.out.print("Successful log in as admin.\n");
            switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
        }
