@@ -56,6 +56,9 @@ public class Professional {
         return titles;
     }
 
+    public String getName(){
+        return this.name;
+    }
     public void addTag(Tag t){
         tags.add(t);
         if(!t.containsProf(this)){

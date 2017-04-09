@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -33,15 +35,23 @@ public class EditTagScreenController extends AbsController {
     public Button addNewTag;
     public TextField tagName;
 
+    @FXML
+    private TextField profSearchField;
+
     List tags = dir.getTags();
     List Profs= dir.getProfessionals();
+    List<Professional> unfiltered = dir.getProfessionals();
+    List<Professional> filtered = new ArrayList<Professional>();
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
     List<Tag> allTheTags= dir.getTags();
+    List<String> allTagNames = new ArrayList<String>();
     private Tag chosenTag=null;
 
     @FXML ListView<String> tagList;// = new ListView<>();
 
     @FXML
-    private ListView<String> allProffessionals;
+    private ListView allProffessionals;
+    //private ListView<String> allProffessionals;
 
     @FXML
     private ListView<String> currentProfessionals;
@@ -55,7 +65,10 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void initialize(){
        // List chosenProf=chosenTag.getProfs();
-        TextFields.bindAutoCompletion(searchTagBar, allTheTags);
+        for (int i = 0 ; i<allTheTags.size(); i++) {
+            allTagNames.add(allTheTags.get(i).getTagName());
+        }
+        TextFields.bindAutoCompletion(searchTagBar, allTagNames);
         ObservableList<String> tag = FXCollections.observableArrayList(tags);
         tagList.setItems(tag);
         ObservableList<String> names = FXCollections.observableArrayList(Profs);
@@ -82,6 +95,27 @@ public class EditTagScreenController extends AbsController {
                     }
                 });
 
+        profSearchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResult(profSearchField.getText() + event.getText());
+            }
+        });
+        
     }
-    
+
+    @FXML
+    public void displayResult(String value){
+
+        for (Professional d: unfiltered){
+            filtered = unfiltered.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResults.setAll(filtered);
+
+        allProffessionals.setItems(searchResults);
+
+    }
 }
