@@ -33,6 +33,8 @@ public class Directory implements DirectoryInterface {
 
     private Directory( ){}
 
+    private User curUser = null;
+
     public void initialize(
             ArrayList<Node> nodes,
             ArrayList<Tag> tags,
@@ -300,12 +302,34 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public User loginUser(String username, String password) {
-        return null;
+        String password_hash = "";
+        try {
+            password_hash = User.calculateHash(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        int user_id = dbHandler.getUser(username, password_hash);
+        if(user_id < 1) {
+            return null;
+        }
+        List<String> roles = dbHandler.getRolesForUser(user_id);
+        if(roles == null) {
+            roles = new ArrayList<String>();
+        }
+        User u = new User(username, roles);
+        curUser = u;
+        return u;
+    }
+
+    @Override
+    public void logoutUser() {
+        curUser = null;
     }
 
     @Override
     public User getCurrentUser() {
-        return null;
+        return curUser;
     }
 
     public void deleteProf(Professional p){

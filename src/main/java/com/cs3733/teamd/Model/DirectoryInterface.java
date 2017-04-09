@@ -156,6 +156,7 @@ public interface DirectoryInterface {
 
     User loginUser(String username, String password);
     User getCurrentUser();
+    void logoutUser();
 
     /**
      *
