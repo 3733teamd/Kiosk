@@ -8,10 +8,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by sdmichelini on 4/9/17.
@@ -89,5 +88,48 @@ public class DBHandlerUser {
         int user_id = handler.getUser("jim", "xyz");
 
         assertEquals(0,user_id);
+    }
+
+    @Test
+    public void testRoleAddedToUser() {
+        int result = handler.createUser("jim", "xyz");
+        assertNotEquals(0, result);
+        assertNotEquals(-1, result);
+
+        assertTrue(handler.addRoleToUser(result,"admin"));
+    }
+
+    @Test
+    public void testRoleRetrievedFromUser() {
+        int result = handler.createUser("jim", "xyz");
+        assertNotEquals(0, result);
+        assertNotEquals(-1, result);
+
+        assertTrue(handler.addRoleToUser(result,"admin"));
+
+        List<String> roles = handler.getRolesForUser(result);
+
+        assertEquals(1, roles.size());
+        assertEquals("admin", roles.get(0));
+    }
+
+    @Test
+    public void testRoleDeletedFromUser() {
+        int result = handler.createUser("jim", "xyz");
+        assertNotEquals(0, result);
+        assertNotEquals(-1, result);
+
+        assertTrue(handler.addRoleToUser(result,"admin"));
+
+        List<String> roles = handler.getRolesForUser(result);
+
+        assertEquals(1, roles.size());
+        assertEquals("admin", roles.get(0));
+
+        assertTrue(handler.removeRoleFromUser(result,"admin"));
+
+        roles = handler.getRolesForUser(result);
+
+        assertEquals(0, roles.size());
     }
 }

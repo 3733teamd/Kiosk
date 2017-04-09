@@ -750,4 +750,51 @@ public class DBHandler {
             return -1;
         }
     }
+
+    public boolean addRoleToUser(int user_id, String role) {
+        String sqlInsert = "INSERT INTO UserRole VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, user_id);
+            statement.setString(2, role);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<String> getRolesForUser(int user_id) {
+        String sqlSelect = "SELECT role FROM UserRole WHERE user_id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlSelect);
+            statement.setInt(1,user_id);
+            ResultSet rs = statement.executeQuery();
+            List<String> roles = new ArrayList<String>();
+            while(rs.next()) {
+                String role = rs.getString(1);
+                roles.add(role);
+            }
+            return roles;
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean removeRoleFromUser(int user_id, String role) {
+        String sqlDelete = "DELETE FROM UserRole WHERE user_id=? AND role=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, user_id);
+            statement.setString(2, role);
+            statement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
