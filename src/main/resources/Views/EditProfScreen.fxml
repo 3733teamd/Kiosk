@@ -71,7 +71,7 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="1020.0">
                            <children>
                               <Button fx:id="deletePorf" layoutX="898.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="118.0" text="Delete" />
-                              <TextField fx:id="ProfName" layoutX="-7.0" layoutY="-1.0" prefHeight="65.0" prefWidth="495.0" text="Professionals Name">
+                              <TextField fx:id="ProfName" layoutX="-7.0" layoutY="-1.0" prefHeight="65.0" prefWidth="495.0" text="Professional's Name">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -84,7 +84,7 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <Label text="All Titles" />
-                                    <ListView fx:id="allTitleList" prefHeight="757.0" prefWidth="228.0" />
+                                    <ListView fx:id="allTitleList" prefHeight="655.0" prefWidth="228.0" />
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">

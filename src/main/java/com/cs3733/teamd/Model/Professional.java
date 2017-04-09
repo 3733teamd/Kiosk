@@ -12,7 +12,7 @@ import java.util.List;
 //TODO May require overiding a javaFX method for converting class to string instead of using toString in class
 //TODO Make general improvements to toString
 public class Professional {
-    String name;
+    public String name;
     private int ID;
     private List<ProTitle> titles = new ArrayList<ProTitle>();
     private List<Tag> tags = new LinkedList<Tag>();

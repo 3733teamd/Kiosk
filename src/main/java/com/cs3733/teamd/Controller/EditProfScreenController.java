@@ -1,9 +1,7 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
-import com.cs3733.teamd.Model.Title;
+import com.cs3733.teamd.Model.*;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,16 +47,16 @@ public class EditProfScreenController extends AbsController {
     private Button deletePorf;
 
     @FXML
-    private TextField ProfName;
+    private TextField profName;
 
     @FXML
     private Button modifyName;
 
     @FXML
-    private ListView<Title> allTitleList;
+    private ListView<ProTitle> allTitleList;
 
     @FXML
-    private ListView<Title> curTitleList;
+    private ListView<ProTitle> curTitleList;
 
     @FXML
     private TextField searchTitle;
@@ -94,14 +92,25 @@ public class EditProfScreenController extends AbsController {
 
         Directory dir = Directory.getInstance();
 
+        //fill in alltags
         ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
         allTagsList.setItems(tagObjList);
 
+        //fill in allProfs
         ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
         allProfList.setItems(profObjList);
 
+        for(ProTitle t : dir.getTitles()){
+            System.out.println(t.toString());
+        }
+
+        //fil in allTitles
+        ObservableList<ProTitle> titleObjList = FXCollections.observableArrayList(dir.getTitles());
+        allTitleList.setItems(titleObjList);
 
 
+
+        //allProfs listens for selection
         allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
             @Override
             public void changed(ObservableValue<? extends Professional> observable,
@@ -109,6 +118,8 @@ public class EditProfScreenController extends AbsController {
 
                 updateCurrentProfList(newValue);
             }
+
+
         });
 
 
@@ -168,8 +179,10 @@ public class EditProfScreenController extends AbsController {
 
 
     private void updateCurrentProfList(Professional p){
-
+        selectedProf = p;
         curTitleList.setItems( FXCollections.observableArrayList(p.getTitles()));
+        curTagsList.setItems(FXCollections.observableArrayList(p.getTags()));
+        profName.setText(p.name);
     }
 
 
