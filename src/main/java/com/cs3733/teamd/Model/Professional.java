@@ -14,7 +14,7 @@ import java.util.List;
 public class Professional {
     String name;
     private int ID;
-    private List<Title> titles = new ArrayList<Title>();
+    private List<ProTitle> titles = new ArrayList<ProTitle>();
     private List<Tag> tags = new LinkedList<Tag>();
 
 
@@ -22,7 +22,7 @@ public class Professional {
         return ID;
     }
     //This is called during RUNTIME and adds itself to the DB
-    public Professional(String name, ArrayList<Title> titles, int ID) {
+    public Professional(String name, List<ProTitle> titles, int ID) {
         this.name = name;
         this.titles = titles;
         this.ID = ID;
@@ -38,21 +38,21 @@ public class Professional {
         this.ID = ID;
     }
 
-    public Professional(String name, ArrayList<Title> titles, LinkedList<Tag> tags) {
+    public Professional(String name, List<ProTitle> titles, LinkedList<Tag> tags) {
         this.name = name;
         this.titles = titles;
         this.tags = tags;
     }
 
-    public void setTitles(ArrayList<Title> titles) {
+    public void setTitles(ArrayList<ProTitle> titles) {
         this.titles = titles;
     }
 
-    public void addTitle(Title title) {
+    public void addTitle(ProTitle title) {
         this.titles.add(title);
     }
 
-    public List<Title> getTitles() {
+    public List<ProTitle> getTitles() {
         return titles;
     }
 
@@ -76,12 +76,12 @@ public class Professional {
         }
     }
 
-    public void rmvTitle(Title t) {
+    public void rmvTitle(ProTitle t) {
         titles.remove(t);
     }
 
     public void rmvAllTitles(){
-        titles = new ArrayList<Title>();
+        titles = new ArrayList<ProTitle>();
     }
 
     public void rmvAllTags(){

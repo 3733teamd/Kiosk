@@ -1,9 +1,6 @@
 package com.cs3733.teamd.Integration;
 
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
-import com.cs3733.teamd.Model.Title;
+import com.cs3733.teamd.Model.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class ThreeEntityTest {
     @Test
     public void addTagToProf(){
-        Professional p = new Professional("Bob", new ArrayList<>(Arrays.asList(new Title[]{Title.AuD})), 10);
+        Professional p = new Professional("Bob", new ArrayList<ProTitle>(), 10);
         Tag t = new Tag("Testing",2);
         p.addTag(t);
         assertTrue(t.containsProf(p));

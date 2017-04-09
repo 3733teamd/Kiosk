@@ -114,14 +114,14 @@ public interface DirectoryInterface {
      * @param t - title to be added
      * @return - true if succesful, false if failed
      */
-    boolean addTitleToProfessional(Professional p, Title t);
+    boolean addTitleToProfessional(Professional p, ProTitle t);
     /**
      * removes a title from a prof
      * @param p - the prof to lose his title
      * @param t - the title to be lost
      * @return - true if succesful, false if failed
      */
-    boolean removeTitleFromProfessional(Professional p, Title t);
+    boolean removeTitleFromProfessional(Professional p, ProTitle t);
 
     /**
      * gets rid of node-tag pairing
@@ -156,4 +156,18 @@ public interface DirectoryInterface {
 
     User loginUser(String username, String password);
     User getCurrentUser();
+
+    /**
+     *
+     * @return
+     */
+    List<ProTitle> getTitles();
+
+    /**
+     *
+     * @param acronym
+     * @param title
+     * @return
+     */
+    ProTitle addTitle(String acronym, String title);
 }

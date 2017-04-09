@@ -28,17 +28,24 @@ public class Directory implements DirectoryInterface {
     private List<Node> allNodes = new ArrayList<Node>();
     private List<Tag> allTags = new ArrayList<Tag>();
     private List<Professional> allProfs = new ArrayList<Professional>();
+    private List<ProTitle> titles = new ArrayList<ProTitle>();
     private DBHandler dbHandler;
 
     private Directory( ){}
 
-    public void initialize(ArrayList<Node> nodes, ArrayList<Tag> tags, ArrayList<Professional> profs, DBHandler dbHandler){
+    public void initialize(
+            ArrayList<Node> nodes,
+            ArrayList<Tag> tags,
+            ArrayList<Professional> profs,
+            List<ProTitle> titles,
+            DBHandler dbHandler){
         allNodes = nodes;
         allTags = tags;
         allProfs = profs;
         this.dbHandler = dbHandler;
         this.nextNodeID = nextNodeID;
         this.nextProfID = nextProfID;
+        this.titles = titles;
     }
 
     public void notifyUpdate() {
@@ -55,29 +62,19 @@ public class Directory implements DirectoryInterface {
         }
     }
 
-
+    @Deprecated
     public Tag createNewTag(String tagName){
-        //Tag newTag = new Tag(tagName);
-        //allTags.add(newTag);
-        //SAVE TO DATABASE
-        //notifyUpdate();
+
         return  null;
     }
+    @Deprecated
     public Node createNewNode(int x, int y, int ID){
-        //Node newNode = new Node(x,y,ID);
-        //newNode.setID(dbHandler.generateKeyForNode());
-        //allNodes.add(newNode);
-        //SAVE TO DATABASE
-        notifyUpdate();
+
         return null;
     }
+    @Deprecated
     public Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
-        Professional newProf = new Professional(name,titles,ID);
-        nextProfID++;
-        //newProf.setID(dbHandler.generateKeyForProf());
-        allProfs.add(newProf);
-        //SAVE TO DATABASE
-        notifyUpdate();
+
         return  null;
     }
 
@@ -263,9 +260,9 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addTitleToProfessional(Professional p, Title t) {
+    public boolean addTitleToProfessional(Professional p, ProTitle t) {
         // TODO: FIX ID
-        boolean dbResult = dbHandler.addTitleToProfessional(1, p.getID());
+        boolean dbResult = dbHandler.addTitleToProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.addTitle(t);
             return true;
@@ -275,9 +272,9 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean removeTitleFromProfessional(Professional p, Title t) {
+    public boolean removeTitleFromProfessional(Professional p, ProTitle t) {
         // TODO: FIX ID
-        boolean dbResult = dbHandler.removeTitleFromProfessional(1, p.getID());
+        boolean dbResult = dbHandler.removeTitleFromProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.rmvTitle(t);
             return true;
@@ -315,6 +312,23 @@ public class Directory implements DirectoryInterface {
         allProfs.remove(p);
         //REMOVE FROM DATABASE
         notifyUpdate();
+    }
+
+    @Override
+    public List<ProTitle> getTitles() {
+        return titles;
+    }
+
+    @Override
+    public ProTitle addTitle(String acronym, String title) {
+        int dbResult = dbHandler.addTitle(acronym, title);
+        if(dbResult == -1) {
+            return null;
+        } else {
+            ProTitle t = new ProTitle(acronym, title, dbResult);
+            titles.add(t);
+            return t;
+        }
     }
 
 }

@@ -2,11 +2,8 @@ package com.cs3733.teamd;
 
 import com.cs3733.teamd.Controller.IterationOne.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
-import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.*;
 
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -87,12 +85,13 @@ public class Main extends Application {
         ArrayList<Node> nodes;
         ArrayList<Tag> tags;
         ArrayList<Professional> professionals;
+        List<ProTitle> titles;
         try {
             database.load();
             nodes = database.nodes;
             tags = database.tags;
             professionals = database.professionals;
-
+            titles = database.titles;
             database.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +101,7 @@ public class Main extends Application {
 
 
         //set up DIRECTORY
-        dir.initialize(nodes,tags,professionals,database);
+        dir.initialize(nodes,tags,professionals,titles,database);
 
         //Populate Search Menus
         /*try {
