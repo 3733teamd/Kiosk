@@ -85,6 +85,7 @@ public class EditProfScreenController extends AbsController {
 
     private Professional selectedProf;
     private Tag selectedTag;
+    private Tag selectedCurTag;
 
     Directory dir = Directory.getInstance();
 
@@ -103,10 +104,26 @@ public class EditProfScreenController extends AbsController {
         createAllProfListListener();
         //allTags listesns for selection
         createAllTagListListener();
+        //you know the drill
+        createCurTagListListener();
 
         ObservableList list = FXCollections.observableList(drop);
     }
 
+    private void createCurTagListListener(){
+
+        allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
+            @Override
+            public void changed(ObservableValue<? extends Professional> observable,
+                                Professional oldValue, Professional newValue) {
+
+                updateCurrentProfList(newValue);
+            }
+
+
+        });
+
+    }
     private void createAllProfListListener(){
         allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
             @Override
@@ -157,7 +174,8 @@ public class EditProfScreenController extends AbsController {
     void addTag(ActionEvent event) {
         if(selectedTag != null && selectedProf != null) {
             dir.addTagToProfessional(selectedProf,selectedTag);
-            curTagsList.refresh();
+            curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+            //curTagsList.refresh();
         }
     }
 
@@ -185,6 +203,7 @@ public class EditProfScreenController extends AbsController {
     void deleteProf(ActionEvent event) {
 
         if(selectedProf!=null){
+            System.out.println(dir.removeProfessional(selectedProf));
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
