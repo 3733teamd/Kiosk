@@ -70,8 +70,8 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="1020.0">
                            <children>
-                              <Button fx:id="deletePorf" layoutX="898.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="118.0" text="Delete" />
-                              <TextField fx:id="ProfName" layoutX="-7.0" layoutY="-1.0" prefHeight="65.0" prefWidth="495.0" text="Professional's Name">
+                              <Button fx:id="deletePorf" layoutX="898.0" layoutY="-1.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="65.0" prefWidth="118.0" text="Delete" />
+                              <TextField fx:id="profName" layoutX="-7.0" layoutY="-1.0" prefHeight="65.0" prefWidth="495.0" promptText="Edit Professional Name">
                                  <font>
                                     <Font size="30.0" />
                                  </font>

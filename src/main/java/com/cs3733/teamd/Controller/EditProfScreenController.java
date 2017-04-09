@@ -85,28 +85,21 @@ public class EditProfScreenController extends AbsController {
 
     private Professional selectedProf;
 
-
+    Directory dir = Directory.getInstance();
 
     @FXML
     public void initialize(){
 
-        Directory dir = Directory.getInstance();
+
 
         //fill in alltags
-        ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
-        allTagsList.setItems(tagObjList);
+        setAllTagsList();
 
         //fill in allProfs
-        ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
-        allProfList.setItems(profObjList);
-
-        for(ProTitle t : dir.getTitles()){
-            System.out.println(t.toString());
-        }
+        setAllProfList();
 
         //fil in allTitles
-        ObservableList<ProTitle> titleObjList = FXCollections.observableArrayList(dir.getTitles());
-        allTitleList.setItems(titleObjList);
+        setAllTitleList();
 
 
 
@@ -143,6 +136,20 @@ public class EditProfScreenController extends AbsController {
         });*/
     }
 
+    private void setAllTagsList(){
+        ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
+        allTagsList.setItems(tagObjList);
+    }
+
+    private void setAllProfList(){
+        ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
+        allProfList.setItems(profObjList);
+    }
+
+    private void setAllTitleList(){
+        ObservableList<ProTitle> titleObjList = FXCollections.observableArrayList(dir.getTitles());
+        allTitleList.setItems(titleObjList);
+    }
 
 
     @FXML
@@ -175,6 +182,15 @@ public class EditProfScreenController extends AbsController {
 
     }
 
+    @FXML
+    void deleteProf(ActionEvent event) {
+        if(selectedProf!=null){
+            dir.removeProfessional(selectedProf);
+            setAllProfList();
+        }
+    }
+
+
 
 
 
@@ -182,7 +198,7 @@ public class EditProfScreenController extends AbsController {
         selectedProf = p;
         curTitleList.setItems( FXCollections.observableArrayList(p.getTitles()));
         curTagsList.setItems(FXCollections.observableArrayList(p.getTags()));
-        profName.setText(p.name);
+        profName.setPromptText(p.name);
     }
 
 
