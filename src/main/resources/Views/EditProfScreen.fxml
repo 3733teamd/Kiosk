@@ -26,7 +26,7 @@
                            <children>
                               <ImageView fitHeight="48.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="floor_imgs/fkthumb.png" />
+                                    <Image url="@/floor_imgs/fkthumb.png" />
                                  </image>
                               </ImageView>
                            </children></AnchorPane>

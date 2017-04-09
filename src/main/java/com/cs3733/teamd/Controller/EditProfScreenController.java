@@ -4,15 +4,19 @@ import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Professional;
 import com.cs3733.teamd.Model.Tag;
 import com.cs3733.teamd.Model.Title;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 /**
@@ -80,6 +84,11 @@ public class EditProfScreenController extends AbsController {
     @FXML
     private Button deleteTag;
 
+
+    private Professional selectedProf;
+
+
+
     @FXML
     public void initialize(){
 
@@ -90,6 +99,17 @@ public class EditProfScreenController extends AbsController {
 
         ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
         allProfList.setItems(profObjList);
+
+
+
+        allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
+            @Override
+            public void changed(ObservableValue<? extends Professional> observable,
+                                Professional oldValue, Professional newValue) {
+
+                updateCurrentProfList(newValue);
+            }
+        });
 
 
         ObservableList list = FXCollections.observableList(drop);
@@ -111,6 +131,8 @@ public class EditProfScreenController extends AbsController {
             }
         });*/
     }
+
+
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws IOException {
@@ -145,5 +167,19 @@ public class EditProfScreenController extends AbsController {
 
 
 
+    private void updateCurrentProfList(Professional p){
+
+        curTitleList.setItems( FXCollections.observableArrayList(p.getTitles()));
+    }
+
+
+
+
+
+    /*
+        selectedProf = allProfList.getSelectionModel().getSelectedItem();
+        updateCurrentProfList(selectedProf);
+        System.out.print("sdffdas");
+        */
 
 }
