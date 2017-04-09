@@ -7,6 +7,7 @@ import com.cs3733.teamd.Model.Tag;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Deprecated
-    public Tag createNewTag(String tagName){
+    public synchronized Tag createNewTag(String tagName){
 
         return  null;
     }
@@ -73,7 +74,7 @@ public class Directory implements DirectoryInterface {
         return null;
     }
     @Deprecated
-    public Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
+    public synchronized Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
 
         return  null;
     }
@@ -86,7 +87,7 @@ public class Directory implements DirectoryInterface {
     }
 */
     @Override
-    public Node saveNode(int x, int y, int floor) {
+    public synchronized Node saveNode(int x, int y, int floor) {
         int id = this.dbHandler.saveNode(x,y,floor);
         if(id == -1) {
             return null;
@@ -98,7 +99,7 @@ public class Directory implements DirectoryInterface {
 
     }
     @Override
-    public boolean deleteNode(Node n){
+    public synchronized boolean deleteNode(Node n){
 
         // Can not delete nodes with neighbors
         if((n.getNodes().size() > 0)) {
@@ -119,14 +120,14 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean updateNode(Node n) {
+    public synchronized boolean updateNode(Node n) {
         boolean dbResult = dbHandler.updateNode(n.getX(), n.getY(), n.getID());
 
         return dbResult;
     }
 
     @Override
-    public boolean saveEdge(Node n1, Node n2) {
+    public synchronized boolean saveEdge(Node n1, Node n2) {
         boolean dbResult = dbHandler.addEdge(n1.getID(), n2.getID());
         if(!dbResult) {
             return false;
@@ -137,7 +138,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean deleteEdge(Node n1, Node n2) {
+    public synchronized boolean deleteEdge(Node n1, Node n2) {
         boolean dbResult = dbHandler.removeEdge(n1.getID(), n2.getID());
         if(!dbResult) {
             return false;
@@ -148,7 +149,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public Tag saveTag(String name) {
+    public synchronized Tag saveTag(String name) {
         int id = this.dbHandler.saveTag(name);
         if(id == -1) {
             return null;
@@ -160,7 +161,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean updateTag(Tag t) {
+    public synchronized boolean updateTag(Tag t) {
         boolean dbResult = dbHandler.updateTag(t.getTagName(),t.getId());
         return dbResult;
     }
@@ -203,8 +204,15 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean removeProfessional(Professional p) {
-        // Can not delete nodes with neighbors
+    public synchronized boolean  removeProfessional(Professional p) {
+
+        for(Tag t : p.getTags()){
+            removeTagFromProfessional(p,t);
+        }
+
+        for(ProTitle pt : p.getTitles()){
+            removeTitleFromProfessional(p,pt);
+        }
 
         boolean dbResult = dbHandler.deleteProfessional(p.getID());
         if(dbResult) {
@@ -227,7 +235,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean removeTagFromProfessional(Professional p, Tag t) {
+    public synchronized boolean removeTagFromProfessional(Professional p, Tag t) {
         boolean dbResult = dbHandler.removeTagFromProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.rmvTag(t);
@@ -272,7 +280,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean removeTitleFromProfessional(Professional p, ProTitle t) {
+    public synchronized boolean removeTitleFromProfessional(Professional p, ProTitle t) {
         // TODO: FIX ID
         boolean dbResult = dbHandler.removeTitleFromProfessional(t.getId(), p.getID());
         if(dbResult) {
