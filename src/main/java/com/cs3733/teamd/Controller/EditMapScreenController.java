@@ -1,26 +1,17 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.CircleNode;
-import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.Node;
 import com.cs3733.teamd.Model.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -28,14 +19,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
-import org.controlsfx.control.textfield.TextFields;
 
-import javax.xml.soap.Text;
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 //TODO deleate connections
 //TODO update/ add
@@ -102,12 +88,6 @@ public class EditMapScreenController extends AbsController{
     @FXML
     private Pane mapCanvas;
 
-    public int imageW = 1091;
-    public int imageH = 606;
-    public double scale = 8.4;
-    public int offset_x = 160*12;
-    public int offset_y = 80*12;
-
     private List<Node> nodeList = dir.getNodes();
     private List<Tag> ListofTags =dir.getTags();
 
@@ -137,11 +117,14 @@ public class EditMapScreenController extends AbsController{
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                //floorSlider.setText(String.format("%.2f", new_val));
-                floor= (int)new_val;
-                System.out.println("floor"+floor);
-            }
+                if (!floorSlider.isValueChanging()) {
+                    //floorSlider.setText(String.format("%.2f", new_val));
+                    floor = new_val.intValue();
+                    floorSlider.setValue(floor);
+//                    System.out.println("floor: "+floor);
 
+                }
+            }
         });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
@@ -190,13 +173,6 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void toSpanish(){
 
-    }
-
-    private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX();
-        int y = node.getY();
-        Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
-        return p;
     }
 
     @FXML
