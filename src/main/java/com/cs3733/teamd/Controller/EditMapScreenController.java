@@ -13,11 +13,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -25,6 +30,7 @@ import javafx.scene.shape.StrokeLineCap;
 import org.controlsfx.control.textfield.TextFields;
 
 import javax.xml.soap.Text;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +94,15 @@ public class EditMapScreenController extends AbsController{
     public CircleNode scirc;
     public Boolean switchS =true;
     public int floor =4;
+
+    @FXML
+    private Pane mapCanvas;
+
+    public int imageW = 1091;
+    public int imageH = 606;
+    public double scale = 8.4;
+    public int offset_x = 160*12;
+    public int offset_y = 80*12;
 
     private List<Node> nodeList = dir.getNodes();
     private List<Tag> ListofTags =dir.getTags();
@@ -172,11 +187,16 @@ public class EditMapScreenController extends AbsController{
 
     }
 
-
+    private Point getConvertedPoint(Node node) { //conversion from database to canvas
+        int x = node.getX();
+        int y = node.getY();
+        Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
+        return p;
+    }
 
     @FXML
     public void addNode(){
-        CircleNode circ = createCircle(dir.saveNode(50,50,i), 5, Color.RED);
+        CircleNode circ = createCircle(dir.saveNode(50,50,4), 5, Color.RED);
         imagePane.getChildren().add(circ);
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
@@ -200,8 +220,8 @@ public class EditMapScreenController extends AbsController{
 
 
     private CircleNode createCircle(Node n, double r, Color color) {
-
-        CircleNode circle = new CircleNode(n.getX()/10, n.getY()/10, r, color,n);
+        System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
+        CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
         circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
@@ -316,7 +336,7 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void updatePosition(MouseEvent m){
-        select1.referenceNode.setCoord((int)select1.getCenterX() + (int)orgSceneX,(int)select1.getCenterY() + (int)orgSceneY);
+        select1.referenceNode.setCoord((int)select1.getCenterX(),(int)select1.getCenterY());
 
         dir.updateNode(select1.referenceNode);
 
