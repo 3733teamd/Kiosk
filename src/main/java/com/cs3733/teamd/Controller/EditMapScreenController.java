@@ -69,6 +69,7 @@ public class EditMapScreenController extends AbsController{
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
 
+    private Tag selectedTag;
     double orgSceneX, orgSceneY;
 
     public Node s1 = new Node(1,1,0);
@@ -114,6 +115,17 @@ public class EditMapScreenController extends AbsController{
                 floor= (int)new_val;
                 System.out.println("floor"+floor);
             }
+
+        });
+
+        allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
+
+                    selectedTag = newValue;
+            }
+
 
         });
 
@@ -204,6 +216,7 @@ public class EditMapScreenController extends AbsController{
                 s= n.getID();
                 c.setFill(Color.BLACK);
             }
+
 
 
             /*if(switchS ==true){
@@ -331,6 +344,11 @@ public class EditMapScreenController extends AbsController{
 
 
     public void addTagToCurrentNode(ActionEvent actionEvent) {
+        if(selectedTag != null){
+            dir.addNodeTag(select1.referenceNode,selectedTag);
+            currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+            currentTagBox.refresh();
+        }
 
     }
 
