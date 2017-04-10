@@ -169,8 +169,19 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean deleteTag(Tag t) {
-        // Can not delete tags with neighbors
+    public synchronized boolean deleteTag(Tag t) {
+        // Delete the NodeTags
+        for(Node n: this.getNodes()) {
+            if(n.containsTag(t)) {
+                removeNodeTag(n, t);
+            }
+        }
+        // Delete the professional tags
+        for(Professional p: this.getProfessionals()) {
+            if(p.containsTag(t)) {
+                removeTagFromProfessional(p, t);
+            }
+        }
 
         boolean dbResult = dbHandler.deleteTag(t.getID());
         if(dbResult) {
@@ -182,7 +193,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public Professional saveProfessional(String name) {
+    public synchronized Professional saveProfessional(String name) {
         int id = this.dbHandler.saveProfessional(name);
         if(id == -1) {
             return null;
@@ -200,7 +211,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean updateProfessional(Professional p) {
+    public synchronized boolean updateProfessional(Professional p) {
         boolean dbResult = dbHandler.updateProfessional(p.name,p.getID());
         return dbResult;
     }
@@ -209,12 +220,14 @@ public class Directory implements DirectoryInterface {
     public synchronized boolean  removeProfessional(Professional p) {
 
         for(Tag t : p.getTags()){
-            removeTagFromProfessional(p,t);
+            boolean result = dbHandler.removeTagFromProfessional(t.getId(),p.getID());
         }
+        p.rmvAllTags();
 
         for(ProTitle pt : p.getTitles()){
-            removeTitleFromProfessional(p,pt);
+            boolean result = dbHandler.removeTitleFromProfessional(pt.getId(),p.getID());
         }
+        p.rmvAllTitles();
 
         boolean dbResult = dbHandler.deleteProfessional(p.getID());
         if(dbResult) {
@@ -226,7 +239,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addTagToProfessional(Professional p, Tag t) {
+    public synchronized boolean addTagToProfessional(Professional p, Tag t) {
         boolean dbResult = dbHandler.addTagToProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.addTag(t);
@@ -238,6 +251,7 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public synchronized boolean removeTagFromProfessional(Professional p, Tag t) {
+
         boolean dbResult = dbHandler.removeTagFromProfessional(t.getId(), p.getID());
         if(dbResult) {
             p.rmvTag(t);
@@ -248,7 +262,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addNodeTag(Node n, Tag t) {
+    public synchronized boolean addNodeTag(Node n, Tag t) {
         boolean dbResult = dbHandler.addNodeTag(n.getID(), t.getID());
         if(dbResult) {
             n.addTag(t);
@@ -259,7 +273,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean removeNodeTag(Node n, Tag t) {
+    public synchronized boolean removeNodeTag(Node n, Tag t) {
         boolean dbResult = dbHandler.removeNodeTag(n.getID(), t.getID());
         if(dbResult) {
             n.rmvTag(t);
@@ -270,7 +284,7 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addTitleToProfessional(Professional p, ProTitle t) {
+    public synchronized boolean addTitleToProfessional(Professional p, ProTitle t) {
         // TODO: FIX ID
         boolean dbResult = dbHandler.addTitleToProfessional(t.getId(), p.getID());
         if(dbResult) {
@@ -340,6 +354,7 @@ public class Directory implements DirectoryInterface {
         return curUser;
     }
 
+    @Deprecated
     public void deleteProf(Professional p){
         allProfs.remove(p);
         //REMOVE FROM DATABASE
