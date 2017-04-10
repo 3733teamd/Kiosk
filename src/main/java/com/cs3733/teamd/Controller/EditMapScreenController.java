@@ -70,6 +70,8 @@ public class EditMapScreenController extends AbsController{
 
 
     private Tag selectedTag;
+    private Tag selectedCurrentTag;
+
     double orgSceneX, orgSceneY;
 
     public Node s1 = new Node(1,1,0);
@@ -124,6 +126,16 @@ public class EditMapScreenController extends AbsController{
                                 Tag oldValue, Tag newValue) {
 
                     selectedTag = newValue;
+            }
+
+
+        });
+        currentTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
+
+                    selectedCurrentTag = newValue;
             }
 
 
