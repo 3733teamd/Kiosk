@@ -33,10 +33,13 @@ public class EditTagScreenController extends AbsController {
     public Button BackButton;
     public AnchorPane MMGpane;
     public Button addNewTag;
-    public TextField tagName;
+    public TextField tagNameTxt;
 
     @FXML
     private Button addProf;
+
+    @FXML
+    private Button newTagNameBtn;
 
     @FXML
     private Button deleteProf;
@@ -98,7 +101,7 @@ public class EditTagScreenController extends AbsController {
                     String text = searchTagBar.getText();
                     //TODO set chosen tag to tag from bar
                     System.out.println(chosenTag);
-                    tagName.setText(searchTagBar.getText());
+                    tagNameTxt.setText(searchTagBar.getText());
                     //System.out.println(text);
                 }
             }
@@ -112,7 +115,9 @@ public class EditTagScreenController extends AbsController {
                             currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
                             currentProfessionals.refresh();
 
-                            tagName.setPromptText(selectedTag.toString());
+                            tagNameTxt.clear();
+                            tagNameTxt.setPromptText(selectedTag.toString());
+
                         }
 
                     }
@@ -145,6 +150,15 @@ public class EditTagScreenController extends AbsController {
             }
         });
         
+    }
+
+    @FXML
+    void newTagName(ActionEvent event) {
+        if(selectedTag != null){
+            selectedTag.setTagName(tagNameTxt.getText());
+            dir.updateTag(selectedTag);
+            tagList.refresh();
+        }
     }
 
     @FXML
