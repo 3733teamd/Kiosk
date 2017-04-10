@@ -53,6 +53,12 @@ public class EditTagScreenController extends AbsController {
     List<String> allTagNames = new ArrayList<String>();
     private Tag chosenTag=null;
 
+    @FXML
+    private Button addNewTagBtn;
+
+    @FXML
+    private Button deleteTagBtn;
+
     Tag selectedTag;
     Professional selectedCurProf;
     Professional selectedProf;
@@ -102,8 +108,10 @@ public class EditTagScreenController extends AbsController {
                     public void changed(ObservableValue<? extends Tag> ov,
                                         Tag old_val, Tag new_val) {
                         selectedTag = new_val;
-                        currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
-                        currentProfessionals.refresh();
+                        if(selectedTag!=null) {
+                            currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
+                            currentProfessionals.refresh();
+                        }
 
                     }
                 });
@@ -148,6 +156,11 @@ public class EditTagScreenController extends AbsController {
 
     @FXML
     void deleteProf(ActionEvent event) {
+        if(selectedTag != null && selectedCurProf != null){
+            dir.removeTagFromProfessional(selectedCurProf,selectedTag);
+            currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
+            currentProfessionals.refresh();
+        }
 
     }
 
@@ -162,5 +175,22 @@ public class EditTagScreenController extends AbsController {
 
         allProffessionals.setItems(searchResults);
 
+    }
+    //TODO: is deleted from database wrongly, causes fatal error
+    @FXML
+    void deleteTag(ActionEvent event) {
+        if(selectedTag != null){
+
+            dir.deleteTag(selectedTag);
+            tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+            tagList.refresh();
+        }
+    }
+    
+    @FXML
+    void addTag(ActionEvent event) {
+        dir.saveTag(searchTagBar.getText());
+        tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+        tagList.refresh();
     }
 }
