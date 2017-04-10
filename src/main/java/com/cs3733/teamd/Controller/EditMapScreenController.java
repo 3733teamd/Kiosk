@@ -146,7 +146,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void addNode(){
-        CircleNode circ = createCircle(new Node(50,50,i), 5, Color.RED);
+        CircleNode circ = createCircle(dir.saveNode(50,50,i), 5, Color.RED);
         imagePane.getChildren().add(circ);
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
