@@ -384,6 +384,9 @@ public class EditMapScreenController extends AbsController{
 
                 }
             }
+
+            select1 = null;
+            select2 = null;
         }
 
 
