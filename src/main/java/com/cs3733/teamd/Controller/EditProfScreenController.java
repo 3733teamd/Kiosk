@@ -44,7 +44,7 @@ public class EditProfScreenController extends AbsController {
     private Button addNewProf;
 
     @FXML
-    private Button deletePorf;
+    private Button deleteProf;
 
     @FXML
     private TextField profName;
@@ -84,26 +84,75 @@ public class EditProfScreenController extends AbsController {
 
 
     private Professional selectedProf;
+    private Tag selectedTag;
+    private Tag selectedCurTag;
+    private ProTitle selectedTitle;
+    private ProTitle selectedCurTitle;
 
     Directory dir = Directory.getInstance();
 
     @FXML
     public void initialize(){
-
-
-
         //fill in alltags
         setAllTagsList();
-
         //fill in allProfs
         setAllProfList();
-
         //fil in allTitles
         setAllTitleList();
-
-
-
         //allProfs listens for selection
+        createAllProfListListener();
+        //allTags listesns for selection
+        createAllTagListListener();
+        //you know the drill
+        createCurTagListListener();
+
+        createAllTitleListListener();
+        createCurTitleListListener();
+
+        ObservableList list = FXCollections.observableList(drop);
+    }
+
+    private void createCurTagListListener(){
+
+        curTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
+
+                selectedCurTag = newValue;
+            }
+        });
+
+    }
+
+    private void createCurTitleListListener(){
+
+        curTitleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProTitle>() {
+            @Override
+            public void changed(ObservableValue<? extends ProTitle> observable,
+                                ProTitle oldValue, ProTitle newValue) {
+
+                selectedCurTitle = newValue;
+            }
+        });
+
+    }
+    private void createAllTitleListListener(){
+
+        allTitleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProTitle>() {
+            @Override
+            public void changed(ObservableValue<? extends ProTitle> observable,
+                                ProTitle oldValue, ProTitle newValue) {
+                selectedTitle = newValue;
+
+            }
+        });
+
+    }
+
+
+
+    private void createAllProfListListener(){
         allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
             @Override
             public void changed(ObservableValue<? extends Professional> observable,
@@ -112,43 +161,35 @@ public class EditProfScreenController extends AbsController {
                 updateCurrentProfList(newValue);
             }
 
-
         });
-
-
-        ObservableList list = FXCollections.observableList(drop);
-       // ProfessionalsList.setCellValueFactory(new PropertyValueFactory<>(acronyms));
-       /// list.add(new Professional("Abb",12));
-        ///ProfessionalTable.setItems(list);
-        ///ProfessionalsList.setCellFactory(new PropertyValueFactory("name"));
-       // ProfessionalTable.getColumns().setAll(ProfessionalsList);
-      /*
-        ProfessionalsList.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
-                String[] x = p.getValue();
-                if (x != null && x.length>0) {
-                    return new SimpleStringProperty(x[0]);
-                } else {
-                    return new SimpleStringProperty("<no name>");
-                }
-            }
-        });*/
     }
 
+     private void createAllTagListListener(){
+            allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+                @Override
+                public void changed(ObservableValue<? extends Tag> observable,
+                                    Tag oldValue, Tag newValue) {
+
+                    updateCurrentTagList(newValue);
+                }
+
+
+            });
+        }
+
     private void setAllTagsList(){
-        ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
-        allTagsList.setItems(tagObjList);
+        //ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
+        allTagsList.setItems(FXCollections.observableArrayList(dir.getTags()));
     }
 
     private void setAllProfList(){
-        ObservableList<Professional> profObjList = FXCollections.observableArrayList(dir.getProfessionals());
-        allProfList.setItems(profObjList);
+        //ObservableList<Professional> profObjList = ;
+        allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
     }
 
     private void setAllTitleList(){
-        ObservableList<ProTitle> titleObjList = FXCollections.observableArrayList(dir.getTitles());
-        allTitleList.setItems(titleObjList);
+        //ObservableList<ProTitle> titleObjList = ;
+        allTitleList.setItems(FXCollections.observableArrayList(dir.getTitles()));
     }
 
 
@@ -158,35 +199,72 @@ public class EditProfScreenController extends AbsController {
     }
 
     @FXML
-    void AddTag(ActionEvent event) {
-
+    void addTag(ActionEvent event) {
+        if(selectedTag != null && selectedProf != null) {
+            dir.addTagToProfessional(selectedProf,selectedTag);
+            curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+            //curTagsList.refresh();
+        }
     }
 
     @FXML
-    void AddTitle(ActionEvent event) {
-
+    void addTitle(ActionEvent event) {
+        if(selectedProf != null && selectedTitle != null){
+            dir.addTitleToProfessional(selectedProf,selectedTitle);
+            dir.updateProfessional(selectedProf);
+            curTitleList.setItems(FXCollections.observableArrayList( selectedProf.getTitles()));
+            curTitleList.refresh();
+        }
     }
 
     @FXML
-    void DeleteTitle(ActionEvent event) {
+    void deleteTitle(ActionEvent event) {
+        if(selectedProf != null && selectedCurTitle != null){
+            dir.removeTitleFromProfessional(selectedProf,selectedCurTitle);
 
+            curTitleList.setItems(FXCollections.observableArrayList( selectedProf.getTitles()));
+            curTitleList.refresh();
+        }
     }
 
     @FXML
     void addNewProf(ActionEvent event) {
-
+        dir.saveProfessional(searchProfessionalBar.getText());
+        allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+        allProfList.refresh();
     }
 
     @FXML
     void deleteTag(ActionEvent event) {
-
+        if(selectedCurTag != null){
+            selectedProf.getTags().remove(selectedCurTag);
+            dir.removeTagFromProfessional(selectedProf,selectedCurTag);
+            dir.updateProfessional(selectedProf);
+            curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+        }
     }
 
     @FXML
     void deleteProf(ActionEvent event) {
+
         if(selectedProf!=null){
-            dir.removeProfessional(selectedProf);
+            System.out.println(dir.removeProfessional(selectedProf));
+            System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
+            allProfList.refresh();
+        }
+
+    }
+
+    @FXML
+    void modifyName(ActionEvent event) {
+        if(selectedProf != null){
+
+            selectedProf.name = (profName.getText());
+            dir.updateProfessional(selectedProf);
+            allProfList.refresh();
+            //setAllProfList();
+
         }
     }
 
@@ -195,11 +273,21 @@ public class EditProfScreenController extends AbsController {
 
 
     private void updateCurrentProfList(Professional p){
-        selectedProf = p;
-        curTitleList.setItems( FXCollections.observableArrayList(p.getTitles()));
-        curTagsList.setItems(FXCollections.observableArrayList(p.getTags()));
-        profName.setPromptText(p.name);
+
+        if(p != null) {
+            selectedProf = p;
+            curTitleList.setItems(FXCollections.observableArrayList(p.getTitles()));
+            curTagsList.setItems(FXCollections.observableArrayList(p.getTags()));
+            profName.setPromptText(p.name);
+        }
     }
+
+    private void updateCurrentTagList(Tag t){
+
+            if(t != null) {
+                selectedTag = t;
+            }
+        }
 
 
 

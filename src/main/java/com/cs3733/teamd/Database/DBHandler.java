@@ -187,6 +187,7 @@ public class DBHandler {
             String fullTitle = professtionalTitles.getString("fullTitle");
 
             ProTitle t = new ProTitle(acronym, fullTitle, id);
+            titles.add(t);
             professionalTitleMap.put(id, t);
         }
         professtionalTitles.close();
@@ -555,6 +556,7 @@ public class DBHandler {
             statement.executeUpdate();
             return true;
         } catch(SQLException e) {
+            System.out.println(e);
             return false;
         }
     }
@@ -629,7 +631,7 @@ public class DBHandler {
     }
 
     public boolean addTitleToProfessional(int titleId, int professionalId) {
-        String sqlInsert = "INSERT INTO HCPTag VALUES (?,?)";
+        String sqlInsert = "INSERT INTO HCPTitle VALUES (?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlInsert);
             statement.setInt(1, professionalId);
@@ -643,7 +645,7 @@ public class DBHandler {
     }
 
     public boolean removeTitleFromProfessional(int titleId, int professionalId) {
-        String sqlDelete = "DELETE FROM HCPTag WHERE titleId=? AND hcpId=?";
+        String sqlDelete = "DELETE FROM HCPTitle WHERE titleId=? AND hcpId=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlDelete);
             statement.setInt(1, titleId);

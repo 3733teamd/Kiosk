@@ -21,9 +21,10 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+
     public static String Langugage="English";
     public static Stage window;
-
+    public Boolean languageEnglish = true;
     public static Parent rootMain;
     
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
@@ -50,6 +51,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+
+
 
         DBHandler database;
         Directory dir = Directory.getInstance();
@@ -92,7 +96,7 @@ public class Main extends Application {
             tags = database.tags;
             professionals = database.professionals;
             titles = database.titles;
-            database.close();
+            //database.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print("Could not load data from database.\nExiting...\n");
@@ -138,6 +142,14 @@ public class Main extends Application {
 
         // launch window
         launch(args);
+
+
+        try {
+            database.close();
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
 
     }
 
