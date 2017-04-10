@@ -7,10 +7,12 @@ import com.cs3733.teamd.Model.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,9 +22,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 
+import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -67,6 +71,8 @@ public class EditMapScreenController extends AbsController{
     private Button disconnectNodeBtn;
 
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
+
+    public Map<Integer, Image> imageHashMap = new HashMap<>();
 
 
     private Tag selectedTag;
@@ -114,6 +120,18 @@ public class EditMapScreenController extends AbsController{
         //TextFields.bindAutoCompletion(addTag,ListofTags);
 
 
+        //Populate image hashmap
+        try {
+            imageHashMap.put(4,
+                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk4x-Model.png")), null));
+            imageHashMap.put(5,
+                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/fkthumb.png")), null));
+        } catch (IOException e) {
+            System.err.println("CANNOT LOAD IMAGES");
+            e.printStackTrace();
+            return;
+        }
+
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -122,7 +140,7 @@ public class EditMapScreenController extends AbsController{
                     floor = new_val.intValue();
                     floorSlider.setValue(floor);
 //                    System.out.println("floor: "+floor);
-
+                    floorMap.setImage(imageHashMap.get(floor));
                 }
             }
         });
