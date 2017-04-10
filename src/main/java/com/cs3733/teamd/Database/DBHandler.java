@@ -2,9 +2,7 @@ package com.cs3733.teamd.Database;
 
 import com.cs3733.teamd.Model.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -795,6 +793,28 @@ public class DBHandler {
             statement.executeUpdate();
             return true;
         } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean dumpDatabaseToSqlStatements(String filename) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            String sqlSelectNodes = "SELECT * FROM Node";
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sqlSelectNodes);
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                int x = rs.getInt(2);
+                int y = rs.getInt(3);
+                int floor = rs.getInt(4);
+                bw.write("INSERT INTO Node VALUES("+id+","+x+","+y+","+floor+")\n");
+            }
+            return true;
+        } catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
