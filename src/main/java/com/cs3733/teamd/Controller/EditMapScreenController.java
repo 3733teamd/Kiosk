@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -232,7 +233,9 @@ public class EditMapScreenController extends AbsController{
                 select2.setFill(Color.BLUE);
             }
 
-            updatePosition();
+            updatePosition(t);
+
+
 
 
         });
@@ -275,7 +278,10 @@ public class EditMapScreenController extends AbsController{
         return line;
     }
 
-    private void updatePosition(){
+    private void updatePosition(MouseEvent m){
+        select1.referenceNode.setCoord((int)select1.getCenterX() + (int)orgSceneX,(int)select1.getCenterY() + (int)orgSceneY);
+
+        dir.updateNode(select1.referenceNode);
 
     }
 
