@@ -8,6 +8,7 @@ import com.cs3733.teamd.Model.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -210,15 +211,12 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void connectNode(){
+
         Line line = connect(select1,select2);
         select1.lineMap.put(select2,line);
         select2.lineMap.put(select1,line);
-
         dir.saveEdge(select1.referenceNode,select2.referenceNode);
         imagePane.getChildren().add(line);
-        updateNeighbors();
-
-        //update
     }
 
     @FXML
@@ -227,7 +225,6 @@ public class EditMapScreenController extends AbsController{
         select1.lineMap.put(select2,line);
         select2.lineMap.put(select1,line);
         imagePane.getChildren().add(line);
-        updateNeighbors();
         //update
     }
 
@@ -356,9 +353,6 @@ public class EditMapScreenController extends AbsController{
     }
 
 
-    private void updateNeighbors(){ //doesn't work
-
-    }
 
     private void drawfloorNodes(){
         for(Node n: dir.getNodes()){
@@ -416,12 +410,17 @@ public class EditMapScreenController extends AbsController{
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         System.out.print(select1.lineMap.get(select2).getStartX());
+
+        dir.deleteEdge(select1.referenceNode,select2.referenceNode);
+
+
         imagePane.getChildren().remove(select1.lineMap.get(select2));
-        imagePane.();
+
         select1.lineMap.remove(select2);
         select2.lineMap.remove(select1);
-        dir.deleteEdge(select1.referenceNode,select2.referenceNode);
-        updateNeighbors();
+
+
+
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
