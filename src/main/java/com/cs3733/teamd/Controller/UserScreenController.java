@@ -122,17 +122,7 @@ public class UserScreenController extends AbsController{
         directionLabel.setText(Main.bundle.getString("directions"));
         EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
-       // MenuButton.setText(Main.bundle.getString("menu"));
-        //BackButton.setText(Main.bundle.getString("back"));
-//        menu.setText(Main.bundle.getString("mainmenu"));
-//
-//
-//        if(Main.Langugage.equals("Spanish") ){
-//            menu.setX(-50);
-//        }
-//        else if(Main.Langugage.equals("English") ){
-//            menu.setX(0);
-//        }
+
 
     }
 
