@@ -190,7 +190,6 @@ public class EditTagScreenController extends AbsController {
         searchResults.setAll(filtered);
 
         allProffessionals.setItems(searchResults);
-
     }
     //TODO: is deleted from database wrongly, causes fatal error
     @FXML

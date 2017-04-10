@@ -86,6 +86,10 @@ public class Node {
         }
     }
 
+    public void setCoord(int x, int y){
+        coord.setLocation(x,y);
+    }
+
     public void destroyNode(){
         for(Node neighbor : nodes){
             neighbor.removeNeighbor(this);
