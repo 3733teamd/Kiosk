@@ -46,6 +46,7 @@ public class EditMapScreenController extends AbsController{
     public TextField searchAllTags;
     public ListView allTagBox;
     public Button addTagButton;
+    public Button removeTagButton;
     Directory dir = Directory.getInstance();
 
     public Button EditProf;
@@ -330,5 +331,9 @@ public class EditMapScreenController extends AbsController{
 
 
     public void addTagToCurrentNode(ActionEvent actionEvent) {
+
+    }
+
+    public void removeTagFromCurrentNode(ActionEvent actionEvent) {
     }
 }

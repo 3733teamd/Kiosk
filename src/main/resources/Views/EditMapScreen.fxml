@@ -118,7 +118,8 @@
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="Avalible Tags" />
                         <TextField fx:id="searchAllTags" promptText="search avalible tags" />
                         <ListView fx:id="allTagBox" prefHeight="200.0" prefWidth="200.0" />
-                        <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="Add To Node" />
+                        <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="Add Tag To Node" />
+                        <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="25.0" prefWidth="250.0" text="Remove Tag From Node" />
                      </children>
                   </VBox>
                </children>
