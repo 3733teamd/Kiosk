@@ -36,6 +36,12 @@ public class EditTagScreenController extends AbsController {
     public TextField tagName;
 
     @FXML
+    private Button addProf;
+
+    @FXML
+    private Button deleteProf;
+
+    @FXML
     private TextField profSearchField;
 
     List tags = dir.getTags();
@@ -47,14 +53,18 @@ public class EditTagScreenController extends AbsController {
     List<String> allTagNames = new ArrayList<String>();
     private Tag chosenTag=null;
 
-    @FXML ListView<String> tagList;// = new ListView<>();
+    Tag selectedTag;
+    Professional selectedCurProf;
+    Professional selectedProf;
+
+    @FXML ListView<Tag> tagList;// = new ListView<>();
 
     @FXML
     private ListView allProffessionals;
     //private ListView<String> allProffessionals;
 
     @FXML
-    private ListView<String> currentProfessionals;
+    private ListView<Professional> currentProfessionals;
 
 
     //Back button
@@ -69,8 +79,7 @@ public class EditTagScreenController extends AbsController {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         TextFields.bindAutoCompletion(searchTagBar, allTagNames);
-        ObservableList<String> tag = FXCollections.observableArrayList(tags);
-        tagList.setItems(tag);
+        tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
         ObservableList<String> names = FXCollections.observableArrayList(Profs);
         System.out.println(names);
         allProffessionals.setItems(names);
@@ -89,11 +98,33 @@ public class EditTagScreenController extends AbsController {
             }
         });
         tagList.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<String>() {
-                    public void changed(ObservableValue<? extends String> ov,
-                                        String old_val, String new_val) {
+                new ChangeListener<Tag>() {
+                    public void changed(ObservableValue<? extends Tag> ov,
+                                        Tag old_val, Tag new_val) {
+                        selectedTag = new_val;
+                        currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
+                        currentProfessionals.refresh();
+
                     }
                 });
+
+        currentProfessionals.getSelectionModel().selectedItemProperty().addListener(
+        new ChangeListener<Professional>() {
+            public void changed(ObservableValue<? extends Professional> ov,
+                                Professional old_val, Professional new_val) {
+                selectedCurProf = new_val;
+
+            }
+        });
+
+        allProffessionals.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Professional>() {
+            public void changed(ObservableValue<? extends Professional> ov,
+                                Professional old_val, Professional new_val) {
+                selectedProf = new_val;
+
+            }
+        });
 
         profSearchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -104,6 +135,20 @@ public class EditTagScreenController extends AbsController {
             }
         });
         
+    }
+
+    @FXML
+    void addProf(ActionEvent event) {
+        if(selectedProf!=null && selectedTag != null){
+            dir.addTagToProfessional(selectedProf,selectedTag);
+            currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
+            currentProfessionals.refresh();
+        }
+    }
+
+    @FXML
+    void deleteProf(ActionEvent event) {
+
     }
 
     @FXML

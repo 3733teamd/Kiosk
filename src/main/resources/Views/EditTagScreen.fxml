@@ -112,8 +112,8 @@
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="279.0" text="Add Professional" />
-                                          <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="261.0" text="Remove Professional" />
+                                          <Button fx:id="addProf" mnemonicParsing="false" onAction="#addProf" prefHeight="31.0" prefWidth="279.0" text="Add Professional" />
+                                          <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="31.0" prefWidth="261.0" text="Remove Professional" />
                                       </items>
                                     </SplitPane>
                                  </children>
