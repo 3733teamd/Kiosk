@@ -857,6 +857,75 @@ public class DBHandler {
                 bw.write("INSERT INTO Node VALUES("+id+","+x+","+y+","+floor+")\n");
             }
             rs.close();
+            // Adjacent Nodes
+            String sqlSelectAdjacentNodes = "SELECT * FROM AdjacentNode";
+            rs = s.executeQuery(sqlSelectAdjacentNodes);
+            while(rs.next()) {
+                int id1 = rs.getInt(1);
+                int id2 = rs.getInt(2);
+                bw.write("INSERT INTO AdjacentNode VALUES("+id1+","+id2+")\n");
+            }
+            rs.close();
+            // Tags
+            String sqlSelectAllTags = "SELECT * FROM Tag";
+            rs = s.executeQuery(sqlSelectAllTags);
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"')\n");
+            }
+            rs.close();
+            // Node Tag
+            String sqlSelectNodeTags = "SELECT * FROM NodeTag";
+            rs = s.executeQuery(sqlSelectNodeTags);
+            while(rs.next()) {
+                int nodeId = rs.getInt(1);
+                int tagId = rs.getInt(2);
+                bw.write("INSERT INTO NodeTag VALUES("+nodeId+","+tagId+")\n");
+            }
+            rs.close();
+            // HCP
+            String sqlSelectHcp = "SELECT * FROM HCP";
+            rs = s.executeQuery(sqlSelectHcp);
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String lastName = rs.getString(2);
+                bw.write("INSET INTO HCP VALUES("+id+",'"+lastName+"')\n");
+            }
+            rs.close();
+
+            // HCP Tag
+            String sqlSelectHcpTag = "SELECT * FROM HCPTag";
+            rs = s.executeQuery(sqlSelectHcpTag);
+            while(rs.next()) {
+                int id1 = rs.getInt(1);
+                int id2 = rs.getInt(2);
+                bw.write("INSERT INTO HCPTag VALUES("+id1+","+id2+")\n");
+            }
+            rs.close();
+
+
+            // Pro Title
+            String sqlSelectProTitle = "SELECT * FROM ProTitle";
+            rs = s.executeQuery(sqlSelectProTitle);
+            while(rs.next()) {
+                int id = rs.getInt(1);
+                String acronym = rs.getString(2);
+                String fullTitle = rs.getString(3);
+                bw.write("INSERT INTO Tag VALUES("+id+",'"+acronym+"','"+fullTitle+"')\n");
+            }
+            rs.close();
+
+            // HCP Title
+            String sqlSelectHcpTitle = "SELECT * FROM HCPTitle";
+            rs = s.executeQuery(sqlSelectHcpTitle);
+            while(rs.next()) {
+                int hcpId = rs.getInt(1);
+                int id2 = rs.getInt(2);
+                bw.write("INSERT INTO HCPTitle VALUES("+hcpId+","+id2+")\n");
+            }
+            rs.close();
+
             s.close();
             return true;
         } catch(IOException e) {
