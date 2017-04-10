@@ -65,7 +65,7 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane imagePane;
     public TextField addTag;
 
-    HashMap<Circle, Node> nodes;
+    HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
 
     double orgSceneX, orgSceneY;
@@ -168,6 +168,7 @@ public class EditMapScreenController extends AbsController{
     private CircleNode createCircle(Node n, double r, Color color) {
 
         CircleNode circle = new CircleNode(n.getX()/10, n.getY()/10, r, color,n);
+        circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
         //nodes.put(circle, n);
@@ -183,6 +184,7 @@ public class EditMapScreenController extends AbsController{
             yLoc.setText(new Integer((int)c.getCenterY()).toString());
 
             currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
+            currentTagBox.refresh();
 
             scirc = c;
 
@@ -295,10 +297,33 @@ public class EditMapScreenController extends AbsController{
             if(n.getFloor()==floor){
                 CircleNode circ = createCircle(n, 5, Color.RED);
                 imagePane.getChildren().add(circ);
+
                 //System.out.println(circ.getCenterX());
                // nodes.put(circ, n);
             }
         }
+
+        //System.out.println(circleMap.size());
+        //draws stored connections
+
+        for(int i=0; i<circleMap.size(); i++){
+            CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
+            Node n = circ.referenceNode;
+
+            if(n.getFloor()==floor){
+
+                for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
+                    CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
+                    Line line = connect(circ, circ2);
+                    imagePane.getChildren().add(line);
+
+                    System.out.println(circ.referenceNode.toString() + " " + circ2.referenceNode.toString());
+                }
+                //System.out.println(circ.getCenterX());
+                // nodes.put(circ, n);
+            }
+        }
+
 
 
     }
