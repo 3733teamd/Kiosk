@@ -65,6 +65,10 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
+    HashMap<List<CircleNode>,Line> circleLines;
+
+    @FXML
+    private Button disconnectNodeBtn;
 
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
@@ -183,6 +187,11 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void connectNode(){
         Line line = connect(select1,select2);
+        select1.lineMap.put(select2,line);
+        select2.lineMap.put(select1,line);
+
+        //dir.addNodetoNode()
+
         imagePane.getChildren().add(line);
         updateNeighbors();
 
@@ -372,4 +381,11 @@ public class EditMapScreenController extends AbsController{
         }
     }
 
+    public void disconnectNode(ActionEvent actionEvent) {
+        imagePane.getChildren().remove(select1.lineMap.get(select2));
+        select1.lineMap.remove(select2);
+        select2.lineMap.remove(select1);
+        //dir.removeNodeFromNodes()
+        updateNeighbors();
+    }
 }
