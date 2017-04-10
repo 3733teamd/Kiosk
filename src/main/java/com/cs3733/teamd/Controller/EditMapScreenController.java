@@ -53,6 +53,9 @@ public class EditMapScreenController extends AbsController{
     public ListView allTagBox;
     public Button addTagButton;
     public Button removeTagButton;
+    public Button removeNodeButton;
+    public Button disconnectNodeButton;
+    //public Label errorBox;
     Directory dir = Directory.getInstance();
 
     public Button EditProf;
@@ -111,6 +114,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
+        //errorBox.setText(" ");
         xLoc.setText("");
         yLoc.setText("");
         String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
@@ -368,14 +372,13 @@ public class EditMapScreenController extends AbsController{
             if(n.getFloor()==floor){
 
                 for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
-                    CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
-                    Line line = connect(circ, circ2);
-                    imagePane.getChildren().add(line);
 
-                    System.out.println(circ.referenceNode.toString() + " " + circ2.referenceNode.toString());
+                    CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
+                    select1 = circ;
+                    select2 = circ2;
+                    connectNode();
+
                 }
-                //System.out.println(circ.getCenterX());
-                // nodes.put(circ, n);
             }
         }
 
@@ -401,11 +404,21 @@ public class EditMapScreenController extends AbsController{
         }
     }
 
-    public void disconnectNode(ActionEvent actionEvent) {
+    public void disconnectCircleNodes(ActionEvent actionEvent) {
+        System.out.print(select1.lineMap.get(select2).getStartX());
         imagePane.getChildren().remove(select1.lineMap.get(select2));
         select1.lineMap.remove(select2);
         select2.lineMap.remove(select1);
+
         //dir.removeNodeFromNodes()
         updateNeighbors();
     }
+
+    public void removeCircleNode(ActionEvent actionEvent) {
+        if (select1.referenceNode.getNodes().size() > 0){
+            //errorBox.setText("Node must have no connections before it is deleted");
+        }
+    }
+
+
 }

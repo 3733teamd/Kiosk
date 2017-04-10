@@ -90,6 +90,7 @@
                   <VBox layoutX="-50.0" prefHeight="640.0" prefWidth="201.0">
                      <children>
                         <Button fx:id="addNode" mnemonicParsing="false" onAction="#addNode" prefHeight="57.0" prefWidth="201.0" text="Add Node" />
+                        <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="60.0" prefWidth="201.0" text="Remove Node" />
                         <HBox prefHeight="60.0" prefWidth="201.0">
                            <children>
                               <Label text="X:">
@@ -115,6 +116,7 @@
                            </children>
                         </HBox>
                         <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNode" prefHeight="54.0" prefWidth="201.0" text="Connect" />
+                        <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="57.0" prefWidth="201.0" text="Disconnect" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="298.0" text="Current Tags" />
                         <ListView fx:id="currentTagBox" prefHeight="200.0" prefWidth="200.0" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="Avalible Tags" />
