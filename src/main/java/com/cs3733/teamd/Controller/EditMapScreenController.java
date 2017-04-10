@@ -214,11 +214,20 @@ public class EditMapScreenController extends AbsController{
         select1.lineMap.put(select2,line);
         select2.lineMap.put(select1,line);
 
-        //dir.addNodetoNode()
-
+        dir.saveEdge(select1.referenceNode,select2.referenceNode);
         imagePane.getChildren().add(line);
         updateNeighbors();
 
+        //update
+    }
+
+    @FXML
+    public void loadConnection(){
+        Line line = connect(select1,select2);
+        select1.lineMap.put(select2,line);
+        select2.lineMap.put(select1,line);
+        imagePane.getChildren().add(line);
+        updateNeighbors();
         //update
     }
 
@@ -368,15 +377,16 @@ public class EditMapScreenController extends AbsController{
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
+            select1 = circ;
 
             if(n.getFloor()==floor){
 
                 for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
 
                     CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
-                    select1 = circ;
+
                     select2 = circ2;
-                    connectNode();
+                    loadConnection();
 
                 }
             }
@@ -407,10 +417,10 @@ public class EditMapScreenController extends AbsController{
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         System.out.print(select1.lineMap.get(select2).getStartX());
         imagePane.getChildren().remove(select1.lineMap.get(select2));
+        imagePane.();
         select1.lineMap.remove(select2);
         select2.lineMap.remove(select1);
-
-        //dir.removeNodeFromNodes()
+        dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         updateNeighbors();
     }
 
