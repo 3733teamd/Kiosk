@@ -365,5 +365,11 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
+        if(selectedCurrentTag != null){
+            dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
+            currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+            currentTagBox.refresh();
+        }
     }
+
 }
