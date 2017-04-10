@@ -175,6 +175,7 @@ public class DBHandler {
         while (HCPRoomTupleRslt.next()) {
             Professional pro = professionalMap.get(HCPRoomTupleRslt.getInt("hcpId"));
             Tag tag = tagMap.get(HCPRoomTupleRslt.getInt("tagId"));
+            System.out.println(pro.toString() + " and " + tag.toString());
             pro.addTag(tag);
         }
         HCPTupleRslt.close();
@@ -187,6 +188,7 @@ public class DBHandler {
             String fullTitle = professtionalTitles.getString("fullTitle");
 
             ProTitle t = new ProTitle(acronym, fullTitle, id);
+            titles.add(t);
             professionalTitleMap.put(id, t);
         }
         professtionalTitles.close();

@@ -30,23 +30,18 @@
                                  </image>
                               </ImageView>
                            </children></AnchorPane>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Professionals" wrappingWidth="1245.99998742342">
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Professionals" wrappingWidth="1087.99998742342">
                                     <font>
                                         <Font name="Tahoma" size="31.0" />
                                     </font>
                                 </Text>
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="48.0" prefWidth="250.0" text="⇦ Back">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Button>
                             </children>
                         </HBox>
-                  <Button fx:id="submitButton" layoutX="1173.0" mnemonicParsing="false" onAction="#onBack" prefHeight="65.0" prefWidth="131.0" text="Submit">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="BackButton" layoutX="1042.0" mnemonicParsing="false" onAction="#onBack" prefHeight="65.0" prefWidth="131.0" text="⇦ Back">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Button>
                     </children>
                     <VBox.margin>
                         <Insets />
@@ -58,7 +53,7 @@
                             <children>
                         <Label text="All Professionals" />
                         <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" />
-                        <TextField fx:id="searchProfessionalBar" promptText="Search Professionals" />
+                        <TextField fx:id="searchProfessionalBar" promptText="New Professional Name" />
                         <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="68.0" prefWidth="282.0" text="Add New Professional">
                            <font>
                               <Font size="22.0" />
@@ -90,10 +85,9 @@
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                  <children>
                                     <Label text="Current Titles" />
-                                    <ListView fx:id="curTitleList" prefHeight="527.0" prefWidth="265.0" />
-                                    <TextField fx:id="searchTitle" promptText="Choose a Title" />
-                                    <Button fx:id="addTitle" mnemonicParsing="false" onAction="#AddTitle" prefHeight="49.0" prefWidth="282.0" text="Add Title" />
-                                    <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#DeleteTitle" prefHeight="52.0" prefWidth="300.0" text="Remove Title" />
+                                    <ListView fx:id="curTitleList" prefHeight="538.0" prefWidth="225.0" />
+                                    <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="53.0" prefWidth="225.0" text="Add Title" />
+                                    <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="52.0" prefWidth="300.0" text="Remove Title" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
@@ -105,8 +99,7 @@
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                  <children>
                                     <Label text="Current Tags" />
-                                    <ListView fx:id="curTagsList" prefHeight="527.0" prefWidth="265.0" />
-                                    <TextField fx:id="searchTitle1" promptText="Choose a Tag" />
+                                    <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="272.0" />
                                     <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="49.0" prefWidth="282.0" text="Add Tag" />
                                     <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="52.0" prefWidth="300.0" text="Remove Tag" />
                                  </children>

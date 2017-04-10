@@ -86,14 +86,13 @@ public class EditProfScreenController extends AbsController {
     private Professional selectedProf;
     private Tag selectedTag;
     private Tag selectedCurTag;
+    private ProTitle selectedTitle;
+    private ProTitle selectedCurTitle;
 
     Directory dir = Directory.getInstance();
 
     @FXML
     public void initialize(){
-
-
-
         //fill in alltags
         setAllTagsList();
         //fill in allProfs
@@ -107,23 +106,52 @@ public class EditProfScreenController extends AbsController {
         //you know the drill
         createCurTagListListener();
 
+        createAllTitleListListener();
+        createCurTitleListListener();
+
         ObservableList list = FXCollections.observableList(drop);
     }
 
     private void createCurTagListListener(){
 
-        allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
+        curTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
-            public void changed(ObservableValue<? extends Professional> observable,
-                                Professional oldValue, Professional newValue) {
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
 
-                updateCurrentProfList(newValue);
+                selectedCurTag = newValue;
             }
-
-
         });
 
     }
+
+    private void createCurTitleListListener(){
+
+        curTitleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProTitle>() {
+            @Override
+            public void changed(ObservableValue<? extends ProTitle> observable,
+                                ProTitle oldValue, ProTitle newValue) {
+
+                selectedCurTitle = newValue;
+            }
+        });
+
+    }
+    private void createAllTitleListListener(){
+
+        allTitleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProTitle>() {
+            @Override
+            public void changed(ObservableValue<? extends ProTitle> observable,
+                                ProTitle oldValue, ProTitle newValue) {
+                selectedTitle = newValue;
+
+            }
+        });
+
+    }
+
+
+
     private void createAllProfListListener(){
         allProfList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Professional>() {
             @Override
@@ -133,9 +161,9 @@ public class EditProfScreenController extends AbsController {
                 updateCurrentProfList(newValue);
             }
 
-
         });
     }
+
      private void createAllTagListListener(){
             allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
                 @Override
@@ -180,23 +208,40 @@ public class EditProfScreenController extends AbsController {
     }
 
     @FXML
-    void AddTitle(ActionEvent event) {
-
+    void addTitle(ActionEvent event) {
+        if(selectedProf != null && selectedTitle != null){
+            dir.addTitleToProfessional(selectedProf,selectedTitle);
+            dir.updateProfessional(selectedProf);
+            curTitleList.setItems(FXCollections.observableArrayList( selectedProf.getTitles()));
+            curTitleList.refresh();
+        }
     }
 
     @FXML
-    void DeleteTitle(ActionEvent event) {
+    void deleteTitle(ActionEvent event) {
+        if(selectedProf != null && selectedCurTitle != null){
+            dir.removeTitleFromProfessional(selectedProf,selectedCurTitle);
 
+            curTitleList.setItems(FXCollections.observableArrayList( selectedProf.getTitles()));
+            curTitleList.refresh();
+        }
     }
 
     @FXML
     void addNewProf(ActionEvent event) {
-
+        dir.saveProfessional(searchProfessionalBar.getText());
+        allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+        allProfList.refresh();
     }
 
     @FXML
     void deleteTag(ActionEvent event) {
-
+        if(selectedCurTag != null){
+            selectedProf.getTags().remove(selectedCurTag);
+            dir.removeTagFromProfessional(selectedProf,selectedCurTag);
+            dir.updateProfessional(selectedProf);
+            curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+        }
     }
 
     @FXML
