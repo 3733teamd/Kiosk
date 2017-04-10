@@ -47,7 +47,7 @@ public class Main extends Application {
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
-        //window.setFullScreen(true);
+        // window.setFullScreen(true);
     }
 
     public static void main(String[] args) {
@@ -68,7 +68,7 @@ public class Main extends Application {
         try {
             database.setup();
         } catch (SQLException e) {
-            if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
+             if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
                 System.out.println("Skipping setup as tables are already made");
             } else {
                 System.err.println("ERROR: creation of database failed");
