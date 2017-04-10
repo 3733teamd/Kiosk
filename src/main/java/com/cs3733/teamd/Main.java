@@ -24,7 +24,7 @@ public class Main extends Application {
 
     public static String Langugage="English";
     public static Stage window;
-
+    public Boolean languageEnglish = true;
     public static Parent rootMain;
     
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);

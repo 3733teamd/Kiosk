@@ -13,13 +13,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import org.controlsfx.control.textfield.TextFields;
 
-import java.awt.*;
+//import javax.xml.soap.Text;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
@@ -34,6 +37,10 @@ public class UserScreenController extends AbsController{
     public Button SpanishButton;
     public Button SearchButton;
     public TextField TypeDestination;
+    public Text EnterDest;
+    public Text floor;
+    public Label directionLabel;
+
     public Canvas MapCanvas;
     public int imageW = 1091;
     public int imageH = 693;
@@ -43,8 +50,6 @@ public class UserScreenController extends AbsController{
     public AnchorPane MMGpane;
     @FXML
     private TextArea directions;
-
-    private Boolean languageEnglish =true;
     public GraphicsContext gc;
     private static LinkedList<Node> pathNodes;
     private List<Tag> nodeList = dir.getTags();
@@ -53,7 +58,6 @@ public class UserScreenController extends AbsController{
     @FXML private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,nodeList);
-
         setText();
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
@@ -66,20 +70,19 @@ public class UserScreenController extends AbsController{
 
     //Spanish button to change language to Spanish
     @FXML
-    public void onSpanish(ActionEvent actionEvent){
-        languageEnglish = !languageEnglish;
-        if(languageEnglish ==false) {
+    public void onSpanish(ActionEvent actionEvent) throws  IOException{
+        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
+        if(Main.Langugage == "English") {
             Main.Langugage = "Spanish";
             Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
         }
         else{
             Main.Langugage = "English";
+
             Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
         }
 
-        Main.window.hide();
-        Main.window.setScene(Main.MainScene);
-        Main.window.show();
+        switchScreen(MMGpane,"/Views/UserScreen.fxml");
 
         setText();
     }
@@ -113,6 +116,23 @@ public class UserScreenController extends AbsController{
 
     //Spanish translation
     public void setText(){
+        SpanishButton.setText(Main.bundle.getString("spanish"));
+        SearchButton.setText(Main.bundle.getString("search"));
+        LoginButton.setText(Main.bundle.getString("login"));
+        directionLabel.setText(Main.bundle.getString("directions"));
+        EnterDest.setText(Main.bundle.getString("enterDes"));
+        floor.setText(Main.bundle.getString("floor"));
+       // MenuButton.setText(Main.bundle.getString("menu"));
+        //BackButton.setText(Main.bundle.getString("back"));
+//        menu.setText(Main.bundle.getString("mainmenu"));
+//
+//
+//        if(Main.Langugage.equals("Spanish") ){
+//            menu.setX(-50);
+//        }
+//        else if(Main.Langugage.equals("English") ){
+//            menu.setX(0);
+//        }
 
     }
 
