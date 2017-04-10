@@ -632,7 +632,7 @@ public class DBHandler {
     }
 
     public boolean addTitleToProfessional(int titleId, int professionalId) {
-        String sqlInsert = "INSERT INTO HCPTag VALUES (?,?)";
+        String sqlInsert = "INSERT INTO HCPTitle VALUES (?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlInsert);
             statement.setInt(1, professionalId);

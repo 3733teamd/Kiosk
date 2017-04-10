@@ -54,26 +54,30 @@
                         <Label text="All Professionals" />
                         <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" />
                         <TextField fx:id="searchProfessionalBar" promptText="New Professional Name" />
-                        <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="68.0" prefWidth="282.0" text="Add New Professional">
+                        <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="121.0" prefWidth="275.0" text="Add New Professional">
                            <font>
                               <Font size="22.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="115.0" prefWidth="275.0" text="Delete Professional">
+                           <font>
+                              <Font size="24.0" />
                            </font>
                         </Button>
                             </children>
                         </VBox>
                   <SplitPane dividerPositions="0.0942622950819672" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="1020.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="deleteProf" layoutX="898.0" layoutY="-1.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="65.0" prefWidth="118.0" text="Delete" />
-                              <TextField fx:id="profName" layoutX="-7.0" layoutY="-1.0" prefHeight="65.0" prefWidth="495.0" promptText="Edit Professional Name">
+                              <TextField fx:id="profName" prefHeight="65.0" prefWidth="1113.0" promptText="Edit Professional Name">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="modifyName" layoutX="488.0" layoutY="-2.0" mnemonicParsing="false" onAction="#modifyName" prefHeight="68.0" prefWidth="153.0" text="Modify Name" />
+                              <Button fx:id="modifyName" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="566.0" text="Modify Name" />
                            </children>
-                        </AnchorPane>
+                        </HBox>
                         <SplitPane dividerPositions="0.22713864306784662, 0.4591937069813176, 0.7256637168141593">
                            <items>
                               <VBox prefHeight="200.0" prefWidth="100.0">
