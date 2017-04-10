@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,7 +81,14 @@ public class Professional {
     }
 
     public void rmvTitle(ProTitle t) {
-        titles.remove(t);
+        Iterator<ProTitle> iter = this.titles.iterator();
+        while(iter.hasNext()) {
+            ProTitle next = iter.next();
+            if(next.getId() == t.getId()) {
+                iter.remove();
+                break;
+            }
+        }
     }
 
     public void rmvAllTitles(){
