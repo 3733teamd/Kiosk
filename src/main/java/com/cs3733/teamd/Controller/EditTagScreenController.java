@@ -111,6 +111,8 @@ public class EditTagScreenController extends AbsController {
                         if(selectedTag!=null) {
                             currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
                             currentProfessionals.refresh();
+
+                            tagName.setPromptText(selectedTag.toString());
                         }
 
                     }

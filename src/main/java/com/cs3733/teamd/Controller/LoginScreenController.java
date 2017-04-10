@@ -47,6 +47,7 @@ public class LoginScreenController extends AbsController {
        }
        else{
             errorIndicator.setText("Invalid login credentials!");
+
        }
 //        System.out.print(username);
 //        System.out.print(password);
