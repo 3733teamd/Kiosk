@@ -285,11 +285,11 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void drawfloorNodes(){
-        for(Node n: nodeList){
+        for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
                 CircleNode circ = createCircle(n, 5, Color.RED);
                 imagePane.getChildren().add(circ);
-                System.out.println(circ.getCenterX());
+                //System.out.println(circ.getCenterX());
                // nodes.put(circ, n);
             }
         }

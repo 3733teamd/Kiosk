@@ -116,6 +116,5 @@ public class EditTagScreenController extends AbsController {
         searchResults.setAll(filtered);
 
         allProffessionals.setItems(searchResults);
-
     }
 }
