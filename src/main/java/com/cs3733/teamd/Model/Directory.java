@@ -50,7 +50,7 @@ public class Directory implements DirectoryInterface {
         this.nextProfID = nextProfID;
         this.titles = titles;
     }
-
+    @Deprecated
     public void notifyUpdate() {
         try {
             dbHandler.open();
