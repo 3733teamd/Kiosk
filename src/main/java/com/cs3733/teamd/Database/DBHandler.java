@@ -228,7 +228,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/DBInitialImports.txt");
+            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/old-dump.sql");
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
@@ -890,7 +890,7 @@ public class DBHandler {
             while(rs.next()) {
                 int id = rs.getInt(1);
                 String lastName = rs.getString(2);
-                bw.write("INSET INTO HCP VALUES("+id+",'"+lastName+"')\n");
+                bw.write("INSERT INTO HCP VALUES("+id+",'"+lastName+"')\n");
             }
             rs.close();
 
@@ -912,7 +912,7 @@ public class DBHandler {
                 int id = rs.getInt(1);
                 String acronym = rs.getString(2);
                 String fullTitle = rs.getString(3);
-                bw.write("INSERT INTO Tag VALUES("+id+",'"+acronym+"','"+fullTitle+"')\n");
+                bw.write("INSERT INTO ProTitle VALUES("+id+",'"+acronym+"','"+fullTitle+"')\n");
             }
             rs.close();
 

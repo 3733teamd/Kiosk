@@ -49,14 +49,13 @@ public class LoginScreenController extends AbsController {
 
        User u = dir.loginUser(user,pass);
 
-       //if (u != null){
+       if (u != null){
            System.out.print("Successful log in as admin.\n");
            switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
-      // }
-       //else{
-        //    errorIndicator.setText("Invalid login credentials!");
+      } else{
+           errorIndicator.setText("Invalid login credentials!");
         //
-       //}
+       }
 
     }
 
