@@ -55,4 +55,22 @@ public class User {
         }
         return hex.toString();
     }
+
+    public boolean hasPermission(Permissions p) {
+        boolean hasPermission = false;
+        switch(p){
+            case CREATE_ADMIN:
+                hasPermission =  this.hasRole("admin");
+                break;
+            case CREATE_PROFESSIONAL:
+                hasPermission = this.hasRole("admin");
+                break;
+            case EDIT_MAP:
+                hasPermission = (this.hasRole("admin") || this.hasRole("prof"));
+                break;
+            default:
+                break;
+        }
+        return hasPermission;
+    }
 }

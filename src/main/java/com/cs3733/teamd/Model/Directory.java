@@ -355,20 +355,25 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean createUser(String username, String password) {
+    public int createUser(String username, String password) {
         String password_hash = "";
         try {
             password_hash = User.calculateHash(password);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
         int user_id = dbHandler.createUser(username, password_hash);
         if(user_id > 0) {
-            return true;
+            return user_id;
         } else {
-            return false;
+            return -1;
         }
+    }
+
+    @Override
+    public boolean addRoleToUser(int user_id, String role) {
+        return dbHandler.addRoleToUser(user_id,role);
     }
 
     @Deprecated

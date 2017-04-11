@@ -158,7 +158,9 @@ public interface DirectoryInterface {
     User getCurrentUser();
     void logoutUser();
 
-    boolean createUser(String username, String password);
+    int createUser(String username, String password);
+
+    boolean addRoleToUser(int user_id, String role);
 
     /**
      *
