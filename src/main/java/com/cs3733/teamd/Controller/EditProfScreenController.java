@@ -230,6 +230,7 @@ public class EditProfScreenController extends AbsController {
     @FXML
     void addNewProf(ActionEvent event) {
         dir.saveProfessional(searchProfessionalBar.getText());
+        searchProfessionalBar.clear();
         allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
         allProfList.refresh();
     }
@@ -261,6 +262,7 @@ public class EditProfScreenController extends AbsController {
         if(selectedProf != null){
 
             selectedProf.name = (profName.getText());
+            profName.clear();
             dir.updateProfessional(selectedProf);
             allProfList.refresh();
             //setAllProfList();
