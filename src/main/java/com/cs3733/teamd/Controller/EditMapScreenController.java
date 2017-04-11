@@ -104,7 +104,7 @@ public class EditMapScreenController extends AbsController{
         //errorBox.setText(" ");
         xLoc.setText("");
         yLoc.setText("");
-        String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
+        //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
 
         allTagBox.setItems(FXCollections.observableList(dir.getTags()));
         /*addTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -126,6 +126,10 @@ public class EditMapScreenController extends AbsController{
                     SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk4x-Model.png")), null));
             imageHashMap.put(5,
                     SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/fkthumb.png")), null));
+            imageHashMap.put(1,
+                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk1xcolored.png")), null));
+            imageHashMap.put(2,
+                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk2xcolored.png")), null));
         } catch (IOException e) {
             System.err.println("CANNOT LOAD IMAGES");
             e.printStackTrace();
@@ -140,6 +144,7 @@ public class EditMapScreenController extends AbsController{
                     floor = new_val.intValue();
                     floorSlider.setValue(floor);
 //                    System.out.println("floor: "+floor);
+
                     floorMap.setImage(imageHashMap.get(floor));
                 }
             }
