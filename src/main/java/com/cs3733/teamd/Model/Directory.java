@@ -354,6 +354,23 @@ public class Directory implements DirectoryInterface {
         return curUser;
     }
 
+    @Override
+    public boolean createUser(String username, String password) {
+        String password_hash = "";
+        try {
+            password_hash = User.calculateHash(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        int user_id = dbHandler.createUser(username, password_hash);
+        if(user_id > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Deprecated
     public void deleteProf(Professional p){
         allProfs.remove(p);
