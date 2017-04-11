@@ -438,10 +438,11 @@ public class EditMapScreenController extends AbsController{
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
             if(response){
                 errorBox.setText("");
+                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
-            currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+
             currentTagBox.refresh();
         }
 
@@ -452,10 +453,11 @@ public class EditMapScreenController extends AbsController{
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
             if(response){
                 errorBox.setText("");
+                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
-            currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+
             currentTagBox.refresh();
         }
     }
@@ -466,14 +468,15 @@ public class EditMapScreenController extends AbsController{
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
             errorBox.setText("");
+            imagePane.getChildren().remove(select1.lineMap.get(select2));
+            select1.lineMap.remove(select2);
+            select2.lineMap.remove(select1);
         }else{
             errorBox.setText(errorString);
         }
 
 
-        imagePane.getChildren().remove(select1.lineMap.get(select2));
-        select1.lineMap.remove(select2);
-        select2.lineMap.remove(select1);
+
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
