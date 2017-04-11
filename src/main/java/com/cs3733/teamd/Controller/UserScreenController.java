@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
@@ -123,6 +124,12 @@ public class UserScreenController extends AbsController{
         EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
 
+        if(Main.Langugage =="Spanish"){
+            LoginButton.setFont(Font.font("System",14));
+        }
+        else{
+            LoginButton.setFont(Font.font("System",20));
+        }
 
     }
 
