@@ -158,6 +158,8 @@ public interface DirectoryInterface {
     User getCurrentUser();
     void logoutUser();
 
+    boolean createUser(String username, String password);
+
     /**
      *
      * @return
