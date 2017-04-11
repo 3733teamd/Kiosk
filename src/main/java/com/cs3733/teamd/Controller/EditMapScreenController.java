@@ -52,6 +52,7 @@ public class EditMapScreenController extends AbsController{
     public Button EditTag;
     public Slider floorSlider;
     public Button LoginButton;
+    public Button CreateUserButton;
     public Button SpanishButton;
     public Button BackButton;
     public Button addNode;
@@ -189,7 +190,11 @@ public class EditMapScreenController extends AbsController{
 
         drawfloorNodes();
     }
-
+    //Login button
+    @FXML
+    public void onCreateUser(ActionEvent actionEvent) throws IOException {
+        switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
+    }
 
     //Back button
     @FXML
