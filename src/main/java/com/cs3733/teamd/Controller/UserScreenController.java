@@ -2,10 +2,7 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Pathfinder;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -14,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -42,6 +40,12 @@ public class UserScreenController extends AbsController{
     public Text floor;
     public Label directionLabel;
 
+    public ImageView floorMap;
+
+    //proxy pattern
+    ImageInterface imgInt = new ProxyImage();
+    public int floorNum =4;
+
     public Canvas MapCanvas;
     public int imageW = 1091;
     public int imageH = 693;
@@ -66,6 +70,7 @@ public class UserScreenController extends AbsController{
         }
 
         directions.setText(output);
+        floorMap.setImage(imgInt.display(floorNum));
     }
 
 

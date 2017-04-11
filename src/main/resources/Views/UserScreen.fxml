@@ -86,11 +86,7 @@
                <children>
                   <AnchorPane>
                      <children>
-                        <ImageView fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../floor_imgs/Fk4x-Model.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
                         <Canvas fx:id="MapCanvas" height="693.0" width="1091.0" />
                      </children>
                   </AnchorPane>
