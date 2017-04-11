@@ -189,7 +189,7 @@ public class EditMapScreenController extends AbsController{
         });
 
         drawfloorNodes();
-    }
+}
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
