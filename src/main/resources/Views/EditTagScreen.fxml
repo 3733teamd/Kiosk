@@ -31,7 +31,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Tags" wrappingWidth="909.99998742342" HBox.hgrow="ALWAYS">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%edT" wrappingWidth="909.99998742342" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Tahoma" size="31.0" />
                            </font>
@@ -102,7 +102,7 @@
                                       <items>
                                           <Label text="%currentProf" />
                                           <ListView fx:id="currentProfessionals" prefHeight="200.0" prefWidth="200.0" />
-                                          <TextField fx:id="profSearchField" prefHeight="15.0" prefWidth="237.0" promptText="Search Professionals...">
+                                          <TextField fx:id="profSearchField" prefHeight="15.0" prefWidth="237.0" promptText="%serProf">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>

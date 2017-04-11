@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.value.ChangeListener;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 
 
 import java.awt.event.MouseEvent;
@@ -110,6 +112,8 @@ public class EditProfScreenController extends AbsController {
         createCurTitleListListener();
 
         ObservableList list = FXCollections.observableList(drop);
+
+        setText();
     }
 
     private void createCurTagListListener(){
@@ -300,5 +304,17 @@ public class EditProfScreenController extends AbsController {
         updateCurrentProfList(selectedProf);
         System.out.print("sdffdas");
         */
+
+    private void setText(){
+        if(Main.Langugage=="Spanish"){
+            addNewProf.setFont(Font.font("System",14));
+            deleteProf.setFont(Font.font("System",14));
+        }
+        else{
+            addNewProf.setFont(Font.font("System",20));
+            deleteProf.setFont(Font.font("System",20));
+        }
+    }
+
 
 }

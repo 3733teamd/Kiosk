@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,10 +23,7 @@ import javafx.scene.shape.StrokeLineCap;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -109,7 +107,7 @@ public class EditMapScreenController extends AbsController{
         //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
 
         allTagBox.setItems(FXCollections.observableList(dir.getTags()));
-        floorMap.setImage(imgInt.display(floor));
+         floorMap.setImage(imgInt.display(floor));
         /*addTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -209,10 +207,7 @@ public class EditMapScreenController extends AbsController{
     public void toEditTag() throws  IOException{
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
-    @FXML
-    public void toSpanish(){
 
-    }
 
     @FXML
     public void addNode(){
@@ -448,6 +443,25 @@ public class EditMapScreenController extends AbsController{
 
 
     public void doneDrag(DragEvent dragEvent) {
+
+    }
+
+    //Spanish button to change language to Spanish
+    @FXML
+    public void toSpanish(ActionEvent actionEvent) throws  IOException{
+        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
+        if(Main.Langugage == "English") {
+            Main.Langugage = "Spanish";
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
+        }
+        else{
+            Main.Langugage = "English";
+
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
+        }
+
+        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+
 
     }
 }

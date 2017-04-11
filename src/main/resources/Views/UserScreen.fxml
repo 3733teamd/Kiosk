@@ -32,7 +32,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Faulkner Hospital Location Finder" wrappingWidth="1245.99998742342">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="1245.99998742342">
                            <font>
                               <Font name="Tahoma" size="31.0" />
                            </font>
@@ -51,7 +51,7 @@
                         <Font size="31.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="TypeDestination" prefHeight="45.0" prefWidth="255.0" promptText="Type Destination" />
+                  <TextField fx:id="TypeDestination" prefHeight="45.0" prefWidth="255.0" promptText="%typeDes" />
                   <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#onSearch" prefHeight="28.0" prefWidth="205.0" text="Search">
                      <font>
                         <Font size="20.0" />

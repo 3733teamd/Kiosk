@@ -32,7 +32,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Faulkner Hospital Location Finder" wrappingWidth="1245.99998742342">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="1245.99998742342">
                            <font>
                               <Font name="Tahoma" size="31.0" />
                            </font>
@@ -63,12 +63,12 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#toSpanish" prefHeight="44.0" prefWidth="183.0" text="%spanish">
+                  <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#toSpanish" prefHeight="44.0" prefWidth="150.0" text="%spanish">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="44.0" prefWidth="86.0" text="%back">
+                  <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="44.0" prefWidth="115.0" text="%back">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -118,11 +118,11 @@
                         <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="33.0" prefWidth="201.0" text="%disconnect" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="298.0" text="%currTag" />
                         <ListView fx:id="currentTagBox" prefHeight="200.0" prefWidth="200.0" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="Avalible Tags" />
-                        <TextField fx:id="searchAllTags" promptText="search avalible tags" />
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="%avaTags" />
+                        <TextField fx:id="searchAllTags" promptText="%seavaTags" />
                         <ListView fx:id="allTagBox" prefHeight="225.0" prefWidth="201.0" />
-                        <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="Add Tag To Node" />
-                        <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="25.0" prefWidth="250.0" text="Remove Tag From Node" />
+                        <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="%addTToNode" />
+                        <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="25.0" prefWidth="250.0" text="%remTToNode" />
                      </children>
                   </VBox>
                </children>

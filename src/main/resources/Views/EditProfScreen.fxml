@@ -30,7 +30,7 @@
                                  </image>
                               </ImageView>
                            </children></AnchorPane>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Professionals" wrappingWidth="1087.99998742342">
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%edProfTitle" wrappingWidth="1087.99998742342">
                                     <font>
                                         <Font name="Tahoma" size="31.0" />
                                     </font>
@@ -70,12 +70,12 @@
                     <items>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="profName" prefHeight="65.0" prefWidth="1113.0" promptText="Edit Professional Name">
+                              <TextField fx:id="profName" prefHeight="65.0" prefWidth="1113.0" promptText="%edProfTitle">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="modifyName" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="566.0" text="Modify Name" />
+                              <Button fx:id="modifyName" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="566.0" text="%modName" />
                            </children>
                         </HBox>
                         <SplitPane dividerPositions="0.22713864306784662, 0.4591937069813176, 0.7256637168141593">
@@ -90,8 +90,8 @@
                                  <children>
                                     <Label text="%currTitle" />
                                     <ListView fx:id="curTitleList" prefHeight="538.0" prefWidth="225.0" />
-                                    <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="53.0" prefWidth="225.0" text="Add Title" />
-                                    <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="52.0" prefWidth="300.0" text="Remove Title" />
+                                    <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="53.0" prefWidth="225.0" text="%addTitle" />
+                                    <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="52.0" prefWidth="300.0" text="%remTitle" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
@@ -104,8 +104,8 @@
                                  <children>
                                     <Label text="%currTag" />
                                     <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="272.0" />
-                                    <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="49.0" prefWidth="282.0" text="Add Tag" />
-                                    <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="52.0" prefWidth="300.0" text="Remove Tag" />
+                                    <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="49.0" prefWidth="282.0" text="%addTag" />
+                                    <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="52.0" prefWidth="300.0" text="%remTag" />
                                  </children>
                               </VBox>
                            </items>
