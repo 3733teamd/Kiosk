@@ -144,6 +144,7 @@ public class EditMapScreenController extends AbsController{
                     floor = new_val.intValue();
                     floorSlider.setValue(floor);
 //                    System.out.println("floor: "+floor);
+
                     floorMap.setImage(imageHashMap.get(floor));
                 }
             }

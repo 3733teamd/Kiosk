@@ -35,7 +35,7 @@
                                         <Font name="Tahoma" size="31.0" />
                                     </font>
                                 </Text>
-                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="48.0" prefWidth="250.0" text="⇦ Back">
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="48.0" prefWidth="250.0" text="%back">
                            <font>
                               <Font size="22.0" />
                            </font>
@@ -51,15 +51,15 @@
                <items>
                         <VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="325.0">
                             <children>
-                        <Label text="All Professionals" />
+                        <Label text="%allProfs" />
                         <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" />
-                        <TextField fx:id="searchProfessionalBar" promptText="New Professional Name" />
-                        <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="121.0" prefWidth="275.0" text="Add New Professional">
+                        <TextField fx:id="searchProfessionalBar" promptText="%newProfName" />
+                        <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="121.0" prefWidth="275.0" text="%addNProf">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Button>
-                        <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="115.0" prefWidth="275.0" text="Delete Professional">
+                        <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="115.0" prefWidth="275.0" text="%dProf">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -82,13 +82,13 @@
                            <items>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Label text="All Titles" />
+                                    <Label text="%allTitle" />
                                     <ListView fx:id="allTitleList" prefHeight="655.0" prefWidth="228.0" />
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                  <children>
-                                    <Label text="Current Titles" />
+                                    <Label text="%currTitle" />
                                     <ListView fx:id="curTitleList" prefHeight="538.0" prefWidth="225.0" />
                                     <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="53.0" prefWidth="225.0" text="Add Title" />
                                     <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="52.0" prefWidth="300.0" text="Remove Title" />
@@ -96,13 +96,13 @@
                               </VBox>
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Label text="All Tags" />
+                                    <Label text="%allTag" />
                                     <ListView fx:id="allTagsList" prefHeight="757.0" prefWidth="228.0" />
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                  <children>
-                                    <Label text="Current Tags" />
+                                    <Label text="%currTag" />
                                     <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="272.0" />
                                     <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="49.0" prefWidth="282.0" text="Add Tag" />
                                     <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="52.0" prefWidth="300.0" text="Remove Tag" />
