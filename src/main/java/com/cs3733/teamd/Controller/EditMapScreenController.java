@@ -392,7 +392,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     private void clickedOnPane(MouseEvent m){
-        
+
     }
 
 
