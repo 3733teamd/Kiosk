@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,13 +20,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Font;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -51,7 +50,7 @@ public class EditMapScreenController extends AbsController{
     public Button EditProf;
     public Button EditTag;
     public Slider floorSlider;
-    public Button LoginButton;
+    public Button LogoutButton;
     public Button CreateUserButton;
     public Button SpanishButton;
     public Button BackButton;
@@ -214,8 +213,39 @@ public class EditMapScreenController extends AbsController{
     public void toEditTag() throws  IOException{
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
+    //Spanish button to change language to Spanish
     @FXML
-    public void toSpanish(){
+    public void onSpanish(ActionEvent actionEvent) throws  IOException{
+        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
+        if(Main.Langugage == "English") {
+            Main.Langugage = "Spanish";
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
+        }
+        else{
+            Main.Langugage = "English";
+
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
+        }
+
+        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+
+        setText();
+    }
+    //Spanish translation
+    public void setText(){
+        SpanishButton.setText(Main.bundle.getString("spanish"));
+     //   SearchButton.setText(Main.bundle.getString("search"));
+        LogoutButton.setText(Main.bundle.getString("Logout"));
+       // directionLabel.setText(Main.bundle.getString("directions"));
+       // EnterDest.setText(Main.bundle.getString("enterDes"));
+       // floor.setText(Main.bundle.getString("floor"));
+
+//        if(Main.Langugage =="Spanish"){
+//            LoginButton.setFont(Font.font("System",14));
+//        }
+//        else{
+//            LoginButton.setFont(Font.font("System",20));
+//        }
 
     }
 
