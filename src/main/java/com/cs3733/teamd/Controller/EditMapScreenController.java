@@ -69,7 +69,8 @@ public class EditMapScreenController extends AbsController{
 
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
-    public Map<Integer, Image> imageHashMap = new HashMap<>();
+    /*replaced with proxy pattern*/
+//    public Map<Integer, Image> imageHashMap = new HashMap<>();
     ImageInterface imgInt = new ProxyImage();
 
     private Tag selectedTag;
@@ -119,29 +120,28 @@ public class EditMapScreenController extends AbsController{
 
 
         //Populate image hashmap
-        try {
-            imageHashMap.put(4,
-                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk4x-Model.png")), null));
-            imageHashMap.put(5,
-                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/fkthumb.png")), null));
-            imageHashMap.put(1,
-                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk1xcolored.png")), null));
-            imageHashMap.put(2,
-                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk2xcolored.png")), null));
-        } catch (IOException e) {
-            System.err.println("CANNOT LOAD IMAGES");
-            e.printStackTrace();
-            return;
-        }
+        /*replaced with proxy pattern*/
+//        try {
+//            imageHashMap.put(4,
+//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk4x-Model.png")), null));
+//            imageHashMap.put(5,
+//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/fkthumb.png")), null));
+//            imageHashMap.put(1,
+//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk1xcolored.png")), null));
+//            imageHashMap.put(2,
+//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk2xcolored.png")), null));
+//        } catch (IOException e) {
+//            System.err.println("CANNOT LOAD IMAGES");
+//            e.printStackTrace();
+//            return;
+//        }
 
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
                 if (!floorSlider.isValueChanging()) {
-                    //floorSlider.setText(String.format("%.2f", new_val));
                     floor = new_val.intValue();
                     floorSlider.setValue(floor);
-//                    System.out.println("floor: "+floor);
                     //floorMap.setImage(imageHashMap.get(floor));
                     floorMap.setImage(imgInt.display(floor));
                 }
