@@ -43,6 +43,7 @@ public class EditMapScreenController extends AbsController{
     public Button removeTagButton;
     public Button removeNodeButton;
     public Button disconnectNodeButton;
+    public Label errorBox;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
 
@@ -102,7 +103,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-        //errorBox.setText(" ");
+        errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
         //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
@@ -233,7 +234,12 @@ public class EditMapScreenController extends AbsController{
         Line line = connect(s1,s2);
         s1.lineMap.put(s2,line);
         s2.lineMap.put(s1,line);
-        dir.saveEdge(s1.referenceNode,s2.referenceNode);
+        boolean response = dir.saveEdge(s1.referenceNode,s2.referenceNode);
+        if(response == false){
+            errorBox.setText("Invalid Action");
+        }else{
+            errorBox.setText("");
+        }
         imagePane.getChildren().add(line);
     }
     @FXML
