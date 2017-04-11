@@ -11,6 +11,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +23,7 @@ import javafx.scene.shape.StrokeLineCap;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 //TODO deleate connections
@@ -62,11 +64,13 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
-    HashMap<List<CircleNode>,Line> circleLines;
+    //HashMap<List<CircleNode>,Line> circleLines;
 
     @FXML
     private Button disconnectNodeBtn;
 
+    LinkedList<Line> floorLines = new LinkedList<Line>();
+    LinkedList<CircleNode> floorCircs = new LinkedList<CircleNode>();
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
     /*replaced with proxy pattern*/
@@ -144,6 +148,20 @@ public class EditMapScreenController extends AbsController{
                     floorSlider.setValue(floor);
                     //floorMap.setImage(imageHashMap.get(floor));
                     floorMap.setImage(imgInt.display(floor));
+
+                    //clears circlenodes
+                    /*LinkedList<CircleNode> listOfCircs = new LinkedList<CircleNode>();
+                    for (int i=0; i<circleMap.size(); i++){
+                        CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
+                        listOfCircs.add(circ);
+                    }*/
+                    imagePane.getChildren().removeAll(floorCircs);
+                    imagePane.getChildren().removeAll(floorLines);
+                    floorCircs.clear();
+                    floorLines.clear();
+
+                    drawfloorNodes();
+
                 }
             }
         });
@@ -229,6 +247,7 @@ public class EditMapScreenController extends AbsController{
     private CircleNode createCircle(Node n, double r, Color color) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
         CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
+        floorCircs.add(circle);
         circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
@@ -328,6 +347,7 @@ public class EditMapScreenController extends AbsController{
 
     private Line connect(CircleNode c1, CircleNode c2) {
         Line line = new Line();
+        floorLines.add(line);
 
         line.startXProperty().bind(c1.centerXProperty());
         line.startYProperty().bind(c1.centerYProperty());
@@ -430,4 +450,7 @@ public class EditMapScreenController extends AbsController{
     }
 
 
+    public void doneDrag(DragEvent dragEvent) {
+
+    }
 }
