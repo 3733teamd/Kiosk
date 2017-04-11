@@ -50,5 +50,7 @@ db/
 test_db/
 derby.log
 
+dump.sql
+
 # Don't copy target
 target/

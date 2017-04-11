@@ -14,11 +14,14 @@ public class RealImage implements ImageInterface {
     }
     @Override
     public Image display(int floor) {
-//        if (floor==5) {
-//            return new Image("../../../resources/floor_imgs/fkthumb.png");
-//        }
+        if (floor==1) {
+            return new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/Fk1xcolored.png"));
+        }
+        if (floor==2) {
+            return new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/Fk2xcolored.png"));
+        }
         //if (floor == 4) {
-         return new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/Fk4x-Model.png"));
+         else return new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/Fk4x-Model.png"));
         //}
     }
 }

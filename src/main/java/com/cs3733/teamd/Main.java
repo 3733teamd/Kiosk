@@ -145,6 +145,7 @@ public class Main extends Application {
 
 
         try {
+            //database.dumpDatabaseToSqlStatements("dump.sql");
             database.close();
         }catch (SQLException e){
             System.out.println(e);
