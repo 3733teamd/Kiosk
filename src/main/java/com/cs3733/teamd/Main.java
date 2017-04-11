@@ -30,6 +30,7 @@ public class Main extends Application {
     public static Scene MainScene;//=new Scene(rootMain, 2124, 1010);
 
     public static String DestinationSelected = "";
+    public static int currentFloor = 1;
 
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");

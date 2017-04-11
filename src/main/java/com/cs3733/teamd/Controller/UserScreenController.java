@@ -49,7 +49,7 @@ public class UserScreenController extends AbsController{
 
     //proxy pattern
     ImageInterface imgInt = new ProxyImage();
-    public int floorNum =4;
+    public int floorNum = Main.currentFloor;
 
     public Canvas MapCanvas;
     public int imageW = 1091;
@@ -64,18 +64,15 @@ public class UserScreenController extends AbsController{
     private static LinkedList<Node> pathNodes;
     private List<Tag> nodeList = dir.getTags();
 
-    int onFloor = 4;
+    int onFloor = Main.currentFloor;
+    int indexOfElevator = 0;
 
     String output = "";
+    Tag starttag = null;
     @FXML private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,nodeList);
         setText();
-        gc = MapCanvas.getGraphicsContext2D();
-        if(pathNodes != null) {
-            draw();
-        }
-
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
 
@@ -87,10 +84,23 @@ public class UserScreenController extends AbsController{
                     floorSlider.setValue(onFloor);
                     //floorMap.setImage(imageHashMap.get(onFloor));
                     floorMap.setImage(imgInt.display(onFloor));
+                    gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+                    output = "";
+                    directions.setText(output);
+                    System.out.println(onFloor);
+
+                    if(pathNodes != null) {
+                        draw();
+                    }
 
                 }
             }
         });
+
+        gc = MapCanvas.getGraphicsContext2D();
+        if(pathNodes != null) {
+            draw();
+        }
     }
 
 
@@ -146,22 +156,40 @@ public class UserScreenController extends AbsController{
         int numnodes = dir.getNodes().size();
         //Makes a temporary holder for values
         Tag curtag;
-        //Iterates through all existing tags
+        String Start = "Kiosk";
         for(int itr = 0; itr < numtags; itr++){
             curtag = dir.getTags().get(itr);
             //If match is found create path to node from start nodes
-            if(Main.DestinationSelected.equals(curtag.getTagName())){
-                Pathfinder pathfinder =
-                        //will get updated to actually be the starting node
-                        new Pathfinder(dir.getNodes().get(numnodes-1),
-                                curtag.getNodes().getFirst());
-                //use the shortest path
-                pathNodes = pathfinder.shortestPath();
+            if(Start.equals(curtag.getTagName())){
+                starttag = curtag;
             }
 
         }
-        //Refresh page with path
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        if(starttag != null) {
+            Main.currentFloor = starttag.getNodes().getFirst().getFloor();
+            //Iterates through all existing tags
+            for (int itr = 0; itr < numtags; itr++) {
+                curtag = dir.getTags().get(itr);
+                //If match is found create path to node from start nodes
+                if (Main.DestinationSelected.equals(curtag.getTagName())) {
+                    Pathfinder pathfinder =
+                            //will get updated to actually be the starting node
+                            new Pathfinder(starttag.getNodes().getFirst(),
+                                    curtag.getNodes().getFirst());
+                    //use the shortest path
+                    pathNodes = pathfinder.shortestPath();
+                }
+            }
+        }
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        output = "";
+        directions.setText(output);
+        System.out.println(onFloor);
+
+        if(pathNodes != null) {
+            draw();
+        }
+
     }
 
     @FXML
@@ -174,17 +202,34 @@ public class UserScreenController extends AbsController{
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
         int x = node.getX();
         int y = node.getY();
-        Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
+        //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
+        Point p = new Point(x, y);
         return p;
     }
 
     //Converts a given path of nodes to a path of points and then draws it
     public void plotPath(LinkedList<Node> path){
-        LinkedList<Point> points = new LinkedList<>();
+        LinkedList<Point> pointsStartFloor = new LinkedList<>();
+        LinkedList<Point> pointsEndFloor = new LinkedList<>();
+        int index = 0;
         for (Node node: path) {
-            points.add(getConvertedPoint(node));
+            if(node.getFloor() == onFloor) {
+                System.out.println("Node.getfloor" + node.getFloor());
+                System.out.println("plot"+ onFloor);
+                pointsStartFloor.add(getConvertedPoint(node));
+                index++;
+            }
+            else{
+                pointsEndFloor.add(getConvertedPoint(node));
+            }
         }
-        drawShapes(gc, points);
+        indexOfElevator = index;
+        if(starttag.getNodes().getFirst().getFloor() == onFloor) {
+            drawShapes(gc, pointsStartFloor);
+        }
+        else if(path.getLast().getFloor() == onFloor){
+            drawShapes(gc, pointsEndFloor);
+        }
     }
 
     //Function to actually draw a path
@@ -230,7 +275,13 @@ public class UserScreenController extends AbsController{
 
             //first point directions
             if(i == 0){
-                String temp = "Starting at and facing the kiosk " + "\n";
+                String temp = "";
+                if(Main.Langugage == "Spanish"){
+                    temp = "Comenzando y mirando hacia el quiosco" + "\n";
+                }
+                else{
+                    temp = "Starting at and facing the kiosk " + "\n";
+                }
                 TextDirections.set(i, temp);
             }
             // every point between first and second to last
@@ -240,8 +291,13 @@ public class UserScreenController extends AbsController{
                 Point currnode = path.get(i);
                 Point nextnode = path.get(i + 1);
                 //Run helper functions to update text
-                TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
+                if(Main.Langugage == "Spanish") {
+                    TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                }
+                else {
+                    TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                }
+                    curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
             }
             // second to last point
             if(i == pathlength - 2) {
@@ -250,12 +306,24 @@ public class UserScreenController extends AbsController{
                 Point currnode = path.get(i);
                 Point nextnode = path.get(i + 1);
                 //Run helper functions to update text
-                TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                if(Main.Langugage == "Spanish") {
+                    TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                }
+                else {
+                    TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                }
                 curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
+                //System.out.println("Second to last" + TextDirections.getLast());
             }
             //last point
             if(i == pathlength -1){
-                String temp = "Ending at " + Main.DestinationSelected;
+                String temp = "";
+                if(Main.Langugage == "Spanish") {
+                    temp = "Terminando a " + Main.DestinationSelected;
+                }
+                else{
+                    temp = "Ending at " + Main.DestinationSelected;
+                }
                 TextDirections.set(i, temp);
             }
 
@@ -277,7 +345,7 @@ public class UserScreenController extends AbsController{
                 }
             }
             if(stritr > 0 && stritr < pathlength - 1) {
-                tempstr = TextDirections.get(stritr);
+                tempstr = TextDirections.get(pathlength - stritr - 1);
                 if (tempstr != "i") {
                     output = output + tempstr;
                 }
@@ -289,8 +357,9 @@ public class UserScreenController extends AbsController{
                 }
             }
         }
+        directions.setText(output);
         // print output to show path directions
-        System.out.println(output);
+        //System.out.println(output);
     }
 
     //helper function to determine if the change in x direction if more significant than the change in y direction
@@ -346,6 +415,7 @@ public class UserScreenController extends AbsController{
         double nextnodex = nextnode.getX();
         double nextnodey = nextnode.getY();
 
+        //System.out.println(oldnodex + "" + oldnodey);
         //Get transitions
         double oldcurx = currentnodex - oldnodex;
         double oldcury = currentnodey - oldnodey;
@@ -358,6 +428,8 @@ public class UserScreenController extends AbsController{
         //Get orientations
         ocmorsig = moresig(oldcurx, oldcury);
         cnmorsig = moresig(curnextx, curnexty);
+
+        //System.out.println("Regular getText " + ocmorsig + "" + cnmorsig);
 
         // ocx more significant than ocy
         if(ocmorsig == 1){
@@ -396,28 +468,28 @@ public class UserScreenController extends AbsController{
             if(cnmorsig == 2){
                 // oc is movement to the right
                 if(oldcurx >= 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right " + "\n");
+                        TextDirections.set(i, "Turn left " + "\n");
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left " + "\n");
+                        TextDirections.set(i, "Turn right " + "\n");
                     }
                 }
                 // oc is movement to the left
                 if(oldcurx < 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left " + "\n");
+                        TextDirections.set(i, "Turn right " + "\n");
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right " + "\n");
+                        TextDirections.set(i, "Turn left " + "\n");
                     }
                 }
             }
@@ -427,42 +499,42 @@ public class UserScreenController extends AbsController{
         if(ocmorsig == 2){
             // cnx more significant than cny
             if(cnmorsig == 1){
-                // oc is movement upwards
+                // oc is movement downwards
                 if(oldcury >= 0){
                     // cn is movement to the right
                     if(curnextx >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left " + "\n");
+                        TextDirections.set(i, "Turn right " + "\n");
                     }
                     // cn is movement to the left
                     if(curnextx < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right " + "\n");
+                        TextDirections.set(i, "Turn left " + "\n");
                     }
                 }
-                // oc is movement downwards
+                // oc is movement upwards
                 if(oldcury < 0){
                     // ocn is movement to the right
                     if(curnextx >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right " + "\n");
+                        TextDirections.set(i, "Turn left " + "\n");
                     }
                     // cn is movement to the left
                     if(curnextx < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left " + "\n");
+                        TextDirections.set(i, "Turn right " + "\n");
                     }
                 }
             }
             // cny more significant than cnx
             if(cnmorsig == 2){
-                // oc is movement upwards
+                // oc is movement downwards
                 if(oldcury >= 0){
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         // turn around case
                     }
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         if(curdir != "Straight"){
                             curdir = "Straight";
@@ -470,16 +542,16 @@ public class UserScreenController extends AbsController{
                         }
                     }
                 }
-                // oc is movement downwards
+                // oc is movement upwards
                 if(oldcury < 0){
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         if(curdir != "Straight"){
                             curdir = "Straight";
                             TextDirections.set(i, "Go straight until end of hallway " + "\n");
                         }
                     }
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         //turn around case
                     }
@@ -511,6 +583,8 @@ public class UserScreenController extends AbsController{
         ocmorsig = moresig(oldcurx, oldcury);
         cnmorsig = moresig(curnextx, curnexty);
 
+        //System.out.println("Edge getText " + ocmorsig + "" + cnmorsig);
+
         // ocx more significant than ocy
         if(ocmorsig == 1){
             // cnx more significant than cny
@@ -521,28 +595,28 @@ public class UserScreenController extends AbsController{
             if(cnmorsig == 2){
                 // oc is movement to the right
                 if(oldcurx >= 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right in current hallway " + "\n");
+                        TextDirections.set(i, "Turn left in current hallway " + "\n");
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left in current hallway " + "\n");
+                        TextDirections.set(i, "Turn right in current hallway " + "\n");
                     }
                 }
                 // oc is movement to the left
                 if(oldcurx < 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left in current hallway " + "\n");
+                        TextDirections.set(i, "Turn right in current hallway " + "\n");
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right in current hallway " + "\n");
+                        TextDirections.set(i, "Turn left in current hallway " + "\n");
                     }
                 }
             }
@@ -552,30 +626,30 @@ public class UserScreenController extends AbsController{
         if(ocmorsig == 2){
             // cnx more significant than cny
             if(cnmorsig == 1){
-                // oc is movement upwards
+                // oc is movement downwards
                 if(oldcury >= 0){
                     // cn is movement to the right
                     if(curnextx >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left in current hallway " + "\n");
+                        TextDirections.set(i, "Turn right in current hallway " + "\n");
                     }
                     // cn is movement to the left
                     if(curnextx < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right in current hallway " + "\n");
+                        TextDirections.set(i, "Turn left in current hallway " + "\n");
                     }
                 }
-                // oc is movement downwards
+                // oc is movement upwards
                 if(oldcury < 0){
                     // ocn is movement to the right
                     if(curnextx >= 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn right in current hallway " + "\n");
+                        TextDirections.set(i, "Turn left in current hallway " + "\n");
                     }
                     // cn is movement to the left
                     if(curnextx < 0){
                         curdir = "";
-                        TextDirections.set(i, "Turn left in current hallway " + "\n");
+                        TextDirections.set(i, "Turn right in current hallway " + "\n");
                     }
                 }
             }
@@ -608,6 +682,8 @@ public class UserScreenController extends AbsController{
         ocmorsig = moresig(oldcurx, oldcury);
         cnmorsig = moresig(curnextx, curnexty);
 
+        //System.out.println("Curdir getText " + ocmorsig + "" + cnmorsig);
+
         // ocx more significant than ocy
         if(ocmorsig == 1){
             // cnx more significant than cny
@@ -643,22 +719,22 @@ public class UserScreenController extends AbsController{
             if(cnmorsig == 2){
                 // oc is movement to the right
                 if(oldcurx >= 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
                     }
                 }
                 // oc is movement to the left
                 if(oldcurx < 0){
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         curdir = "";
                     }
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         curdir = "";
                     }
@@ -670,7 +746,7 @@ public class UserScreenController extends AbsController{
         if(ocmorsig == 2){
             // cnx more significant than cny
             if(cnmorsig == 1){
-                // oc is movement upwards
+                // oc is movement downwards
                 if(oldcury >= 0){
                     // cn is movement to the right
                     if(curnextx >= 0){
@@ -681,7 +757,7 @@ public class UserScreenController extends AbsController{
                         curdir = "";
                     }
                 }
-                // oc is movement downwards
+                // oc is movement upwards
                 if(oldcury < 0){
                     // ocn is movement to the right
                     if(curnextx >= 0){
@@ -695,28 +771,28 @@ public class UserScreenController extends AbsController{
             }
             // cny more significant than cnx
             if(cnmorsig == 2){
-                // oc is movement upwards
+                // oc is movement downwards
                 if(oldcury >= 0){
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         // turn around case
                     }
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         if(curdir != "Straight"){
                             curdir = "Straight";
                         }
                     }
                 }
-                // oc is movement downwards
+                // oc is movement upwards
                 if(oldcury < 0){
-                    // cn is movement downwards
+                    // cn is movement upwards
                     if(curnexty < 0){
                         if(curdir != "Straight"){
                             curdir = "Straight";
                         }
                     }
-                    // cn is movement upwards
+                    // cn is movement downwards
                     if(curnexty >= 0){
                         //turn around case
                     }
@@ -724,5 +800,262 @@ public class UserScreenController extends AbsController{
             }
         }
         return curdir;
+    }
+
+    //Helper function to generate text for most cases but in spanish
+    private LinkedList<String> getTextEsp(Point oldnode, Point currnode, Point nextnode,
+                                       String curdir, LinkedList<String> TextDirections, int i ){
+        //Get values
+        double oldnodex = oldnode.getX();
+        double oldnodey = oldnode.getY();
+        double currentnodex = currnode.getX();
+        double currentnodey = currnode.getY();
+        double nextnodex = nextnode.getX();
+        double nextnodey = nextnode.getY();
+
+        //System.out.println(oldnodex + "" + oldnodey);
+        //Get transitions
+        double oldcurx = currentnodex - oldnodex;
+        double oldcury = currentnodey - oldnodey;
+        double curnextx = nextnodex - currentnodex;
+        double curnexty = nextnodey - currentnodey;
+
+        double ocmorsig = 0;
+        double cnmorsig = 0;
+
+        //Get orientations
+        ocmorsig = moresig(oldcurx, oldcury);
+        cnmorsig = moresig(curnextx, curnexty);
+
+        //System.out.println("Regular getText " + ocmorsig + "" + cnmorsig);
+
+        // ocx more significant than ocy
+        if(ocmorsig == 1){
+            // cnx more significant than cny
+            if(cnmorsig == 1){
+                // oc is movement to the right
+                if(oldcurx >= 0){
+                    // cn is movement to the right
+                    if(curnextx >= 0){
+                        if(curdir != "Straight"){
+                            curdir = "Straight";
+                            TextDirections.set(i, "ir recto hasta el final del pasillo " + "\n");
+                        }
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        // turn around case shouldnt activate
+                    }
+                }
+                // oc is movement to the left
+                if(oldcurx < 0){
+                    // cn is movement to the right
+                    if(curnextx >= 0){
+                        //turn around case
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        if(curdir != "Straight"){
+                            curdir = "Straight";
+                            TextDirections.set(i, "ir recto hasta el final del pasillo " + "\n");
+                        }
+                    }
+                }
+            }
+            // cny more significant than cnx
+            if(cnmorsig == 2){
+                // oc is movement to the right
+                if(oldcurx >= 0){
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda " + "\n");
+                    }
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha " + "\n");
+                    }
+                }
+                // oc is movement to the left
+                if(oldcurx < 0){
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha " + "\n");
+                    }
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda " + "\n");
+                    }
+                }
+            }
+        }
+
+        // ocy more significant than ocx
+        if(ocmorsig == 2){
+            // cnx more significant than cny
+            if(cnmorsig == 1){
+                // oc is movement downwards
+                if(oldcury >= 0){
+                    // cn is movement to the right
+                    if(curnextx >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha " + "\n");
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda " + "\n");
+                    }
+                }
+                // oc is movement upwards
+                if(oldcury < 0){
+                    // ocn is movement to the right
+                    if(curnextx >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda " + "\n");
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha " + "\n");
+                    }
+                }
+            }
+            // cny more significant than cnx
+            if(cnmorsig == 2){
+                // oc is movement downwards
+                if(oldcury >= 0){
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        // turn around case
+                    }
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        if(curdir != "Straight"){
+                            curdir = "Straight";
+                            TextDirections.set(i, "ir recto hasta el final del pasillo " + "\n");
+                        }
+                    }
+                }
+                // oc is movement upwards
+                if(oldcury < 0){
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        if(curdir != "Straight"){
+                            curdir = "Straight";
+                            TextDirections.set(i, "ir recto hasta el final del pasillo " + "\n");
+                        }
+                    }
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        //turn around case
+                    }
+                }
+            }
+        }
+        //Return the updated text directions
+        return TextDirections;
+    }
+
+    //Helper function to generate text for case of reaching an elevator or the destination
+    private LinkedList<String> getTextMidHallwayEsp(Point oldnode, Point currnode, Point nextnode,
+                                                 String curdir, LinkedList<String> TextDirections, int i ){
+        double oldnodex = oldnode.getX();
+        double oldnodey = oldnode.getY();
+        double currentnodex = currnode.getX();
+        double currentnodey = currnode.getY();
+        double nextnodex = nextnode.getX();
+        double nextnodey = nextnode.getY();
+
+        double oldcurx = currentnodex - oldnodex;
+        double oldcury = currentnodey - oldnodey;
+        double curnextx = nextnodex - currentnodex;
+        double curnexty = nextnodey - currentnodey;
+
+        double ocmorsig = 0;
+        double cnmorsig = 0;
+
+        ocmorsig = moresig(oldcurx, oldcury);
+        cnmorsig = moresig(curnextx, curnexty);
+
+        //System.out.println("Edge getText " + ocmorsig + "" + cnmorsig);
+
+        // ocx more significant than ocy
+        if(ocmorsig == 1){
+            // cnx more significant than cny
+            if(cnmorsig == 1){
+                // shouldnt happen in node layout
+            }
+            // cny more significant than cnx
+            if(cnmorsig == 2){
+                // oc is movement to the right
+                if(oldcurx >= 0){
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda en el pasillo actual " + "\n");
+                    }
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha en el pasillo actual " + "\n");
+                    }
+                }
+                // oc is movement to the left
+                if(oldcurx < 0){
+                    // cn is movement downwards
+                    if(curnexty >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha en el pasillo actual " + "\n");
+                    }
+                    // cn is movement upwards
+                    if(curnexty < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda en el pasillo actual " + "\n");
+                    }
+                }
+            }
+        }
+
+        // ocy more significant than ocx
+        if(ocmorsig == 2){
+            // cnx more significant than cny
+            if(cnmorsig == 1){
+                // oc is movement downwards
+                if(oldcury >= 0){
+                    // cn is movement to the right
+                    if(curnextx >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha en el pasillo actual " + "\n");
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda en el pasillo actual " + "\n");
+                    }
+                }
+                // oc is movement upwards
+                if(oldcury < 0){
+                    // ocn is movement to the right
+                    if(curnextx >= 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la izquierda en el pasillo actual " + "\n");
+                    }
+                    // cn is movement to the left
+                    if(curnextx < 0){
+                        curdir = "";
+                        TextDirections.set(i, "dobla a la derecha en el pasillo actual " + "\n");
+                    }
+                }
+            }
+            // cny more significant than cnx
+            if(cnmorsig == 2){
+                //shouldnt happen due to node layout
+            }
+        }
+        return TextDirections;
     }
 }
