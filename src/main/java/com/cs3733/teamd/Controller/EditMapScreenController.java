@@ -1,9 +1,6 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Model.CircleNode;
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -73,7 +70,7 @@ public class EditMapScreenController extends AbsController{
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
     public Map<Integer, Image> imageHashMap = new HashMap<>();
-
+    ImageInterface imgInt = new ProxyImage();
 
     private Tag selectedTag;
     private Tag selectedCurrentTag;
@@ -107,6 +104,7 @@ public class EditMapScreenController extends AbsController{
         //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
 
         allTagBox.setItems(FXCollections.observableList(dir.getTags()));
+        floorMap.setImage(imgInt.display(floor));
         /*addTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -144,8 +142,8 @@ public class EditMapScreenController extends AbsController{
                     floor = new_val.intValue();
                     floorSlider.setValue(floor);
 //                    System.out.println("floor: "+floor);
-
-                    floorMap.setImage(imageHashMap.get(floor));
+                    //floorMap.setImage(imageHashMap.get(floor));
+                    floorMap.setImage(imgInt.display(floor));
                 }
             }
         });
