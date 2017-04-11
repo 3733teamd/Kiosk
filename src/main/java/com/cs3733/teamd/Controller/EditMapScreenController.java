@@ -7,12 +7,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -20,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import org.controlsfx.control.textfield.TextFields;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -99,8 +103,8 @@ public class EditMapScreenController extends AbsController{
     private Pane mapCanvas;
 
     private List<Node> nodeList = dir.getNodes();
-    private List<Tag> ListofTags =dir.getTags();
-
+    private List<Tag> allTheTags =dir.getTags();
+    List<String> allTagNames = new ArrayList<String>();
     int i=50;
 
     @FXML
@@ -109,38 +113,23 @@ public class EditMapScreenController extends AbsController{
         xLoc.setText("");
         yLoc.setText("");
         //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
+        initializeCircleMap();
 
-        allTagBox.setItems(FXCollections.observableList(dir.getTags()));
+        allTagBox.setItems(FXCollections.observableList(allTheTags));
          floorMap.setImage(imgInt.display(floor));
-        /*addTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        for (int i = 0 ; i<allTheTags.size(); i++) {
+            allTagNames.add(allTheTags.get(i).getTagName());
+        }
+        TextFields.bindAutoCompletion(searchAllTags,allTagNames);
+        connectNode.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    String text = addTag.getText();
-                    System.out.println(text);
+                if (keyEvent.getCode() == KeyCode.ENTER && select1 != null && select2 != null)  {
+                    connectNode(select1,select2);
                 }
             }
-        });*/
+        });
 
-        //TextFields.bindAutoCompletion(addTag,ListofTags);
-
-
-        //Populate image hashmap
-        /*replaced with proxy pattern*/
-//        try {
-//            imageHashMap.put(4,
-//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk4x-Model.png")), null));
-//            imageHashMap.put(5,
-//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/fkthumb.png")), null));
-//            imageHashMap.put(1,
-//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk1xcolored.png")), null));
-//            imageHashMap.put(2,
-//                    SwingFXUtils.toFXImage(ImageIO.read(getClass().getResource("/floor_imgs/Fk2xcolored.png")), null));
-//        } catch (IOException e) {
-//            System.err.println("CANNOT LOAD IMAGES");
-//            e.printStackTrace();
-//            return;
-//        }
 
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
@@ -151,12 +140,7 @@ public class EditMapScreenController extends AbsController{
                     //floorMap.setImage(imageHashMap.get(floor));
                     floorMap.setImage(imgInt.display(floor));
 
-                    //clears circlenodes
-                    /*LinkedList<CircleNode> listOfCircs = new LinkedList<CircleNode>();
-                    for (int i=0; i<circleMap.size(); i++){
-                        CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
-                        listOfCircs.add(circ);
-                    }*/
+                    //TODO: heart of error
                     imagePane.getChildren().removeAll(floorCircs);
                     imagePane.getChildren().removeAll(floorLines);
                     floorCircs.clear();
@@ -259,7 +243,7 @@ public class EditMapScreenController extends AbsController{
     private CircleNode createCircle(Node n, double r, Color color) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
         CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
-        floorCircs.add(circle);
+
         circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
@@ -395,13 +379,22 @@ public class EditMapScreenController extends AbsController{
 
     }
 
-
+    private void initializeCircleMap(){
+        for(Node n : dir.getNodes()){
+            CircleNode circ = createCircle(n, 5, Color.RED);
+        }
+    }
 
     private void drawfloorNodes(){
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
-                CircleNode circ = createCircle(n, 5, Color.RED);
-                imagePane.getChildren().add(circ);
+                //CircleNode circ = createCircle(n, 5, Color.RED);
+                try {
+                    imagePane.getChildren().add(circleMap.get(n));
+                    floorCircs.add(circleMap.get(n));
+                }catch (IllegalArgumentException e){
+                    System.out.println(e);
+                }
 
                 //System.out.println(circ.getCenterX());
                // nodes.put(circ, n);
@@ -423,9 +416,10 @@ public class EditMapScreenController extends AbsController{
 
             if(n.getFloor()==floor){
 
-                for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
+                //for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
+                for (Node n2 : circ.referenceNode.getNodes()){
 
-                    CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
+                    CircleNode circ2 = circleMap.get(n2);
 
                     //select2 = circ2;
                     loadConnection(circ,circ2);
