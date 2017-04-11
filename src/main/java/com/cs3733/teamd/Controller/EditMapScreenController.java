@@ -444,9 +444,10 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
-        if (select1.referenceNode.getNodes().size() > 0){
-            //errorBox.setText("Node must have no connections before it is deleted");
-        }
+        dir.deleteNode(select1.referenceNode);
+        imagePane.getChildren().remove(select1);
+        select1 = select2;
+        select2= null;
     }
 
 
