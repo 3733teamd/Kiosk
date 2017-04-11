@@ -24,6 +24,7 @@ public class LoginScreenController extends AbsController {
     public PasswordField password;
     public Button LoginButton;
     public Button BackButton;
+
     public AnchorPane MMGpane;
     public Label errorIndicator;
     public Text userText;
@@ -54,10 +55,11 @@ public class LoginScreenController extends AbsController {
       // }
        //else{
         //    errorIndicator.setText("Invalid login credentials!");
-        //
+        
        //}
 
     }
+
     //Spanish translation
     @FXML
     public void setText() {
