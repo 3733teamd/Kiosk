@@ -78,7 +78,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="629.0" prefWidth="1292.0">
                <children>
-                  <AnchorPane fx:id="imagePane" prefHeight="622.0" prefWidth="1091.0" HBox.hgrow="NEVER">
+                  <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="1091.0" HBox.hgrow="NEVER">
                      <children>
                         <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="606.0" prefWidth="1091.0" />
                         <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />

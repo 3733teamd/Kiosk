@@ -234,6 +234,7 @@ public class EditMapScreenController extends AbsController{
 
     private void connectNode(CircleNode s1, CircleNode s2){
         Line line = connect(s1,s2);
+        line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
         s2.lineMap.put(s1,line);
         boolean response = dir.saveEdge(s1.referenceNode,s2.referenceNode);
@@ -247,6 +248,7 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void loadConnection(CircleNode s1, CircleNode s2){
         Line line = connect(s1,s2);
+        line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
         s2.lineMap.put(s1,line);
         imagePane.getChildren().add(line);
@@ -384,6 +386,12 @@ public class EditMapScreenController extends AbsController{
         }else{
             errorBox.setText(errorString);
         }
+
+    }
+
+
+    @FXML
+    private void clickedOnPane(MouseEvent m){
 
     }
 
