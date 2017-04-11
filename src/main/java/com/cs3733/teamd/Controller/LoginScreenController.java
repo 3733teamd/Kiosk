@@ -24,6 +24,7 @@ public class LoginScreenController extends AbsController {
     public PasswordField password;
     public Button LoginButton;
     public Button BackButton;
+
     public AnchorPane MMGpane;
     public Label errorIndicator;
     public Text userText;
@@ -58,6 +59,7 @@ public class LoginScreenController extends AbsController {
        //}
 
     }
+
     //Spanish translation
     @FXML
     public void setText() {
