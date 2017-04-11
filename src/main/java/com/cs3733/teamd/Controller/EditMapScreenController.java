@@ -418,7 +418,7 @@ public class EditMapScreenController extends AbsController{
 
                 //for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
                 for (Node n2 : circ.referenceNode.getNodes()){
-                    
+
                     CircleNode circ2 = circleMap.get(n2);
                     //select2 = circ2;
                     loadConnection(circ,circ2);
