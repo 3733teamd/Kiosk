@@ -89,7 +89,7 @@
                   <VBox layoutX="-50.0" prefHeight="640.0" prefWidth="201.0">
                      <children>
                         <Button fx:id="addNode" mnemonicParsing="false" onAction="#addNode" prefHeight="57.0" prefWidth="201.0" text="%addN" />
-                        <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="60.0" prefWidth="201.0" text="%remN" />
+                        <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="47.0" prefWidth="201.0" text="%remN" />
                         <HBox prefHeight="60.0" prefWidth="201.0">
                            <children>
                               <Label text="X:">
@@ -114,13 +114,13 @@
                               </Label>
                            </children>
                         </HBox>
-                        <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNode" prefHeight="54.0" prefWidth="201.0" text="%connect" />
-                        <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="57.0" prefWidth="201.0" text="%disconnect" />
+                        <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNode" prefHeight="51.0" prefWidth="201.0" text="%connect" />
+                        <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="33.0" prefWidth="201.0" text="%disconnect" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="298.0" text="%currTag" />
                         <ListView fx:id="currentTagBox" prefHeight="200.0" prefWidth="200.0" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="Avalible Tags" />
                         <TextField fx:id="searchAllTags" promptText="search avalible tags" />
-                        <ListView fx:id="allTagBox" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="allTagBox" prefHeight="225.0" prefWidth="201.0" />
                         <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="Add Tag To Node" />
                         <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="25.0" prefWidth="250.0" text="Remove Tag From Node" />
                      </children>

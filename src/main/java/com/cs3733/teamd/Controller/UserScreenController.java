@@ -3,6 +3,8 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -39,6 +41,8 @@ public class UserScreenController extends AbsController{
     public Text EnterDest;
     public Text floor;
     public Label directionLabel;
+    @FXML
+    private Slider floorSlider;
 
     public ImageView floorMap;
 
@@ -59,6 +63,8 @@ public class UserScreenController extends AbsController{
     private static LinkedList<Node> pathNodes;
     private List<Tag> nodeList = dir.getTags();
 
+    int onFloor = 4;
+
     String output = "";
     @FXML private void initialize()
     {
@@ -71,6 +77,19 @@ public class UserScreenController extends AbsController{
 
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
+
+        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if (!floorSlider.isValueChanging()) {
+                    onFloor = new_val.intValue();
+                    floorSlider.setValue(onFloor);
+                    //floorMap.setImage(imageHashMap.get(onFloor));
+                    floorMap.setImage(imgInt.display(onFloor));
+
+                }
+            }
+        });
     }
 
 

@@ -435,12 +435,8 @@ public class EditMapScreenController extends AbsController{
 
 
         imagePane.getChildren().remove(select1.lineMap.get(select2));
-
         select1.lineMap.remove(select2);
         select2.lineMap.remove(select1);
-
-
-
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
