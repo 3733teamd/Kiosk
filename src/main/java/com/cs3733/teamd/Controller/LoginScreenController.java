@@ -54,7 +54,7 @@ public class LoginScreenController extends AbsController {
       // }
        //else{
         //    errorIndicator.setText("Invalid login credentials!");
-
+        //
        //}
 
     }
