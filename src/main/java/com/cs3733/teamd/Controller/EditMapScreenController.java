@@ -36,6 +36,8 @@ import java.util.*;
  */
 public class EditMapScreenController extends AbsController{
 
+    public String errorString = "Invalid Action";
+
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -236,7 +238,7 @@ public class EditMapScreenController extends AbsController{
         s2.lineMap.put(s1,line);
         boolean response = dir.saveEdge(s1.referenceNode,s2.referenceNode);
         if(response == false){
-            errorBox.setText("Invalid Action");
+            errorBox.setText(errorString);
         }else{
             errorBox.setText("");
         }
@@ -375,7 +377,13 @@ public class EditMapScreenController extends AbsController{
     private void updatePosition(MouseEvent m){
         select1.referenceNode.setCoord((int)select1.getCenterX(),(int)select1.getCenterY());
 
-        dir.updateNode(select1.referenceNode);
+        boolean response = dir.updateNode(select1.referenceNode);
+
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
 
     }
 
@@ -427,7 +435,12 @@ public class EditMapScreenController extends AbsController{
 
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null){
-            dir.addNodeTag(select1.referenceNode,selectedTag);
+            boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
+            if(response){
+                errorBox.setText("");
+            }else{
+                errorBox.setText(errorString);
+            }
             currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
             currentTagBox.refresh();
         }
@@ -436,7 +449,12 @@ public class EditMapScreenController extends AbsController{
 
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
-            dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
+            boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
+            if(response){
+                errorBox.setText("");
+            }else{
+                errorBox.setText(errorString);
+            }
             currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
             currentTagBox.refresh();
         }
@@ -445,7 +463,12 @@ public class EditMapScreenController extends AbsController{
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         System.out.print(select1.lineMap.get(select2).getStartX());
 
-        dir.deleteEdge(select1.referenceNode,select2.referenceNode);
+        boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
 
 
         imagePane.getChildren().remove(select1.lineMap.get(select2));
@@ -454,10 +477,16 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
-        dir.deleteNode(select1.referenceNode);
-        imagePane.getChildren().remove(select1);
-        select1 = select2;
-        select2= null;
+        boolean response = dir.deleteNode(select1.referenceNode);
+        if(response){
+            errorBox.setText("");
+            imagePane.getChildren().remove(select1);
+            select1 = select2;
+            select2= null;
+        }else{
+            errorBox.setText(errorString);
+        }
+
     }
 
 
