@@ -69,6 +69,8 @@ public class UserScreenController extends AbsController{
 
     String output = "";
     Tag starttag = null;
+    int startfloor = 0;
+    int destfloor = 0;
     @FXML private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,nodeList);
@@ -213,6 +215,8 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         int index = 0;
+        startfloor = starttag.getNodes().getFirst().getFloor();
+        destfloor = path.getLast().getFloor();
         for (Node node: path) {
             if(node.getFloor() == onFloor) {
                 System.out.println("Node.getfloor" + node.getFloor());
@@ -225,10 +229,10 @@ public class UserScreenController extends AbsController{
             }
         }
         indexOfElevator = index;
-        if(starttag.getNodes().getFirst().getFloor() == onFloor) {
+        if(startfloor == onFloor) {
             drawShapes(gc, pointsStartFloor);
         }
-        else if(path.getLast().getFloor() == onFloor){
+        else if(destfloor == onFloor){
             drawShapes(gc, pointsEndFloor);
         }
     }
