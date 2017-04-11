@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.text.Font;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -44,13 +43,14 @@ public class EditMapScreenController extends AbsController{
     public Button removeTagButton;
     public Button removeNodeButton;
     public Button disconnectNodeButton;
+    public Label errorBox;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
 
     public Button EditProf;
     public Button EditTag;
     public Slider floorSlider;
-    public Button LogoutButton;
+    public Button LoginButton;
     public Button CreateUserButton;
     public Button SpanishButton;
     public Button BackButton;
@@ -103,13 +103,13 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-        //errorBox.setText(" ");
+        errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
         //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
 
         allTagBox.setItems(FXCollections.observableList(dir.getTags()));
-        floorMap.setImage(imgInt.display(floor));
+         floorMap.setImage(imgInt.display(floor));
         /*addTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -188,7 +188,7 @@ public class EditMapScreenController extends AbsController{
         });
 
         drawfloorNodes();
-    }
+}
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
@@ -213,41 +213,7 @@ public class EditMapScreenController extends AbsController{
     public void toEditTag() throws  IOException{
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
-    //Spanish button to change language to Spanish
-    @FXML
-    public void onSpanish(ActionEvent actionEvent) throws  IOException{
-        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(Main.Langugage == "English") {
-            Main.Langugage = "Spanish";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
-        }
-        else{
-            Main.Langugage = "English";
 
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
-        }
-
-        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
-
-        setText();
-    }
-    //Spanish translation
-    public void setText(){
-        SpanishButton.setText(Main.bundle.getString("spanish"));
-     //   SearchButton.setText(Main.bundle.getString("search"));
-        LogoutButton.setText(Main.bundle.getString("Logout"));
-       // directionLabel.setText(Main.bundle.getString("directions"));
-       // EnterDest.setText(Main.bundle.getString("enterDes"));
-       // floor.setText(Main.bundle.getString("floor"));
-
-//        if(Main.Langugage =="Spanish"){
-//            LoginButton.setFont(Font.font("System",14));
-//        }
-//        else{
-//            LoginButton.setFont(Font.font("System",20));
-//        }
-
-    }
 
     @FXML
     public void addNode(){
@@ -260,20 +226,27 @@ public class EditMapScreenController extends AbsController{
     }
 
     @FXML
-    public void connectNode(){
-
-        Line line = connect(select1,select2);
-        select1.lineMap.put(select2,line);
-        select2.lineMap.put(select1,line);
-        dir.saveEdge(select1.referenceNode,select2.referenceNode);
-        imagePane.getChildren().add(line);
+    public void connectNodePressed(){
+        connectNode(select1,select2);
     }
 
+    private void connectNode(CircleNode s1, CircleNode s2){
+        Line line = connect(s1,s2);
+        s1.lineMap.put(s2,line);
+        s2.lineMap.put(s1,line);
+        boolean response = dir.saveEdge(s1.referenceNode,s2.referenceNode);
+        if(response == false){
+            errorBox.setText("Invalid Action");
+        }else{
+            errorBox.setText("");
+        }
+        imagePane.getChildren().add(line);
+    }
     @FXML
-    public void loadConnection(){
-        Line line = connect(select1,select2);
-        select1.lineMap.put(select2,line);
-        select2.lineMap.put(select1,line);
+    public void loadConnection(CircleNode s1, CircleNode s2){
+        Line line = connect(s1,s2);
+        s1.lineMap.put(s2,line);
+        s2.lineMap.put(s1,line);
         imagePane.getChildren().add(line);
         //update
     }
@@ -319,6 +292,8 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }
 
+
+            System.out.println(select1.toString() + " " + select2.toString());
 
 
             /*if(switchS ==true){
@@ -417,13 +392,18 @@ public class EditMapScreenController extends AbsController{
             }
         }
 
+        if(select1 != null && select2 != null) {
+            System.out.println(select1.toString() + " " + select2.toString());
+        }
+
+
         //System.out.println(circleMap.size());
         //draws stored connections
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
-            select1 = circ;
+            //select1 = circ;
 
             if(n.getFloor()==floor){
 
@@ -431,18 +411,17 @@ public class EditMapScreenController extends AbsController{
 
                     CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
 
-                    select2 = circ2;
-                    loadConnection();
+                    //select2 = circ2;
+                    loadConnection(circ,circ2);
 
                 }
             }
 
-            select1 = null;
-            select2 = null;
         }
 
-
-
+        if(select1 != null && select2 != null) {
+            System.out.println(select1.toString() + " " + select2.toString());
+        }
     }
 
 
@@ -483,6 +462,25 @@ public class EditMapScreenController extends AbsController{
 
 
     public void doneDrag(DragEvent dragEvent) {
+
+    }
+
+    //Spanish button to change language to Spanish
+    @FXML
+    public void toSpanish(ActionEvent actionEvent) throws  IOException{
+        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
+        if(Main.Langugage == "English") {
+            Main.Langugage = "Spanish";
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
+        }
+        else{
+            Main.Langugage = "English";
+
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
+        }
+
+        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+
 
     }
 }

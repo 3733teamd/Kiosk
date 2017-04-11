@@ -39,7 +39,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Login" wrappingWidth="1245.99998742342">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%adminLogin" wrappingWidth="1245.99998742342">
                            <font>
                               <Font name="Tahoma" size="31.0" />
                            </font>
