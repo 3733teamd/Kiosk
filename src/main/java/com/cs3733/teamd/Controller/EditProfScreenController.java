@@ -14,10 +14,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import org.controlsfx.control.textfield.TextFields;
 
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -92,7 +95,8 @@ public class EditProfScreenController extends AbsController {
     private ProTitle selectedCurTitle;
 
     Directory dir = Directory.getInstance();
-
+    List<Professional> allTheProfs= dir.getProfessionals();
+    List<String> allProfNames = new ArrayList<String>();
     @FXML
     public void initialize(){
         //fill in alltags
@@ -114,6 +118,10 @@ public class EditProfScreenController extends AbsController {
         ObservableList list = FXCollections.observableList(drop);
 
         setText();
+        for (int i = 0 ; i<allTheProfs.size(); i++) {
+            allProfNames.add(allTheProfs.get(i).getName());
+        }
+        TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
     }
 
     private void createCurTagListListener(){
