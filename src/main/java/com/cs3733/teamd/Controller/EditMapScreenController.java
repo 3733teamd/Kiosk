@@ -287,6 +287,8 @@ public class EditMapScreenController extends AbsController{
             }
 
 
+            System.out.println(select1.toString() + " " + select2.toString());
+
 
             /*if(switchS ==true){
                 //select1.setFill(Color.RED);
@@ -384,6 +386,11 @@ public class EditMapScreenController extends AbsController{
             }
         }
 
+        if(select1 != null && select2 != null) {
+            System.out.println(select1.toString() + " " + select2.toString());
+        }
+
+
         //System.out.println(circleMap.size());
         //draws stored connections
 
@@ -406,8 +413,9 @@ public class EditMapScreenController extends AbsController{
 
         }
 
-
-
+        if(select1 != null && select2 != null) {
+            System.out.println(select1.toString() + " " + select2.toString());
+        }
     }
 
 
