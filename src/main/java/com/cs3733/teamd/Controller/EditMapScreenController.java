@@ -225,20 +225,22 @@ public class EditMapScreenController extends AbsController{
     }
 
     @FXML
-    public void connectNode(){
-
-        Line line = connect(select1,select2);
-        select1.lineMap.put(select2,line);
-        select2.lineMap.put(select1,line);
-        dir.saveEdge(select1.referenceNode,select2.referenceNode);
-        imagePane.getChildren().add(line);
+    public void connectNodePressed(){
+        connectNode(select1,select2);
     }
 
+    private void connectNode(CircleNode s1, CircleNode s2){
+        Line line = connect(s1,s2);
+        s1.lineMap.put(s2,line);
+        s2.lineMap.put(s1,line);
+        dir.saveEdge(s1.referenceNode,s2.referenceNode);
+        imagePane.getChildren().add(line);
+    }
     @FXML
-    public void loadConnection(){
-        Line line = connect(select1,select2);
-        select1.lineMap.put(select2,line);
-        select2.lineMap.put(select1,line);
+    public void loadConnection(CircleNode s1, CircleNode s2){
+        Line line = connect(s1,s2);
+        s1.lineMap.put(s2,line);
+        s2.lineMap.put(s1,line);
         imagePane.getChildren().add(line);
         //update
     }
@@ -388,7 +390,7 @@ public class EditMapScreenController extends AbsController{
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
-            select1 = circ;
+            //select1 = circ;
 
             if(n.getFloor()==floor){
 
@@ -396,14 +398,12 @@ public class EditMapScreenController extends AbsController{
 
                     CircleNode circ2 = circleMap.get(circ.referenceNode.getNodes().get(j));
 
-                    select2 = circ2;
-                    loadConnection();
+                    //select2 = circ2;
+                    loadConnection(circ,circ2);
 
                 }
             }
 
-            select1 = null;
-            select2 = null;
         }
 
 

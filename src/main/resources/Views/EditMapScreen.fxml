@@ -114,7 +114,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNode" prefHeight="51.0" prefWidth="201.0" text="%connect" />
+                        <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNodePressed" prefHeight="51.0" prefWidth="201.0" text="%connect" />
                         <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="33.0" prefWidth="201.0" text="%disconnect" />
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="298.0" text="%currTag" />
                         <ListView fx:id="currentTagBox" prefHeight="200.0" prefWidth="200.0" />
