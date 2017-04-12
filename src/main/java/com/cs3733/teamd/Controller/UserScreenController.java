@@ -170,14 +170,41 @@ public class UserScreenController extends AbsController{
             //Iterates through all existing tags
             for (int itr = 0; itr < numtags; itr++) {
                 curtag = dir.getTags().get(itr);
+
+
+                if (Main.DestinationSelected.equals(curtag.getTagName())) {
+                    double record = 9999999999999999999999.0;
+                    Pathfinder bestPath = null;
+
+                    for (Node n : curtag.getNodes()) {
+                        Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
+                        if (attempt.pathLength(attempt.shortestPath()) < record) {
+                            bestPath = attempt;
+                        }
+                    }
+
+                    if (bestPath != null) {
+                        pathNodes = bestPath.shortestPath();
+                    } else {
+                        System.out.println("Failed to find best path out of many\n");
+                        Pathfinder pathfinder = new Pathfinder(starttag.getNodes().getFirst(), curtag.getNodes().getFirst());
+                        //use the shortest path
+                        pathNodes = pathfinder.shortestPath();
+                    }
+                /*
+                Pathfinder bestPath = null;
                 //If match is found create path to node from start nodes
                 if (Main.DestinationSelected.equals(curtag.getTagName())) {
+
+
                     Pathfinder pathfinder =
                             //will get updated to actually be the starting node
                             new Pathfinder(starttag.getNodes().getFirst(),
                                     curtag.getNodes().getFirst());
                     //use the shortest path
                     pathNodes = pathfinder.shortestPath();
+                }
+                */
                 }
             }
         }
