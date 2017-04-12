@@ -115,6 +115,14 @@ public class EditProfScreenController extends AbsController {
         createAllTitleListListener();
         createCurTitleListListener();
 
+        //change opacity
+        deleteTitle.setOpacity(.5);
+        deleteTag.setOpacity(.5);
+        addTitle.setOpacity(.5);
+        addTag.setOpacity(.5);
+        deleteProf.setOpacity(.5);
+
+
         ObservableList list = FXCollections.observableList(drop);
 
         setText();
@@ -132,6 +140,8 @@ public class EditProfScreenController extends AbsController {
                                 Tag oldValue, Tag newValue) {
 
                 selectedCurTag = newValue;
+
+
             }
         });
 
@@ -171,6 +181,12 @@ public class EditProfScreenController extends AbsController {
                                 Professional oldValue, Professional newValue) {
 
                 updateCurrentProfList(newValue);
+                //change opacity
+                deleteTitle.setOpacity(1.0);
+                deleteTag.setOpacity(1.0);
+                addTitle.setOpacity(1.0);
+                addTag.setOpacity(1.0);
+                deleteProf.setOpacity(1.0);
             }
 
         });
@@ -241,10 +257,16 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void addNewProf(ActionEvent event) {
-        dir.saveProfessional(searchProfessionalBar.getText());
-        searchProfessionalBar.clear();
-        allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
-        allProfList.refresh();
+        if(searchProfessionalBar.getText()==null ||searchProfessionalBar.getText()=="\n"||searchProfessionalBar.getText()==""){
+
+        }
+        else {
+            System.out.println("print" + searchProfessionalBar.getText() + "print");
+            dir.saveProfessional(searchProfessionalBar.getText());
+            searchProfessionalBar.clear();
+            allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+            allProfList.refresh();
+        }
     }
 
     @FXML
