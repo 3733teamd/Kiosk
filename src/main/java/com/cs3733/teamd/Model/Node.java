@@ -120,7 +120,7 @@ public class Node {
 
     @Override
     public String toString(){
-        return "("+this.getX()+","+this.getY()+")";
+        return "("+this.getX()+","+this.getY()+ ")";
     }
 
     public String toSql(){

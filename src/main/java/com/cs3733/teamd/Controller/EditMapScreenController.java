@@ -219,7 +219,9 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void addNode(){
         CircleNode circ = createCircle(dir.saveNode(50,50,floor), 5, Color.RED);
+        floorCircs.add(circ);
         imagePane.getChildren().add(circ);
+
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
 
@@ -248,11 +250,16 @@ public class EditMapScreenController extends AbsController{
             }
         }
 
-        if(s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) {
+        if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
+            line.setFill(Color.YELLOW);
+            line.setStrokeWidth(2);
+            imagePane.getChildren().add(line);
+        }else{
             imagePane.getChildren().add(line);
         }
+
     }
-    @FXML
+    /*@FXML
     public void loadConnection(CircleNode s1, CircleNode s2){
         Line line = connect(s1,s2);
         //Line line = s1.lineMap.get(s2.referenceNode);
@@ -261,7 +268,7 @@ public class EditMapScreenController extends AbsController{
         s2.lineMap.put(s1,line);
         imagePane.getChildren().add(line);
         //update
-    }
+    }*/
 
 
     private CircleNode createCircle(Node n, double r, Color color) {
@@ -276,6 +283,7 @@ public class EditMapScreenController extends AbsController{
         circle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
+            System.out.println(circle.referenceNode.getFloor());
 
 
             CircleNode c = (CircleNode) (t.getSource());
