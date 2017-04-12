@@ -84,6 +84,7 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void initialize(){
         addProf.setOpacity(.5);
+        
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
        // List chosenProf=chosenTag.getProfs();
@@ -212,7 +213,10 @@ public class EditTagScreenController extends AbsController {
     
     @FXML
     void addTag(ActionEvent event) {
-        if (searchTagBar.getText() != null||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()>1) {
+        if (searchTagBar.getText() == null||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()<=1) {
+
+        }
+        else {
             dir.saveTag(searchTagBar.getText());
             tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
             tagList.refresh();
