@@ -257,7 +257,8 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void addNewProf(ActionEvent event) {
-        if(searchProfessionalBar.getText()==null ||searchProfessionalBar.getText()=="\n"||searchProfessionalBar.getText()==""||searchProfessionalBar.getText().length()<=1){
+        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
+        if(noSpace==null ||noSpace==""||noSpace.length()<=1){
 
         }
         else {
@@ -267,6 +268,7 @@ public class EditProfScreenController extends AbsController {
             allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
             allProfList.refresh();
         }
+        searchProfessionalBar.setText("");
     }
 
     @FXML
@@ -293,14 +295,16 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void modifyName(ActionEvent event) {
-        if(selectedProf != null){
-
+        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
+        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
+            searchProfessionalBar.setText("");
+        }
+        else{
             selectedProf.name = (profName.getText());
             profName.clear();
             dir.updateProfessional(selectedProf);
             allProfList.refresh();
             //setAllProfList();
-
         }
     }
 
