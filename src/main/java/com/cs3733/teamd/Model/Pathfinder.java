@@ -22,6 +22,16 @@ public class Pathfinder {
         this.end = end;
     }
 
+    public static double pathLength(LinkedList<Node> path){
+
+        double length = 0;
+        for(int i=0; i < path.size() - 1; i++){
+            length += path.get(i).getDist(path.get(i+1));
+        }
+
+        return length;
+    }
+
     public boolean hasPath() {
         LinkedList<Node> nodes = shortestPath();
         boolean hasStart = false;
@@ -112,6 +122,7 @@ public class Pathfinder {
         // no path
         //return null; // or maybe new LinkedList<Node>()
 
+        
         /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
         return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
     }
@@ -153,4 +164,6 @@ public class Pathfinder {
         }
         return bestPath;
     }
+
+
 }
