@@ -22,6 +22,10 @@ public class Pathfinder {
         this.end = end;
     }
 
+    public static double pathLength(LinkedList<Node>){
+        return 0.0;
+    }
+
     public boolean hasPath() {
         LinkedList<Node> nodes = shortestPath();
         boolean hasStart = false;
