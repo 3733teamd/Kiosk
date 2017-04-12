@@ -848,7 +848,7 @@ public class DBHandler {
         if(curId < GENERATE_ID_START) {
             return curId;
         } else {
-            return curId - (GENERATE_ID_START - maxId + 1);
+            return curId - (GENERATE_ID_START - maxId) + 1;
         }
 
     }
@@ -865,7 +865,7 @@ public class DBHandler {
                 if(id < GENERATE_ID_START) {
                     maxNodeId = id;
                 } else {
-                    id = id - (GENERATE_ID_START - maxNodeId + 1);
+                    id = id - (GENERATE_ID_START - maxNodeId) + 1;
                 }
                 int x = rs.getInt(2);
                 int y = rs.getInt(3);
@@ -891,7 +891,7 @@ public class DBHandler {
                 if(id < GENERATE_ID_START) {
                     maxTagId = id;
                 } else {
-                    id = id - (GENERATE_ID_START - maxTagId + 1);
+                    id = id - (GENERATE_ID_START - maxTagId) + 1;
                 }
                 String name = rs.getString(2);
                 bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"')\n");
@@ -916,7 +916,7 @@ public class DBHandler {
                 if(id < GENERATE_ID_START) {
                     maxHcpId = id;
                 } else {
-                    id = id - (GENERATE_ID_START - maxHcpId + 1);
+                    id = id - (GENERATE_ID_START - maxHcpId) + 1;
                 }
                 String lastName = rs.getString(2);
                 bw.write("INSERT INTO HCP VALUES("+id+",'"+lastName+"')\n");
