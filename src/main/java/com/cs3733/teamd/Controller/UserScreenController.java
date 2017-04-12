@@ -218,21 +218,24 @@ public class UserScreenController extends AbsController{
         startfloor = starttag.getNodes().getFirst().getFloor();
         destfloor = path.getLast().getFloor();
         for (Node node: path) {
-            if(node.getFloor() == onFloor) {
+            if(node.getFloor() == startfloor) {
                 System.out.println("Node.getfloor" + node.getFloor());
-                System.out.println("plot"+ onFloor);
+                System.out.println("plot"+ startfloor);
                 pointsStartFloor.add(getConvertedPoint(node));
                 index++;
             }
             else{
+                System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
             }
         }
         indexOfElevator = index;
         if(startfloor == onFloor) {
+            System.out.println("startfloor");
             drawShapes(gc, pointsStartFloor);
         }
         else if(destfloor == onFloor){
+            System.out.println("destfloor");
             drawShapes(gc, pointsEndFloor);
         }
     }
@@ -277,8 +280,16 @@ public class UserScreenController extends AbsController{
                 gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
                         current.getX() + radius, current.getY() + radius);
             }
-
-            if(i != indexOfElevator) {
+            if(i == indexOfElevator-1){
+                String temp = "";
+                if (Main.Langugage == "Spanish") {
+                    temp = "Terminando al ascensor " + "\n";
+                } else {
+                    temp = "Ending at elevator " + "\n";
+                }
+                TextDirections.set(i, temp);
+            }
+            if(i != indexOfElevator-1) {
                 //first point directions
                 if (i == 0) {
                     String temp = "";
@@ -322,7 +333,7 @@ public class UserScreenController extends AbsController{
                 if (i == pathlength - 1) {
                     String temp = "";
                     if (Main.Langugage == "Spanish") {
-                        temp = "Terminando a " + Main.DestinationSelected;
+                        temp = "Terminando al " + Main.DestinationSelected;
                     } else {
                         temp = "Ending at " + Main.DestinationSelected;
                     }
