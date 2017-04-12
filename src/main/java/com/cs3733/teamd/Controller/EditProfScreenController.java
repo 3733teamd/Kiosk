@@ -257,7 +257,7 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void addNewProf(ActionEvent event) {
-        if(searchProfessionalBar.getText()==null ||searchProfessionalBar.getText()=="\n"||searchProfessionalBar.getText()==""){
+        if(searchProfessionalBar.getText()==null ||searchProfessionalBar.getText()=="\n"||searchProfessionalBar.getText()==""||searchProfessionalBar.getText().length()<=1){
 
         }
         else {
