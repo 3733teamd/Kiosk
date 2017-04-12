@@ -220,7 +220,8 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         int index = 0;
         startfloor = starttag.getNodes().getFirst().getFloor();
-        destfloor = path.getLast().getFloor();
+        destfloor = path.getFirst().getFloor();
+        System.out.println(destfloor);
         for (Node node: path) {
             if(node.getFloor() == startfloor) {
                 System.out.println("Node.getfloor" + node.getFloor());
@@ -228,7 +229,7 @@ public class UserScreenController extends AbsController{
                 pointsStartFloor.add(getConvertedPoint(node));
                 index++;
             }
-            else{
+            else if(node.getFloor() == destfloor){
                 System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
             }
