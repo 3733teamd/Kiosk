@@ -73,6 +73,8 @@ public class UserScreenController extends AbsController{
 
     String output = "";
     Tag starttag = null;
+    int startfloor = 0;
+    int destfloor = 0;
     @FXML private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,nodeList);
@@ -199,6 +201,7 @@ public class UserScreenController extends AbsController{
     @FXML
     //Starts path displaying process
     private void draw(){
+        System.out.println("Begin drawing");
         plotPath(UserScreenController.pathNodes);
     }
 
@@ -216,6 +219,8 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         int index = 0;
+        startfloor = starttag.getNodes().getFirst().getFloor();
+        destfloor = path.getLast().getFloor();
         for (Node node: path) {
             if(node.getFloor() == onFloor) {
                 System.out.println("Node.getfloor" + node.getFloor());
@@ -228,16 +233,17 @@ public class UserScreenController extends AbsController{
             }
         }
         indexOfElevator = index;
-        if(starttag.getNodes().getFirst().getFloor() == onFloor) {
+        if(startfloor == onFloor) {
             drawShapes(gc, pointsStartFloor);
         }
-        else if(path.getLast().getFloor() == onFloor){
+        else if(destfloor == onFloor){
             drawShapes(gc, pointsEndFloor);
         }
     }
 
     //Function to actually draw a path
     private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
+        System.out.println("Drawing");
         //color for start node
         gc.setFill(javafx.scene.paint.Color.GREEN);
         //color for edges
@@ -276,59 +282,56 @@ public class UserScreenController extends AbsController{
                         current.getX() + radius, current.getY() + radius);
             }
 
-
-            //first point directions
-            if(i == 0){
-                String temp = "";
-                if(Main.Langugage == "Spanish"){
-                    temp = "Comenzando y mirando hacia el quiosco" + "\n";
+            if(i != indexOfElevator) {
+                //first point directions
+                if (i == 0) {
+                    String temp = "";
+                    if (Main.Langugage == "Spanish") {
+                        temp = "Comenzando y mirando hacia el quiosco" + "\n";
+                    } else {
+                        temp = "Starting at and facing the kiosk " + "\n";
+                    }
+                    TextDirections.set(i, temp);
                 }
-                else{
-                    temp = "Starting at and facing the kiosk " + "\n";
-                }
-                TextDirections.set(i, temp);
-            }
-            // every point between first and second to last
-            if(i > 0 && i+2 < pathlength) {
-                //Assign point
-                Point oldnode = path.get(i - 1);
-                Point currnode = path.get(i);
-                Point nextnode = path.get(i + 1);
-                //Run helper functions to update text
-                if(Main.Langugage == "Spanish") {
-                    TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                }
-                else {
-                    TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                }
+                // every point between first and second to last
+                if (i > 0 && i + 2 < pathlength) {
+                    //Assign point
+                    Point oldnode = path.get(i - 1);
+                    Point currnode = path.get(i);
+                    Point nextnode = path.get(i + 1);
+                    //Run helper functions to update text
+                    if (Main.Langugage == "Spanish") {
+                        TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                    } else {
+                        TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                    }
                     curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
-            }
-            // second to last point
-            if(i == pathlength - 2) {
-                //Assign point
-                Point oldnode = path.get(i - 1);
-                Point currnode = path.get(i);
-                Point nextnode = path.get(i + 1);
-                //Run helper functions to update text
-                if(Main.Langugage == "Spanish") {
-                    TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
                 }
-                else {
-                    TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                // second to last point
+                if (i == pathlength - 2) {
+                    //Assign point
+                    Point oldnode = path.get(i - 1);
+                    Point currnode = path.get(i);
+                    Point nextnode = path.get(i + 1);
+                    //Run helper functions to update text
+                    if (Main.Langugage == "Spanish") {
+                        TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                    } else {
+                        TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
+                    }
+                    curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
+                    //System.out.println("Second to last" + TextDirections.getLast());
                 }
-                curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
-                //System.out.println("Second to last" + TextDirections.getLast());
-            }
-            //last point
-            if(i == pathlength -1){
-                String temp = "";
-                if(Main.Langugage == "Spanish") {
-                    temp = "Terminando a " + Main.DestinationSelected;
+                //last point
+                if (i == pathlength - 1) {
+                    String temp = "";
+                    if (Main.Langugage == "Spanish") {
+                        temp = "Terminando a " + Main.DestinationSelected;
+                    } else {
+                        temp = "Ending at " + Main.DestinationSelected;
+                    }
+                    TextDirections.set(i, temp);
                 }
-                else{
-                    temp = "Ending at " + Main.DestinationSelected;
-                }
-                TextDirections.set(i, temp);
             }
 
             //Update for next loop
