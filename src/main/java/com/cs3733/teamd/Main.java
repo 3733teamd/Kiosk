@@ -144,6 +144,7 @@ public class Main extends Application {
         // launch window
         launch(args);
 
+        
         //database.dumpDatabaseToSqlStatements("DBImports.txt");
         try {
             //database.dumpDatabaseToSqlStatements("dump.sql.import");

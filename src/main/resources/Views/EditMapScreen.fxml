@@ -58,7 +58,7 @@
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <Slider fx:id="floorSlider" blockIncrement="1.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" onDragDropped="#doneDrag" prefHeight="40.0" prefWidth="377.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="4.0" />
+                  <Slider fx:id="floorSlider" blockIncrement="1.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" onDragDropped="#doneDrag" prefHeight="40.0" prefWidth="377.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
                   <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="44.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true">
                      <font>
                         <Font size="20.0" />
