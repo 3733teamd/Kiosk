@@ -122,6 +122,7 @@ public class Pathfinder {
         // no path
         //return null; // or maybe new LinkedList<Node>()
 
+        
         /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
         return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
     }
@@ -163,4 +164,6 @@ public class Pathfinder {
         }
         return bestPath;
     }
+
+
 }
