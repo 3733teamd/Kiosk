@@ -281,7 +281,7 @@ public class EditMapScreenController extends AbsController{
             }
 
 
-            System.out.println(select1.toString() + " " + select2.toString());
+            //System.out.println(select1.toString() + " " + select2.toString());
 
 
             /*if(switchS ==true){
