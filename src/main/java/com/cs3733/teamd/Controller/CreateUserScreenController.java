@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Directory;
 import com.cs3733.teamd.Model.Permissions;
 import com.cs3733.teamd.Model.User;
@@ -64,24 +65,24 @@ public class CreateUserScreenController extends AbsController {
         Directory dir = Directory.getInstance();
         User u = dir.getCurrentUser();
         if(u == null) {
-            errorIndicator.setText("No User Logged In...");
+            errorIndicator.setText(Main.bundle.getString("NoUserLoggedIn"));
         } else if(!u.hasPermission(Permissions.CREATE_ADMIN)) {
-            errorIndicator.setText("Insufficient Permissions");
+            errorIndicator.setText(Main.bundle.getString("InsufficientPermissions"));
             roleSelection.getValue();
         } else {
             String role = (String)roleSelection.getValue();
-            if(role.length() <= 0) {
-                errorIndicator.setText("Please Select a Role...");
+            if(role.length() == 0 ||role =="null") {
+                errorIndicator.setText(Main.bundle.getString("PleaseSelectaRole"));
             } else {
                 int result = dir.createUser(newUsername.getText(), newPassword.getText());
                 if(result <= 0) {
-                    errorIndicator.setText("Name is already taken...");
+                    errorIndicator.setText(Main.bundle.getString("Nameisalreadytaken"));
                 } else {
-                    errorIndicator.setText("New User "+newUsername.getText()+" created.");
+                    errorIndicator.setText(Main.bundle.getString("NewUser") +" "+newUsername.getText()+" "+Main.bundle.getString("created"));
                     // Now try to assign a role
                     boolean roleResult = dir.addRoleToUser(result, role);
                     if(!roleResult) {
-                        errorIndicator.setText("Error Adding Role to User...");
+                        errorIndicator.setText(Main.bundle.getString("ErrorAddingRoletoUser"));
                     }
                 }
             }

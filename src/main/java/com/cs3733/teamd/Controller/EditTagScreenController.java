@@ -172,7 +172,7 @@ public class EditTagScreenController extends AbsController {
             selectedTag.setTagName(tagNameTxt.getText());
             dir.updateTag(selectedTag);
             tagList.refresh();
-            tagNameTxt.setText("");
+            tagNameTxt.clear();
         }
     }
 
@@ -226,7 +226,7 @@ public class EditTagScreenController extends AbsController {
             dir.saveTag(searchTagBar.getText());
             tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
             tagList.refresh();
-            searchTagBar.setText("");
+            searchTagBar.clear();
         }
     }
 }

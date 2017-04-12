@@ -52,7 +52,7 @@
                      </font>
                   </Button>
                   <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" />
-                  <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="151.0" text="Create new User" />
+                  <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="151.0" text="%CreatenewUser" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0">
                      <font>
                         <Font size="33.0" />

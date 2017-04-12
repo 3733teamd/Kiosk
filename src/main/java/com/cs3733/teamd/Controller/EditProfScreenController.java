@@ -121,6 +121,11 @@ public class EditProfScreenController extends AbsController {
         addTitle.setOpacity(.5);
         addTag.setOpacity(.5);
         deleteProf.setOpacity(.5);
+        deleteTitle.setDisable(true);
+        deleteTag.setDisable(true);
+        addTitle.setDisable(true);
+        addTag.setDisable(true);
+        deleteProf.setDisable(true);
 
 
         ObservableList list = FXCollections.observableList(drop);
@@ -187,6 +192,11 @@ public class EditProfScreenController extends AbsController {
                 addTitle.setOpacity(1.0);
                 addTag.setOpacity(1.0);
                 deleteProf.setOpacity(1.0);
+                deleteTitle.setDisable(false);
+                deleteTag.setDisable(false);
+                addTitle.setDisable(false);
+                addTag.setDisable(false);
+                deleteProf.setDisable(false);
             }
 
         });
@@ -266,6 +276,8 @@ public class EditProfScreenController extends AbsController {
             searchProfessionalBar.clear();
             allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
             allProfList.refresh();
+            searchProfessionalBar.clear();
+
         }
     }
 
@@ -300,7 +312,7 @@ public class EditProfScreenController extends AbsController {
             dir.updateProfessional(selectedProf);
             allProfList.refresh();
             //setAllProfList();
-
+            profName.clear();
         }
     }
 

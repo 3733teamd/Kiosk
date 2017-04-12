@@ -34,7 +34,7 @@
                                         </ImageView>
                                     </children>
                                 </AnchorPane>
-                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Sign up" wrappingWidth="1245.99998742342">
+                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%AdminSignup" wrappingWidth="1245.99998742342">
                                     <font>
                                         <Font name="Tahoma" size="31.0" />
                                     </font>
@@ -65,17 +65,17 @@
                             </rowConstraints>
                             <children>
                                 <TextField fx:id="newUsername" prefHeight="67.0" prefWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Text fx:id="pwText" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new password" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Text fx:id="pwText" strokeType="OUTSIDE" strokeWidth="0.0" text="%CreateNewPassword" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                     <font>
                                         <Font size="50.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" text="Create new username" textAlignment="CENTER" wrappingWidth="552.13671875" GridPane.columnIndex="1">
+                                <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" text="%CreateNewUsername" textAlignment="CENTER" wrappingWidth="552.13671875" GridPane.columnIndex="1">
                                     <font>
                                         <Font size="50.0" />
                                     </font>
                                 </Text>
-                        <Text fx:id="pwText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Role for User" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                        <Text fx:id="pwText1" strokeType="OUTSIDE" strokeWidth="0.0" text="%RoleforUser" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -89,7 +89,7 @@
                         <ChoiceBox fx:id="roleSelection" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             </children>
                         </GridPane>
-                        <Button fx:id="CreateUserButton" layoutX="558.0" layoutY="601.0" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="56.0" prefWidth="206.0" text="Create user" textAlignment="CENTER" wrapText="true">
+                        <Button fx:id="CreateUserButton" layoutX="558.0" layoutY="601.0" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="56.0" prefWidth="206.0" text="%CreateUser" textAlignment="CENTER" wrapText="true">
                             <font>
                                 <Font size="24.0" />
                             </font>

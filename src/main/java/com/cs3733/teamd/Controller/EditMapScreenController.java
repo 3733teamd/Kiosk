@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
 import javax.imageio.ImageIO;
@@ -40,7 +41,7 @@ import java.util.*;
  */
 public class EditMapScreenController extends AbsController{
 
-    public String errorString = "Invalid Action";
+    public String errorString = Main.bundle.getString("InvalidAction");
 
     public boolean loading=false;
     public ListView currentTagBox;
@@ -175,6 +176,19 @@ public class EditMapScreenController extends AbsController{
         });
 
         drawfloorNodes();
+
+        if(Main.Langugage=="Spanish"){
+            EditTag.setFont(Font.font("System",14));
+            LoginButton.setFont(Font.font("System",14));
+            CreateUserButton.setFont(Font.font("System",14));
+
+        }
+        else {
+            EditTag.setFont(Font.font("System",20));
+            LoginButton.setFont(Font.font("System",20));
+            CreateUserButton.setFont(Font.font("System",20));
+        }
+
 }
     //Login button
     @FXML
