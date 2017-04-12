@@ -42,6 +42,7 @@ public class EditMapScreenController extends AbsController{
 
     public String errorString = "Invalid Action";
 
+    public boolean loading=false;
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -217,21 +218,30 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void connectNode(CircleNode s1, CircleNode s2){
+
+
         Line line = connect(s1,s2);
         line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
         s2.lineMap.put(s1,line);
-        boolean response = dir.saveEdge(s1.referenceNode,s2.referenceNode);
-        if(response == false){
-            errorBox.setText(errorString);
-        }else{
-            errorBox.setText("");
+
+        if(loading==false) {
+            boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
+            if(response == false){
+                errorBox.setText(errorString);
+            }else{
+                errorBox.setText("");
+            }
         }
-        imagePane.getChildren().add(line);
+
+        if(s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) {
+            imagePane.getChildren().add(line);
+        }
     }
     @FXML
     public void loadConnection(CircleNode s1, CircleNode s2){
         Line line = connect(s1,s2);
+        //Line line = s1.lineMap.get(s2.referenceNode);
         line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
         s2.lineMap.put(s1,line);
@@ -281,7 +291,7 @@ public class EditMapScreenController extends AbsController{
             }
 
 
-            System.out.println(select1.toString() + " " + select2.toString());
+            //System.out.println(select1.toString() + " " + select2.toString());
 
 
             /*if(switchS ==true){
@@ -421,7 +431,9 @@ public class EditMapScreenController extends AbsController{
 
                     CircleNode circ2 = circleMap.get(n2);
                     //select2 = circ2;
-                    loadConnection(circ,circ2);
+                    loading = true;
+                    connectNode(circ,circ2);
+                    loading = false;
 
                 }
             }
@@ -464,12 +476,17 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
-        System.out.print(select1.lineMap.get(select2).getStartX());
+        //System.out.print(select1.lineMap.get(select2).getStartX());
 
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
             errorBox.setText("");
-            imagePane.getChildren().remove(select1.lineMap.get(select2));
+            Line l = select1.lineMap.get(select2);
+
+            //System.out.println("Line xcoord" +l.getEndX());
+
+            imagePane.getChildren().remove(l);
+            System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
             select2.lineMap.remove(select1);
         }else{
