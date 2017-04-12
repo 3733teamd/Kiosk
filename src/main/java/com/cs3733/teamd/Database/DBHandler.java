@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cs3733.teamd.Model.Title.*;
-
 /**
  * Created by kicknickr on 3/31/2017.
  */
@@ -228,7 +226,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/old-dump.sql");
+            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/dump.sql.import");
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
@@ -844,13 +842,31 @@ public class DBHandler {
         }
     }
 
+    private static final int GENERATE_ID_START = 1000;
+
+    private int getNormalizedId(int curId, int maxId) {
+        if(curId < GENERATE_ID_START) {
+            return curId;
+        } else {
+            return curId - (GENERATE_ID_START - maxId);
+        }
+
+    }
+
     public boolean dumpDatabaseToSqlStatements(String filename) {
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-            String sqlSelectNodes = "SELECT * FROM Node";
+            String sqlSelectNodes = "SELECT * FROM Node ORDER BY id ASC";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelectNodes);
+            int maxNodeId = 0;
             while(rs.next()) {
                 int id = rs.getInt(1);
+                if(id < GENERATE_ID_START) {
+                    maxNodeId = id;
+                } else {
+                    id = id - (GENERATE_ID_START - maxNodeId);
+                }
                 int x = rs.getInt(2);
                 int y = rs.getInt(3);
                 int floor = rs.getInt(4);
@@ -861,16 +877,22 @@ public class DBHandler {
             String sqlSelectAdjacentNodes = "SELECT * FROM AdjacentNode";
             rs = s.executeQuery(sqlSelectAdjacentNodes);
             while(rs.next()) {
-                int id1 = rs.getInt(1);
-                int id2 = rs.getInt(2);
+                int id1 = getNormalizedId(rs.getInt(1), maxNodeId);
+                int id2 = getNormalizedId(rs.getInt(2), maxNodeId);
                 bw.write("INSERT INTO AdjacentNode VALUES("+id1+","+id2+")\n");
             }
             rs.close();
             // Tags
-            String sqlSelectAllTags = "SELECT * FROM Tag";
+            String sqlSelectAllTags = "SELECT * FROM Tag ORDER BY id ASC";
+            int maxTagId = 0;
             rs = s.executeQuery(sqlSelectAllTags);
             while(rs.next()) {
                 int id = rs.getInt(1);
+                if(id < GENERATE_ID_START) {
+                    maxTagId = id;
+                } else {
+                    id = id - (GENERATE_ID_START - maxTagId);
+                }
                 String name = rs.getString(2);
                 bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"')\n");
             }
@@ -879,16 +901,23 @@ public class DBHandler {
             String sqlSelectNodeTags = "SELECT * FROM NodeTag";
             rs = s.executeQuery(sqlSelectNodeTags);
             while(rs.next()) {
-                int nodeId = rs.getInt(1);
-                int tagId = rs.getInt(2);
+                int nodeId = getNormalizedId(rs.getInt(1), maxNodeId);
+                int tagId = getNormalizedId(rs.getInt(2), maxTagId);
                 bw.write("INSERT INTO NodeTag VALUES("+nodeId+","+tagId+")\n");
             }
             rs.close();
             // HCP
-            String sqlSelectHcp = "SELECT * FROM HCP";
+            String sqlSelectHcp = "SELECT * FROM HCP ORDER BY id ASC";
+
+            int maxHcpId = 0;
             rs = s.executeQuery(sqlSelectHcp);
             while(rs.next()) {
                 int id = rs.getInt(1);
+                if(id < GENERATE_ID_START) {
+                    maxHcpId = id;
+                } else {
+                    id = id - (GENERATE_ID_START - maxHcpId);
+                }
                 String lastName = rs.getString(2);
                 bw.write("INSERT INTO HCP VALUES("+id+",'"+lastName+"')\n");
             }
@@ -898,18 +927,24 @@ public class DBHandler {
             String sqlSelectHcpTag = "SELECT * FROM HCPTag";
             rs = s.executeQuery(sqlSelectHcpTag);
             while(rs.next()) {
-                int id1 = rs.getInt(1);
-                int id2 = rs.getInt(2);
-                bw.write("INSERT INTO HCPTag VALUES("+id1+","+id2+")\n");
+                int tagId = getNormalizedId(rs.getInt(1),maxTagId);
+                int hcpId = getNormalizedId(rs.getInt(2), maxHcpId);
+                bw.write("INSERT INTO HCPTag VALUES("+tagId+","+hcpId+")\n");
             }
             rs.close();
 
 
             // Pro Title
-            String sqlSelectProTitle = "SELECT * FROM ProTitle";
+            String sqlSelectProTitle = "SELECT * FROM ProTitle ORDER BY id ASC";
+            int maxTitleId = 0;
             rs = s.executeQuery(sqlSelectProTitle);
             while(rs.next()) {
                 int id = rs.getInt(1);
+                if(id < GENERATE_ID_START) {
+                    maxTitleId = id;
+                } else {
+                    id = id - (GENERATE_ID_START - maxTitleId);
+                }
                 String acronym = rs.getString(2);
                 String fullTitle = rs.getString(3);
                 bw.write("INSERT INTO ProTitle VALUES("+id+",'"+acronym+"','"+fullTitle+"')\n");
@@ -920,9 +955,9 @@ public class DBHandler {
             String sqlSelectHcpTitle = "SELECT * FROM HCPTitle";
             rs = s.executeQuery(sqlSelectHcpTitle);
             while(rs.next()) {
-                int hcpId = rs.getInt(1);
-                int id2 = rs.getInt(2);
-                bw.write("INSERT INTO HCPTitle VALUES("+hcpId+","+id2+")\n");
+                int hcpId = getNormalizedId(rs.getInt(1),maxHcpId);
+                int titleId = getNormalizedId(rs.getInt(2), maxTitleId);
+                bw.write("INSERT INTO HCPTitle VALUES("+hcpId+","+titleId+")\n");
             }
             rs.close();
 
