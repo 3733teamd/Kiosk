@@ -22,8 +22,14 @@ public class Pathfinder {
         this.end = end;
     }
 
-    public static double pathLength(LinkedList<Node>){
-        return 0.0;
+    public static double pathLength(LinkedList<Node> path){
+
+        double length = 0;
+        for(int i=0; i < path.size() - 1; i++){
+            length += path.get(i).getDist(path.get(i+1));
+        }
+
+        return length;
     }
 
     public boolean hasPath() {
