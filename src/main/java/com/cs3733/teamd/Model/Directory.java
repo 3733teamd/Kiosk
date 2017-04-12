@@ -76,7 +76,7 @@ public class Directory implements DirectoryInterface {
         return null;
     }
     @Deprecated
-    public synchronized Professional creaNewProf(String name, ArrayList<Title> titles, int ID){
+    public synchronized Professional creaNewProf(String name, ArrayList<ProTitle> titles, int ID){
 
         return  null;
     }
@@ -206,7 +206,7 @@ public class Directory implements DirectoryInterface {
 
     //TODO: implement this
     @Override
-    public Professional saveProfessional(String name, List<Title> titles, List<Tag> tags) {
+    public Professional saveProfessional(String name, List<ProTitle> titles, List<Tag> tags) {
      return null;
     }
 
