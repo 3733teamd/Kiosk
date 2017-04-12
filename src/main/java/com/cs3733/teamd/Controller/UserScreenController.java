@@ -34,6 +34,10 @@ import java.util.List;
  * Created by Anh Dao on 4/6/2017.
  */
 public class UserScreenController extends AbsController{
+
+    private static int USERSCREEN_X_OFFSET = -5;
+    private static int USERSCREEN_Y_OFFSET = -90;
+
     Directory dir = Directory.getInstance();
     public Button LoginButton;
     public Button SpanishButton;
@@ -203,8 +207,8 @@ public class UserScreenController extends AbsController{
 
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX();
-        int y = node.getY();
+        int x = node.getX() + USERSCREEN_X_OFFSET;
+        int y = node.getY() + USERSCREEN_Y_OFFSET;
         //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         Point p = new Point(x, y);
         return p;
