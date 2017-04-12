@@ -307,8 +307,11 @@ public class UserScreenController extends AbsController{
                     }
                     TextDirections.set(i, temp);
                 }
+                else if(pathlength < 3) {
+                    TextDirections.set(i, "");
+                }
                 // every point between first and second to last
-                if (i > 0 && i + 2 < pathlength) {
+                else if (i > 0 && i + 2 < pathlength) {
                     //Assign point
                     Point oldnode = path.get(i - 1);
                     Point currnode = path.get(i);
@@ -322,7 +325,7 @@ public class UserScreenController extends AbsController{
                     curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
                 }
                 // second to last point
-                if (i == pathlength - 2) {
+                else if (i == pathlength - 2) {
                     //Assign point
                     Point oldnode = path.get(i - 1);
                     Point currnode = path.get(i);
@@ -337,7 +340,7 @@ public class UserScreenController extends AbsController{
                     //System.out.println("Second to last" + TextDirections.getLast());
                 }
                 //last point
-                if (i == pathlength - 1) {
+                else if (i == pathlength - 1) {
                     String temp = "";
                     if (Main.Langugage == "Spanish") {
                         temp = "Terminando al " + Main.DestinationSelected;

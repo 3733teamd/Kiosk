@@ -469,7 +469,7 @@ public class EditMapScreenController extends AbsController{
 
 
     public void addTagToCurrentNode(ActionEvent actionEvent) {
-        if(selectedTag != null){
+        if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
             if(response){
                 errorBox.setText("");
