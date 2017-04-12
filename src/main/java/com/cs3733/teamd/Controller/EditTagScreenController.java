@@ -168,7 +168,11 @@ public class EditTagScreenController extends AbsController {
 
     @FXML
     void newTagName(ActionEvent event) {
-        if(selectedTag != null){
+        String noSpace = tagNameTxt.getText().replaceAll("\\s","");
+        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
+            searchTagBar.setText("");
+        }
+        else {
             selectedTag.setTagName(tagNameTxt.getText());
             dir.updateTag(selectedTag);
             tagList.refresh();
@@ -219,7 +223,8 @@ public class EditTagScreenController extends AbsController {
     
     @FXML
     void addTag(ActionEvent event) {
-        if (searchTagBar.getText() == null ||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()<=1) {
+        String noSpace = searchTagBar.getText().replaceAll("\\s","");
+        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
 
         }
         else {
@@ -228,5 +233,6 @@ public class EditTagScreenController extends AbsController {
             tagList.refresh();
             searchTagBar.setText("");
         }
+        searchTagBar.setText("");
     }
 }
