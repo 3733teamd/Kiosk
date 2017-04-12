@@ -29,7 +29,7 @@ public class CreateUserScreenController extends AbsController {
 
     @FXML
     private Text pwText;
-    
+
 
     @FXML
     private PasswordField newPassword;

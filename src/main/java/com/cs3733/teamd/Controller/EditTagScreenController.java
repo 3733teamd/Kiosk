@@ -83,6 +83,9 @@ public class EditTagScreenController extends AbsController {
     }
     @FXML
     public void initialize(){
+        addProf.setOpacity(.5);
+        deleteProf.setOpacity(.5);
+        newTagNameBtn.setOpacity(.5);
        // List chosenProf=chosenTag.getProfs();
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
@@ -102,6 +105,7 @@ public class EditTagScreenController extends AbsController {
                     //TODO set chosen tag to tag from bar
                     System.out.println(chosenTag);
                     tagNameTxt.setText(searchTagBar.getText());
+
                     //System.out.println(text);
                 }
             }
@@ -119,8 +123,12 @@ public class EditTagScreenController extends AbsController {
                             tagNameTxt.setPromptText(selectedTag.toString());
 
                         }
+                        addProf.setOpacity(1.0);
+                        deleteProf.setOpacity(1.0);
+                        newTagNameBtn.setOpacity(1.0);
 
                     }
+
                 });
 
         currentProfessionals.getSelectionModel().selectedItemProperty().addListener(
@@ -204,8 +212,10 @@ public class EditTagScreenController extends AbsController {
     
     @FXML
     void addTag(ActionEvent event) {
-        dir.saveTag(searchTagBar.getText());
-        tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
-        tagList.refresh();
+        if (searchTagBar.getText() != null||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()>1) {
+            dir.saveTag(searchTagBar.getText());
+            tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+            tagList.refresh();
+        }
     }
 }
