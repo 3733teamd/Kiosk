@@ -226,7 +226,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/dump.sql");
+            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/dump.sql.import");
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
