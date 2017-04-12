@@ -84,9 +84,11 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void initialize(){
         addProf.setOpacity(.5);
-        
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
+        addProf.setDisable(true);
+        deleteProf.setDisable(true);
+        newTagNameBtn.setDisable(true);
        // List chosenProf=chosenTag.getProfs();
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
@@ -127,6 +129,9 @@ public class EditTagScreenController extends AbsController {
                         addProf.setOpacity(1.0);
                         deleteProf.setOpacity(1.0);
                         newTagNameBtn.setOpacity(1.0);
+                        addProf.setDisable(false);
+                        deleteProf.setDisable(false);
+                        newTagNameBtn.setDisable(false);
 
                     }
 
@@ -167,6 +172,7 @@ public class EditTagScreenController extends AbsController {
             selectedTag.setTagName(tagNameTxt.getText());
             dir.updateTag(selectedTag);
             tagList.refresh();
+            tagNameTxt.setText("");
         }
     }
 
@@ -213,13 +219,14 @@ public class EditTagScreenController extends AbsController {
     
     @FXML
     void addTag(ActionEvent event) {
-        if (searchTagBar.getText() == null||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()<=1) {
+        if (searchTagBar.getText() == null ||searchTagBar.getText()==" "||searchTagBar.getText()==""|| searchTagBar.getText().length()<=1) {
 
         }
         else {
             dir.saveTag(searchTagBar.getText());
             tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
             tagList.refresh();
+            searchTagBar.setText("");
         }
     }
 }
