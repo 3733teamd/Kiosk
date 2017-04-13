@@ -1,6 +1,5 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
@@ -18,8 +17,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Color;
 import org.controlsfx.control.textfield.TextFields;
 
 //import javax.xml.soap.Text;
@@ -27,7 +24,6 @@ import org.controlsfx.control.textfield.TextFields;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 import java.util.List;
 
 /**
@@ -251,16 +247,16 @@ public class UserScreenController extends AbsController{
         indexOfElevator = index;
         if(startfloor == onFloor) {
             System.out.println("startfloor");
-            drawShapes(gc, pointsStartFloor);
+            drawPathFromPoints(gc, pointsStartFloor);
         }
         else if(destfloor == onFloor){
             System.out.println("destfloor");
-            drawShapes(gc, pointsEndFloor);
+            drawPathFromPoints(gc, pointsEndFloor);
         }
     }
 
     //Function to actually draw a path
-    private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
+    private void drawPathFromPoints(GraphicsContext gc, LinkedList<Point> path) {
         System.out.println("Drawing");
         //color for start node
         gc.setFill(javafx.scene.paint.Color.GREEN);
@@ -399,40 +395,34 @@ public class UserScreenController extends AbsController{
     }
 
     //helper function to determine if the change in x direction if more significant than the change in y direction
-    public int moresig(double x, double y){
+    public int moreSignificantChange(double x, double y){
         //System.out.println("Xvalue = " + x + " Yvalue = " + y);
         if(x >= 0){
             if(y >= 0){
                 if(x >= y){
                     return 1; // X more signifcant
-                }
-                if(y > x){
+                } else if(y > x){
                     return 2; // Ymore significant
                 }
-            }
-            if(y < 0){
+            } else if(y < 0){
                 if(x >= y*-1){
                     return 1; // X more signifcant
-                }
-                if(y*-1 > x){
+                } else if(y*-1 > x){
                     return 2; // Y more signifcant
                 }
             }
-        }
-        if(x < 0){
+        } else if(x < 0){
             if(y >= 0){
                 if(x*-1 >= y){
                     return 1; // X more signifcant
-                }
-                if(y > x*-1){
+                } else if(y > x*-1){
                     return 2; // Y more signifcant
                 }
             }
             if(y < 0){
                 if(x*-1 >= y*-1){
                     return 1; // X more signifcant
-                }
-                if(y*-1 > x*-1){
+                } else if(y*-1 > x*-1){
                     return 2; // Y more signifcant
                 }
             }
@@ -441,36 +431,42 @@ public class UserScreenController extends AbsController{
     }
 
     //Helper function to generate text for most cases
-    private LinkedList<String> getText(Point oldnode, Point currnode, Point nextnode,
-                                       String curdir, LinkedList<String> TextDirections, int i ){
+    private LinkedList<String> getText(
+            Point oldNode,
+            Point currentNode,
+            Point nextNode,
+            String curdir,
+            LinkedList<String> TextDirections,
+            int i
+    ){
         //Get values
-        double oldnodex = oldnode.getX();
-        double oldnodey = oldnode.getY();
-        double currentnodex = currnode.getX();
-        double currentnodey = currnode.getY();
-        double nextnodex = nextnode.getX();
-        double nextnodey = nextnode.getY();
+        double oldNodeX = oldNode.getX();
+        double oldNodeY = oldNode.getY();
+        double currentnodex = currentNode.getX();
+        double currentnodey = currentNode.getY();
+        double nextnodex = nextNode.getX();
+        double nextnodey = nextNode.getY();
 
         //System.out.println(oldnodex + "" + oldnodey);
         //Get transitions
-        double oldcurx = currentnodex - oldnodex;
-        double oldcury = currentnodey - oldnodey;
+        double oldcurx = currentnodex - oldNodeX;
+        double oldcury = currentnodey - oldNodeY;
         double curnextx = nextnodex - currentnodex;
         double curnexty = nextnodey - currentnodey;
 
-        double ocmorsig = 0;
-        double cnmorsig = 0;
+        double oldChangesMoreSignificant = 0;
+        double currentChangesMoreSignificant = 0;
 
         //Get orientations
-        ocmorsig = moresig(oldcurx, oldcury);
-        cnmorsig = moresig(curnextx, curnexty);
+        oldChangesMoreSignificant = moreSignificantChange(oldcurx, oldcury);
+        currentChangesMoreSignificant = moreSignificantChange(curnextx, curnexty);
 
         //System.out.println("Regular getText " + ocmorsig + "" + cnmorsig);
 
         // ocx more significant than ocy
-        if(ocmorsig == 1){
+        if(oldChangesMoreSignificant == 1){
             // cnx more significant than cny
-            if(cnmorsig == 1){
+            if(currentChangesMoreSignificant == 1){
                 // oc is movement to the right
                 if(oldcurx >= 0){
                     // cn is movement to the right
@@ -501,7 +497,7 @@ public class UserScreenController extends AbsController{
                 }
             }
             // cny more significant than cnx
-            if(cnmorsig == 2){
+            if(currentChangesMoreSignificant == 2){
                 // oc is movement to the right
                 if(oldcurx >= 0){
                     // cn is movement downwards
@@ -532,9 +528,9 @@ public class UserScreenController extends AbsController{
         }
 
         // ocy more significant than ocx
-        if(ocmorsig == 2){
+        if(oldChangesMoreSignificant == 2){
             // cnx more significant than cny
-            if(cnmorsig == 1){
+            if(currentChangesMoreSignificant == 1){
                 // oc is movement downwards
                 if(oldcury >= 0){
                     // cn is movement to the right
@@ -563,7 +559,7 @@ public class UserScreenController extends AbsController{
                 }
             }
             // cny more significant than cnx
-            if(cnmorsig == 2){
+            if(currentChangesMoreSignificant == 2){
                 // oc is movement downwards
                 if(oldcury >= 0){
                     // cn is movement upwards
@@ -616,8 +612,8 @@ public class UserScreenController extends AbsController{
         double ocmorsig = 0;
         double cnmorsig = 0;
 
-        ocmorsig = moresig(oldcurx, oldcury);
-        cnmorsig = moresig(curnextx, curnexty);
+        ocmorsig = moreSignificantChange(oldcurx, oldcury);
+        cnmorsig = moreSignificantChange(curnextx, curnexty);
 
         //System.out.println("Edge getText " + ocmorsig + "" + cnmorsig);
 
@@ -715,8 +711,8 @@ public class UserScreenController extends AbsController{
         double ocmorsig = 0;
         double cnmorsig = 0;
 
-        ocmorsig = moresig(oldcurx, oldcury);
-        cnmorsig = moresig(curnextx, curnexty);
+        ocmorsig = moreSignificantChange(oldcurx, oldcury);
+        cnmorsig = moreSignificantChange(curnextx, curnexty);
 
         //System.out.println("Curdir getText " + ocmorsig + "" + cnmorsig);
 
@@ -860,8 +856,8 @@ public class UserScreenController extends AbsController{
         double cnmorsig = 0;
 
         //Get orientations
-        ocmorsig = moresig(oldcurx, oldcury);
-        cnmorsig = moresig(curnextx, curnexty);
+        ocmorsig = moreSignificantChange(oldcurx, oldcury);
+        cnmorsig = moreSignificantChange(curnextx, curnexty);
 
         //System.out.println("Regular getText " + ocmorsig + "" + cnmorsig);
 
@@ -1014,8 +1010,8 @@ public class UserScreenController extends AbsController{
         double ocmorsig = 0;
         double cnmorsig = 0;
 
-        ocmorsig = moresig(oldcurx, oldcury);
-        cnmorsig = moresig(curnextx, curnexty);
+        ocmorsig = moreSignificantChange(oldcurx, oldcury);
+        cnmorsig = moreSignificantChange(curnextx, curnexty);
 
         //System.out.println("Edge getText " + ocmorsig + "" + cnmorsig);
 
