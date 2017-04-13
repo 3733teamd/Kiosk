@@ -130,7 +130,8 @@ public class UserScreenController extends AbsController{
         EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
 
-        if(Main.Langugage =="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             LoginButton.setFont(Font.font("System",14));
         }
         else{
@@ -295,7 +296,8 @@ public class UserScreenController extends AbsController{
             }
             if(i == indexOfElevator-1){
                 String temp = "";
-                if (Main.Langugage == "Spanish") {
+                if (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                        == ApplicationConfiguration.Language.SPANISH) {
                     temp = "Terminando al ascensor " + "\n";
                 } else {
                     temp = "Ending at elevator " + "\n";
@@ -306,7 +308,8 @@ public class UserScreenController extends AbsController{
                 //first point directions
                 if (i == 0) {
                     String temp = "";
-                    if (Main.Langugage == "Spanish") {
+                    if (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                            == ApplicationConfiguration.Language.SPANISH) {
                         temp = "Comenzando y mirando hacia el quiosco" + "\n";
                     } else {
                         temp = "Starting at and facing the kiosk " + "\n";
@@ -323,7 +326,8 @@ public class UserScreenController extends AbsController{
                     Point currnode = path.get(i);
                     Point nextnode = path.get(i + 1);
                     //Run helper functions to update text
-                    if (Main.Langugage == "Spanish") {
+                    if (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                            == ApplicationConfiguration.Language.SPANISH) {
                         TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
                     } else {
                         TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
@@ -337,7 +341,8 @@ public class UserScreenController extends AbsController{
                     Point currnode = path.get(i);
                     Point nextnode = path.get(i + 1);
                     //Run helper functions to update text
-                    if (Main.Langugage == "Spanish") {
+                    if (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                            == ApplicationConfiguration.Language.SPANISH) {
                         TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
                     } else {
                         TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
@@ -348,7 +353,8 @@ public class UserScreenController extends AbsController{
                 //last point
                 else if (i == pathlength - 1) {
                     String temp = "";
-                    if (Main.Langugage == "Spanish") {
+                    if (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                            == ApplicationConfiguration.Language.SPANISH) {
                         temp = "Terminando al " + Main.DestinationSelected;
                     } else {
                         temp = "Ending at " + Main.DestinationSelected;

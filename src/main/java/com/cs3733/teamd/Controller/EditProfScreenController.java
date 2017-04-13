@@ -350,7 +350,8 @@ public class EditProfScreenController extends AbsController {
         */
 
     private void setText(){
-        if(Main.Langugage=="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             addNewProf.setFont(Font.font("System",14));
             deleteProf.setFont(Font.font("System",14));
         }

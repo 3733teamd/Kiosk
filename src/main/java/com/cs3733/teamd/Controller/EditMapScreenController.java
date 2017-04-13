@@ -177,13 +177,13 @@ public class EditMapScreenController extends AbsController{
 
         drawfloorNodes();
 
-        if(Main.Langugage=="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             EditTag.setFont(Font.font("System",14));
             LoginButton.setFont(Font.font("System",14));
             CreateUserButton.setFont(Font.font("System",14));
 
-        }
-        else {
+        } else {
             EditTag.setFont(Font.font("System",20));
             LoginButton.setFont(Font.font("System",20));
             CreateUserButton.setFont(Font.font("System",20));
