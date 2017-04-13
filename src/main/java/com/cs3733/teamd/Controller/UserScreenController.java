@@ -151,62 +151,56 @@ public class UserScreenController extends AbsController{
         //stores the destination inputted
         Main.DestinationSelected = TypeDestination.getText();
         //Gets nodes and tags from directory
-        int numtags = dir.getTags().size();
-        int numnodes = dir.getNodes().size();
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
         //Makes a temporary holder for values
-        Tag curtag;
-        String Start = "Kiosk";
-        for(int itr = 0; itr < numtags; itr++){
-            curtag = dir.getTags().get(itr);
+        Tag currentTag;
+
+        String startTagString = "Kiosk";
+        for(int itr = 0; itr < tagCount; itr++){
+            currentTag = dir.getTags().get(itr);
             //If match is found create path to node from start nodes
-            if(Start.equals(curtag.getTagName())){
-                starttag = curtag;
+            if(startTagString.equals(currentTag.getTagName())){
+                starttag = currentTag;
             }
 
         }
+        // Do we have a starting tag???
         if(starttag != null) {
+            // What floor is the Kiosk on?
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
             //Iterates through all existing tags
-            for (int itr = 0; itr < numtags; itr++) {
-                curtag = dir.getTags().get(itr);
+            for (int itr = 0; itr < tagCount; itr++) {
 
-
-                if (Main.DestinationSelected.equals(curtag.getTagName())) {
+                currentTag = dir.getTags().get(itr);
+                // Have we found our destination?
+                if (Main.DestinationSelected.equals(currentTag.getTagName())) {
                     double record = 9999999999999999999999.0;
                     Pathfinder bestPath = null;
 
-                    for (Node n : curtag.getNodes()) {
+                    for (Node n : currentTag.getNodes()) {
+                        // Let's find the shortest path
                         Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
                         if (attempt.pathLength(attempt.shortestPath()) < record) {
                             bestPath = attempt;
                         }
                     }
-
+                    // Is there a path from the source to the destination?
                     if (bestPath != null) {
                         pathNodes = bestPath.shortestPath();
                     } else {
                         System.out.println("Failed to find best path out of many\n");
-                        Pathfinder pathfinder = new Pathfinder(starttag.getNodes().getFirst(), curtag.getNodes().getFirst());
+                        Pathfinder pathfinder = new Pathfinder(
+                                starttag.getNodes().getFirst(),
+                                currentTag.getNodes().getFirst()
+                        );
                         //use the shortest path
                         pathNodes = pathfinder.shortestPath();
                     }
-                /*
-                Pathfinder bestPath = null;
-                //If match is found create path to node from start nodes
-                if (Main.DestinationSelected.equals(curtag.getTagName())) {
-
-
-                    Pathfinder pathfinder =
-                            //will get updated to actually be the starting node
-                            new Pathfinder(starttag.getNodes().getFirst(),
-                                    curtag.getNodes().getFirst());
-                    //use the shortest path
-                    pathNodes = pathfinder.shortestPath();
-                }
-                */
                 }
             }
         }
+        // Clear the canvas
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
         directions.setText(output);
