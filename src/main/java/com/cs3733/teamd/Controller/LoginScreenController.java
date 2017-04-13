@@ -20,20 +20,20 @@ import java.util.ResourceBundle;
  * Created by Anh Dao on 4/6/2017.
  */
 public class LoginScreenController extends AbsController {
+
     public TextField username;
     public PasswordField password;
     public Button LoginButton;
     public Button BackButton;
-
     public AnchorPane MMGpane;
     public Label errorIndicator;
     public Text userText;
     public Text pwText;
+
     @FXML
     public void initialize(){
         setText();
     }
-
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
@@ -50,7 +50,7 @@ public class LoginScreenController extends AbsController {
        User u = dir.loginUser(user,pass);
 
        if (u != null){
-           System.out.print("Successful log in as admin.\n");
+           System.out.println("Successful log in as admin.\n");
            switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
       } else{
            errorIndicator.setText(Main.bundle.getString("InvalidloginCredentials"));
