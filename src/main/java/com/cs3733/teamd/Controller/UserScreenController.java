@@ -113,16 +113,7 @@ public class UserScreenController extends AbsController{
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
-        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(Main.Langugage == "English") {
-            Main.Langugage = "Spanish";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
-        }
-        else{
-            Main.Langugage = "English";
-
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
-        }
+        super.switchLanguage();
 
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
 

@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 /**
  * Created by Allyk on 4/4/2017.
@@ -30,6 +31,18 @@ public abstract class AbsController {
         AnchorPane.setBottomAnchor(gp, 0.0);
         AnchorPane.setLeftAnchor(gp, 0.0);
         AnchorPane.setRightAnchor(gp, 0.0);
+    }
+
+    void switchLanguage() {
+        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
+        if(Main.Langugage == "English") {
+            Main.Langugage = "Spanish";
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
+        }
+        else{
+            Main.Langugage = "English";
+            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
+        }
     }
 
 }

@@ -203,17 +203,17 @@ public class EditProfScreenController extends AbsController {
     }
 
      private void createAllTagListListener(){
-            allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
-                @Override
-                public void changed(ObservableValue<? extends Tag> observable,
-                                    Tag oldValue, Tag newValue) {
+        allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
 
-                    updateCurrentTagList(newValue);
-                }
+                updateCurrentTagList(newValue);
+            }
 
 
-            });
-        }
+        });
+    }
 
     private void setAllTagsList(){
         //ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
@@ -295,14 +295,12 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void deleteProf(ActionEvent event) {
-
         if(selectedProf!=null){
             System.out.println(dir.removeProfessional(selectedProf));
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
         }
-
     }
 
     @FXML
@@ -336,11 +334,10 @@ public class EditProfScreenController extends AbsController {
     }
 
     private void updateCurrentTagList(Tag t){
-
-            if(t != null) {
-                selectedTag = t;
-            }
+        if(t != null) {
+            selectedTag = t;
         }
+    }
 
 
 
