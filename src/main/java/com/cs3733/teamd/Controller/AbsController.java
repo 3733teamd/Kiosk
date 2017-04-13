@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.ApplicationConfiguration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -34,14 +35,16 @@ public abstract class AbsController {
     }
 
     void switchLanguage() {
+        ApplicationConfiguration appConfig = ApplicationConfiguration.getInstance();
         //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(Main.Langugage == "English") {
-            Main.Langugage = "Spanish";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
-        }
-        else{
-            Main.Langugage = "English";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
+        if(appConfig.getCurrentLanguage() == ApplicationConfiguration.Language.ENGLISH) {
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.SPANISH);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getSpanishLocale());
+        } else if(appConfig.getCurrentLanguage() == ApplicationConfiguration.Language.SPANISH){
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.ENGLISH);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getEnglishLocale());
+        } else {
+            System.out.println("ERROR: Undetected Langauge");
         }
     }
 
