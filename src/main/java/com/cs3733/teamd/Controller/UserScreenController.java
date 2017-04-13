@@ -164,6 +164,7 @@ public class UserScreenController extends AbsController{
         if(starttag != null) {
             // What floor is the Kiosk on?
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
+            System.out.println("HEre");
             //Iterates through all existing tags
             for (int itr = 0; itr < tagCount; itr++) {
 
@@ -277,6 +278,8 @@ public class UserScreenController extends AbsController{
         }
         //Set radius of first node
         int radius = 7;
+        TextDirectionGenerator g = new TextDirectionGenerator(path);
+        g.generateTextDirections();
 
         //Iterate through the path
         for  (int i = 0; i < pathlength; i++){
