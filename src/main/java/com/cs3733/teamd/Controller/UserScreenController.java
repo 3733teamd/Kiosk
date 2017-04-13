@@ -31,10 +31,15 @@ import java.util.List;
  */
 public class UserScreenController extends AbsController{
 
+    //connect to facade
+    Directory dir = Directory.getInstance();
+
+    //shift nodes to align with image
     private static int USERSCREEN_X_OFFSET = -5;
     private static int USERSCREEN_Y_OFFSET = -90;
 
-    Directory dir = Directory.getInstance();
+    //Boundary objects
+    @FXML
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
@@ -44,40 +49,42 @@ public class UserScreenController extends AbsController{
     public Label directionLabel;
     @FXML
     private Slider floorSlider;
-
     public ImageView floorMap;
-
-    //proxy pattern
-    ImageInterface imgInt = new ProxyImage();
-    public int floorNum = Main.currentFloor;
-
     public Canvas MapCanvas;
-    public int imageW = 1091;
-    public int imageH = 693;
-    public double scale = 8.4;
-    public int offset_x = 160*12;
-    public int offset_y = 80*12;
     public AnchorPane MMGpane;
     @FXML
     private TextArea directions;
     public GraphicsContext gc;
-    private static LinkedList<Node> pathNodes;
-    private List<Tag> nodeList = dir.getTags();
 
+    //proxy pattern for maps
+    ImageInterface imgInt = new ProxyImage();
+    public int floorNum = Main.currentFloor;
+
+    private static LinkedList<Node> pathNodes;
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
+    private String output = "";
+    private Tag starttag = null;
+    private int startfloor = 0;
+    private int destfloor = 0;
 
-    String output = "";
-    Tag starttag = null;
-    int startfloor = 0;
-    int destfloor = 0;
+
     @FXML private void initialize()
     {
-        TextFields.bindAutoCompletion(TypeDestination,nodeList);
-        setText();
+        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
+        setFloorSliderListener();
 
+
+        gc = MapCanvas.getGraphicsContext2D();
+        if(pathNodes != null) {
+            draw();
+        }
+    }
+
+    private void setFloorSliderListener(){
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
@@ -98,22 +105,13 @@ public class UserScreenController extends AbsController{
                 }
             }
         });
-
-        gc = MapCanvas.getGraphicsContext2D();
-        if(pathNodes != null) {
-            draw();
-        }
     }
-
-
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
-
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
-
-        setText();
+        setSpanishText();
     }
 
     @FXML
@@ -124,7 +122,7 @@ public class UserScreenController extends AbsController{
     }
 
     //Spanish translation
-    public void setText(){
+    public void setSpanishText(){
         SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
