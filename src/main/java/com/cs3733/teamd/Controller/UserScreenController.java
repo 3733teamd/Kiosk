@@ -338,7 +338,7 @@ public class UserScreenController extends AbsController{
                     TextDirections.set(i, "");
                 }
                 // every point between first and second to last
-                else if (i > 0 && i + 2 < pathlength) {
+                else if ((i > 0) && ((i + 2) < pathlength)) {
                     //Assign point
                     Point oldnode = path.get(i - 1);
                     Point currnode = path.get(i);
