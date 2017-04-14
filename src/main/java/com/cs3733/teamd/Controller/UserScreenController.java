@@ -282,7 +282,10 @@ public class UserScreenController extends AbsController{
                 path,
                 (startfloor == onFloor)&&(startfloor != destfloor)
         );
-        g.generateTextDirections();
+        List<String> directionsArray = g.generateTextDirections();
+        for(String token: directionsArray) {
+            System.out.println(token);
+        }
 
         //Iterate through the path
         for  (int i = 0; i < pathlength; i++){

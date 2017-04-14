@@ -42,7 +42,7 @@ public class TextDirectionGenerator {
             System.out.println(d);
         }
         Collections.reverse(this.points);
-        return null;
+        return getEnglishDirections(directions);
     }
 
     public static List<String> getEnglishDirections(List<Direction> directions) {
@@ -51,13 +51,32 @@ public class TextDirectionGenerator {
         boolean isFirstElement = true;
         for(Direction d: directions) {
             String addition = "";
-            if(d == Direction.GO_STRAIGHT) {
-                addition = "proceed straight";
-            } else if(d == Direction.TURN_LEFT) {
-                addition = "turn left";
-            } else if(d == Direction.ARRIVED) {
-                addition = "you have arrived at your destination";
+            switch(d) {
+                case GO_STRAIGHT:
+                    addition = "proceed straight";
+                    break;
+                case TURN_LEFT:
+                    addition = "turn left";
+                    break;
+                case SLIGHT_LEFT:
+                    addition = "turn slightly to the left";
+                    break;
+                case TURN_RIGHT:
+                    addition = "turn right";
+                    break;
+                case SLIGHT_RIGHT:
+                    addition = "turn slightly to the right";
+                    break;
+                case ARRIVED:
+                    addition = "you have arrived at your destination";
+                    break;
+                case PROCEED_TO_ELEVATOR:
+                    addition = "take the elevator to your destination floor";
+                    break;
+                default:
+
             }
+
             if(isFirstElement) {
                 addition = addition.replaceFirst(addition.substring(0,1),addition.substring(0,1).toUpperCase());
                 isFirstElement = false;

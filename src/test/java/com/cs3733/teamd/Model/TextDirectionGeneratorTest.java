@@ -43,4 +43,22 @@ public class TextDirectionGeneratorTest {
                 )
         ));
     }
+
+    @Test
+    public void testRightTurnEnglish() {
+        List<String> expectedOutput = new ArrayList<String>(
+                Arrays.asList(
+                        "Proceed straight",
+                        "and then turn right",
+                        "and then you have arrived at your destination")
+        );
+        assertEquals(expectedOutput, TextDirectionGenerator.getEnglishDirections(
+                new ArrayList<TextDirectionGenerator.Direction>(
+                        Arrays.asList(
+                                TextDirectionGenerator.Direction.GO_STRAIGHT,
+                                TextDirectionGenerator.Direction.TURN_RIGHT,
+                                TextDirectionGenerator.Direction.ARRIVED)
+                )
+        ));
+    }
 }
