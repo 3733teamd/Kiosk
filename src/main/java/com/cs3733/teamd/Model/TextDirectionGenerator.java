@@ -17,17 +17,51 @@ public class TextDirectionGenerator {
     private static double SLIGHT_THRESHOLD = 20.0;
     private static double FULL_THRESHOLD = 45.0;
 
+    private boolean endAtElevator;
+
     private List<Point> points;
-    public TextDirectionGenerator(List<Point> points) {
-       this.points = points;
+    public TextDirectionGenerator(List<Point> points, boolean endAtElevator) {
+        this.points = points;
+        this.endAtElevator = endAtElevator;
     }
     // This method will generate text directions from the points
+
+
     public List<String> generateTextDirections() {
         System.out.println("Here");
         Collections.reverse(this.points);
-        List<Direction> directions = generateDirections();
+        List<Direction> directions = reduceDirections(
+                generateDirections()
+        );
+        for(Direction d: directions) {
+            System.out.println(d);
+        }
         Collections.reverse(this.points);
         return null;
+    }
+
+    /**
+     * Reduce the directions so that they are simplified
+     * @param directions - directions that need to be reduced
+     * @return - Reduced Direction Set
+     */
+    private List<Direction> reduceDirections(List<Direction> directions) {
+        List<Direction> reducedDirections = new ArrayList<Direction>();
+        boolean lastGoStraight = false;
+        for(Direction d: directions) {
+            if(lastGoStraight) {
+                if(d == Direction.GO_STRAIGHT) {
+                    continue;
+                } else {
+                    lastGoStraight = false;
+                }
+            }
+            if(d == Direction.GO_STRAIGHT) {
+                lastGoStraight = true;
+            }
+            reducedDirections.add(d);
+        }
+        return reducedDirections;
     }
 
     public static Direction getDirectionFromDeltas(
@@ -84,7 +118,11 @@ public class TextDirectionGenerator {
             }
 
             if(nextPoint == null) {
-                directions.add(Direction.ARRIVED);
+                if(!endAtElevator) {
+                    directions.add(Direction.ARRIVED);
+                } else {
+                    directions.add(Direction.PROCEED_TO_ELEVATOR);
+                }
                 break;
             }
             if(previousPoint == null) {
@@ -103,7 +141,6 @@ public class TextDirectionGenerator {
             Direction d = getDirectionFromDeltas(
                     deltaPrevToCurrentX, deltaPrevToCurrentY, deltaCurrentToNextX, deltaCurrentToNextY
             );
-            System.out.println(d);
             directions.add(d);
         }
 

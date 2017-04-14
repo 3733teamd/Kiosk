@@ -278,7 +278,10 @@ public class UserScreenController extends AbsController{
         }
         //Set radius of first node
         int radius = 7;
-        TextDirectionGenerator g = new TextDirectionGenerator(path);
+        TextDirectionGenerator g = new TextDirectionGenerator(
+                path,
+                (startfloor == onFloor)&&(startfloor != destfloor)
+        );
         g.generateTextDirections();
 
         //Iterate through the path
