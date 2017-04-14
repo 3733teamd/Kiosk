@@ -3,10 +3,17 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -14,12 +21,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import org.controlsfx.control.textfield.TextFields;
 
 //import javax.xml.soap.Text;
@@ -35,6 +46,7 @@ import java.util.List;
  */
 public class UserScreenController extends AbsController{
     Directory dir = Directory.getInstance();
+    private static final int MIN_PIXELS = 10;
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
@@ -46,6 +58,8 @@ public class UserScreenController extends AbsController{
     private Slider floorSlider;
 
     public ImageView floorMap;
+    public AnchorPane imagePane;
+
 
     //proxy pattern
     ImageInterface imgInt = new ProxyImage();
@@ -67,19 +81,25 @@ public class UserScreenController extends AbsController{
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
 
+    final double SCALE_DELTA = 1.1;
+    double orgSceneX, orgSceneY;
+
+    public ScrollPane scrollPane;
+
     String output = "";
     Tag starttag = null;
-    @FXML private void initialize()
-    {
-        TextFields.bindAutoCompletion(TypeDestination,nodeList);
+    @FXML private void initialize() {
+        TextFields.bindAutoCompletion(TypeDestination, nodeList);
         setText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
 
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
+                                Number old_val, Number new_val)  {
                 if (!floorSlider.isValueChanging()) {
+
+
                     onFloor = new_val.intValue();
                     floorSlider.setValue(onFloor);
                     //floorMap.setImage(imageHashMap.get(onFloor));
@@ -89,7 +109,7 @@ public class UserScreenController extends AbsController{
                     directions.setText(output);
                     System.out.println(onFloor);
 
-                    if(pathNodes != null) {
+                    if (pathNodes != null) {
                         draw();
                     }
 
@@ -98,11 +118,170 @@ public class UserScreenController extends AbsController{
         });
 
         gc = MapCanvas.getGraphicsContext2D();
-        if(pathNodes != null) {
+        if (pathNodes != null) {
             draw();
         }
+
+        //added initalize
+        //zoom functions?
+        imagePane.getChildren();//.add(group);
+        floorMap.setPreserveRatio(true);
+        /*imagePane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor =
+                        (event.getDeltaY() > 0)
+                                ? SCALE_DELTA
+                                : 1/SCALE_DELTA;
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
+
+            }
+        });
+
+        imagePane.setOnMousePressed((t) -> {
+                    orgSceneX = t.getSceneX();
+                    orgSceneY = t.getSceneY();
+
+
+                    AnchorPane c = (AnchorPane) (t.getSource());
+                    c.toFront();
+                });
+        imagePane.setOnMouseDragged((t) -> {
+            //if(state ==states.add) {
+            double offsetX = t.getSceneX() - orgSceneX;
+            double offsetY = t.getSceneY() - orgSceneY;
+
+            AnchorPane c = (AnchorPane) (t.getSource());
+
+            c.setTranslateX(c.getLayoutX()+offsetX);
+            c.setTranslateY(c.getLayoutY()+offsetY);
+
+
+            orgSceneX = t.getSceneX();
+            orgSceneY = t.getSceneY();
+
+
+            //}
+        });*/
+        final double SCALE_DELTA = 1.1;
+        //final Group group = new Group(floorMap, MapCanvas);
+
+        //imagePane.getChildren().add(group);
+
+        final Group scrollContent = new Group(floorMap, MapCanvas);
+       scrollPane.setContent(scrollContent);
+
+        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable,
+                                Bounds oldValue, Bounds newValue) {
+                imagePane.setMinSize(newValue.getWidth(), newValue.getHeight());
+            }
+        });
+
+        scrollPane.setPrefViewportWidth(256);
+        scrollPane.setPrefViewportHeight(256);
+
+        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
+                        : 1 / SCALE_DELTA;
+
+                // amount of scrolling in each direction in scrollContent coordinate
+                // units
+                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
+
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
+
+                // move viewport so that old center remains in the center after the
+                // scaling
+                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
+                System.out.println("scrolling");
+
+            }
+        });
+
+        // Panning via drag....
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            }
+        });
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                double desiredH = scrollPane.getHvalue() - deltaH;
+                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                double desiredV = scrollPane.getVvalue() - deltaV;
+                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+            }
+        });
+
+
+
     }
 
+    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
+            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+    }
+    //////////////////////
 
     //Spanish button to change language to Spanish
     @FXML
@@ -125,6 +304,9 @@ public class UserScreenController extends AbsController{
 
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
+        pathNodes=null;
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
