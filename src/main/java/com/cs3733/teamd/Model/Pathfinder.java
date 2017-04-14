@@ -1,7 +1,5 @@
 package com.cs3733.teamd.Model;
 
-import sun.awt.image.ImageWatched;
-
 import java.util.*;
 
 /**
@@ -64,6 +62,62 @@ public class Pathfinder {
         return lowest;
     }
 
+    public LinkedList<Node> BFSPath() throws Exception {
+        Queue<Node> seen = new LinkedList<Node>();
+        LinkedList<Node> openSet = new LinkedList<Node>();
+
+        Map<Node, Node> cameFrom = new HashMap<>();
+
+        Node current;
+
+        openSet.add(start);
+        seen.add(start);
+
+        while (!seen.isEmpty()) {
+            current = seen.remove();
+            if (current == end) { return reconstructPath(cameFrom, current);}
+            for (Node n : current.getNodes()) {
+                if (!openSet.contains(n)) {
+                    openSet.add(n);
+                    cameFrom.put(n, current);
+                    seen.add(n);
+                }
+            }
+        }
+
+        throw new Exception("Path does not exist to destination.");
+    }
+
+    public LinkedList<Node> DFSPath() throws Exception {
+        Stack<Node> openSet = new Stack<Node>();
+        LinkedList<Node> discovered = new LinkedList<Node>();
+
+        Map<Node, Node> cameFrom = new HashMap<>();
+
+        Node current;
+
+        openSet.push(start);
+        while(!openSet.isEmpty()){
+            current = openSet.pop();
+
+            if (current == end) {
+                return reconstructPath(cameFrom, current);
+            }
+            if(!discovered.contains(current)){
+                discovered.add(current);
+                for(Node n : current.getNodes()){
+                    cameFrom.put(n,current);
+                    openSet.push(n);
+                }
+            }
+            //No path found
+            throw new Exception("No path to destination found.");
+        }
+
+
+
+        throw new Exception("Path does not exist to destination.");
+    }
     /**
      * Gives shortest path
      * @return a linked list of nodes from start to end
