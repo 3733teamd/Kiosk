@@ -20,6 +20,12 @@ public class TextDirectionGenerator {
     private boolean endAtElevator;
 
     private List<Point> points;
+
+    /**
+     * Creates a Text Direction Generator
+     * @param points - Points to Create Text Directions from
+     * @param endAtElevator - Is the path ending at an elevator or the destination?
+     */
     public TextDirectionGenerator(List<Point> points, boolean endAtElevator) {
         this.points = points;
         this.endAtElevator = endAtElevator;
@@ -28,7 +34,6 @@ public class TextDirectionGenerator {
 
 
     public List<String> generateTextDirections() {
-        System.out.println("Here");
         Collections.reverse(this.points);
         List<Direction> directions = reduceDirections(
                 generateDirections()
@@ -38,6 +43,30 @@ public class TextDirectionGenerator {
         }
         Collections.reverse(this.points);
         return null;
+    }
+
+    public static List<String> getEnglishDirections(List<Direction> directions) {
+        List<String> directionList = new ArrayList<String>();
+
+        boolean isFirstElement = true;
+        for(Direction d: directions) {
+            String addition = "";
+            if(d == Direction.GO_STRAIGHT) {
+                addition = "proceed straight";
+            } else if(d == Direction.TURN_LEFT) {
+                addition = "turn left";
+            } else if(d == Direction.ARRIVED) {
+                addition = "you have arrived at your destination";
+            }
+            if(isFirstElement) {
+                addition = addition.replaceFirst(addition.substring(0,1),addition.substring(0,1).toUpperCase());
+                isFirstElement = false;
+            } else {
+                addition = "and then "+addition;
+            }
+            directionList.add(addition);
+        }
+        return directionList;
     }
 
     /**
@@ -64,6 +93,14 @@ public class TextDirectionGenerator {
         return reducedDirections;
     }
 
+    /**
+     * Get a direction from a previous (x,y) and current (x,y) and a next (x,y)
+     * @param prevToCurrentX - delta from previous x to current x
+     * @param prevToCurrentY - delta from previous y to current y
+     * @param currentToNextX - delta from current x to next x
+     * @param currentToNextY - delta from current y to next y
+     * @return - Direction of travel about the current point
+     */
     public static Direction getDirectionFromDeltas(
             double prevToCurrentX,
             double prevToCurrentY,
