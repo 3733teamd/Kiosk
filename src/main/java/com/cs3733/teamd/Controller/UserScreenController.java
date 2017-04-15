@@ -2,6 +2,9 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -69,7 +72,8 @@ public class UserScreenController extends AbsController{
     private int destfloor = 0;
 
 
-    @FXML private void initialize()
+    @FXML
+    private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();

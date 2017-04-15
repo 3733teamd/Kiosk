@@ -1,10 +1,12 @@
 package com.cs3733.teamd.Integration;
 
-import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.ProTitle;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
 

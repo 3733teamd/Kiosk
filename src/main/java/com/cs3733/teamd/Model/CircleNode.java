@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Model;
 
+import com.cs3733.teamd.Model.Entities.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;

@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Database;
 
 import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.*;
 
 import java.io.*;
 import java.sql.*;

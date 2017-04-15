@@ -1,15 +1,10 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Entities;
 
 import com.cs3733.teamd.Database.DBHandler;
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Used by CONTROLLERS to store ALL ENTITIES

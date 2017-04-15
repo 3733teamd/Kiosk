@@ -3,6 +3,7 @@ package com.cs3733.teamd.Model;
 /**
  * Created by sdmichelini on 4/1/17.
  */
+import com.cs3733.teamd.Model.Entities.User;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
