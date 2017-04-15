@@ -28,7 +28,7 @@
          <children>
             <AnchorPane prefHeight="42.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
-                  <HBox prefHeight="40.0" prefWidth="1291.0">
+                  <HBox prefHeight="42.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
@@ -37,13 +37,9 @@
                                     <Image url="@/floor_imgs/fkthumb.png" />
                                  </image>
                               </ImageView>
+                              <Label layoutX="66.0" layoutY="-2.0" text="%adminLogin" AnchorPane.bottomAnchor="-1.0" AnchorPane.rightAnchor="-20.0" />
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%adminLogin" wrappingWidth="1245.99998742342">
-                           <font>
-                              <Font name="Tahoma" size="31.0" />
-                           </font>
-                        </Text>
                      </children>
                   </HBox>
                </children>
@@ -51,7 +47,7 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <AnchorPane prefHeight="759.0" prefWidth="1283.0" style="-fx-background-color: #e9ebee;">
+            <AnchorPane prefHeight="759.0" prefWidth="1283.0" style="-fx-background-color: #e9ebee;" VBox.vgrow="ALWAYS">
                <children>
                   <GridPane layoutX="201.0" layoutY="85.0" prefHeight="496.0" prefWidth="881.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="179.0">
                     <columnConstraints>
@@ -60,45 +56,54 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="279.0" minHeight="10.0" prefHeight="173.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="259.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="279.0" minHeight="10.0" percentHeight="20.0" prefHeight="173.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="259.0" minHeight="10.0" percentHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="197.0" minHeight="10.0" percentHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="197.0" minHeight="10.0" percentHeight="20.0" prefHeight="133.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="200.0" minHeight="10.0" percentHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <TextField fx:id="username" prefHeight="49.0" prefWidth="392.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="username" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <PasswordField fx:id="password" prefHeight="46.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <PasswordField fx:id="password" layoutX="-14.0" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1">
                            <children>
-                              <Label fx:id="userText" alignment="CENTER" layoutY="-14.0" prefHeight="141.0" prefWidth="350.0" text="\%username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1">
+                              <Label fx:id="userText" alignment="CENTER" layoutY="-14.0" prefHeight="81.0" prefWidth="303.0" text="\%username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1">
                                  <font>
-                                    <Font size="50.0" />
+                                    <Font name="System Bold" size="50.0" />
                                  </font>
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <Label fx:id="pwText" alignment="CENTER" prefHeight="102.0" prefWidth="350.0" text="\%password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Button fx:id="LoginButton" alignment="CENTER" layoutX="77.0" layoutY="36.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="55.0" prefWidth="150.0" text="\%login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="76.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="LoginButton" layoutX="578.0" layoutY="595.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="119.0" prefWidth="134.0" text="\%login" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="BackButton" layoutX="14.0" layoutY="706.0" mnemonicParsing="false" onAction="#onBack" prefHeight="31.0" prefWidth="99.0" text="\%back" />
+                  <AnchorPane layoutX="14.0" layoutY="706.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+                     <children>
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="40.0" prefWidth="150.0" text="\%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
