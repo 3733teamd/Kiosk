@@ -93,9 +93,9 @@
                      <children>
                         <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
                         <Canvas fx:id="MapCanvas" height="685.0" layoutY="36.0" width="1091.0" />
-                        <Button fx:id="StartFloorButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#ShowStart" prefHeight="55.0" prefWidth="144.0" text="Starting Floor" />
-                        <Button fx:id="MiddleFloorButton" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="55.0" prefWidth="144.0" text="Intermediate Floor" />
-                        <Button fx:id="EndFloorButton" layoutX="14.0" layoutY="190.0" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="55.0" prefWidth="144.0" text="Ending Floor" />
+                        <Button fx:id="StartFloorButton" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#ShowStart" prefHeight="55.0" prefWidth="151.0" text="Show Starting Floor" />
+                        <Button fx:id="MiddleFloorButton" layoutX="14.0" layoutY="112.0" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="55.0" prefWidth="151.0" text="Show Intermediate Floor" />
+                        <Button fx:id="EndFloorButton" layoutX="14.0" layoutY="190.0" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="55.0" prefWidth="151.0" text="Show Ending Floor" />
                      </children>
                   </AnchorPane>
                   <VBox prefHeight="607.0" prefWidth="203.0">
