@@ -396,48 +396,54 @@ public class UserScreenController extends AbsController{
     @FXML
     //Function to allow the user to change to the starting floor of path
     public  void ShowStart(ActionEvent actionEvent) throws IOException{
-        onFloor = startfloor;
-        FloorMenu.setValue(onFloor);
-        floorMap.setImage(imgInt.display(onFloor));
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        output = "";
-        directions.setText(output);
-        System.out.println(onFloor);
+        if(startfloor != 0) {
+            onFloor = startfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
 
-        if(pathNodes != null) {
-            draw();
+            if (pathNodes != null) {
+                draw();
+            }
         }
     }
 
     @FXML
     //Function to allow the user to change to the middle floor of path
     public  void ShowMiddle(ActionEvent actionEvent) throws IOException{
-        onFloor = midfloor;
-        FloorMenu.setValue(onFloor);
-        floorMap.setImage(imgInt.display(onFloor));
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        output = "";
-        directions.setText(output);
-        System.out.println(onFloor);
+        if(midfloor != 0) {
+            onFloor = midfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
 
-        if(pathNodes != null) {
-            draw();
+            if (pathNodes != null) {
+                draw();
+            }
         }
     }
 
     @FXML
     //Function to allow the user to change to the ending floor of path
     public  void ShowEnd(ActionEvent actionEvent) throws IOException{
-        onFloor = destfloor;
-        FloorMenu.setValue(onFloor);
-        floorMap.setImage(imgInt.display(onFloor));
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        output = "";
-        directions.setText(output);
-        System.out.println(onFloor);
+        if(destfloor != 0) {
+            onFloor = destfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
 
-        if(pathNodes != null) {
-            draw();
+            if (pathNodes != null) {
+                draw();
+            }
         }
     }
 }
