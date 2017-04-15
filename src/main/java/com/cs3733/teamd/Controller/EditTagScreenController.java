@@ -94,12 +94,19 @@ public class EditTagScreenController extends AbsController {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         TextFields.bindAutoCompletion(searchTagBar, allTagNames);
+
         tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
         ObservableList<String> names = FXCollections.observableArrayList(Profs);
         System.out.println(names);
         allProffessionals.setItems(names);
         //ObservableList<String> chosen = FXCollections.observableArrayList(chosenProf);
        // allProffessionals.setItems(chosen);
+
+        //List all tags in tagList,
+        tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+        //put all professionals in allProffessionals
+        allProffessionals.setItems(FXCollections.observableArrayList((List)dir.getProfessionals()));
+
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
