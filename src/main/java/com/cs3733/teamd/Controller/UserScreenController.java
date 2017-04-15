@@ -91,28 +91,7 @@ public class UserScreenController extends AbsController{
     Tag starttag = null;
     @FXML private void initialize() {
 
-        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                double scaleFactor = 0;
-                if (event.getDeltaY() > 0) {
-                    scaleFactor = SCALE_DELTA;
-
-
-
-                } else if(event.getDeltaY() < 0){
-                    scaleFactor = 1/SCALE_DELTA;
-                }else{
-                    event.consume();
-                }
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
-                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
-                event.consume();
-            }});
-
+        overrideScrollWheel();
         TextFields.bindAutoCompletion(TypeDestination, nodeList);
         setText();
         directions.setText(output);
@@ -227,6 +206,30 @@ public class UserScreenController extends AbsController{
 
 
 
+    }
+
+    private void overrideScrollWheel() {
+        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                double scaleFactor = 0;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+
+
+                } else if (event.getDeltaY() < 0) {
+                    scaleFactor = 1 / SCALE_DELTA;
+                } else {
+                    event.consume();
+                }
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY() * scaleFactor);
+                event.consume();
+            }
+        });
     }
 
     private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
