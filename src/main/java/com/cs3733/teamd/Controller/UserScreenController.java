@@ -110,6 +110,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
+        pathNodes = null;
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
         setSpanishText();
     }
