@@ -8,6 +8,7 @@ import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -57,7 +58,6 @@ public class EditMapScreenController extends AbsController{
 
     public Button EditProf;
     public Button EditTag;
-    public Slider floorSlider;
     public Button LoginButton;
     public Button CreateUserButton;
     public Button SpanishButton;
@@ -72,6 +72,7 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
+    public ChoiceBox FloorMenu;
     //HashMap<List<CircleNode>,Line> circleLines;
 
     @FXML
@@ -99,7 +100,7 @@ public class EditMapScreenController extends AbsController{
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor =1;
 
     @FXML
     private Pane mapCanvas;
@@ -108,6 +109,9 @@ public class EditMapScreenController extends AbsController{
     private List<Tag> allTheTags =dir.getTags();
     List<String> allTagNames = new ArrayList<String>();
     int i=50;
+
+    LinkedList<Integer> floors = new LinkedList<Integer>();
+    public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(){
@@ -132,13 +136,24 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
+        if(floors.size() == 0){
+            floors.addLast(1);
+            floors.addLast(2);
+            floors.addLast(3);
+            floors.addLast(4);
+            floors.addLast(5);
+            floors.addLast(6);
+            floors.addLast(7);
+        }
+        floorDropDown.addAll(floors);
+        FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue(floorDropDown.get(0));
 
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if (!floorSlider.isValueChanging()) {
                     floor = new_val.intValue();
-                    floorSlider.setValue(floor);
+                    FloorMenu.setValue(floor);
                     //floorMap.setImage(imageHashMap.get(floor));
                     floorMap.setImage(imgInt.display(floor));
 
@@ -150,7 +165,6 @@ public class EditMapScreenController extends AbsController{
 
                     drawfloorNodes();
 
-                }
             }
         });
 
