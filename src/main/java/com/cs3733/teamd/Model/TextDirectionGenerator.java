@@ -46,16 +46,21 @@ public class TextDirectionGenerator {
             System.out.println(d);
         }
         Collections.reverse(this.points);
-        return getEnglishDirections(directions);
+        return getEnglishDirections(directions, pointsOfInterestNames);
     }
 
-    public static List<String> getEnglishDirections(List<Direction> directions) {
+    public static List<String> getEnglishDirections(
+            List<Direction> directions,
+            List<String> pointsOfInterestNames) {
         List<String> directionList = new ArrayList<String>();
-
+        String tagName = (pointsOfInterestNames.size() > 0) ? pointsOfInterestNames.get(0) : "starting point.";
         boolean isFirstElement = true;
         for(Direction d: directions) {
             String addition = "";
             switch(d) {
+                case PROCEED_FROM_TAG:
+                    addition = "proceed from " + tagName;
+                    break;
                 case GO_STRAIGHT:
                     addition = "proceed straight";
                     break;
@@ -81,7 +86,7 @@ public class TextDirectionGenerator {
 
             }
 
-            if(isFirstElement) {
+            if(isFirstElement && (addition.length() > 0)) {
                 addition = addition.replaceFirst(addition.substring(0,1),addition.substring(0,1).toUpperCase());
                 isFirstElement = false;
             } else {
@@ -191,7 +196,10 @@ public class TextDirectionGenerator {
                     (previousPoint == null) ||
                     (previousPoint.getFloor() != currentPoint.getFloor())
                     ) {
-                directions.add(Direction.GO_STRAIGHT);
+                directions.add(Direction.PROCEED_FROM_TAG);
+                if(currentPoint.getTags().size() > 0) {
+                    pointsOfInterestNames.add(currentPoint.getTags().getFirst().getTagName());
+                }
                 // Continue to next loop
                 continue;
             }
@@ -216,6 +224,7 @@ public class TextDirectionGenerator {
     }
 
     public enum Direction {
+        PROCEED_FROM_TAG,
         GO_STRAIGHT,
         TURN_LEFT,
         SLIGHT_LEFT,

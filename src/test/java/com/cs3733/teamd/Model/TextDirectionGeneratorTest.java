@@ -40,7 +40,8 @@ public class TextDirectionGeneratorTest {
                                 TextDirectionGenerator.Direction.GO_STRAIGHT,
                                 TextDirectionGenerator.Direction.TURN_LEFT,
                                 TextDirectionGenerator.Direction.ARRIVED)
-                )
+                ),
+                new ArrayList<String>()
         ));
     }
 
@@ -58,7 +59,8 @@ public class TextDirectionGeneratorTest {
                                 TextDirectionGenerator.Direction.GO_STRAIGHT,
                                 TextDirectionGenerator.Direction.TURN_RIGHT,
                                 TextDirectionGenerator.Direction.ARRIVED)
-                )
+                ),
+                new ArrayList<String>()
         ));
     }
 }
