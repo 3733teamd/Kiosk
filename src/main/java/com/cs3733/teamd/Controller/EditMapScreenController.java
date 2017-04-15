@@ -106,6 +106,8 @@ public class EditMapScreenController extends AbsController{
     public Boolean switchS =true;
     public int floor =4;
     final double SCALE_DELTA = 1.1;
+    int onFloor = Main.currentFloor;
+
 
     @FXML
     private Pane mapCanvas;
@@ -117,6 +119,9 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
+setFloorSliderListener();
+        overrideScrollWheel();
+        panMethods();
 
         errorBox.setText("");
         xLoc.setText("");
@@ -174,11 +179,104 @@ public class EditMapScreenController extends AbsController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-        drawfloorNodes();
-
+        //drawfloorNodes();
+//
 
     }//initialize end
 
+
+    private void setFloorSliderListener(){
+        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val)  {
+                if (!floorSlider.isValueChanging()) {
+                    floor = new_val.intValue();
+                    floorSlider.setValue(floor);
+                    //floorMap.setImage(imageHashMap.get(onFloor));
+                    floorMap.setImage(imgInt.display(floor));
+                    drawfloorNodes();
+
+                }
+            }
+        });
+
+    }
+    private void panMethods(){
+
+        //zoom functions
+        //imagePane.getChildren();
+        floorMap.setPreserveRatio(true);
+        final double SCALE_DELTA = 1.1;
+
+        final Group scrollContent = new Group(floorMap, mapCanvas);
+        scrollPane.setContent(scrollContent);
+
+        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable,
+                                Bounds oldValue, Bounds newValue) {
+                imagePane.setMinSize(newValue.getWidth(), newValue.getHeight());
+            }
+        });
+
+        scrollPane.setPrefViewportWidth(256);
+        scrollPane.setPrefViewportHeight(256);
+
+
+
+        // Panning via drag....
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            }
+        });
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                double desiredH = scrollPane.getHvalue() - deltaH;
+                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                double desiredV = scrollPane.getVvalue() - deltaV;
+                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+            }
+        });
+
+
+    }
+
+    private void overrideScrollWheel() {
+        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                double scaleFactor = 0;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+
+
+                } else if (event.getDeltaY() < 0) {
+                    scaleFactor = 1 / SCALE_DELTA;
+                } else {
+                    event.consume();
+                }
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                mapCanvas.setScaleX(mapCanvas.getScaleX() * scaleFactor);
+                mapCanvas.setScaleY(mapCanvas.getScaleY() * scaleFactor);
+                event.consume();
+            }
+        });
+    }
 
 
 
@@ -214,7 +312,7 @@ public class EditMapScreenController extends AbsController{
     public void addNode(){
         CircleNode circ = createCircle(dir.saveNode(50,50,floor), 5, Color.RED);
         floorCircs.add(circ);
-        imagePane.getChildren().add(circ);
+        mapCanvas.getChildren().add(circ);
 
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
@@ -247,9 +345,9 @@ public class EditMapScreenController extends AbsController{
         if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
             line.setFill(Color.YELLOW);
             line.setStrokeWidth(2);
-            imagePane.getChildren().add(line);
+            mapCanvas.getChildren().add(line);
         }else{
-            imagePane.getChildren().add(line);
+            mapCanvas.getChildren().add(line);
         }
 
     }
@@ -371,11 +469,12 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void drawfloorNodes(){
+        mapCanvas.getChildren().clear();
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
                 try {
-                    imagePane.getChildren().add(circleMap.get(n));
+                    mapCanvas.getChildren().add(circleMap.get(n));
                     floorCircs.add(circleMap.get(n));
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
@@ -453,7 +552,7 @@ public class EditMapScreenController extends AbsController{
 
             //System.out.println("Line xcoord" +l.getEndX());
 
-            imagePane.getChildren().remove(l);
+            mapCanvas.getChildren().remove(l);
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
             select2.lineMap.remove(select1);
@@ -469,7 +568,7 @@ public class EditMapScreenController extends AbsController{
         boolean response = dir.deleteNode(select1.referenceNode);
         if(response){
             errorBox.setText("");
-            imagePane.getChildren().remove(select1);
+            mapCanvas.getChildren().remove(select1);
             select1 = select2;
             select2= null;
         }else{
