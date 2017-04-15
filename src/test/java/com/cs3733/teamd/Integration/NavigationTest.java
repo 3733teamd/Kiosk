@@ -1,9 +1,9 @@
 package com.cs3733.teamd.Integration;
 
 import com.cs3733.teamd.Database.DBHandler;
-import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Pathfinder;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Entities.Tag;
 import org.junit.Test;
 
 import java.io.IOException;

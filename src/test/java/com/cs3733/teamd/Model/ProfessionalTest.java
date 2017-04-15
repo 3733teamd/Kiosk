@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Model;
 
+import com.cs3733.teamd.Model.Entities.ProTitle;
+import com.cs3733.teamd.Model.Entities.Professional;
 import org.junit.Test;
 
 import java.util.ArrayList;

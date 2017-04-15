@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Database;
 
-import com.cs3733.teamd.Model.Node;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

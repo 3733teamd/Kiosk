@@ -1,4 +1,6 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Entities;
+
+import com.cs3733.teamd.Model.Permissions;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

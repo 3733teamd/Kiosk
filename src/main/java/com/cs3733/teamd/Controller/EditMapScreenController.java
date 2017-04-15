@@ -2,16 +2,17 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
@@ -26,7 +27,6 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.*;
 //TODO deleate connections
@@ -177,13 +177,13 @@ public class EditMapScreenController extends AbsController{
 
         drawfloorNodes();
 
-        if(Main.Langugage=="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             EditTag.setFont(Font.font("System",14));
             LoginButton.setFont(Font.font("System",14));
             CreateUserButton.setFont(Font.font("System",14));
 
-        }
-        else {
+        } else {
             EditTag.setFont(Font.font("System",20));
             LoginButton.setFont(Font.font("System",20));
             CreateUserButton.setFont(Font.font("System",20));
@@ -259,17 +259,6 @@ public class EditMapScreenController extends AbsController{
         }
 
     }
-    /*@FXML
-    public void loadConnection(CircleNode s1, CircleNode s2){
-        Line line = connect(s1,s2);
-        //Line line = s1.lineMap.get(s2.referenceNode);
-        line.setStyle("-fx-stroke: red;");
-        s1.lineMap.put(s2,line);
-        s2.lineMap.put(s1,line);
-        imagePane.getChildren().add(line);
-        //update
-    }*/
-
 
     private CircleNode createCircle(Node n, double r, Color color) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
@@ -312,30 +301,6 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }
 
-
-            //System.out.println(select1.toString() + " " + select2.toString());
-
-
-            /*if(switchS ==true){
-                //select1.setFill(Color.RED);
-                select1 =c;
-                s1.setID(n.getID());
-                s= n.getID();
-                //System.out.println("s1" + select1.getCenterX());
-                switchS=false;
-                c.setFill(Color.BLACK);
-
-            }
-            else{
-                select1.setFill(Color.GREEN);
-                select2=c;
-                s2.setID(n.getID());
-                sa=n.getID();
-                c.setFill(Color.BLACK);
-                //System.out.println("s2:" +select2.getCenterX());
-                switchS=true;
-            }*/
-//            System.out.println(nodes.get(c).getX());
         });
         circle.setOnMouseReleased((t)->{
 
@@ -347,10 +312,6 @@ public class EditMapScreenController extends AbsController{
             }
 
             updatePosition(t);
-
-
-
-
         });
 
         circle.setOnMouseDragged((t) -> {
@@ -387,7 +348,6 @@ public class EditMapScreenController extends AbsController{
 
         line.setStrokeWidth(1);
         line.setStrokeLineCap(StrokeLineCap.BUTT);
-//        line.getStrokeDashArray().setAll(1.0, 4.0);
 
         return line;
     }
@@ -427,19 +387,12 @@ public class EditMapScreenController extends AbsController{
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
-
-                //System.out.println(circ.getCenterX());
-               // nodes.put(circ, n);
             }
         }
 
         if(select1 != null && select2 != null) {
             System.out.println(select1.toString() + " " + select2.toString());
         }
-
-
-        //System.out.println(circleMap.size());
-        //draws stored connections
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
@@ -540,19 +493,7 @@ public class EditMapScreenController extends AbsController{
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(Main.Langugage == "English") {
-            Main.Langugage = "Spanish";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
-        }
-        else{
-            Main.Langugage = "English";
-
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
-        }
-
+        super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
-
-
     }
 }

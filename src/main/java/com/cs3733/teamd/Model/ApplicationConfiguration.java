@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Model;
 
+import java.util.Locale;
+
 /**
  * Singleton which holds the configuration for our application
  * Created by Stephen on 4/5/2017.
@@ -7,8 +9,10 @@ package com.cs3733.teamd.Model;
 public class ApplicationConfiguration {
     private static ApplicationConfiguration config = null;
 
-    private ApplicationConfiguration(){
+    private Language currentLangauge;
 
+    private ApplicationConfiguration(){
+        currentLangauge = Language.ENGLISH;
     }
 
     public static ApplicationConfiguration getInstance() {
@@ -26,4 +30,27 @@ public class ApplicationConfiguration {
         NONE,
         FULL
     }
+
+    public enum Language {
+        ENGLISH,
+        SPANISH
+    }
+
+    public Language getCurrentLanguage() {
+        return currentLangauge;
+    }
+
+    public void setCurrentLangauge(Language newLanguage) {
+        this.currentLangauge = newLanguage;
+    }
+
+    public static Locale getEnglishLocale() {
+        return new Locale("en", "US");
+    }
+
+    public static Locale getSpanishLocale() {
+        return new Locale("es","SP");
+    }
+
+
 }
