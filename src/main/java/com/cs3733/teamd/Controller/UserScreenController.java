@@ -70,12 +70,6 @@ public class UserScreenController extends AbsController{
     private Slider floorSlider;
     public ImageView floorMap;
     public AnchorPane imagePane;
-
-
-    //proxy pattern
-    ImageInterface imgInt = new ProxyImage();
-    public int floorNum = Main.currentFloor;
-
     public Canvas MapCanvas;
     public AnchorPane MMGpane;
     @FXML
@@ -89,8 +83,8 @@ public class UserScreenController extends AbsController{
     private static LinkedList<Node> pathNodes;
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
-    private String output = "";
-    private Tag starttag = null;
+    String output = "";
+    Tag starttag = null;
     private int startfloor = 0;
     private int destfloor = 0;
 
@@ -99,17 +93,13 @@ public class UserScreenController extends AbsController{
 
     public ScrollPane scrollPane;
 
-    String output = "";
-    Tag starttag = null;
-    @FXML private void initialize() {
 
-        overrideScrollWheel();
-        TextFields.bindAutoCompletion(TypeDestination, nodeList);
-        setText();
+
 
     @FXML
     private void initialize()
     {
+        overrideScrollWheel();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);

@@ -194,15 +194,11 @@ public class EditMapScreenController extends AbsController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-}
 
 
 //added initalize
         //zoom functions?
         final double SCALE_DELTA = 1.1;
-        //final Group group = new Group(floorMap, MapCanvas);
-
-        //imagePane.getChildren().add(group);
 
         final Group scrollContent = new Group(imagePane, floorMap, mapCanvas);
         scrollPane.setContent(scrollContent);
