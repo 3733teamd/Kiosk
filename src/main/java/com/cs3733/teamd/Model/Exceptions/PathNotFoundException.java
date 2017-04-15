@@ -1,4 +1,4 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Exceptions;
 
 /**
  * Created by tom on 4/15/17.
