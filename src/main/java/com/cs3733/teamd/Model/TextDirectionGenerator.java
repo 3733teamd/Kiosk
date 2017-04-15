@@ -1,11 +1,6 @@
 package com.cs3733.teamd.Model;
 
-import javax.sound.midi.SysexMessage;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Stephen on 4/13/2017.
@@ -13,6 +8,7 @@ import java.util.List;
  * Generates Text Directions Given a Path
  */
 public class TextDirectionGenerator {
+
 
     private static double SLIGHT_THRESHOLD = 20.0;
     private static double FULL_THRESHOLD = 45.0;
@@ -34,6 +30,38 @@ public class TextDirectionGenerator {
         this.onFloor = onFloor;
         this.pointsOfInterestNames = new ArrayList<String>();
     }
+
+    private static Map<Direction, String[]> getTranslations() {
+        Map<Direction, String[]> translations = new HashMap<Direction, String[]>();
+        String[] proceedFrom = { "proceed from ", "precdeder desde " };
+        translations.put(Direction.PROCEED_FROM_TAG, proceedFrom);
+
+        String[] goStraight = { "proceed straight", "proceder recto"};
+        translations.put(Direction.GO_STRAIGHT, goStraight);
+
+        String[] turnLeft = {"turn left", "girar a la izquierda"};
+        translations.put(Direction.TURN_LEFT, turnLeft);
+
+        String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda"};
+        translations.put(Direction.SLIGHT_LEFT, slightLeft);
+
+        String[] turnRight = {"turn right", "dobla a la derecha"};
+        translations.put(Direction.TURN_RIGHT, turnRight);
+
+        String[] slightRight = {"make a slight right", "hacer un ligero derecho"};
+        translations.put(Direction.SLIGHT_RIGHT, slightRight);
+
+        String[] arrived = {"you have arrived at your destination", "has llegado a tu destino"};
+        translations.put(Direction.ARRIVED, arrived);
+
+        String[] proceedToElevator = {
+                "take the elevator to your destination floor",
+                "tomar el ascensor hasta el piso de destino"
+        };
+        translations.put(Direction.PROCEED_TO_ELEVATOR, proceedToElevator);
+        return translations;
+
+    }
     // This method will generate text directions from the points
 
 
@@ -46,12 +74,14 @@ public class TextDirectionGenerator {
             System.out.println(d);
         }
         Collections.reverse(this.points);
-        return getEnglishDirections(directions, pointsOfInterestNames);
+        return getDirectionsInLanguage(directions, pointsOfInterestNames);
     }
 
-    public static List<String> getEnglishDirections(
+    public static List<String> getDirectionsInLanguage(
             List<Direction> directions,
             List<String> pointsOfInterestNames) {
+        int textIndex = (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.ENGLISH) ? 0 : 1;
         List<String> directionList = new ArrayList<String>();
         String tagName = (pointsOfInterestNames.size() > 0) ? pointsOfInterestNames.get(0) : "starting point.";
         boolean isFirstElement = true;
@@ -59,28 +89,16 @@ public class TextDirectionGenerator {
             String addition = "";
             switch(d) {
                 case PROCEED_FROM_TAG:
-                    addition = "proceed from " + tagName;
+                    addition = getTranslations().get(d)[textIndex] + tagName;
                     break;
                 case GO_STRAIGHT:
-                    addition = "proceed straight";
-                    break;
                 case TURN_LEFT:
-                    addition = "turn left";
-                    break;
                 case SLIGHT_LEFT:
-                    addition = "turn slightly to the left";
-                    break;
                 case TURN_RIGHT:
-                    addition = "turn right";
-                    break;
                 case SLIGHT_RIGHT:
-                    addition = "turn slightly to the right";
-                    break;
                 case ARRIVED:
-                    addition = "you have arrived at your destination";
-                    break;
                 case PROCEED_TO_ELEVATOR:
-                    addition = "take the elevator to your destination floor";
+                    addition = getTranslations().get(d)[textIndex];
                     break;
                 default:
 
@@ -90,7 +108,12 @@ public class TextDirectionGenerator {
                 addition = addition.replaceFirst(addition.substring(0,1),addition.substring(0,1).toUpperCase());
                 isFirstElement = false;
             } else {
-                addition = "and then "+addition;
+                if(textIndex == 0) {
+                    addition = "and then "+addition;
+                } else {
+                    addition = "y "+addition;
+                }
+
             }
             directionList.add(addition);
         }
