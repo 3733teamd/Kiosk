@@ -9,7 +9,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +27,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
 import javax.imageio.ImageIO;
@@ -209,10 +213,31 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void toEditProf() throws  IOException{
         switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
+//        Main.rootMain = FXMLLoader.load(getClass().getResource("/Views/EditProfScreen.fxml"),bundle);
+//
+//        Main.MainScene = new Scene(Main.rootMain);
+//        Main.window.setMaximized(false);
+//        Main.window.setScene(Main.MainScene );
+//        Main.window.show();
     }
+
+    public Stage stage;
+    public Parent root;
+
+    public static Locale local = new Locale("en", "US");
+    public static Locale spanish = new Locale("es","SP");
+    public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
     @FXML
-    public void toEditTag() throws  IOException{
+    public void toEditTag(ActionEvent event) throws  IOException{
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
+
+//
+//        Main.rootMain = FXMLLoader.load(getClass().getResource("/Views/EditTagScreen.fxml"),bundle);
+//
+//        Main.MainScene = new Scene(Main.rootMain);
+//        Main.window.setMaximized(false);
+//        Main.window.setScene(Main.MainScene );
+//        Main.window.show();
     }
 
 
