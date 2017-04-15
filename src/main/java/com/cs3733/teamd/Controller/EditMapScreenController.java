@@ -174,13 +174,10 @@ public class EditMapScreenController extends AbsController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-
-
-
         drawfloorNodes();
 
 
-    }
+    }//initialize end
 
 
 

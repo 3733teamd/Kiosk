@@ -92,6 +92,7 @@ public class UserScreenController extends AbsController{
     private void initialize()
     {
         overrideScrollWheel();
+        panMethods();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);
@@ -127,6 +128,9 @@ public class UserScreenController extends AbsController{
             }
         });
 
+    }
+
+    private void panMethods(){
 
         //zoom functions
         imagePane.getChildren();
@@ -134,7 +138,7 @@ public class UserScreenController extends AbsController{
         final double SCALE_DELTA = 1.1;
 
         final Group scrollContent = new Group(floorMap, MapCanvas);
-       scrollPane.setContent(scrollContent);
+        scrollPane.setContent(scrollContent);
 
         scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
@@ -174,7 +178,6 @@ public class UserScreenController extends AbsController{
                 scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
             }
         });
-
 
 
     }
