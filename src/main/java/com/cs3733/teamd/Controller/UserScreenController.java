@@ -51,8 +51,10 @@ public class UserScreenController extends AbsController{
     public Text floor;
     public Label directionLabel;
     public ChoiceBox FloorMenu;
+    public Button StartFloorButton;
+    public Button MiddleFloorButton;
+    public Button EndFloorButton;
     @FXML
-    private Slider floorSlider;
     public ImageView floorMap;
     public Canvas MapCanvas;
     public AnchorPane MMGpane;
@@ -71,6 +73,7 @@ public class UserScreenController extends AbsController{
     private Tag starttag = null;
     private int startfloor = 0;
     private int destfloor = 0;
+    private int midfloor = 0;
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
@@ -80,7 +83,6 @@ public class UserScreenController extends AbsController{
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
-        setFloorSliderListener();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -94,7 +96,9 @@ public class UserScreenController extends AbsController{
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
         setFloorMenuListener();
-
+        StartFloorButton.setVisible(false);
+        MiddleFloorButton.setVisible(false);
+        EndFloorButton.setVisible(false);
 
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
@@ -102,6 +106,7 @@ public class UserScreenController extends AbsController{
         }
     }
 
+    //Function to set the listener for the floor choice box
     private void setFloorMenuListener(){
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
@@ -121,28 +126,6 @@ public class UserScreenController extends AbsController{
         });
     }
 
-    private void setFloorSliderListener(){
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if (!floorSlider.isValueChanging()) {
-                    onFloor = new_val.intValue();
-                    floorSlider.setValue(onFloor);
-                    //floorMap.setImage(imageHashMap.get(onFloor));
-                    floorMap.setImage(imgInt.display(onFloor));
-                    gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-                    output = "";
-                    directions.setText(output);
-                    System.out.println(onFloor);
-
-                    if(pathNodes != null) {
-                        draw();
-                    }
-
-                }
-            }
-        });
-    }
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
@@ -248,6 +231,7 @@ public class UserScreenController extends AbsController{
     }
 
     @FXML
+    //Function to allow the user to change the start to wherever they wish
     public  void onSet(ActionEvent actionEvent) throws IOException{
         int tagCount = dir.getTags().size();
         Tag currentTag;
@@ -266,7 +250,6 @@ public class UserScreenController extends AbsController{
     @FXML
     //Starts path displaying process
     private void draw(){
-        System.out.println("Begin drawing");
         plotPath(UserScreenController.pathNodes);
     }
 
@@ -282,8 +265,16 @@ public class UserScreenController extends AbsController{
     //Converts a given path of nodes to a path of points and then draws it
     public void plotPath(LinkedList<Node> path){
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
+        LinkedList<Point> pointsMidFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
+        // ensure values are reset
         int index = 0;
+        startfloor = 0;
+        destfloor = 0;
+        midfloor = 0;
+        StartFloorButton.setVisible(false);
+        MiddleFloorButton.setVisible(false);
+        EndFloorButton.setVisible(false);
         startfloor = starttag.getNodes().getFirst().getFloor();
         destfloor = path.getFirst().getFloor();
         System.out.println(destfloor);
@@ -298,15 +289,32 @@ public class UserScreenController extends AbsController{
                 System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
             }
+            else if(node.getFloor() == 1 && startfloor != 1 && destfloor != 1){
+                pointsMidFloor.add(getConvertedPoint(node));
+            }
         }
         indexOfElevator = index;
         if(startfloor == onFloor) {
             System.out.println("startfloor");
             drawPathFromPoints(gc, pointsStartFloor);
+            EndFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
         }
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);
+            StartFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
+        }
+        else if(midfloor == onFloor){
+            System.out.println("midfloor");
+            drawPathFromPoints(gc, pointsMidFloor);
+            StartFloorButton.setVisible(true);
+            EndFloorButton.setVisible(true);
         }
     }
 
@@ -1157,5 +1165,53 @@ public class UserScreenController extends AbsController{
             }
         }
         return TextDirections;
+    }
+
+    @FXML
+    //Function to allow the user to change to the starting floor of path
+    public  void ShowStart(ActionEvent actionEvent) throws IOException{
+        onFloor = startfloor;
+        FloorMenu.setValue(onFloor);
+        floorMap.setImage(imgInt.display(onFloor));
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        output = "";
+        directions.setText(output);
+        System.out.println(onFloor);
+
+        if(pathNodes != null) {
+            draw();
+        }
+    }
+
+    @FXML
+    //Function to allow the user to change to the middle floor of path
+    public  void ShowMiddle(ActionEvent actionEvent) throws IOException{
+        onFloor = midfloor;
+        FloorMenu.setValue(onFloor);
+        floorMap.setImage(imgInt.display(onFloor));
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        output = "";
+        directions.setText(output);
+        System.out.println(onFloor);
+
+        if(pathNodes != null) {
+            draw();
+        }
+    }
+
+    @FXML
+    //Function to allow the user to change to the ending floor of path
+    public  void ShowEnd(ActionEvent actionEvent) throws IOException{
+        onFloor = destfloor;
+        FloorMenu.setValue(onFloor);
+        floorMap.setImage(imgInt.display(onFloor));
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        output = "";
+        directions.setText(output);
+        System.out.println(onFloor);
+
+        if(pathNodes != null) {
+            draw();
+        }
     }
 }
