@@ -248,6 +248,11 @@ public class UserScreenController extends AbsController{
                 onFloor
         );
         List<String> directionsArray = g.generateTextDirections();
+        String output = "";
+        for(String directionString: directionsArray) {
+            output += directionString + "\n";
+        }
+        directions.setText(output);
         for(String token: directionsArray) {
             System.out.println(token);
         }
@@ -402,7 +407,7 @@ public class UserScreenController extends AbsController{
                 }
             }
         }
-        directions.setText(output);
+        //directions.setText(output);
         // print output to show path directions
         //System.out.println(output);
     }
