@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0">
          <children>
@@ -32,7 +32,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="1245.99998742342">
+                        <Text id="headerBox" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="1245.99998742342">
                            <font>
                               <Font name="Tahoma" size="31.0" />
                            </font>
@@ -44,7 +44,7 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <HBox prefHeight="78.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
+            <HBox id="headerBox" prefHeight="78.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
                <children>
                   <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP">
                      <font>
@@ -58,8 +58,8 @@
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <Slider fx:id="floorSlider" blockIncrement="1.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" onDragDropped="#doneDrag" prefHeight="40.0" prefWidth="377.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
-                  <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="44.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true">
+                  <Slider fx:id="floorSlider" blockIncrement="1.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" onDragDropped="#doneDrag" prefHeight="40.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+                  <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="49.0" prefWidth="137.0" text="%Logout" textAlignment="RIGHT" wrapText="true">
                      <font>
                         <Font size="20.0" />
                      </font>
