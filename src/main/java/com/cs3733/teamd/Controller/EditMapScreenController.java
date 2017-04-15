@@ -236,18 +236,19 @@ setFloorSliderListener();
         scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                
-                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
-                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
-                double desiredH = scrollPane.getHvalue() - deltaH;
-                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                    double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                    double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                    double desiredH = scrollPane.getHvalue() - deltaH;
+                    scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
 
-                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
-                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
-                double desiredV = scrollPane.getVvalue() - deltaV;
-                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+                    double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                    double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                    double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                    double desiredV = scrollPane.getVvalue() - deltaV;
+                    scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+                }
             }
         });
 
@@ -412,8 +413,8 @@ setFloorSliderListener();
 
             Circle c = (Circle) (t.getSource());
 
-            c.setCenterX(c.getCenterX() + offsetX);
-            c.setCenterY(c.getCenterY() + offsetY);
+            c.setCenterX((c.getCenterX() + offsetX*mapCanvas.getScaleX()));//*1091/mapCanvas.getScaleX());
+            c.setCenterY((c.getCenterY() + offsetY*mapCanvas.getScaleY()));
 
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
