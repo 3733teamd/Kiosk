@@ -15,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,25 +23,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 import org.controlsfx.control.textfield.TextFields;
 
-//import javax.xml.soap.Text;
 
-import javax.swing.*;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 import java.util.List;
 
 /**
@@ -135,19 +127,11 @@ public class UserScreenController extends AbsController{
             }
         });
 
-        gc = MapCanvas.getGraphicsContext2D();
-        if (pathNodes != null) {
-            draw();
-        }
 
-        //added initalize
-        //zoom functions?
-        imagePane.getChildren();//.add(group);
+        //zoom functions
+        imagePane.getChildren();
         floorMap.setPreserveRatio(true);
         final double SCALE_DELTA = 1.1;
-        //final Group group = new Group(floorMap, MapCanvas);
-
-        //imagePane.getChildren().add(group);
 
         final Group scrollContent = new Group(floorMap, MapCanvas);
        scrollPane.setContent(scrollContent);
@@ -163,35 +147,7 @@ public class UserScreenController extends AbsController{
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
 
-        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
 
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
-                        : 1 / SCALE_DELTA;
-
-                // amount of scrolling in each direction in scrollContent coordinate
-                // units
-                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
-
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
-                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
-
-                // move viewport so that old center remains in the center after the
-                // scaling
-                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
-                System.out.println("scrolling");
-
-            }
-        });
 
         // Panning via drag....
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
@@ -246,38 +202,6 @@ public class UserScreenController extends AbsController{
             }
         });
     }
-
-    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
-        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
-        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
-        return new Point2D(scrollXOffset, scrollYOffset);
-    }
-
-    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
-        double scrollXOffset = scrollOffset.getX();
-        double scrollYOffset = scrollOffset.getY();
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        if (extraWidth > 0) {
-            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
-            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
-            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        if (extraHeight > 0) {
-            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
-            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
-            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-    }
-    //////////////////////
 
     //Spanish button to change language to Spanish
     @FXML
@@ -392,7 +316,7 @@ public class UserScreenController extends AbsController{
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
         int x = node.getX() + USERSCREEN_X_OFFSET;
-        int y = node.getY() + USERSCREEN_Y_OFFSET;
+        int y = node.getY() + USERSCREEN_Y_OFFSET+25;
         //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         Point p = new Point(x, y);
         return p;

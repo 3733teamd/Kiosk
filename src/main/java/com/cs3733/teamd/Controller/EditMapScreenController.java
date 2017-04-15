@@ -105,6 +105,7 @@ public class EditMapScreenController extends AbsController{
     public CircleNode scirc;
     public Boolean switchS =true;
     public int floor =4;
+    final double SCALE_DELTA = 1.1;
 
     @FXML
     private Pane mapCanvas;
@@ -116,10 +117,10 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
-        //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
@@ -137,27 +138,6 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
-
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if (!floorSlider.isValueChanging()) {
-                    floor = new_val.intValue();
-                    floorSlider.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(floor));
-                    floorMap.setImage(imgInt.display(floor));
-
-                    //TODO: heart of error
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
-
-                    drawfloorNodes();
-
-                }
-            }
-        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
@@ -196,118 +176,17 @@ public class EditMapScreenController extends AbsController{
 
 
 
-//added initalize
-        //zoom functions?
-        final double SCALE_DELTA = 1.1;
-
-        final Group scrollContent = new Group(imagePane, floorMap, mapCanvas);
-        scrollPane.setContent(scrollContent);
-
-        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
-            @Override
-            public void changed(ObservableValue<? extends Bounds> observable,
-                                Bounds oldValue, Bounds newValue) {
-                imagePane.setMinSize(newValue.getWidth(), newValue.getHeight());
-            }
-        });
-
-        scrollPane.setPrefViewportWidth(256);
-        scrollPane.setPrefViewportHeight(256);
-
-        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
-
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
-                        : 1 / SCALE_DELTA;
-
-                // amount of scrolling in each direction in scrollContent coordinate
-                // units
-                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
-
-
-               // imagePane.setScaleX(imagePane.getScaleX()*scaleFactor);
-               // imagePane.setScaleY(imagePane.getScaleY()*scaleFactor);
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                mapCanvas.setScaleX(mapCanvas.getScaleX()*scaleFactor);
-                mapCanvas.setScaleY(mapCanvas.getScaleY()*scaleFactor);
-
-                // move viewport so that old center remains in the center after the
-                // scaling
-                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
-                System.out.println("scrolling");
-
-            }
-        });
-
-        // Panning via drag....
-        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
-            }
-        });
-
-        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
-                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
-                double desiredH = scrollPane.getHvalue() - deltaH;
-                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
-
-                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
-                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
-                double desiredV = scrollPane.getVvalue() - deltaV;
-                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
-            }
-        });
 
         drawfloorNodes();
 
 
     }
 
-    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
-        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
-        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
-        return new Point2D(scrollXOffset, scrollYOffset);
-    }
 
-    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
-        double scrollXOffset = scrollOffset.getX();
-        double scrollYOffset = scrollOffset.getY();
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        if (extraWidth > 0) {
-            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
-            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
-            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        if (extraHeight > 0) {
-            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
-            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
-            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-    }
+
+
+
+
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
