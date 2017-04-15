@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -16,9 +22,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.LoginScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.LoginScreenController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1292.0">
+      <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="42.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
@@ -49,9 +55,9 @@
                <children>
                   <GridPane layoutX="201.0" layoutY="85.0" prefHeight="496.0" prefWidth="881.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="179.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="108.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="350.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" percentWidth="33.0" prefWidth="108.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" percentWidth="34.0" prefWidth="350.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="279.0" minHeight="10.0" prefHeight="173.0" vgrow="SOMETIMES" />
@@ -61,23 +67,30 @@
                         <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="username" prefHeight="67.0" prefWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Text fx:id="pwText" strokeType="OUTSIDE" strokeWidth="0.0" text="\%password" textAlignment="CENTER" wrappingWidth="347.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="50.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" text="\%username" textAlignment="CENTER" wrappingWidth="354.13671875" GridPane.columnIndex="1">
-                           <font>
-                              <Font size="50.0" />
-                           </font>
-                        </Text>
-                        <PasswordField fx:id="password" prefHeight="45.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label fx:id="errorIndicator" prefHeight="34.0" prefWidth="206.0" text=" ">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TextField fx:id="username" prefHeight="49.0" prefWidth="392.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <PasswordField fx:id="password" prefHeight="46.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="userText" alignment="CENTER" layoutY="-14.0" prefHeight="141.0" prefWidth="350.0" text="\%username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="50.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="pwText" alignment="CENTER" prefHeight="102.0" prefWidth="350.0" text="\%password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </GridPane>
                   <Button fx:id="LoginButton" layoutX="578.0" layoutY="595.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="119.0" prefWidth="134.0" text="\%login" textAlignment="CENTER" wrapText="true">

@@ -27,8 +27,8 @@ public class LoginScreenController extends AbsController {
 
     public AnchorPane MMGpane;
     public Label errorIndicator;
-    public Text userText;
-    public Text pwText;
+    public Label userText;
+    public Label pwText;
     @FXML
     public void initialize(){
         setText();
