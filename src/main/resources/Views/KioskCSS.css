@@ -1,4 +1,32 @@
 .text {
     -fx-font-size: 30px;
-    /*-fx-font: System;*/
+    -fx-font: System;
+}
+
+.label {
+    -fx-pref-height: 40px;
+}
+.text-field{
+    -fx-pref-height: 40px;
+}
+
+.button {
+    -fx-border-radius: 2px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 40px;
+}
+
+#thumbNailContainer{
+    -fx-pref-height: 40px;
+}
+
+#headerBox{
+    -fx-pref-height: 40px;
+}
+
+#titleTxt {
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font: System;
 }
