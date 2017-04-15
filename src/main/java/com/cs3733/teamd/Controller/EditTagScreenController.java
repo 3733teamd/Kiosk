@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,7 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
-import org.junit.FixMethodOrder;
 
 import java.io.IOException;
 import java.util.ArrayList;

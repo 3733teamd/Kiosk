@@ -1,23 +1,22 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.ProTitle;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +114,7 @@ public class EditProfScreenController extends AbsController {
         createAllTitleListListener();
         createCurTitleListListener();
 
-        //change opacity
+        //disable buttons
         deleteTitle.setOpacity(.5);
         deleteTag.setOpacity(.5);
         addTitle.setOpacity(.5);

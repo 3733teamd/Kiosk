@@ -34,13 +34,14 @@ public class TextDirectionGeneratorTest {
                         "and then turn left",
                         "and then you have arrived at your destination")
         );
-        assertEquals(expectedOutput, TextDirectionGenerator.getEnglishDirections(
+        assertEquals(expectedOutput, TextDirectionGenerator.getDirectionsInLanguage(
                 new ArrayList<TextDirectionGenerator.Direction>(
                         Arrays.asList(
                                 TextDirectionGenerator.Direction.GO_STRAIGHT,
                                 TextDirectionGenerator.Direction.TURN_LEFT,
                                 TextDirectionGenerator.Direction.ARRIVED)
-                )
+                ),
+                new ArrayList<String>()
         ));
     }
 
@@ -52,13 +53,14 @@ public class TextDirectionGeneratorTest {
                         "and then turn right",
                         "and then you have arrived at your destination")
         );
-        assertEquals(expectedOutput, TextDirectionGenerator.getEnglishDirections(
+        assertEquals(expectedOutput, TextDirectionGenerator.getDirectionsInLanguage(
                 new ArrayList<TextDirectionGenerator.Direction>(
                         Arrays.asList(
                                 TextDirectionGenerator.Direction.GO_STRAIGHT,
                                 TextDirectionGenerator.Direction.TURN_RIGHT,
                                 TextDirectionGenerator.Direction.ARRIVED)
-                )
+                ),
+                new ArrayList<String>()
         ));
     }
 }

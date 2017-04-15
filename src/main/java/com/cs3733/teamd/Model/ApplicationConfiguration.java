@@ -11,7 +11,10 @@ public class ApplicationConfiguration {
 
     private Language currentLangauge;
 
+    private SearchAlgorithm currentSearchAlgorithm;
+
     private ApplicationConfiguration(){
+        currentSearchAlgorithm = SearchAlgorithm.A_STAR;
         currentLangauge = Language.ENGLISH;
     }
 
@@ -36,6 +39,12 @@ public class ApplicationConfiguration {
         SPANISH
     }
 
+    public enum SearchAlgorithm {
+        A_STAR,
+        BFS,
+        DFS
+    }
+
     public Language getCurrentLanguage() {
         return currentLangauge;
     }
@@ -52,5 +61,11 @@ public class ApplicationConfiguration {
         return new Locale("es","SP");
     }
 
+    public SearchAlgorithm getCurrentSearchAlgorithm() {
+        return currentSearchAlgorithm;
+    }
 
+    public void setCurrentSearchAlgorithm(SearchAlgorithm currentSearchAlgorithm) {
+        this.currentSearchAlgorithm = currentSearchAlgorithm;
+    }
 }
