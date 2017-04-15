@@ -4,6 +4,7 @@ package com.cs3733.teamd.Model;
  * Created by tom on 3/31/17.
  */
 
+import com.cs3733.teamd.Model.Entities.Node;
 import org.junit.Test;
 
 import java.util.LinkedList;

@@ -1,23 +1,22 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.ProTitle;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +114,19 @@ public class EditProfScreenController extends AbsController {
         createAllTitleListListener();
         createCurTitleListListener();
 
+        //disable buttons
+        deleteTitle.setOpacity(.5);
+        deleteTag.setOpacity(.5);
+        addTitle.setOpacity(.5);
+        addTag.setOpacity(.5);
+        deleteProf.setOpacity(.5);
+        deleteTitle.setDisable(true);
+        deleteTag.setDisable(true);
+        addTitle.setDisable(true);
+        addTag.setDisable(true);
+        deleteProf.setDisable(true);
+
+
         ObservableList list = FXCollections.observableList(drop);
 
         setText();
@@ -132,6 +144,8 @@ public class EditProfScreenController extends AbsController {
                                 Tag oldValue, Tag newValue) {
 
                 selectedCurTag = newValue;
+
+
             }
         });
 
@@ -171,23 +185,34 @@ public class EditProfScreenController extends AbsController {
                                 Professional oldValue, Professional newValue) {
 
                 updateCurrentProfList(newValue);
+                //change opacity
+                deleteTitle.setOpacity(1.0);
+                deleteTag.setOpacity(1.0);
+                addTitle.setOpacity(1.0);
+                addTag.setOpacity(1.0);
+                deleteProf.setOpacity(1.0);
+                deleteTitle.setDisable(false);
+                deleteTag.setDisable(false);
+                addTitle.setDisable(false);
+                addTag.setDisable(false);
+                deleteProf.setDisable(false);
             }
 
         });
     }
 
      private void createAllTagListListener(){
-            allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
-                @Override
-                public void changed(ObservableValue<? extends Tag> observable,
-                                    Tag oldValue, Tag newValue) {
+        allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
 
-                    updateCurrentTagList(newValue);
-                }
+                updateCurrentTagList(newValue);
+            }
 
 
-            });
-        }
+        });
+    }
 
     private void setAllTagsList(){
         //ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
@@ -241,10 +266,20 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void addNewProf(ActionEvent event) {
-        dir.saveProfessional(searchProfessionalBar.getText());
-        searchProfessionalBar.clear();
-        allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
-        allProfList.refresh();
+        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
+        if(noSpace==null ||noSpace==""||noSpace.length()<=1){
+
+        }
+        else {
+            System.out.println("print" + searchProfessionalBar.getText() + "print");
+            dir.saveProfessional(searchProfessionalBar.getText());
+            searchProfessionalBar.clear();
+            allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+            allProfList.refresh();
+            searchProfessionalBar.clear();
+
+        }
+        searchProfessionalBar.setText("");
     }
 
     @FXML
@@ -259,26 +294,27 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void deleteProf(ActionEvent event) {
-
         if(selectedProf!=null){
             System.out.println(dir.removeProfessional(selectedProf));
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
         }
-
     }
 
     @FXML
     void modifyName(ActionEvent event) {
-        if(selectedProf != null){
-
+        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
+        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
+            searchProfessionalBar.setText("");
+        }
+        else{
             selectedProf.name = (profName.getText());
             profName.clear();
             dir.updateProfessional(selectedProf);
             allProfList.refresh();
             //setAllProfList();
-
+            profName.clear();
         }
     }
 
@@ -297,11 +333,10 @@ public class EditProfScreenController extends AbsController {
     }
 
     private void updateCurrentTagList(Tag t){
-
-            if(t != null) {
-                selectedTag = t;
-            }
+        if(t != null) {
+            selectedTag = t;
         }
+    }
 
 
 
@@ -314,7 +349,8 @@ public class EditProfScreenController extends AbsController {
         */
 
     private void setText(){
-        if(Main.Langugage=="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             addNewProf.setFont(Font.font("System",14));
             deleteProf.setFont(Font.font("System",14));
         }

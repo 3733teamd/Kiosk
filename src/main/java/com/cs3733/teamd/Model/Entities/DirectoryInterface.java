@@ -1,4 +1,6 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Entities;
+
+import com.cs3733.teamd.Model.Entities.*;
 
 import java.util.List;
 
@@ -81,7 +83,7 @@ public interface DirectoryInterface {
      * @param tags - the tags the prof is in
      * @return - the Porf object
      */
-    Professional saveProfessional(String name, List<Title> titles, List<Tag> tags);
+    Professional saveProfessional(String name, List<ProTitle> titles, List<Tag> tags);
     /**
      * Update a Professional object and persist it to database
      * @param p - prof to update

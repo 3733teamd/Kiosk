@@ -1,4 +1,4 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Entities;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -120,7 +120,7 @@ public class Node {
 
     @Override
     public String toString(){
-        return "("+this.getX()+","+this.getY()+")";
+        return "("+this.getX()+","+this.getY()+ ")";
     }
 
     public String toSql(){

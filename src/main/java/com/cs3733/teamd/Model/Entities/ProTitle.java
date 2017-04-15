@@ -1,4 +1,4 @@
-package com.cs3733.teamd.Model;
+package com.cs3733.teamd.Model.Entities;
 
 /**
  * Created by sdmichelini on 4/8/17.

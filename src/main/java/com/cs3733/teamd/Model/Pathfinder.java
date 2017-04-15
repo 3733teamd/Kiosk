@@ -1,6 +1,6 @@
 package com.cs3733.teamd.Model;
 
-import sun.awt.image.ImageWatched;
+import com.cs3733.teamd.Model.Entities.Node;
 
 import java.util.*;
 
@@ -20,6 +20,16 @@ public class Pathfinder {
     public Pathfinder(Node start, Node end){
         this.start = start;
         this.end = end;
+    }
+
+    public static double pathLength(LinkedList<Node> path){
+
+        double length = 0;
+        for(int i=0; i < path.size() - 1; i++){
+            length += path.get(i).getDist(path.get(i+1));
+        }
+
+        return length;
     }
 
     public boolean hasPath() {
@@ -112,6 +122,7 @@ public class Pathfinder {
         // no path
         //return null; // or maybe new LinkedList<Node>()
 
+        
         /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
         return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
     }
@@ -153,4 +164,6 @@ public class Pathfinder {
         }
         return bestPath;
     }
+
+
 }

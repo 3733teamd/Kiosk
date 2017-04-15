@@ -1,9 +1,8 @@
 package com.cs3733.teamd;
 
-import com.cs3733.teamd.Controller.IterationOne.MapMenuController;
 import com.cs3733.teamd.Database.DBHandler;
-import com.cs3733.teamd.Model.*;
 
+import com.cs3733.teamd.Model.Entities.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +21,7 @@ import java.util.ResourceBundle;
 public class Main extends Application {
 
 
-    public static String Langugage="English";
+    //public static String Langugage="English";
     public static Stage window;
     public Boolean languageEnglish = true;
     public static Parent rootMain;
@@ -144,9 +143,10 @@ public class Main extends Application {
         // launch window
         launch(args);
 
+        
         //database.dumpDatabaseToSqlStatements("DBImports.txt");
         try {
-            //database.dumpDatabaseToSqlStatements("dump.sql");
+            //database.dumpDatabaseToSqlStatements("dump.sql.import");
             database.close();
         }catch (SQLException e){
             System.out.println(e);
