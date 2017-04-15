@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
@@ -35,7 +36,7 @@ import java.util.List;
 public class UserScreenController extends AbsController{
 
     //connect to facade
-    Directory dir = Directory.getInstance();
+    DirectoryInterface dir = Directory.getInstance();
 
     //shift nodes to align with image
     private static int USERSCREEN_X_OFFSET = -5;
