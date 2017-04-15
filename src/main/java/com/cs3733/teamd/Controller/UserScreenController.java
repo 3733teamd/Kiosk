@@ -334,6 +334,13 @@ public class UserScreenController extends AbsController{
             StartFloorButton.setVisible(true);
             EndFloorButton.setVisible(true);
         }
+        else{
+            StartFloorButton.setVisible(true);
+            EndFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
+        }
     }
 
     //Function to actually draw a path
