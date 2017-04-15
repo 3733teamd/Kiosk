@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Model;
 
+import com.cs3733.teamd.Model.Entities.Node;
+
 import java.util.*;
 
 /**
