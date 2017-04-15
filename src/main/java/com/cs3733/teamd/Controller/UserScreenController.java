@@ -156,7 +156,7 @@ public class UserScreenController extends AbsController{
 
     //Search button, generates path and directions on submit
     @FXML
-    public void onSearch(ActionEvent actionEvent) throws IOException{
+    public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
         Main.DestinationSelected = TypeDestination.getText();
         //Gets nodes and tags from directory
@@ -186,8 +186,12 @@ public class UserScreenController extends AbsController{
 
                     for (Node n : curtag.getNodes()) {
                         Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        if (attempt.pathLength(attempt.shortestPath()) < record) {
-                            bestPath = attempt;
+                        try {
+                            if (attempt.pathLength(attempt.shortestPath()) < record) {
+                                bestPath = attempt;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
 

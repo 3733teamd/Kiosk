@@ -9,6 +9,7 @@ public class Pathfinder {
 
     private Node start;
     private Node end;
+    private PathNotFoundException pathNotFound;
 
     /**
      * Creates new Pathfinder object
@@ -18,6 +19,7 @@ public class Pathfinder {
     public Pathfinder(Node start, Node end){
         this.start = start;
         this.end = end;
+        this.pathNotFound = new PathNotFoundException("Path not found between " + start + " and " + end);
     }
 
     public static double pathLength(LinkedList<Node> path){
@@ -30,19 +32,17 @@ public class Pathfinder {
         return length;
     }
 
+    /**
+     * Mostly for testing purposes. Tests whether there is a path between two nodes
+     * @return
+     */
     public boolean hasPath() {
-        LinkedList<Node> nodes = shortestPath();
-        boolean hasStart = false;
-        boolean hasEnd = false;
-        for(Node n: nodes) {
-            if(start.getID() == n.getID()) {
-                hasStart = true;
-            }
-            if(end.getID() == n.getID()) {
-                hasEnd = true;
-            }
+        try {
+            shortestPath();
+        } catch (PathNotFoundException e){
+            return false;
         }
-        return hasStart && hasEnd;
+        return true;
     }
 
     /**
@@ -62,7 +62,7 @@ public class Pathfinder {
         return lowest;
     }
 
-    public LinkedList<Node> BFSPath() throws Exception {
+    public LinkedList<Node> BFSPath() throws PathNotFoundException {
         Queue<Node> seen = new LinkedList<Node>();
         LinkedList<Node> openSet = new LinkedList<Node>();
 
@@ -85,10 +85,10 @@ public class Pathfinder {
             }
         }
 
-        throw new Exception("Path does not exist to destination.");
+        throw new PathNotFoundException("Path not found between " + start + " and " + end);
     }
 
-    public LinkedList<Node> DFSPath() throws Exception {
+    public LinkedList<Node> DFSPath() throws PathNotFoundException {
         Stack<Node> openSet = new Stack<Node>();
         LinkedList<Node> discovered = new LinkedList<Node>();
 
@@ -111,18 +111,18 @@ public class Pathfinder {
                 }
             }
             //No path found
-            throw new Exception("No path to destination found.");
+            throw pathNotFound;
         }
 
 
 
-        throw new Exception("Path does not exist to destination.");
+        throw pathNotFound;
     }
     /**
      * Gives shortest path
      * @return a linked list of nodes from start to end
      */
-    public LinkedList<Node> shortestPath(){
+    public LinkedList<Node> shortestPath() throws PathNotFoundException {
 
         // Set of nodes already evaluated
         List<Node> closedSet = new ArrayList<Node>();
@@ -174,11 +174,7 @@ public class Pathfinder {
             }
         }
         // no path
-        //return null; // or maybe new LinkedList<Node>()
-
-        
-        /////////////////////// TEMPORARY FIX /////////////////////// TODO TODO TODO
-        return new LinkedList<Node>(Arrays.asList(new Node[]{start, start}));
+        throw pathNotFound;
     }
 
     /**
@@ -188,6 +184,7 @@ public class Pathfinder {
      * @return distance between a and b
      */
     public double distanceBetween(Node a, Node b){
+        // used to be its own function, now is implemented in the Node class
         return a.getDist(b);
     }
 
@@ -198,7 +195,8 @@ public class Pathfinder {
      * @return calculated cost
      */
     private double heuristic(Node a, Node b){
-        // returns 0 for now
+
+        // absolute value of the differences in floors
         return Math.abs(a.getFloor() - b.getFloor());
     }
 

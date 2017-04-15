@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller.IterationOne;
 import com.cs3733.teamd.Controller.AbsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.PathNotFoundException;
 import com.cs3733.teamd.Model.Pathfinder;
 import com.cs3733.teamd.Model.Tag;
 import javafx.collections.FXCollections;
@@ -82,7 +83,7 @@ public class MapMenuController extends AbsController {
 
     //Submit button
     @FXML
-    public void onSubmit(ActionEvent actionEvent) throws  IOException{
+    public void onSubmit(ActionEvent actionEvent) throws IOException, PathNotFoundException {
 
         ///-----------------------------------------------------------------Just Picks the First Node In A Tag!!!!!
         Tag destinationTag = (Tag) DestinationSelect.getValue();
@@ -95,7 +96,7 @@ public class MapMenuController extends AbsController {
 
         pathNodes =pathfinder.shortestPath();
 
-       // switchScreen(MMGpane, "/Views/Iteration1/MapDirections.fxml", "/Views/Iteration1/MapMenu.fxml");
+        // switchScreen(MMGpane, "/Views/Iteration1/MapDirections.fxml", "/Views/Iteration1/MapMenu.fxml");
     }
 
     @FXML
