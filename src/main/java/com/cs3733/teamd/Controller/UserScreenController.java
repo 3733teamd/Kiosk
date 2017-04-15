@@ -35,6 +35,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 //import javax.xml.soap.Text;
 
+import javax.swing.*;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -89,6 +90,29 @@ public class UserScreenController extends AbsController{
     String output = "";
     Tag starttag = null;
     @FXML private void initialize() {
+
+        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                double scaleFactor = 0;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+
+
+
+                } else if(event.getDeltaY() < 0){
+                    scaleFactor = 1/SCALE_DELTA;
+                }else{
+                    event.consume();
+                }
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
+                event.consume();
+            }});
+
         TextFields.bindAutoCompletion(TypeDestination, nodeList);
         setText();
         directions.setText(output);
@@ -126,52 +150,6 @@ public class UserScreenController extends AbsController{
         //zoom functions?
         imagePane.getChildren();//.add(group);
         floorMap.setPreserveRatio(true);
-        /*imagePane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override public void handle(ScrollEvent event) {
-                event.consume();
-
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor =
-                        (event.getDeltaY() > 0)
-                                ? SCALE_DELTA
-                                : 1/SCALE_DELTA;
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
-                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
-
-            }
-        });
-
-        imagePane.setOnMousePressed((t) -> {
-                    orgSceneX = t.getSceneX();
-                    orgSceneY = t.getSceneY();
-
-
-                    AnchorPane c = (AnchorPane) (t.getSource());
-                    c.toFront();
-                });
-        imagePane.setOnMouseDragged((t) -> {
-            //if(state ==states.add) {
-            double offsetX = t.getSceneX() - orgSceneX;
-            double offsetY = t.getSceneY() - orgSceneY;
-
-            AnchorPane c = (AnchorPane) (t.getSource());
-
-            c.setTranslateX(c.getLayoutX()+offsetX);
-            c.setTranslateY(c.getLayoutY()+offsetY);
-
-
-            orgSceneX = t.getSceneX();
-            orgSceneY = t.getSceneY();
-
-
-            //}
-        });*/
         final double SCALE_DELTA = 1.1;
         //final Group group = new Group(floorMap, MapCanvas);
 
