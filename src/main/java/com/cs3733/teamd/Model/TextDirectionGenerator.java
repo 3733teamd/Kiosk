@@ -19,16 +19,20 @@ public class TextDirectionGenerator {
 
     private boolean endAtElevator;
 
-    private List<Point> points;
+    private List<Node> points;
+
+    private int onFloor;
+
+    private List<String> pointsOfInterestNames;
 
     /**
      * Creates a Text Direction Generator
      * @param points - Points to Create Text Directions from
-     * @param endAtElevator - Is the path ending at an elevator or the destination?
      */
-    public TextDirectionGenerator(List<Point> points, boolean endAtElevator) {
+    public TextDirectionGenerator(List<Node> points, int onFloor) {
         this.points = points;
-        this.endAtElevator = endAtElevator;
+        this.onFloor = onFloor;
+        this.pointsOfInterestNames = new ArrayList<String>();
     }
     // This method will generate text directions from the points
 
@@ -156,10 +160,13 @@ public class TextDirectionGenerator {
     private List<Direction> generateDirections() {
         ArrayList<Direction> directions = new ArrayList<Direction>();
         System.out.println("Generating Directions..");
-        Point currentPoint, previousPoint, nextPoint;
+        Node currentPoint, previousPoint, nextPoint;
 
         for(int i = 0; i < points.size(); i++) {
             currentPoint = points.get(i);
+            if(currentPoint.getFloor() != onFloor) {
+                continue;
+            }
             // These next two if clauses make sure we have a next point and a previous point
             if(i!=0) {
                 previousPoint = points.get(i - 1);
@@ -174,14 +181,16 @@ public class TextDirectionGenerator {
             }
 
             if(nextPoint == null) {
-                if(!endAtElevator) {
-                    directions.add(Direction.ARRIVED);
-                } else {
-                    directions.add(Direction.PROCEED_TO_ELEVATOR);
-                }
+                directions.add(Direction.ARRIVED);
+                break;
+            } else if(nextPoint.getFloor() != onFloor) {
+                directions.add(Direction.PROCEED_TO_ELEVATOR);
                 break;
             }
-            if(previousPoint == null) {
+            if(
+                    (previousPoint == null) ||
+                    (previousPoint.getFloor() != currentPoint.getFloor())
+                    ) {
                 directions.add(Direction.GO_STRAIGHT);
                 // Continue to next loop
                 continue;
@@ -197,6 +206,9 @@ public class TextDirectionGenerator {
             Direction d = getDirectionFromDeltas(
                     deltaPrevToCurrentX, deltaPrevToCurrentY, deltaCurrentToNextX, deltaCurrentToNextY
             );
+            if(d != Direction.GO_STRAIGHT) {
+                System.out.println(currentPoint.getTags().size());
+            }
             directions.add(d);
         }
 

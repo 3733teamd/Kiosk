@@ -238,11 +238,18 @@ public class UserScreenController extends AbsController{
                 System.out.println("plot"+ startfloor);
                 pointsStartFloor.add(getConvertedPoint(node));
                 index++;
-            }
-            else if(node.getFloor() == destfloor){
+            } else if(node.getFloor() == destfloor){
                 System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
             }
+        }
+        TextDirectionGenerator g = new TextDirectionGenerator(
+                path,
+                onFloor
+        );
+        List<String> directionsArray = g.generateTextDirections();
+        for(String token: directionsArray) {
+            System.out.println(token);
         }
         indexOfElevator = index;
         if(startfloor == onFloor) {
@@ -278,14 +285,7 @@ public class UserScreenController extends AbsController{
         }
         //Set radius of first node
         int radius = 7;
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                path,
-                (startfloor == onFloor)&&(startfloor != destfloor)
-        );
-        List<String> directionsArray = g.generateTextDirections();
-        for(String token: directionsArray) {
-            System.out.println(token);
-        }
+
 
         //Iterate through the path
         for  (int i = 0; i < pathlength; i++){
