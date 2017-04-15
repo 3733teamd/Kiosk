@@ -4,6 +4,8 @@ import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -43,10 +45,12 @@ public class UserScreenController extends AbsController{
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
+    public Button SetButton;
     public TextField TypeDestination;
     public Text EnterDest;
     public Text floor;
     public Label directionLabel;
+    public ChoiceBox FloorMenu;
     @FXML
     private Slider floorSlider;
     public ImageView floorMap;
@@ -67,7 +71,8 @@ public class UserScreenController extends AbsController{
     private Tag starttag = null;
     private int startfloor = 0;
     private int destfloor = 0;
-
+    LinkedList<Integer> floors = new LinkedList<Integer>();
+    public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
     @FXML private void initialize()
     {
@@ -76,12 +81,44 @@ public class UserScreenController extends AbsController{
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
         setFloorSliderListener();
+        if(floors.size() == 0){
+            floors.addLast(1);
+            floors.addLast(2);
+            floors.addLast(3);
+            floors.addLast(4);
+            floors.addLast(5);
+            floors.addLast(6);
+            floors.addLast(7);
+        }
+        floorDropDown.addAll(floors);
+        FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue(floorDropDown.get(0));
+        setFloorMenuListener();
 
 
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
             draw();
         }
+    }
+
+    private void setFloorMenuListener(){
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                onFloor = new_val.intValue();
+                FloorMenu.setValue(onFloor);
+                floorMap.setImage(imgInt.display(onFloor));
+                gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+                output = "";
+                directions.setText(output);
+                System.out.println(onFloor);
+
+                if(pathNodes != null) {
+                    draw();
+                }
+            }
+        });
     }
 
     private void setFloorSliderListener(){
@@ -152,13 +189,15 @@ public class UserScreenController extends AbsController{
         Tag currentTag;
 
         String startTagString = "Kiosk";
-        for(int itr = 0; itr < tagCount; itr++){
-            currentTag = dir.getTags().get(itr);
-            //If match is found create path to node from start nodes
-            if(startTagString.equals(currentTag.getTagName())){
-                starttag = currentTag;
-            }
+        if(starttag == null) {
+            for (int itr = 0; itr < tagCount; itr++) {
+                currentTag = dir.getTags().get(itr);
+                //If match is found create path to node from start nodes
+                if (startTagString.equals(currentTag.getTagName())) {
+                    starttag = currentTag;
+                }
 
+            }
         }
         // Do we have a starting tag???
         if(starttag != null) {
@@ -206,6 +245,22 @@ public class UserScreenController extends AbsController{
             draw();
         }
 
+    }
+
+    @FXML
+    public  void onSet(ActionEvent actionEvent) throws IOException{
+        int tagCount = dir.getTags().size();
+        Tag currentTag;
+        String startTagString = TypeDestination.getText();
+
+        for (int itr = 0; itr < tagCount; itr++) {
+            currentTag = dir.getTags().get(itr);
+            //If match is found create path to node from start nodes
+            if (startTagString.equals(currentTag.getTagName())) {
+                starttag = currentTag;
+            }
+
+        }
     }
 
     @FXML
