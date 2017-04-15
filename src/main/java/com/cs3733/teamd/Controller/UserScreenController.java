@@ -43,8 +43,10 @@ public class UserScreenController extends AbsController{
     public Button SpanishButton;
     public Button SearchButton;
     public TextField TypeDestination;
-    public Text EnterDest;
-    public Text floor;
+    @FXML
+    public Label EnterDest;
+    @FXML
+    public Label floor;
     public Label directionLabel;
     @FXML
     private Slider floorSlider;
@@ -132,7 +134,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+//        switchScreen(MMGpane, "/Views/UserScreen.fxml");
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
