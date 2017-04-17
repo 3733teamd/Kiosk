@@ -50,7 +50,7 @@ public class PathfinderTest {
         Pathfinder pf = new Pathfinder(a,d);
         LinkedList<Node> calulatedPath = new LinkedList<>();
         try {
-            calulatedPath = pf.shortestPath();
+            calulatedPath = pf.aStarPath();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class PathfinderTest {
         Pathfinder pf = new Pathfinder(a,f);
         LinkedList<Node> calulatedPath = new LinkedList<>();
         try {
-            calulatedPath = pf.shortestPath();
+            calulatedPath = pf.aStarPath();
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -127,7 +127,7 @@ public class PathfinderTest {
 
         Pathfinder pf = new Pathfinder(k, j);
 
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calulatedPath = pf.aStarPath();
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(j); actualPath.add(i); actualPath.add(k); // backwards path
 

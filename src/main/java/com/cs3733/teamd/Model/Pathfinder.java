@@ -41,7 +41,7 @@ public class Pathfinder {
      */
     public boolean hasPath() {
         try {
-            shortestPath();
+            aStarPath();
         } catch (PathNotFoundException e){
             return false;
         }
@@ -65,7 +65,7 @@ public class Pathfinder {
         return lowest;
     }
 
-    public LinkedList<Node> BFSPath() throws PathNotFoundException {
+    private LinkedList<Node> bfsPath() throws PathNotFoundException {
         Queue<Node> seen = new LinkedList<Node>();
         LinkedList<Node> openSet = new LinkedList<Node>();
 
@@ -91,7 +91,7 @@ public class Pathfinder {
         throw new PathNotFoundException("Path not found between " + start + " and " + end);
     }
 
-    public LinkedList<Node> DFSPath() throws PathNotFoundException {
+    private LinkedList<Node> dfsPath() throws PathNotFoundException {
         Stack<Node> openSet = new Stack<Node>();
         LinkedList<Node> discovered = new LinkedList<Node>();
 
@@ -114,18 +114,38 @@ public class Pathfinder {
                 }
             }
             //No path found
-            throw pathNotFound;
+            throw new PathNotFoundException("Path not found between " + start + " and " + end);
         }
 
 
 
-        throw pathNotFound;
+        throw new PathNotFoundException("Path not found between " + start + " and " + end);
     }
+
     /**
-     * Gives shortest path
-     * @return a linked list of nodes from start to end
+     * Get's the shortest path using application configuration strategy
+     * @return
+     * @throws PathNotFoundException
      */
     public LinkedList<Node> shortestPath() throws PathNotFoundException {
+        // Which strategy shall we use?
+        ApplicationConfiguration config = ApplicationConfiguration.getInstance();
+        switch(config.getCurrentSearchAlgorithm()) {
+            case A_STAR:
+                return aStarPath();
+            case BFS:
+                return bfsPath();
+            case DFS:
+                return dfsPath();
+            default:
+                return null;
+        }
+    }
+    /**
+     * Gives shortest path using a start algorithm
+     * @return a linked list of nodes from start to end
+     */
+    private LinkedList<Node> aStarPath() throws PathNotFoundException {
 
         // Set of nodes already evaluated
         List<Node> closedSet = new ArrayList<Node>();
