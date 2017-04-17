@@ -82,7 +82,7 @@ public class UserScreenController extends AbsController{
         floorMap.setImage(imgInt.display(floorNum));
         setFloorSliderListener();
 
-
+        findStartTag();
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
             draw();
@@ -111,11 +111,33 @@ public class UserScreenController extends AbsController{
             }
         });
     }
+
+    /**
+     * Find's the start tag...
+     */
+    private void findStartTag() {
+        //Gets nodes and tags from directory
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
+        //Makes a temporary holder for values
+        Tag currentTag;
+
+        String startTagString = "Kiosk";
+        for(int itr = 0; itr < tagCount; itr++){
+            currentTag = dir.getTags().get(itr);
+            //If match is found create path to node from start nodes
+            if(startTagString.equals(currentTag.getTagName())){
+                starttag = currentTag;
+            }
+
+        }
+    }
+
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
-        pathNodes = null;
+        //pathNodes = null;
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
         setSpanishText();
     }
@@ -151,21 +173,12 @@ public class UserScreenController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
         Main.DestinationSelected = TypeDestination.getText();
-        //Gets nodes and tags from directory
-        int tagCount = dir.getTags().size();
-        int nodeCount = dir.getNodes().size();
+
+        findStartTag();
         //Makes a temporary holder for values
         Tag currentTag;
-
-        String startTagString = "Kiosk";
-        for(int itr = 0; itr < tagCount; itr++){
-            currentTag = dir.getTags().get(itr);
-            //If match is found create path to node from start nodes
-            if(startTagString.equals(currentTag.getTagName())){
-                starttag = currentTag;
-            }
-
-        }
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
@@ -239,6 +252,10 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         int index = 0;
+        if(starttag == null) {
+            System.err.println("Start Tag is Not Populated");
+            return;
+        }
         startfloor = starttag.getNodes().getFirst().getFloor();
         destfloor = path.getFirst().getFloor();
         System.out.println(destfloor);
