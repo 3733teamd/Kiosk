@@ -10,6 +10,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -55,12 +57,16 @@ public class UserScreenController extends AbsController{
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
+    public Button SetButton;
     public TextField TypeDestination;
     public Text EnterDest;
     public Text floor;
     public Label directionLabel;
+    public ChoiceBox FloorMenu;
+    public Button StartFloorButton;
+    public Button MiddleFloorButton;
+    public Button EndFloorButton;
     @FXML
-    private Slider floorSlider;
     public ImageView floorMap;
     public AnchorPane imagePane;
     public Canvas MapCanvas;
@@ -88,6 +94,9 @@ public class UserScreenController extends AbsController{
 
 
 
+    private int midfloor = 0;
+    LinkedList<Integer> floors = new LinkedList<Integer>();
+    public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
     @FXML
     private void initialize()
@@ -98,8 +107,22 @@ public class UserScreenController extends AbsController{
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
-        setFloorSliderListener();
-
+        if(floors.size() == 0){
+            floors.addLast(1);
+            floors.addLast(2);
+            floors.addLast(3);
+            floors.addLast(4);
+            floors.addLast(5);
+            floors.addLast(6);
+            floors.addLast(7);
+        }
+        floorDropDown.addAll(floors);
+        FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue(floorDropDown.get(0));
+        setFloorMenuListener();
+        StartFloorButton.setVisible(false);
+        MiddleFloorButton.setVisible(false);
+        EndFloorButton.setVisible(false);
 
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
@@ -107,29 +130,29 @@ public class UserScreenController extends AbsController{
         }
     }
 
-    private void setFloorSliderListener(){
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+    //Function to set the listener for the floor choice box
+    private void setFloorMenuListener(){
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val)  {
-                if (!floorSlider.isValueChanging()) {
-                    onFloor = new_val.intValue();
-                    floorSlider.setValue(onFloor);
-                    //floorMap.setImage(imageHashMap.get(onFloor));
-                    floorMap.setImage(imgInt.display(onFloor));
-                    gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-                    output = "";
-                    directions.setText(output);
-                    System.out.println(onFloor);
+                                Number old_val, Number new_val) {
+                onFloor = new_val.intValue();
+                FloorMenu.setValue(onFloor);
+                floorMap.setImage(imgInt.display(onFloor));
+                gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+                output = "";
+                directions.setText(output);
+                System.out.println(onFloor);
 
-                    if (pathNodes != null) {
-                        draw();
-                    }
+                if(pathNodes != null) {
+                    draw();
+
 
                 }
             }
         });
 
     }
+
 
     private void panMethods(){
 
@@ -256,13 +279,15 @@ public class UserScreenController extends AbsController{
         Tag currentTag;
 
         String startTagString = "Kiosk";
-        for(int itr = 0; itr < tagCount; itr++){
-            currentTag = dir.getTags().get(itr);
-            //If match is found create path to node from start nodes
-            if(startTagString.equals(currentTag.getTagName())){
-                starttag = currentTag;
-            }
+        if(starttag == null) {
+            for (int itr = 0; itr < tagCount; itr++) {
+                currentTag = dir.getTags().get(itr);
+                //If match is found create path to node from start nodes
+                if (startTagString.equals(currentTag.getTagName())) {
+                    starttag = currentTag;
+                }
 
+            }
         }
         // Do we have a starting tag???
         if(starttag != null) {
@@ -313,9 +338,25 @@ public class UserScreenController extends AbsController{
     }
 
     @FXML
+    //Function to allow the user to change the start to wherever they wish
+    public  void onSet(ActionEvent actionEvent) throws IOException{
+        int tagCount = dir.getTags().size();
+        Tag currentTag;
+        String startTagString = TypeDestination.getText();
+
+        for (int itr = 0; itr < tagCount; itr++) {
+            currentTag = dir.getTags().get(itr);
+            //If match is found create path to node from start nodes
+            if (startTagString.equals(currentTag.getTagName())) {
+                starttag = currentTag;
+            }
+
+        }
+    }
+
+    @FXML
     //Starts path displaying process
     private void draw(){
-        System.out.println("Begin drawing");
         plotPath(UserScreenController.pathNodes);
     }
 
@@ -331,8 +372,16 @@ public class UserScreenController extends AbsController{
     //Converts a given path of nodes to a path of points and then draws it
     public void plotPath(LinkedList<Node> path){
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
+        LinkedList<Point> pointsMidFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
+        // ensure values are reset
         int index = 0;
+        startfloor = 0;
+        destfloor = 0;
+        midfloor = 0;
+        StartFloorButton.setVisible(false);
+        MiddleFloorButton.setVisible(false);
+        EndFloorButton.setVisible(false);
         startfloor = starttag.getNodes().getFirst().getFloor();
         destfloor = path.getFirst().getFloor();
         System.out.println(destfloor);
@@ -345,6 +394,9 @@ public class UserScreenController extends AbsController{
             } else if(node.getFloor() == destfloor){
                 System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
+            }
+            else if(node.getFloor() == 1 && startfloor != 1 && destfloor != 1){
+                pointsMidFloor.add(getConvertedPoint(node));
             }
         }
         TextDirectionGenerator g = new TextDirectionGenerator(
@@ -364,10 +416,31 @@ public class UserScreenController extends AbsController{
         if(startfloor == onFloor) {
             System.out.println("startfloor");
             drawPathFromPoints(gc, pointsStartFloor);
+            EndFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
         }
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);
+            StartFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
+        }
+        else if(midfloor == onFloor){
+            System.out.println("midfloor");
+            drawPathFromPoints(gc, pointsMidFloor);
+            StartFloorButton.setVisible(true);
+            EndFloorButton.setVisible(true);
+        }
+        else{
+            StartFloorButton.setVisible(true);
+            EndFloorButton.setVisible(true);
+            if(midfloor != 0){
+                MiddleFloorButton.setVisible(true);
+            }
         }
     }
 
@@ -418,6 +491,60 @@ public class UserScreenController extends AbsController{
             //Set intermediate points to be smaller and blue
             gc.setFill(javafx.scene.paint.Color.BLUE);
             radius = 5;
+        }
+    }
+
+    @FXML
+    //Function to allow the user to change to the starting floor of path
+    public  void ShowStart(ActionEvent actionEvent) throws IOException{
+        if(startfloor != 0) {
+            onFloor = startfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
+
+            if (pathNodes != null) {
+                draw();
+            }
+        }
+    }
+
+    @FXML
+    //Function to allow the user to change to the middle floor of path
+    public  void ShowMiddle(ActionEvent actionEvent) throws IOException{
+        if(midfloor != 0) {
+            onFloor = midfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
+
+            if (pathNodes != null) {
+                draw();
+            }
+        }
+    }
+
+    @FXML
+    //Function to allow the user to change to the ending floor of path
+    public  void ShowEnd(ActionEvent actionEvent) throws IOException{
+        if(destfloor != 0) {
+            onFloor = destfloor;
+            FloorMenu.setValue(onFloor);
+            floorMap.setImage(imgInt.display(onFloor));
+            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            output = "";
+            directions.setText(output);
+            System.out.println(onFloor);
+
+            if (pathNodes != null) {
+                draw();
+            }
         }
     }
 }

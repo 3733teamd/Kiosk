@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,7 +21,10 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -60,7 +64,6 @@ public class EditMapScreenController extends AbsController{
 
     public Button EditProf;
     public Button EditTag;
-    public Slider floorSlider;
     public Button LoginButton;
     public Button CreateUserButton;
     public Button SpanishButton;
@@ -75,6 +78,7 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
+    public ChoiceBox FloorMenu;
     //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
@@ -117,6 +121,9 @@ public class EditMapScreenController extends AbsController{
     List<String> allTagNames = new ArrayList<String>();
     int i=50;
 
+    LinkedList<Integer> floors = new LinkedList<Integer>();
+    public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
+
     @FXML
     public void initialize(){
 setFloorSliderListener();
@@ -126,6 +133,7 @@ setFloorSliderListener();
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
+        //String[] sug= {"app","cat", "orage", "adsdf", " ddddd", "ddees"};
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
@@ -143,6 +151,37 @@ setFloorSliderListener();
             }
         });
 
+        if(floors.size() == 0){
+            floors.addLast(1);
+            floors.addLast(2);
+            floors.addLast(3);
+            floors.addLast(4);
+            floors.addLast(5);
+            floors.addLast(6);
+            floors.addLast(7);
+        }
+        floorDropDown.addAll(floors);
+        FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue(floorDropDown.get(0));
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    //floorMap.setImage(imageHashMap.get(floor));
+                    floorMap.setImage(imgInt.display(floor));
+
+                    //TODO: heart of error
+                    imagePane.getChildren().removeAll(floorCircs);
+                    imagePane.getChildren().removeAll(floorLines);
+                    floorCircs.clear();
+                    floorLines.clear();
+
+                    drawfloorNodes();
+
+            }
+        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
