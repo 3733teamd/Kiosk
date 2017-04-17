@@ -413,8 +413,8 @@ setFloorSliderListener();
 
             Circle c = (Circle) (t.getSource());
 
-            c.setCenterX((c.getCenterX() + offsetX*mapCanvas.getScaleX()));//*1091/mapCanvas.getScaleX());
-            c.setCenterY((c.getCenterY() + offsetY*mapCanvas.getScaleY()));
+            c.setCenterX((c.getCenterX() + offsetX/mapCanvas.getScaleX()));//*1091/mapCanvas.getScaleX());
+            c.setCenterY((c.getCenterY() + offsetY/mapCanvas.getScaleY()));
 
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
