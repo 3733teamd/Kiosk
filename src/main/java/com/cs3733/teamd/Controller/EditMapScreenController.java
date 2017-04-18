@@ -2,12 +2,15 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +20,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +31,6 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.*;
 //TODO deleate connections
@@ -44,8 +45,9 @@ import java.util.*;
  */
 public class EditMapScreenController extends AbsController{
 
-    public String errorString = "Invalid Action";
+    public String errorString = Main.bundle.getString("InvalidAction");
 
+    public boolean loading=false;
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -59,7 +61,6 @@ public class EditMapScreenController extends AbsController{
 
     public Button EditProf;
     public Button EditTag;
-    public Slider floorSlider;
     public Button LoginButton;
     public Button CreateUserButton;
     public Button SpanishButton;
@@ -74,6 +75,7 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane MMGpane;
     public AnchorPane imagePane;
     public TextField addTag;
+    public ChoiceBox FloorMenu;
     //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
@@ -104,6 +106,9 @@ public class EditMapScreenController extends AbsController{
     public CircleNode scirc;
     public Boolean switchS =true;
     public int floor =4;
+    final double SCALE_DELTA = 1.1;
+    int onFloor = Main.currentFloor;
+
 
     @FXML
     private Pane mapCanvas;
@@ -113,8 +118,15 @@ public class EditMapScreenController extends AbsController{
     List<String> allTagNames = new ArrayList<String>();
     int i=50;
 
+    LinkedList<Integer> floors = new LinkedList<Integer>();
+    public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
+
     @FXML
     public void initialize(){
+        setFloorSliderListener();
+        overrideScrollWheel();
+        panMethods();
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
@@ -136,27 +148,22 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
+        if(floors.size() == 0){
+            floors.addLast(1);
+            floors.addLast(2);
+            floors.addLast(3);
+            floors.addLast(4);
+            floors.addLast(5);
+            floors.addLast(6);
+            floors.addLast(7);
+        }
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
+        FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue(floorDropDown.get(0));
 
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if (!floorSlider.isValueChanging()) {
-                    floor = new_val.intValue();
-                    floorSlider.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(floor));
-                    floorMap.setImage(imgInt.display(floor));
 
-                    //TODO: heart of error
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
-
-                    drawfloorNodes();
-
-                }
-            }
-        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
@@ -181,15 +188,66 @@ public class EditMapScreenController extends AbsController{
 
         drawfloorNodes();
 
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
+            EditTag.setFont(Font.font("System",14));
+            LoginButton.setFont(Font.font("System",14));
+            CreateUserButton.setFont(Font.font("System",14));
 
-//added initalize
-        //zoom functions?
+        } else {
+            EditTag.setFont(Font.font("System",20));
+            LoginButton.setFont(Font.font("System",20));
+            CreateUserButton.setFont(Font.font("System",20));
+        }
+
+        //drawfloorNodes();
+//
+
+    }//initialize end
+
+
+    private void setFloorSliderListener(){
+        /*floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val)  {
+                if (!floorSlider.isValueChanging()) {
+                    floor = new_val.intValue();
+                    floorSlider.setValue(floor);
+                    //floorMap.setImage(imageHashMap.get(onFloor));
+                    floorMap.setImage(imgInt.display(floor));
+                    drawfloorNodes();
+
+                }
+            }
+        });*/
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                floor = new_val.intValue();
+                FloorMenu.setValue(floor);
+                //floorMap.setImage(imageHashMap.get(floor));
+                floorMap.setImage(imgInt.display(floor));
+
+                /*//TODO: heart of error
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+*/
+                drawfloorNodes();
+
+            }
+        });
+    }
+    private void panMethods(){
+
+        //zoom functions
+        //imagePane.getChildren();
+        floorMap.setPreserveRatio(true);
         final double SCALE_DELTA = 1.1;
-        //final Group group = new Group(floorMap, MapCanvas);
 
-        //imagePane.getChildren().add(group);
-
-        final Group scrollContent = new Group(imagePane, floorMap, mapCanvas);
+        final Group scrollContent = new Group(floorMap, mapCanvas);
         scrollPane.setContent(scrollContent);
 
         scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -203,38 +261,7 @@ public class EditMapScreenController extends AbsController{
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
 
-        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
 
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
-                        : 1 / SCALE_DELTA;
-
-                // amount of scrolling in each direction in scrollContent coordinate
-                // units
-                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
-
-
-               // imagePane.setScaleX(imagePane.getScaleX()*scaleFactor);
-               // imagePane.setScaleY(imagePane.getScaleY()*scaleFactor);
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                mapCanvas.setScaleX(mapCanvas.getScaleX()*scaleFactor);
-                mapCanvas.setScaleY(mapCanvas.getScaleY()*scaleFactor);
-
-                // move viewport so that old center remains in the center after the
-                // scaling
-                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
-                System.out.println("scrolling");
-
-            }
-        });
 
         // Panning via drag....
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
@@ -248,55 +275,53 @@ public class EditMapScreenController extends AbsController{
         scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
-                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
-                double desiredH = scrollPane.getHvalue() - deltaH;
-                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                    double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                    double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                    double desiredH = scrollPane.getHvalue() - deltaH;
+                    scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
 
-                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
-                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
-                double desiredV = scrollPane.getVvalue() - deltaV;
-                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+                    double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                    double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                    double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                    double desiredV = scrollPane.getVvalue() - deltaV;
+                    scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+                }
             }
         });
 
-        drawfloorNodes();
-
 
     }
 
-    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
-        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
-        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
-        return new Point2D(scrollXOffset, scrollYOffset);
+    private void overrideScrollWheel() {
+        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                double scaleFactor = 0;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+
+
+                } else if (event.getDeltaY() < 0) {
+                    scaleFactor = 1 / SCALE_DELTA;
+                } else {
+                    event.consume();
+                }
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                mapCanvas.setScaleX(mapCanvas.getScaleX() * scaleFactor);
+                mapCanvas.setScaleY(mapCanvas.getScaleY() * scaleFactor);
+                event.consume();
+            }
+        });
     }
 
-    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
-        double scrollXOffset = scrollOffset.getX();
-        double scrollYOffset = scrollOffset.getY();
-        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
-        if (extraWidth > 0) {
-            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
-            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
-            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
-        if (extraHeight > 0) {
-            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
-            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
-            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
-        } else {
-            scroller.setHvalue(scroller.getHmin());
-        }
-    }
+
+
+
+
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
@@ -326,7 +351,9 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void addNode(){
         CircleNode circ = createCircle(dir.saveNode(50,50,floor), 5, Color.RED);
-        imagePane.getChildren().add(circ);
+        floorCircs.add(circ);
+        mapCanvas.getChildren().add(circ);
+
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
 
@@ -339,6 +366,8 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void connectNode(CircleNode s1, CircleNode s2){
+
+
         Line line = connect(s1,s2);
         line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
@@ -356,22 +385,15 @@ public class EditMapScreenController extends AbsController{
         if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
             line.setFill(Color.YELLOW);
             line.setStrokeWidth(2);
-            imagePane.getChildren().add(line);
+            mapCanvas.getChildren().add(line);
         }else{
-            imagePane.getChildren().add(line);
+            mapCanvas.getChildren().add(line);
         }
 
     }
 
-
     private CircleNode createCircle(Node n, double r, Color color) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
-
-        if (n.hasElevator()){
-            color = Color.YELLOW;
-        }else{
-            color = Color.RED;
-        }
         CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
 
         circleMap.put(n, circle);
@@ -382,7 +404,6 @@ public class EditMapScreenController extends AbsController{
         circle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-            System.out.println(circle.referenceNode.getFloor());
 
 
             CircleNode c = (CircleNode) (t.getSource());
@@ -411,38 +432,10 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }
 
-
-            System.out.println(select1.toString() + " " + select2.toString());
-
-
-            /*if(switchS ==true){
-                //select1.setFill(Color.RED);
-                select1 =c;
-                s1.setID(n.getID());
-                s= n.getID();
-                //System.out.println("s1" + select1.getCenterX());
-                switchS=false;
-                c.setFill(Color.BLACK);
-
-            }
-            else{
-                select1.setFill(Color.GREEN);
-                select2=c;
-                s2.setID(n.getID());
-                sa=n.getID();
-                c.setFill(Color.BLACK);
-                //System.out.println("s2:" +select2.getCenterX());
-                switchS=true;
-            }*/
-//            System.out.println(nodes.get(c).getX());
         });
         circle.setOnMouseReleased((t)->{
 
-            if(circle.referenceNode.hasElevator()) {
-                circle.setFill(Color.YELLOW);
-            }else{
-                circle.setFill(Color.RED);
-            }
+            circle.setFill(Color.RED);
 
             select1.setFill(Color.GREEN);
             if(select2 != null && select1 != select2){
@@ -450,10 +443,6 @@ public class EditMapScreenController extends AbsController{
             }
 
             updatePosition(t);
-
-
-
-
         });
 
         circle.setOnMouseDragged((t) -> {
@@ -463,8 +452,8 @@ public class EditMapScreenController extends AbsController{
 
             Circle c = (Circle) (t.getSource());
 
-            c.setCenterX(c.getCenterX() + offsetX);
-            c.setCenterY(c.getCenterY() + offsetY);
+            c.setCenterX((c.getCenterX() + offsetX/mapCanvas.getScaleX()));//*1091/mapCanvas.getScaleX());
+            c.setCenterY((c.getCenterY() + offsetY/mapCanvas.getScaleY()));
 
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
@@ -490,7 +479,6 @@ public class EditMapScreenController extends AbsController{
 
         line.setStrokeWidth(1);
         line.setStrokeLineCap(StrokeLineCap.BUTT);
-//        line.getStrokeDashArray().setAll(1.0, 4.0);
 
         return line;
     }
@@ -516,37 +504,27 @@ public class EditMapScreenController extends AbsController{
 
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
-            if (n.hasElevator()){
-                CircleNode circ = createCircle(n, 5, Color.YELLOW);
-            }else {
-                CircleNode circ = createCircle(n, 5, Color.RED);
-            }
+            CircleNode circ = createCircle(n, 5, Color.RED);
         }
     }
 
     private void drawfloorNodes(){
+        mapCanvas.getChildren().clear();
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
                 try {
-                    imagePane.getChildren().add(circleMap.get(n));
+                    mapCanvas.getChildren().add(circleMap.get(n));
                     floorCircs.add(circleMap.get(n));
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
-
-                //System.out.println(circ.getCenterX());
-               // nodes.put(circ, n);
             }
         }
 
         if(select1 != null && select2 != null) {
             System.out.println(select1.toString() + " " + select2.toString());
         }
-
-
-        //System.out.println(circleMap.size());
-        //draws stored connections
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
@@ -578,13 +556,6 @@ public class EditMapScreenController extends AbsController{
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
-            selectedTag.updateConnections();
-
-            if(select1.referenceNode.hasElevator()){
-                select1.setFill(Color.YELLOW);
-            }
-
-
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
@@ -600,9 +571,6 @@ public class EditMapScreenController extends AbsController{
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
-            if(selectedCurrentTag.isConnectable()){
-                selectedCurrentTag.updateConnections();
-            }
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
@@ -615,7 +583,7 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
-        System.out.print(select1.lineMap.get(select2).getStartX());
+        //System.out.print(select1.lineMap.get(select2).getStartX());
 
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
@@ -624,7 +592,7 @@ public class EditMapScreenController extends AbsController{
 
             //System.out.println("Line xcoord" +l.getEndX());
 
-            imagePane.getChildren().remove(l);
+            mapCanvas.getChildren().remove(l);
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
             select2.lineMap.remove(select1);
@@ -640,7 +608,7 @@ public class EditMapScreenController extends AbsController{
         boolean response = dir.deleteNode(select1.referenceNode);
         if(response){
             errorBox.setText("");
-            imagePane.getChildren().remove(select1);
+            mapCanvas.getChildren().remove(select1);
             select1 = select2;
             select2= null;
         }else{
@@ -657,19 +625,7 @@ public class EditMapScreenController extends AbsController{
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(Main.Langugage == "English") {
-            Main.Langugage = "Spanish";
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.spanish);
-        }
-        else{
-            Main.Langugage = "English";
-
-            Main.bundle = ResourceBundle.getBundle("MyLabels", Main.local);
-        }
-
+        super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
-
-
     }
 }
