@@ -222,7 +222,7 @@ setFloorSliderListener();
 
 
     private void setFloorSliderListener(){
-        
+
 
     }
     private void panMethods(){
