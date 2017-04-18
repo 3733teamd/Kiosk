@@ -423,6 +423,7 @@ public class UserScreenController extends AbsController{
                 MiddleFloorButton.setVisible(true);
             }
         }
+        
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);

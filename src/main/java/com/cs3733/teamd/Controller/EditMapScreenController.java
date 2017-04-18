@@ -123,7 +123,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-//setFloorSliderListener();
+setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -157,30 +157,11 @@ public class EditMapScreenController extends AbsController{
             floors.addLast(6);
             floors.addLast(7);
         }
-        if(floorDropDown.size() == 0) {
-            floorDropDown.addAll(floors);
-        }
+        floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
 
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(floor));
-                    floorMap.setImage(imgInt.display(floor));
 
-                    //TODO: heart of error
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
-
-                    drawfloorNodes();
-
-            }
-        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
@@ -223,8 +204,8 @@ public class EditMapScreenController extends AbsController{
     }//initialize end
 
 
-    /*private void setFloorSliderListener(){
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+    private void setFloorSliderListener(){
+        /*floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val)  {
                 if (!floorSlider.isValueChanging()) {
@@ -236,9 +217,27 @@ public class EditMapScreenController extends AbsController{
 
                 }
             }
-        });
+        });*/
 
-    }*/
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                floor = new_val.intValue();
+                FloorMenu.setValue(floor);
+                //floorMap.setImage(imageHashMap.get(floor));
+                floorMap.setImage(imgInt.display(floor));
+
+                /*//TODO: heart of error
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+*/
+                drawfloorNodes();
+
+            }
+        });
+    }
     private void panMethods(){
 
         //zoom functions
