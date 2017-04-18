@@ -98,7 +98,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="4">
                      <children>
-                        <Label fx:id="floor" prefHeight="50.0" prefWidth="97.0" text="Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4">
+                        <Label fx:id="floor" alignment="CENTER" prefHeight="50.0" prefWidth="123.0" text="Floor" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4">
                            <font>
                               <Font size="34.0" />
                            </font>
@@ -162,7 +162,7 @@
                      <children>
                         <AnchorPane>
                            <children>
-                              <Label fx:id="directionLabel" prefHeight="55.0" prefWidth="259.0" text="Directions:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label fx:id="directionLabel" alignment="CENTER" prefHeight="55.0" prefWidth="259.0" text="Directions:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="38.0" />
                                  </font>
