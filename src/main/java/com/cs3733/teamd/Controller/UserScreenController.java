@@ -43,9 +43,7 @@ public class UserScreenController extends AbsController{
     public Button SpanishButton;
     public Button SearchButton;
     public TextField TypeDestination;
-    @FXML
     public Label EnterDest;
-    @FXML
     public Label floor;
     public Label directionLabel;
     @FXML

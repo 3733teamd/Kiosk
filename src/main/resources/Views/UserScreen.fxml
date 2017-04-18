@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -14,13 +21,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MMGpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
+<AnchorPane fx:id="MMGpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
    <children>
-      <VBox prefHeight="806.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="67.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
-                  <HBox prefHeight="40.0" prefWidth="1280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <HBox prefHeight="40.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="40.0" prefWidth="40.0">
                            <children>
@@ -39,52 +46,108 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <HBox prefHeight="40.0" prefWidth="1280.0" style="-fx-background-color: #e9ebee;">
+            <AnchorPane prefHeight="68.0" prefWidth="1280.0">
                <children>
-                  <Label prefHeight="60.0" prefWidth="323.0" text="Enter Destination:" />
-                  <TextField fx:id="TypeDestination" prefHeight="45.0" prefWidth="255.0" promptText="%typeDes" />
-                  <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#onSearch" prefHeight="28.0" prefWidth="205.0" text="Search">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Label prefHeight="59.0" prefWidth="140.0" text="Floor:" />
-                  <Slider fx:id="floorSlider" blockIncrement="1.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" prefHeight="40.0" prefWidth="325.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
-                  <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#onLogin" prefHeight="44.0" prefWidth="176.0" text="Login" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#onSpanish" prefHeight="44.0" prefWidth="183.0" text="Spanish">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="696.0" prefWidth="1292.0">
-               <children>
-                  <AnchorPane>
+                  <HBox prefHeight="56.0" prefWidth="1280.0" style="-fx-background-color: #e9ebee;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
-                        <Canvas fx:id="MapCanvas" height="685.0" layoutY="36.0" width="1091.0" />
+                        <GridPane prefHeight="56.0" prefWidth="1261.0" HBox.hgrow="ALWAYS">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="19.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="9.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="6.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="29.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="12.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <Label fx:id="EnterDest" prefHeight="56.0" prefWidth="323.0" text="Enter Destination:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="2">
+                                 <children>
+                                    <Button fx:id="SearchButton" mnemonicParsing="false" onAction="#onSearch" prefHeight="56.0" prefWidth="150.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="3">
+                                 <children>
+                                    <Label fx:id="floor" prefHeight="56.0" prefWidth="140.0" text="Floor:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="3" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="4">
+                                 <children>
+                                    <Slider fx:id="floorSlider" blockIncrement="1.0" layoutX="3.0" layoutY="3.0" majorTickUnit="1.0" max="7.0" min="1.0" minorTickCount="0" prefHeight="40.0" prefWidth="384.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0" GridPane.columnIndex="4" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="5">
+                                 <children>
+                                    <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#onLogin" prefHeight="56.0" prefWidth="128.0" text="Login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="6">
+                                 <children>
+                                    <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#onSpanish" prefHeight="56.0" prefWidth="154.0" text="Spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane GridPane.columnIndex="1">
+                                 <children>
+                                    <TextField fx:id="TypeDestination" prefHeight="56.0" prefWidth="255.0" promptText="%typeDes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <GridPane VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1230.0" minWidth="10.0" percentWidth="80.0" prefWidth="1036.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" percentWidth="20.0" prefWidth="244.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="712.0" prefWidth="962.0">
+                     <children>
+                        <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1019.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                        <Canvas fx:id="MapCanvas" height="685.0" layoutY="36.0" width="1011.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
-                  <VBox prefHeight="607.0" prefWidth="203.0">
+                  <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Label fx:id="directionLabel" text="Directions:">
-                           <font>
-                              <Font size="38.0" />
-                           </font>
-                        </Label>
-                        <TextArea fx:id="directions" prefHeight="656.0" prefWidth="189.0" wrapText="true" />
+                        <VBox prefHeight="699.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="directionLabel" text="Directions:">
+                                 <font>
+                                    <Font size="38.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="directions" prefHeight="656.0" prefWidth="189.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </AnchorPane>
                </children>
-            </HBox>
+            </GridPane>
          </children>
       </VBox>
    </children>
