@@ -505,9 +505,10 @@ public class EditMapScreenController extends AbsController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-            
+                CircleNode circ = createCircle(n, 5, Color.YELLOW);
+            }else {
+                CircleNode circ = createCircle(n, 5, Color.RED);
             }
-            CircleNode circ = createCircle(n, 5, Color.RED);
         }
     }
 
@@ -568,7 +569,7 @@ public class EditMapScreenController extends AbsController{
 
             if(selectedTag.isConnectable()){
                 selectedTag.updateConnections();
-                initialize();
+                //initialize();
             }
 
             currentTagBox.refresh();
