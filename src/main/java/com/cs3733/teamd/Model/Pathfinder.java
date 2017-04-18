@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Model;
 
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import com.cs3733.teamd.Model.Exceptions.PathNotFoundException;
 
 import java.util.*;
@@ -9,6 +10,8 @@ import java.util.*;
  * Created by tom on 3/31/17.
  */
 public class Pathfinder {
+
+    private static final int FLOOR_COST = 500;
 
     private Node start;
     private Node end;
@@ -24,6 +27,23 @@ public class Pathfinder {
         this.end = end;
         this.pathNotFound = new PathNotFoundException("Path not found between " + start + " and " + end);
     }
+
+    /**
+     * Creates a new Pathfinder
+     * @param start
+     * @param ends
+     */
+    public Pathfinder(Node start, List<Node> ends){
+        this.start = start;
+
+        // Made up a formula to measure distance between start and end node simply
+        // dist = | difference in floors | * FLOOR_COST + (horizontal distance between nodes)
+    }
+
+    
+
+
+
 
     public static double pathLength(LinkedList<Node> path){
 
@@ -88,7 +108,7 @@ public class Pathfinder {
             }
         }
 
-        throw new PathNotFoundException("Path not found between " + start + " and " + end);
+        throw pathNotFound;
     }
 
     private LinkedList<Node> dfsPath() throws PathNotFoundException {
