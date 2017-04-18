@@ -2,6 +2,8 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -9,14 +11,15 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -41,9 +44,8 @@ import java.util.*;
  */
 public class EditMapScreenController extends AbsController{
 
-    public String errorString = Main.bundle.getString("InvalidAction");
+    public String errorString = "Invalid Action";
 
-    public boolean loading=false;
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -73,6 +75,8 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane imagePane;
     public TextField addTag;
     //HashMap<List<CircleNode>,Line> circleLines;
+
+    public ScrollPane scrollPane;
 
     @FXML
     private Button disconnectNodeBtn;
@@ -177,19 +181,122 @@ public class EditMapScreenController extends AbsController{
 
         drawfloorNodes();
 
-        if(Main.Langugage=="Spanish"){
-            EditTag.setFont(Font.font("System",14));
-            LoginButton.setFont(Font.font("System",14));
-            CreateUserButton.setFont(Font.font("System",14));
 
-        }
-        else {
-            EditTag.setFont(Font.font("System",20));
-            LoginButton.setFont(Font.font("System",20));
-            CreateUserButton.setFont(Font.font("System",20));
-        }
+//added initalize
+        //zoom functions?
+        final double SCALE_DELTA = 1.1;
+        //final Group group = new Group(floorMap, MapCanvas);
 
-}
+        //imagePane.getChildren().add(group);
+
+        final Group scrollContent = new Group(imagePane, floorMap, mapCanvas);
+        scrollPane.setContent(scrollContent);
+
+        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable,
+                                Bounds oldValue, Bounds newValue) {
+                imagePane.setMinSize(newValue.getWidth(), newValue.getHeight());
+            }
+        });
+
+        scrollPane.setPrefViewportWidth(256);
+        scrollPane.setPrefViewportHeight(256);
+
+        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
+                        : 1 / SCALE_DELTA;
+
+                // amount of scrolling in each direction in scrollContent coordinate
+                // units
+                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
+
+
+               // imagePane.setScaleX(imagePane.getScaleX()*scaleFactor);
+               // imagePane.setScaleY(imagePane.getScaleY()*scaleFactor);
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                mapCanvas.setScaleX(mapCanvas.getScaleX()*scaleFactor);
+                mapCanvas.setScaleY(mapCanvas.getScaleY()*scaleFactor);
+
+                // move viewport so that old center remains in the center after the
+                // scaling
+                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
+                System.out.println("scrolling");
+
+            }
+        });
+
+        // Panning via drag....
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            }
+        });
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                double desiredH = scrollPane.getHvalue() - deltaH;
+                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                double desiredV = scrollPane.getVvalue() - deltaV;
+                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+            }
+        });
+
+        drawfloorNodes();
+
+
+    }
+
+    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
+            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+    }
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
@@ -219,9 +326,7 @@ public class EditMapScreenController extends AbsController{
     @FXML
     public void addNode(){
         CircleNode circ = createCircle(dir.saveNode(50,50,floor), 5, Color.RED);
-        floorCircs.add(circ);
         imagePane.getChildren().add(circ);
-
         //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
         //nodeList.add(newn);
 
@@ -234,8 +339,6 @@ public class EditMapScreenController extends AbsController{
     }
 
     private void connectNode(CircleNode s1, CircleNode s2){
-
-
         Line line = connect(s1,s2);
         line.setStyle("-fx-stroke: red;");
         s1.lineMap.put(s2,line);
@@ -299,11 +402,7 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }else {
                 if(select2 != null) {
-                    if(select2.referenceNode.hasElevator()) {
-                        select2.setFill(Color.YELLOW);
-                    }else{
-                        select2.setFill(Color.RED);
-                    }
+                    select2.setFill(Color.RED);
                 }
 
                 select2 = select1;
@@ -312,6 +411,30 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }
 
+
+            System.out.println(select1.toString() + " " + select2.toString());
+
+
+            /*if(switchS ==true){
+                //select1.setFill(Color.RED);
+                select1 =c;
+                s1.setID(n.getID());
+                s= n.getID();
+                //System.out.println("s1" + select1.getCenterX());
+                switchS=false;
+                c.setFill(Color.BLACK);
+
+            }
+            else{
+                select1.setFill(Color.GREEN);
+                select2=c;
+                s2.setID(n.getID());
+                sa=n.getID();
+                c.setFill(Color.BLACK);
+                //System.out.println("s2:" +select2.getCenterX());
+                switchS=true;
+            }*/
+//            System.out.println(nodes.get(c).getX());
         });
         circle.setOnMouseReleased((t)->{
 
@@ -492,7 +615,7 @@ public class EditMapScreenController extends AbsController{
     }
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
-        //System.out.print(select1.lineMap.get(select2).getStartX());
+        System.out.print(select1.lineMap.get(select2).getStartX());
 
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
@@ -549,5 +672,4 @@ public class EditMapScreenController extends AbsController{
 
 
     }
-
 }

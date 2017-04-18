@@ -3,10 +3,17 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -14,12 +21,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Scale;
 import org.controlsfx.control.textfield.TextFields;
 
 //import javax.xml.soap.Text;
@@ -34,11 +45,8 @@ import java.util.List;
  * Created by Anh Dao on 4/6/2017.
  */
 public class UserScreenController extends AbsController{
-
-    private static int USERSCREEN_X_OFFSET = -5;
-    private static int USERSCREEN_Y_OFFSET = -90;
-
     Directory dir = Directory.getInstance();
+    private static final int MIN_PIXELS = 10;
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
@@ -50,6 +58,8 @@ public class UserScreenController extends AbsController{
     private Slider floorSlider;
 
     public ImageView floorMap;
+    public AnchorPane imagePane;
+
 
     //proxy pattern
     ImageInterface imgInt = new ProxyImage();
@@ -71,21 +81,25 @@ public class UserScreenController extends AbsController{
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
 
+    final double SCALE_DELTA = 1.1;
+    double orgSceneX, orgSceneY;
+
+    public ScrollPane scrollPane;
+
     String output = "";
     Tag starttag = null;
-    int startfloor = 0;
-    int destfloor = 0;
-    @FXML private void initialize()
-    {
-        TextFields.bindAutoCompletion(TypeDestination,nodeList);
+    @FXML private void initialize() {
+        TextFields.bindAutoCompletion(TypeDestination, nodeList);
         setText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
 
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
+                                Number old_val, Number new_val)  {
                 if (!floorSlider.isValueChanging()) {
+
+
                     onFloor = new_val.intValue();
                     floorSlider.setValue(onFloor);
                     //floorMap.setImage(imageHashMap.get(onFloor));
@@ -95,7 +109,7 @@ public class UserScreenController extends AbsController{
                     directions.setText(output);
                     System.out.println(onFloor);
 
-                    if(pathNodes != null) {
+                    if (pathNodes != null) {
                         draw();
                     }
 
@@ -104,11 +118,170 @@ public class UserScreenController extends AbsController{
         });
 
         gc = MapCanvas.getGraphicsContext2D();
-        if(pathNodes != null) {
+        if (pathNodes != null) {
             draw();
         }
+
+        //added initalize
+        //zoom functions?
+        imagePane.getChildren();//.add(group);
+        floorMap.setPreserveRatio(true);
+        /*imagePane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor =
+                        (event.getDeltaY() > 0)
+                                ? SCALE_DELTA
+                                : 1/SCALE_DELTA;
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
+
+            }
+        });
+
+        imagePane.setOnMousePressed((t) -> {
+                    orgSceneX = t.getSceneX();
+                    orgSceneY = t.getSceneY();
+
+
+                    AnchorPane c = (AnchorPane) (t.getSource());
+                    c.toFront();
+                });
+        imagePane.setOnMouseDragged((t) -> {
+            //if(state ==states.add) {
+            double offsetX = t.getSceneX() - orgSceneX;
+            double offsetY = t.getSceneY() - orgSceneY;
+
+            AnchorPane c = (AnchorPane) (t.getSource());
+
+            c.setTranslateX(c.getLayoutX()+offsetX);
+            c.setTranslateY(c.getLayoutY()+offsetY);
+
+
+            orgSceneX = t.getSceneX();
+            orgSceneY = t.getSceneY();
+
+
+            //}
+        });*/
+        final double SCALE_DELTA = 1.1;
+        //final Group group = new Group(floorMap, MapCanvas);
+
+        //imagePane.getChildren().add(group);
+
+        final Group scrollContent = new Group(floorMap, MapCanvas);
+       scrollPane.setContent(scrollContent);
+
+        scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable,
+                                Bounds oldValue, Bounds newValue) {
+                imagePane.setMinSize(newValue.getWidth(), newValue.getHeight());
+            }
+        });
+
+        scrollPane.setPrefViewportWidth(256);
+        scrollPane.setPrefViewportHeight(256);
+
+        scrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA
+                        : 1 / SCALE_DELTA;
+
+                // amount of scrolling in each direction in scrollContent coordinate
+                // units
+                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollPane);
+
+
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX()*scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY()*scaleFactor);
+
+                // move viewport so that old center remains in the center after the
+                // scaling
+                repositionScroller(scrollContent, scrollPane, scaleFactor, scrollOffset);
+                System.out.println("scrolling");
+
+            }
+        });
+
+        // Panning via drag....
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            }
+        });
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
+                double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
+                double desiredH = scrollPane.getHvalue() - deltaH;
+                scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
+
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
+                double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
+                double desiredV = scrollPane.getVvalue() - deltaV;
+                scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
+            }
+        });
+
+
+
     }
 
+    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
+            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+    }
+    //////////////////////
 
     //Spanish button to change language to Spanish
     @FXML
@@ -133,6 +306,7 @@ public class UserScreenController extends AbsController{
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
+
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
@@ -178,41 +352,14 @@ public class UserScreenController extends AbsController{
             //Iterates through all existing tags
             for (int itr = 0; itr < numtags; itr++) {
                 curtag = dir.getTags().get(itr);
-
-
-                if (Main.DestinationSelected.equals(curtag.getTagName())) {
-                    double record = 9999999999999999999999.0;
-                    Pathfinder bestPath = null;
-
-                    for (Node n : curtag.getNodes()) {
-                        Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        if (attempt.pathLength(attempt.shortestPath()) < record) {
-                            bestPath = attempt;
-                        }
-                    }
-
-                    if (bestPath != null) {
-                        pathNodes = bestPath.shortestPath();
-                    } else {
-                        System.out.println("Failed to find best path out of many\n");
-                        Pathfinder pathfinder = new Pathfinder(starttag.getNodes().getFirst(), curtag.getNodes().getFirst());
-                        //use the shortest path
-                        pathNodes = pathfinder.shortestPath();
-                    }
-                /*
-                Pathfinder bestPath = null;
                 //If match is found create path to node from start nodes
                 if (Main.DestinationSelected.equals(curtag.getTagName())) {
-
-
                     Pathfinder pathfinder =
                             //will get updated to actually be the starting node
                             new Pathfinder(starttag.getNodes().getFirst(),
                                     curtag.getNodes().getFirst());
                     //use the shortest path
                     pathNodes = pathfinder.shortestPath();
-                }
-                */
                 }
             }
         }
@@ -230,14 +377,13 @@ public class UserScreenController extends AbsController{
     @FXML
     //Starts path displaying process
     private void draw(){
-        System.out.println("Begin drawing");
         plotPath(UserScreenController.pathNodes);
     }
 
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX() + USERSCREEN_X_OFFSET;
-        int y = node.getY() + USERSCREEN_Y_OFFSET;
+        int x = node.getX();
+        int y = node.getY();
         //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         Point p = new Point(x, y);
         return p;
@@ -248,35 +394,28 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         int index = 0;
-        startfloor = starttag.getNodes().getFirst().getFloor();
-        destfloor = path.getFirst().getFloor();
-        System.out.println(destfloor);
         for (Node node: path) {
-            if(node.getFloor() == startfloor) {
+            if(node.getFloor() == onFloor) {
                 System.out.println("Node.getfloor" + node.getFloor());
-                System.out.println("plot"+ startfloor);
+                System.out.println("plot"+ onFloor);
                 pointsStartFloor.add(getConvertedPoint(node));
                 index++;
             }
-            else if(node.getFloor() == destfloor){
-                System.out.println("Node.getfloor" + node.getFloor());
+            else{
                 pointsEndFloor.add(getConvertedPoint(node));
             }
         }
         indexOfElevator = index;
-        if(startfloor == onFloor) {
-            System.out.println("startfloor");
+        if(starttag.getNodes().getFirst().getFloor() == onFloor) {
             drawShapes(gc, pointsStartFloor);
         }
-        else if(destfloor == onFloor){
-            System.out.println("destfloor");
+        else if(path.getLast().getFloor() == onFloor){
             drawShapes(gc, pointsEndFloor);
         }
     }
 
     //Function to actually draw a path
     private void drawShapes(GraphicsContext gc, LinkedList<Point> path) {
-        System.out.println("Drawing");
         //color for start node
         gc.setFill(javafx.scene.paint.Color.GREEN);
         //color for edges
@@ -314,68 +453,60 @@ public class UserScreenController extends AbsController{
                 gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
                         current.getX() + radius, current.getY() + radius);
             }
-            if(i == indexOfElevator-1){
+
+
+            //first point directions
+            if(i == 0){
                 String temp = "";
-                if (Main.Langugage == "Spanish") {
-                    temp = "Terminando al ascensor " + "\n";
-                } else {
-                    temp = "Ending at elevator " + "\n";
+                if(Main.Langugage == "Spanish"){
+                    temp = "Comenzando y mirando hacia el quiosco" + "\n";
+                }
+                else{
+                    temp = "Starting at and facing the kiosk " + "\n";
                 }
                 TextDirections.set(i, temp);
             }
-            if(i != indexOfElevator-1) {
-                //first point directions
-                if (i == 0) {
-                    String temp = "";
-                    if (Main.Langugage == "Spanish") {
-                        temp = "Comenzando y mirando hacia el quiosco" + "\n";
-                    } else {
-                        temp = "Starting at and facing the kiosk " + "\n";
-                    }
-                    TextDirections.set(i, temp);
+            // every point between first and second to last
+            if(i > 0 && i+2 < pathlength) {
+                //Assign point
+                Point oldnode = path.get(i - 1);
+                Point currnode = path.get(i);
+                Point nextnode = path.get(i + 1);
+                //Run helper functions to update text
+                if(Main.Langugage == "Spanish") {
+                    TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
                 }
-                else if(pathlength < 3) {
-                    TextDirections.set(i, "");
+                else {
+                    TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
                 }
-                // every point between first and second to last
-                else if (i > 0 && i + 2 < pathlength) {
-                    //Assign point
-                    Point oldnode = path.get(i - 1);
-                    Point currnode = path.get(i);
-                    Point nextnode = path.get(i + 1);
-                    //Run helper functions to update text
-                    if (Main.Langugage == "Spanish") {
-                        TextDirections = getTextEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                    } else {
-                        TextDirections = getText(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                    }
                     curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
+            }
+            // second to last point
+            if(i == pathlength - 2) {
+                //Assign point
+                Point oldnode = path.get(i - 1);
+                Point currnode = path.get(i);
+                Point nextnode = path.get(i + 1);
+                //Run helper functions to update text
+                if(Main.Langugage == "Spanish") {
+                    TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
                 }
-                // second to last point
-                else if (i == pathlength - 2) {
-                    //Assign point
-                    Point oldnode = path.get(i - 1);
-                    Point currnode = path.get(i);
-                    Point nextnode = path.get(i + 1);
-                    //Run helper functions to update text
-                    if (Main.Langugage == "Spanish") {
-                        TextDirections = getTextMidHallwayEsp(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                    } else {
-                        TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
-                    }
-                    curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
-                    //System.out.println("Second to last" + TextDirections.getLast());
+                else {
+                    TextDirections = getTextMidHallway(oldnode, currnode, nextnode, curdir, TextDirections, i);
                 }
-                //last point
-                else if (i == pathlength - 1) {
-                    String temp = "";
-                    if (Main.Langugage == "Spanish") {
-                        temp = "Terminando al " + Main.DestinationSelected;
-                    } else {
-                        temp = "Ending at " + Main.DestinationSelected;
-                    }
-                    TextDirections.set(i, temp);
+                curdir = setCurdir(oldnode, currnode, nextnode, curdir, i);
+                //System.out.println("Second to last" + TextDirections.getLast());
+            }
+            //last point
+            if(i == pathlength -1){
+                String temp = "";
+                if(Main.Langugage == "Spanish") {
+                    temp = "Terminando a " + Main.DestinationSelected;
                 }
+                else{
+                    temp = "Ending at " + Main.DestinationSelected;
+                }
+                TextDirections.set(i, temp);
             }
 
             //Update for next loop
