@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -17,13 +23,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.CreateUserScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.CreateUserScreenController">
     <children>
-        <VBox prefHeight="800.0" prefWidth="1292.0">
+        <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <AnchorPane prefHeight="42.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                     <children>
-                        <HBox prefHeight="40.0" prefWidth="1291.0">
+                        <HBox prefHeight="42.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                     <children>
@@ -46,55 +52,70 @@
                         <Insets />
                     </VBox.margin>
                 </AnchorPane>
-                <AnchorPane prefHeight="759.0" prefWidth="1283.0" style="-fx-background-color: #e9ebee;">
+                <AnchorPane prefHeight="759.0" prefWidth="1283.0" style="-fx-background-color: #e9ebee;" VBox.vgrow="ALWAYS">
                     <children>
                         <GridPane layoutX="201.0" layoutY="85.0" prefHeight="496.0" prefWidth="881.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="179.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="150.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="539.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="163.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" percentWidth="30.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" percentWidth="40.0" prefWidth="539.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" percentWidth="30.0" prefWidth="163.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints maxHeight="279.0" minHeight="10.0" prefHeight="173.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="259.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="259.0" minHeight="10.0" percentHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
                                 <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="133.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="200.0" minHeight="10.0" percentHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="223.0" minHeight="10.0" percentHeight="5.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="223.0" minHeight="10.0" percentHeight="13.0" prefHeight="95.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="223.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <TextField fx:id="newUsername" prefHeight="67.0" prefWidth="392.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Text fx:id="pwText" strokeType="OUTSIDE" strokeWidth="0.0" text="%CreateNewPassword" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                    <font>
-                                        <Font size="50.0" />
-                                    </font>
-                                </Text>
-                                <Text fx:id="userText" strokeType="OUTSIDE" strokeWidth="0.0" text="%CreateNewUsername" textAlignment="CENTER" wrappingWidth="552.13671875" GridPane.columnIndex="1">
-                                    <font>
-                                        <Font size="50.0" />
-                                    </font>
-                                </Text>
-                        <Text fx:id="pwText1" strokeType="OUTSIDE" strokeWidth="0.0" text="%RoleforUser" textAlignment="CENTER" wrappingWidth="547.13671875" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Text>
-                                <PasswordField fx:id="newPassword" prefHeight="51.0" prefWidth="552.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Label fx:id="errorIndicator" prefHeight="34.0" prefWidth="206.0" text=" " GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                    <font>
-                                        <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
-                        <ChoiceBox fx:id="roleSelection" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                                      <TextField fx:id="newUsername" prefHeight="41.0" prefWidth="534.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                                      <PasswordField fx:id="newPassword" prefHeight="41.0" prefWidth="552.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="30.0" prefWidth="356.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Text fx:id="pwText1" strokeType="OUTSIDE" strokeWidth="0.0" text="%RoleforUser" textAlignment="CENTER" wrappingWidth="228.13671875" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Text>
+                              <ChoiceBox fx:id="roleSelection" prefHeight="50.0" prefWidth="143.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="userText" alignment="CENTER" prefHeight="117.0" prefWidth="534.0" text="%CreateNewUsername" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="pwText" alignment="CENTER" prefHeight="77.0" prefWidth="534.0" text="%CreateNewPassword" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                                    <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="56.0" prefWidth="206.0" text="%CreateUser" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                        <font>
+                                            <Font size="24.0" />
+                                        </font>
+                                    </Button>
+                           </children>
+                        </AnchorPane>
                             </children>
                         </GridPane>
-                        <Button fx:id="CreateUserButton" layoutX="558.0" layoutY="601.0" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="56.0" prefWidth="206.0" text="%CreateUser" textAlignment="CENTER" wrapText="true">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="BackButton" layoutX="14.0" layoutY="706.0" mnemonicParsing="false" onAction="#onBack" prefHeight="31.0" prefWidth="99.0" text="%back" />
+                  <AnchorPane layoutX="14.0" layoutY="690.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+                     <children>
+                              <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="40.0" prefWidth="150.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </children>
