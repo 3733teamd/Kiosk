@@ -134,7 +134,8 @@ setFloorSliderListener();
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
-         floorMap.setImage(imgInt.display(floor));
+        //get the professional version of the floor(1000+)
+         floorMap.setImage(imgInt.display(floor+1000));
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
