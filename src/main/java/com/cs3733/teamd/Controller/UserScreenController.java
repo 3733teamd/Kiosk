@@ -2,10 +2,7 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.cs3733.teamd.Model.Entities.Directory;
-import com.cs3733.teamd.Model.Entities.DirectoryInterface;
-import com.cs3733.teamd.Model.Entities.Node;
-import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.Entities.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,8 +24,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.Point;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -72,11 +68,40 @@ public class UserScreenController extends AbsController{
     private int startfloor = 0;
     private int destfloor = 0;
 
+    private Map<String, String> tagAssociations;
+
 
     @FXML
     private void initialize()
     {
-        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        /*
+            This code will find all of the tags and then all of the professionals and then merge the two.
+            The final result is a list of all the tags and professionals intertwined so that
+            a user can see a list of rooms and a list of professionals...
+         */
+        Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
+        tagAssociations = new HashMap<String, String>();
+        for(Tag t: dir.getTags()) {
+            professionalTagMerge.put(t.toString(), new ArrayList<String>());
+        }
+        for(Professional p: dir.getProfessionals()) {
+            for(Tag t: p.getTags()) {
+                professionalTagMerge.get(t.toString()).add(p.getName());
+            }
+        }
+        // Now convert it into a list...
+        List<String> mergedTagProfessionalList = new ArrayList<String>();
+        for(String tag: professionalTagMerge.keySet()) {
+            for(String professional: professionalTagMerge.get(tag)) {
+                String textDisplay = tag+"-"+professional;
+                mergedTagProfessionalList.add(textDisplay);
+                tagAssociations.put(textDisplay, tag);
+            }
+            mergedTagProfessionalList.add(tag);
+            tagAssociations.put(tag, tag);
+        }
+
+        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
@@ -172,7 +197,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
-        Main.DestinationSelected = TypeDestination.getText();
+        Main.DestinationSelected = tagAssociations.get(TypeDestination.getText());
 
         findStartTag();
         //Makes a temporary holder for values
