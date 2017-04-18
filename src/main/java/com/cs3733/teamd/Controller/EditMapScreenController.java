@@ -259,20 +259,16 @@ public class EditMapScreenController extends AbsController{
         }
 
     }
-    /*@FXML
-    public void loadConnection(CircleNode s1, CircleNode s2){
-        Line line = connect(s1,s2);
-        //Line line = s1.lineMap.get(s2.referenceNode);
-        line.setStyle("-fx-stroke: red;");
-        s1.lineMap.put(s2,line);
-        s2.lineMap.put(s1,line);
-        imagePane.getChildren().add(line);
-        //update
-    }*/
 
 
     private CircleNode createCircle(Node n, double r, Color color) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
+
+        if (n.hasElevator()){
+            color = Color.YELLOW;
+        }else{
+            color = Color.RED;
+        }
         CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
 
         circleMap.put(n, circle);
@@ -303,7 +299,11 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }else {
                 if(select2 != null) {
-                    select2.setFill(Color.RED);
+                    if(select2.referenceNode.hasElevator()) {
+                        select2.setFill(Color.YELLOW);
+                    }else{
+                        select2.setFill(Color.RED);
+                    }
                 }
 
                 select2 = select1;
@@ -312,34 +312,14 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }
 
-
-            //System.out.println(select1.toString() + " " + select2.toString());
-
-
-            /*if(switchS ==true){
-                //select1.setFill(Color.RED);
-                select1 =c;
-                s1.setID(n.getID());
-                s= n.getID();
-                //System.out.println("s1" + select1.getCenterX());
-                switchS=false;
-                c.setFill(Color.BLACK);
-
-            }
-            else{
-                select1.setFill(Color.GREEN);
-                select2=c;
-                s2.setID(n.getID());
-                sa=n.getID();
-                c.setFill(Color.BLACK);
-                //System.out.println("s2:" +select2.getCenterX());
-                switchS=true;
-            }*/
-//            System.out.println(nodes.get(c).getX());
         });
         circle.setOnMouseReleased((t)->{
 
-            circle.setFill(Color.RED);
+            if(circle.referenceNode.hasElevator()) {
+                circle.setFill(Color.YELLOW);
+            }else{
+                circle.setFill(Color.RED);
+            }
 
             select1.setFill(Color.GREEN);
             if(select2 != null && select1 != select2){
@@ -413,7 +393,11 @@ public class EditMapScreenController extends AbsController{
 
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
-            CircleNode circ = createCircle(n, 5, Color.RED);
+            if (n.hasElevator()){
+                CircleNode circ = createCircle(n, 5, Color.YELLOW);
+            }else {
+                CircleNode circ = createCircle(n, 5, Color.RED);
+            }
         }
     }
 
@@ -471,6 +455,13 @@ public class EditMapScreenController extends AbsController{
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
+            selectedTag.updateConnections();
+
+            if(select1.referenceNode.hasElevator()){
+                select1.setFill(Color.YELLOW);
+            }
+
+
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
@@ -486,6 +477,9 @@ public class EditMapScreenController extends AbsController{
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
+            if(selectedCurrentTag.isConnectable()){
+                selectedCurrentTag.updateConnections();
+            }
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
@@ -555,4 +549,5 @@ public class EditMapScreenController extends AbsController{
 
 
     }
+
 }

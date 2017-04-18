@@ -8,9 +8,21 @@ import java.util.LinkedList;
 public class Tag {
 
 
-     private String tagName;
-     private LinkedList<Node> nodes = new LinkedList<Node>();
-     private LinkedList<Professional> profs = new LinkedList<Professional>();
+    private String tagName;
+    private LinkedList<Node> nodes = new LinkedList<Node>();
+    private LinkedList<Professional> profs = new LinkedList<Professional>();
+    private boolean connectable;
+
+
+    public boolean isConnectable() {
+        return connectable;
+    }
+
+    public void setConnectable(boolean b){
+        connectable = b;
+    }
+
+
 
     public int getId() {
         return id;
@@ -29,6 +41,13 @@ public class Tag {
     public Tag(String name, int id){
          this.tagName = name;
          this.id = id;
+         this.connectable = false;
+    }
+
+    public Tag(String name, int id, boolean c){
+        this.tagName = name;
+        this.id = id;
+        this.connectable = c;
     }
 
     public String getTagName(){
@@ -89,6 +108,38 @@ public class Tag {
 
     public String toString(){
         return tagName;
+    }
+
+    public boolean updateConnections(){
+        if(isConnectable()){
+            for (int i=0; i<nodes.size()-1; i++){
+                Node n = nodes.get(i);
+                for (int j=i+1; j<nodes.size(); j++){
+                    Node nn = nodes.get(j);
+                    if(n != nn
+                            && n.getNodes().contains(nn)== false
+                            && n.getFloor() != nn.getFloor()){
+                        n.addNode(nn);
+                    }
+                }
+            }
+            return true;
+        }else{
+            for (int i=0; i<nodes.size()-1; i++){
+                Node n = nodes.get(i);
+                for (int j=i+1; j<nodes.size(); j++){
+                    Node nn = nodes.get(j);
+                    if(n != nn
+                            && n.getNodes().contains(nn)== true
+                            && n.getFloor() != nn.getFloor()){
+                        n.removeNeighbor(nn);
+
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 
 }

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * Created by Anh Dao on 4/6/2017.
  */
 public class EditTagScreenController extends AbsController {
+    public CheckBox selectConnectable;
     Directory dir = Directory.getInstance();
     public TextArea tagTextArea;
     public TextField searchTagBar;
@@ -89,6 +90,8 @@ public class EditTagScreenController extends AbsController {
         addProf.setDisable(true);
         deleteProf.setDisable(true);
         newTagNameBtn.setDisable(true);
+        selectConnectable.setSelected(false);
+        selectConnectable.setDisable(true);
        // List chosenProf=chosenTag.getProfs();
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
@@ -121,7 +124,7 @@ public class EditTagScreenController extends AbsController {
                         if(selectedTag!=null) {
                             currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
                             currentProfessionals.refresh();
-
+                            selectConnectable.setSelected(selectedTag.isConnectable());
                             tagNameTxt.clear();
                             tagNameTxt.setPromptText(selectedTag.toString());
 
@@ -129,6 +132,8 @@ public class EditTagScreenController extends AbsController {
                         addProf.setOpacity(1.0);
                         deleteProf.setOpacity(1.0);
                         newTagNameBtn.setOpacity(1.0);
+
+                        selectConnectable.setDisable(false);
                         addProf.setDisable(false);
                         deleteProf.setDisable(false);
                         newTagNameBtn.setDisable(false);
@@ -167,9 +172,9 @@ public class EditTagScreenController extends AbsController {
     }
 
     @FXML
-    void newTagName(ActionEvent event) {
+    void modifyTag(ActionEvent event) {
         String noSpace = tagNameTxt.getText().replaceAll("\\s","");
-        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
+        if (noSpace == null ||noSpace==""|| noSpace.length()<=1){
             searchTagBar.setText("");
         }
         else {
@@ -178,6 +183,13 @@ public class EditTagScreenController extends AbsController {
             tagList.refresh();
             tagNameTxt.clear();
         }
+        if(selectedTag.isConnectable() != selectConnectable.isSelected()){
+            selectedTag.setConnectable(selectConnectable.isSelected());
+            selectedTag.updateConnections();
+            dir.updateTag(selectedTag);
+            tagList.refresh();
+        }
+        initialize();
     }
 
     @FXML
@@ -196,6 +208,7 @@ public class EditTagScreenController extends AbsController {
             currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
             currentProfessionals.refresh();
         }
+        initialize();
 
     }
 
@@ -219,6 +232,7 @@ public class EditTagScreenController extends AbsController {
             tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
             tagList.refresh();
         }
+        initialize();
     }
     
     @FXML

@@ -126,4 +126,14 @@ public class Node {
     public String toSql(){
         return("("+ID+","+coord.x+","+coord.y+")");
     }
+
+    public boolean hasElevator(){
+        for (int i=0; i<tags.size(); i++){
+            Tag t = tags.get(i);
+            if (t.isConnectable()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
