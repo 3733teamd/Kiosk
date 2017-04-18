@@ -45,7 +45,11 @@ public class EditTagScreenController extends AbsController {
     private TextField profSearchField;
 
     List<Professional> filtered = new ArrayList<Professional>();
+    List<Tag> filteredTag = new ArrayList<>();
+
     ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
+
 
     private Tag chosenTag = null;
 
@@ -90,7 +94,7 @@ public class EditTagScreenController extends AbsController {
         for (Tag t : dir.getTags()) {
             allTagNames.add(t.getTagName());
         }
-        TextFields.bindAutoCompletion(searchTagBar, allTagNames);
+       /// TextFields.bindAutoCompletion(searchTagBar, allTagNames);//Not being used due to list view
         //List all tags in tagList
         tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
         ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
@@ -162,6 +166,14 @@ public class EditTagScreenController extends AbsController {
                 displayResult(profSearchField.getText() + event.getText());
             }
         });
+        searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResultAllTag(searchTagBar.getText() + event.getText());
+            }
+        });
         
     }
 
@@ -214,6 +226,19 @@ public class EditTagScreenController extends AbsController {
 
         allProffessionals.setItems(searchResults);
     }
+
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        tagList.setItems(searchResultsTag);
+    }
+
     //TODO: is deleted from database wrongly, causes fatal error
     @FXML
     void deleteTag(ActionEvent event) {
