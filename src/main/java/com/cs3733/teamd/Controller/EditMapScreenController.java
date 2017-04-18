@@ -21,10 +21,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -126,7 +123,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-setFloorSliderListener();
+//setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -160,7 +157,9 @@ setFloorSliderListener();
             floors.addLast(6);
             floors.addLast(7);
         }
-        floorDropDown.addAll(floors);
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
 
@@ -224,7 +223,7 @@ setFloorSliderListener();
     }//initialize end
 
 
-    private void setFloorSliderListener(){
+    /*private void setFloorSliderListener(){
         floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val)  {
@@ -239,7 +238,7 @@ setFloorSliderListener();
             }
         });
 
-    }
+    }*/
     private void panMethods(){
 
         //zoom functions
