@@ -38,12 +38,37 @@ public class Pathfinder {
 
         // Made up a formula to measure distance between start and end node simply
         // dist = | difference in floors | * FLOOR_COST + (horizontal distance between nodes)
+
+        // if ends is empty
+        if(ends.isEmpty()){
+            this.end = start;
+            return;
+        }
+
+        Node closest = ends.get(0);
+        double lowestCost = distanceEstimate(start, closest);
+
+        for(Node n: ends){
+            double estimate = distanceEstimate(start, n);
+            if(estimate > lowestCost){
+                closest = n;
+                lowestCost = estimate;
+            }
+        }
+
+        this.end = closest;
+
     }
 
-    
-
-
-
+    /**
+     * Helper function for finding distance by adding an arbitrary cost for floors and adding distance
+     * @param a
+     * @param b
+     * @return
+     */
+    private double distanceEstimate(Node a, Node b){
+        return Math.abs(a.getFloor() - b.getFloor()) * FLOOR_COST + distanceBetween(a,b);
+    }
 
     public static double pathLength(LinkedList<Node> path){
 
