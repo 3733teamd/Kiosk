@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  * Created by Anh Dao on 4/6/2017.
  */
 public class EditTagScreenController extends AbsController {
+    public CheckBox selectConnectable;
     Directory dir = Directory.getInstance();
     @FXML
     public TextArea tagTextArea;
@@ -80,6 +81,7 @@ public class EditTagScreenController extends AbsController {
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
         //disable buttons
+        selectConnectable.setDisable(true);
         addProf.setDisable(true);
         deleteProf.setDisable(true);
         newTagNameBtn.setDisable(true);
@@ -124,6 +126,8 @@ public class EditTagScreenController extends AbsController {
                         addProf.setOpacity(1.0);
                         deleteProf.setOpacity(1.0);
                         newTagNameBtn.setOpacity(1.0);
+                        selectConnectable.setSelected(selectedTag.isConnectable());
+                        selectConnectable.setDisable(false);
                         addProf.setDisable(false);
                         deleteProf.setDisable(false);
                         newTagNameBtn.setDisable(false);
@@ -162,7 +166,7 @@ public class EditTagScreenController extends AbsController {
     }
 
     @FXML
-    void newTagName(ActionEvent event) {
+    void modifyTag(ActionEvent event) {
         String noSpace = tagNameTxt.getText().replaceAll("\\s","");
         if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
             searchTagBar.setText("");
@@ -172,6 +176,13 @@ public class EditTagScreenController extends AbsController {
             dir.updateTag(selectedTag);
             tagList.refresh();
             tagNameTxt.clear();
+        }
+        if(selectConnectable.isSelected() == selectedTag.isConnectable()){
+            
+        }else{
+            selectedTag.setConnectable(selectConnectable.isSelected());
+            dir.updateTag(selectedTag);
+            tagList.refresh();
         }
     }
 
