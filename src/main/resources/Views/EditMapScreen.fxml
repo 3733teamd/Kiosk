@@ -36,7 +36,7 @@
                                     <Image url="@/floor_imgs/fkthumb.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="76.0" layoutY="10.0" text="%welTitle" AnchorPane.rightAnchor="0.0" />
+                              <Label layoutX="54.0" layoutY="10.0" text="%welTitle" AnchorPane.leftAnchor="54.0" />
                            </children>
                         </AnchorPane>
                      </children>

@@ -88,14 +88,14 @@
                     <items>
                         <HBox prefHeight="100.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <TextField fx:id="profName" prefHeight="50.0" prefWidth="856.0" promptText="%edProfTitle" HBox.hgrow="ALWAYS">
+                              <TextField fx:id="profName" prefHeight="55.0" prefWidth="705.0" promptText="%edProfTitle" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </TextField>
-                              <AnchorPane>
+                              <AnchorPane prefHeight="65.0" prefWidth="249.0">
                                  <children>
-                                    <Button fx:id="modifyName" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="150.0" text="%modName" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                                    <Button fx:id="modifyName" layoutX="-86.0" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="249.0" text="%modName" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
