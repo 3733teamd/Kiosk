@@ -59,7 +59,7 @@ public class UserScreenController extends AbsController{
     public Button SearchButton;
     public Button SetButton;
     public TextField TypeDestination;
-    public Text EnterDest;
+    public Label EnterDest;
     public Label floor;
     public Label directionLabel;
     public ChoiceBox FloorMenu;
