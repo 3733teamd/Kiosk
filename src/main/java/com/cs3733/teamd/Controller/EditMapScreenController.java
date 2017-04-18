@@ -14,13 +14,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -32,7 +29,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
@@ -127,7 +123,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-    //setFloorSliderListener();
+        setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -161,28 +157,13 @@ public class EditMapScreenController extends AbsController{
             floors.addLast(6);
             floors.addLast(7);
         }
-        floorDropDown.addAll(floors);
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
 
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(floor));
-                    floorMap.setImage(imgInt.display(floor));
 
-                    //TODO: heart of error
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
-
-                    drawfloorNodes();
-
-            }
-        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
@@ -225,22 +206,40 @@ public class EditMapScreenController extends AbsController{
     }//initialize end
 
 
-//    private void setFloorSliderListener(){
-//        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-//            public void changed(ObservableValue<? extends Number> ov,
-//                                Number old_val, Number new_val)  {
-//                if (!floorSlider.isValueChanging()) {
-//                    floor = new_val.intValue();
-//                    floorSlider.setValue(floor);
-//                    //floorMap.setImage(imageHashMap.get(onFloor));
-//                    floorMap.setImage(imgInt.display(floor));
-//                    drawfloorNodes();
-//
-//                }
-//            }
-//        });
-//
-//    }
+    private void setFloorSliderListener(){
+        /*floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val)  {
+                if (!floorSlider.isValueChanging()) {
+                    floor = new_val.intValue();
+                    floorSlider.setValue(floor);
+                    //floorMap.setImage(imageHashMap.get(onFloor));
+                    floorMap.setImage(imgInt.display(floor));
+                    drawfloorNodes();
+
+                }
+            }
+        });*/
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                floor = new_val.intValue();
+                FloorMenu.setValue(floor);
+                //floorMap.setImage(imageHashMap.get(floor));
+                floorMap.setImage(imgInt.display(floor));
+
+                /*//TODO: heart of error
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+*/
+                drawfloorNodes();
+
+            }
+        });
+    }
     private void panMethods(){
 
         //zoom functions

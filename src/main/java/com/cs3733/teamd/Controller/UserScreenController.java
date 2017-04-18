@@ -116,7 +116,9 @@ public class UserScreenController extends AbsController{
             floors.addLast(6);
             floors.addLast(7);
         }
-        floorDropDown.addAll(floors);
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
         setFloorMenuListener();
@@ -421,6 +423,7 @@ public class UserScreenController extends AbsController{
                 MiddleFloorButton.setVisible(true);
             }
         }
+        
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);
