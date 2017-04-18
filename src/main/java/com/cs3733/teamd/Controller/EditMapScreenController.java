@@ -504,6 +504,9 @@ public class EditMapScreenController extends AbsController{
 
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
+            if(n.hasElevator()) {
+            
+            }
             CircleNode circ = createCircle(n, 5, Color.RED);
         }
     }
@@ -561,6 +564,11 @@ public class EditMapScreenController extends AbsController{
                 currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
+            }
+
+            if(selectedTag.isConnectable()){
+                selectedTag.updateConnections();
+                initialize();
             }
 
             currentTagBox.refresh();

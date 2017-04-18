@@ -177,9 +177,7 @@ public class EditTagScreenController extends AbsController {
             tagList.refresh();
             tagNameTxt.clear();
         }
-        if(selectConnectable.isSelected() == selectedTag.isConnectable()){
-            
-        }else{
+        if(selectConnectable.isSelected() != selectedTag.isConnectable()) {
             selectedTag.setConnectable(selectConnectable.isSelected());
             dir.updateTag(selectedTag);
             tagList.refresh();
