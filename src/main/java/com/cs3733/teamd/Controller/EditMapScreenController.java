@@ -123,7 +123,7 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-setFloorSliderListener();
+        setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -157,7 +157,9 @@ setFloorSliderListener();
             floors.addLast(6);
             floors.addLast(7);
         }
-        floorDropDown.addAll(floors);
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
 
