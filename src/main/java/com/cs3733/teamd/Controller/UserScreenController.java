@@ -60,7 +60,7 @@ public class UserScreenController extends AbsController{
     public Button SetButton;
     public TextField TypeDestination;
     public Text EnterDest;
-    public Text floor;
+    public Label floor;
     public Label directionLabel;
     public ChoiceBox FloorMenu;
     public Button StartFloorButton;
@@ -244,7 +244,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+//        switchScreen(MMGpane, "/Views/UserScreen.fxml");
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 

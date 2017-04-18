@@ -26,12 +26,10 @@ import java.util.stream.Collectors;
  */
 public class EditTagScreenController extends AbsController {
     Directory dir = Directory.getInstance();
-    @FXML
     public TextArea tagTextArea;
     public TextField searchTagBar;
     public Button BackButton;
     public AnchorPane MMGpane;
-    @FXML
     public Button addNewTag;
     public TextField tagNameTxt;
     @FXML
