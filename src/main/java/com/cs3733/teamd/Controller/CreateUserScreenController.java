@@ -23,13 +23,13 @@ public class CreateUserScreenController extends AbsController {
     private Label errorIndicator;
 
     @FXML
-    private Text userText;
+    private Label userText;
 
     @FXML
     private TextField newUsername;
 
     @FXML
-    private Text pwText;
+    private Label pwText;
 
 
     @FXML

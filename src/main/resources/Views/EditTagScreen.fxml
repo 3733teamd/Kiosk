@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,13 +20,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1292.0">
+      <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="43.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
-                  <HBox prefHeight="49.0" prefWidth="1291.0">
+                  <HBox prefHeight="49.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="51.0" prefWidth="52.0">
                            <children>
@@ -36,12 +42,16 @@
                               <Font name="Tahoma" size="31.0" />
                            </font>
                         </Text>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="38.0" prefWidth="172.0" text="%back">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Button>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="43.0" prefWidth="150.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </HBox>
                </children>
@@ -49,56 +59,67 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <SplitPane dividerPositions="0.21705426356589147" prefHeight="754.0" prefWidth="1292.0">
+            <SplitPane dividerPositions="0.21705426356589147" prefHeight="754.0" prefWidth="1292.0" VBox.vgrow="ALWAYS">
               <items>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="743.0" prefWidth="636.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="288.0" text="%allTag" />
-                        <ListView fx:id="tagList" editable="true" prefHeight="587.0" prefWidth="273.0" />
-                        <TextField fx:id="searchTagBar" prefHeight="19.0" prefWidth="277.0" promptText="%selTag">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TextField>
-                        <Button fx:id="addNewTagBtn" mnemonicParsing="false" onAction="#addTag" prefHeight="64.0" prefWidth="276.0" text="%addNTag">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="deleteTagBtn" mnemonicParsing="false" onAction="#deleteTag" prefHeight="59.0" prefWidth="276.0" text="%delTag">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <ListView fx:id="tagList" editable="true" prefHeight="587.0" prefWidth="273.0" VBox.vgrow="ALWAYS" />
+                        <AnchorPane>
+                           <children>
+                              <TextField fx:id="searchTagBar" prefHeight="40.0" prefWidth="277.0" promptText="%selTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="addNewTagBtn" mnemonicParsing="false" onAction="#addTag" prefHeight="40.0" prefWidth="276.0" text="%addNTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="deleteTagBtn" mnemonicParsing="false" onAction="#deleteTag" prefHeight="40.0" prefWidth="276.0" text="%delTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
                      </children>
                   </VBox>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="743.0" prefWidth="697.0">
                      <children>
                         <SplitPane dividerPositions="0.07764390896921017" layoutX="289.0" layoutY="204.0" orientation="VERTICAL" prefHeight="749.0" prefWidth="1007.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <HBox prefHeight="100.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
                                  <children>
-                                    <TextField fx:id="tagNameTxt" prefHeight="57.0" prefWidth="356.0" />
-                                    <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#newTagName" prefHeight="54.0" prefWidth="336.0" text="%confTagName">
+                                    <TextField fx:id="tagNameTxt" prefHeight="57.0" prefWidth="356.0" HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#newTagName" prefHeight="54.0" prefWidth="336.0" text="%confTagName" HBox.hgrow="NEVER">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Button>
-                                    <AnchorPane prefHeight="54.0" prefWidth="161.0" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <SplitPane fx:id="allProfessionals" dividerPositions="0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="251.0">
+                                    <SplitPane fx:id="allProfessionals" dividerPositions="0.5" orientation="VERTICAL" prefHeight="671.0" prefWidth="506.0">
                                        <items>
                                           <Label text="%allProfs" />
-                                          <ListView fx:id="allProffessionals" prefHeight="200.0" prefWidth="200.0" />
+                                          <ListView fx:id="allProffessionals" prefHeight="616.0" prefWidth="411.0" />
                                        </items>
                                     </SplitPane>
-                                    <SplitPane dividerPositions="0.7521994134897361, 0.8284457478005866, 0.8914956011730205, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="239.0">
+                                    <SplitPane dividerPositions="0.7522, 0.8284, 0.8915, 0.5, 0.5" orientation="VERTICAL" prefHeight="671.0" prefWidth="512.0" HBox.hgrow="ALWAYS">
                                       <items>
                                           <Label text="%currentProf" />
-                                          <ListView fx:id="currentProfessionals" prefHeight="200.0" prefWidth="200.0" />
+                                          <ListView fx:id="currentProfessionals" fixedCellSize="0.0" prefHeight="200.0" prefWidth="200.0" />
                                           <TextField fx:id="profSearchField" prefHeight="15.0" prefWidth="237.0" promptText="%serProf">
                                              <font>
                                                 <Font size="20.0" />

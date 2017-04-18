@@ -3,8 +3,11 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.ApplicationConfiguration;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -14,23 +17,27 @@ import java.util.ResourceBundle;
  */
 public abstract class AbsController {
 
-    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath) throws IOException{
-
-        AnchorPane pane;
+    public void switchScreen(AnchorPane gp, String ViewPath) throws IOException{
+        Stage stage = (Stage) gp.getScene().getWindow();
+        AnchorPane pane ;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
-        //Main.backString =currView;
-       // System.out.println(Main.backString);
 
-        pane = (AnchorPane) loader.load();
-        gp.getChildren().setAll(pane);
-        fitToParent(gp);
+        pane = loader.load();
 
-        return loader;
+        Scene scene = new Scene(pane);
+        stage.setMaximized(true);
+        stage.setScene(scene);
+        stage.show();
+    //
     }
-    private void  fitToParent(AnchorPane gp){
+    public void  fitToParent(AnchorPane gp){
+//        gp.setMaxWidth(Double.MAX_VALUE);
+//        gp.setMaxHeight(Double.MAX_VALUE);
+//gp.setPrefWidth(50);
         AnchorPane.setTopAnchor(gp, 0.0);
         AnchorPane.setBottomAnchor(gp, 0.0);
         AnchorPane.setLeftAnchor(gp, 0.0);
+  //      System.out.print("set anchor");
         AnchorPane.setRightAnchor(gp, 0.0);
     }
 

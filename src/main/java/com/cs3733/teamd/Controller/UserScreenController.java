@@ -59,8 +59,8 @@ public class UserScreenController extends AbsController{
     public Button SearchButton;
     public Button SetButton;
     public TextField TypeDestination;
-    public Text EnterDest;
-    public Text floor;
+    public Label EnterDest;
+    public Label floor;
     public Label directionLabel;
     public ChoiceBox FloorMenu;
     public Button StartFloorButton;
@@ -116,7 +116,9 @@ public class UserScreenController extends AbsController{
             floors.addLast(6);
             floors.addLast(7);
         }
-        floorDropDown.addAll(floors);
+        if(floorDropDown.size() == 0) {
+            floorDropDown.addAll(floors);
+        }
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
         setFloorMenuListener();
@@ -244,7 +246,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+//        switchScreen(MMGpane, "/Views/UserScreen.fxml");
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
