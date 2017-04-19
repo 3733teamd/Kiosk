@@ -376,7 +376,7 @@ public class UserScreenController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
         Main.DestinationSelected = tagAssociations.get(TypeDestination.getText());
-        
+
         //Makes a temporary holder for values
         Tag currentTag;
         int tagCount = dir.getTags().size();
