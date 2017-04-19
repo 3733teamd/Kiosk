@@ -56,10 +56,11 @@ public class EditMapScreenController extends AbsController{
     public Button removeNodeButton;
     public Button disconnectNodeButton;
     public Label errorBox;
-    public RadioButton chooseAStarButton;
+    public ToggleGroup algSelectGroup;
     public RadioButton chooseDFSButton;
     public RadioButton chooseBFSButton;
-    public ToggleGroup algSelectGorup;
+    public RadioButton chooseAStarButton;
+
     //public Label errorBox;
     Directory dir = Directory.getInstance();
     ApplicationConfiguration config = ApplicationConfiguration.getInstance();
@@ -133,18 +134,18 @@ public class EditMapScreenController extends AbsController{
 
         switch (config.getCurrentSearchAlgorithm()){
             case A_STAR:
-                algSelectGorup.selectToggle(chooseAStarButton);
+                algSelectGroup.selectToggle(chooseAStarButton);
                 break;
             case DFS:
-                algSelectGorup.selectToggle(chooseDFSButton);
+                algSelectGroup.selectToggle(chooseDFSButton);
                 break;
             case BFS:
-                algSelectGorup.selectToggle(chooseBFSButton);
+                algSelectGroup.selectToggle(chooseBFSButton);
                 break;
         }
 
 
-        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        algSelectGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
                 if (new_toggle != null) {
