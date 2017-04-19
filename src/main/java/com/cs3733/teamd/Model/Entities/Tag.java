@@ -8,9 +8,22 @@ import java.util.LinkedList;
 public class Tag {
 
 
-     private String tagName;
-     private LinkedList<Node> nodes = new LinkedList<Node>();
-     private LinkedList<Professional> profs = new LinkedList<Professional>();
+    Directory dir = Directory.getInstance();
+    private String tagName;
+    private LinkedList<Node> nodes = new LinkedList<Node>();
+    private LinkedList<Professional> profs = new LinkedList<Professional>();
+    private boolean connectable;
+
+
+    public boolean isConnectable() {
+        return connectable;
+    }
+
+    public void setConnectable(boolean b){
+        connectable = b;
+    }
+
+
 
     public int getId() {
         return id;
@@ -29,6 +42,13 @@ public class Tag {
     public Tag(String name, int id){
          this.tagName = name;
          this.id = id;
+         this.connectable = false;
+    }
+
+    public Tag(String name, int id, boolean c){
+        this.tagName = name;
+        this.id = id;
+        this.connectable = c;
     }
 
     public String getTagName(){
@@ -89,6 +109,48 @@ public class Tag {
 
     public String toString(){
         return tagName;
+    }
+
+    public boolean updateConnections(){
+        // Is it connectable?
+        System.out.println("Update Connections");
+        if(isConnectable()){
+            // Check each node in the tag...check what it is connected to
+            for (int i=0; i<nodes.size()-1; i++){
+                Node n = nodes.get(i);
+                for (int j=i+1; j<nodes.size(); j++){
+                    Node nn = nodes.get(j);
+                    if(n.getID() != nn.getID()
+                            && (!n.getNodes().contains(nn))
+                            && (n.getFloor() != nn.getFloor())){
+                        dir.saveEdge(n, nn);
+                        System.out.println("Connecting ID1: "+n.getID()+"ID2: "+nn.getID());
+                    }
+                }
+            }
+            System.out.println("isConnectable() size:" + nodes.size());
+            return true;
+        }else{
+            for (int i=0; i<nodes.size()-1; i++){
+                Node n = nodes.get(i);
+                for (int j=i+1; j<nodes.size(); j++){
+                    Node nn = nodes.get(j);
+                    if((n.getID() != nn.getID())
+                            && (n.getNodes().contains(nn))
+                            && (n.getFloor() != nn.getFloor())){
+                        dir.deleteEdge(n,nn);
+                        System.out.println(getTagName());
+                        System.out.println("Disconnected ID1: "+n.getID()+"ID2: "+nn.getID());
+
+                    } else {
+                        System.out.println("Failed to Disconnect ID1: "+n.getID()+"ID2: "+nn.getID()+" in Tag: "+this.getTagName());
+                    }
+                }
+            }
+            System.out.println("!isConnectable() size:" + nodes.size());
+
+        }
+        return false;
     }
 
 }
