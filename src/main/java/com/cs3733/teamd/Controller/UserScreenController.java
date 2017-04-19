@@ -52,8 +52,6 @@ public class UserScreenController extends AbsController{
     private static int USERSCREEN_X_OFFSET = -5;
     private static int USERSCREEN_Y_OFFSET = -90;
 
-    //Boundary objects
-    @FXML
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
@@ -67,6 +65,12 @@ public class UserScreenController extends AbsController{
     public Button MiddleFloorButton;
     public Button EndFloorButton;
     @FXML
+    private Slider floorSlider;
+    @FXML
+    public Button aboutButton;
+    @FXML
+    public Button reportButton;
+
     public ImageView floorMap;
     public AnchorPane imagePane;
     public Canvas MapCanvas;
@@ -193,7 +197,7 @@ public class UserScreenController extends AbsController{
     }
 
 
-    private void panMethods(){
+    private void panMethods() {
 
         //zoom functions
         imagePane.getChildren();
@@ -213,7 +217,6 @@ public class UserScreenController extends AbsController{
 
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
-
 
 
         // Panning via drag....
@@ -243,8 +246,18 @@ public class UserScreenController extends AbsController{
                 }
             }
         });
+    }
 
+    //report Bug button pressed
+    @FXML
+    public void reportBug(ActionEvent event) throws IOException {
+        popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
+    }
 
+    //About button pressed
+    @FXML
+    public void getAbout(ActionEvent event) throws IOException{
+        popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
     }
 
     /**
@@ -408,6 +421,7 @@ public class UserScreenController extends AbsController{
     @FXML
     //Starts path displaying process
     private void draw(){
+        System.out.println("Begin drawing");
         plotPath(UserScreenController.pathNodes);
     }
 
