@@ -382,18 +382,7 @@ public class UserScreenController extends AbsController{
         Tag currentTag;
         int tagCount = dir.getTags().size();
         int nodeCount = dir.getNodes().size();
-        String startTagString = "Kiosk";
-        if(starttag == null) {
-            for (int itr = 0; itr < tagCount; itr++) {
-                currentTag = dir.getTags().get(itr);
-                //If match is found create path to node from start nodes
-                if (startTagString.equals(currentTag.getTagName())) {
-                    starttag = currentTag;
-                }
-
-            }
-        }
-
+        
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
@@ -428,8 +417,8 @@ public class UserScreenController extends AbsController{
 
     }
 
-    @FXML
     //Function to allow the user to change the start to wherever they wish
+    @FXML
     public  void onSet(ActionEvent actionEvent) throws IOException{
         int tagCount = dir.getTags().size();
         Tag currentTag;
