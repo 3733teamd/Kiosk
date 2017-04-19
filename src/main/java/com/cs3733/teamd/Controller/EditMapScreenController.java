@@ -48,6 +48,7 @@ public class EditMapScreenController extends AbsController{
     public String errorString = Main.bundle.getString("InvalidAction");
 
     public boolean loading=false;
+    public boolean edgeTail = false;
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -61,6 +62,7 @@ public class EditMapScreenController extends AbsController{
     public RadioButton chooseAStarButton;
     public ToggleGroup algSelectGorup;
 
+    public Button bugReports;
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
@@ -127,7 +129,7 @@ public class EditMapScreenController extends AbsController{
 
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
-    
+
     private void setAlgGroupListener() {
         chooseAStarButton.setUserData(ApplicationConfiguration.SearchAlgorithm.A_STAR);
         chooseDFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.DFS);
@@ -281,6 +283,7 @@ public class EditMapScreenController extends AbsController{
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
+                if(new_val!=null && old_val!=null)
                 floor = new_val.intValue();
                 FloorMenu.setValue(floor);
                 //floorMap.setImage(imageHashMap.get(floor));
@@ -429,27 +432,29 @@ public class EditMapScreenController extends AbsController{
 
     private void connectNode(CircleNode s1, CircleNode s2){
 
+        if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-        Line line = connect(s1,s2);
-        line.setStyle("-fx-stroke: red;");
-        s1.lineMap.put(s2,line);
-        s2.lineMap.put(s1,line);
+            Line line = connect(s1, s2);
+            line.setStyle("-fx-stroke: red;");
+            s1.lineMap.put(s2, line);
+            s2.lineMap.put(s1, line);
 
-        if(loading==false) {
-            boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
-            if(response == false){
-                errorBox.setText(errorString);
-            }else{
-                errorBox.setText("");
+            if (loading == false) {
+                boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
+                if (response == false) {
+                    errorBox.setText(errorString);
+                } else {
+                    errorBox.setText("");
+                }
             }
-        }
 
-        if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
-            line.setFill(Color.YELLOW);
-            line.setStrokeWidth(2);
-            mapCanvas.getChildren().add(line);
-        }else{
-            mapCanvas.getChildren().add(line);
+            if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
+                line.setFill(Color.YELLOW);
+                line.setStrokeWidth(2);
+                mapCanvas.getChildren().add(line);
+            } else {
+                mapCanvas.getChildren().add(line);
+            }
         }
 
     }
@@ -688,6 +693,7 @@ public class EditMapScreenController extends AbsController{
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
             select2.lineMap.remove(select1);
+            drawfloorNodes();
         }else{
             errorBox.setText(errorString);
         }
@@ -725,5 +731,9 @@ public class EditMapScreenController extends AbsController{
         for (Tag t: dir.getTags()){
             t.updateConnections();
         }
+    }
+
+    public void viewBugReports(ActionEvent actionEvent) throws IOException {
+        popupScreen(MMGpane, "/Views/ViewBugScreen.fxml", "View Bug Reports");
     }
 }

@@ -106,7 +106,7 @@ public class PathfinderTest {
     }
 
     @Test
-    public void testSameFloorPriority() throws PathNotFoundException {
+    public void testSameFloorPriority() {
 
         Node i = new Node(0, 0, 4);
         Node j = new Node(1, 0, 4);
@@ -130,7 +130,13 @@ public class PathfinderTest {
 
         Pathfinder pf = new Pathfinder(k, j);
 
-        LinkedList<Node> calculatedPath = pf.shortestPath();
+        LinkedList<Node> calculatedPath = new LinkedList<>();
+        try {
+            calculatedPath = pf.shortestPath();
+        } catch (PathNotFoundException pnfe){
+            pnfe.printStackTrace();
+        }
+
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(j); actualPath.add(i); actualPath.add(k); // backwards path
 
@@ -178,5 +184,25 @@ public class PathfinderTest {
         actualPath.add(e); actualPath.add(d); // backwards path
 
         assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
+    }
+
+    @Test
+    public void testAllAlgorithms(){
+        ApplicationConfiguration ac = ApplicationConfiguration.getInstance();
+
+        ac.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.DFS);
+
+        //testShortestPath();
+        testMultiFloor();
+        //testSameFloorPriority();
+        //testMultipleEndPoint();
+
+        ac.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.BFS);
+
+        //testShortestPath();
+        testMultiFloor();
+        //testSameFloorPriority();
+        //testMultipleEndPoint();*/
+
     }
 }
