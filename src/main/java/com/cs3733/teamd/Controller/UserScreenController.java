@@ -382,7 +382,7 @@ public class UserScreenController extends AbsController{
         Tag currentTag;
         int tagCount = dir.getTags().size();
         int nodeCount = dir.getNodes().size();
-        
+
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
@@ -463,7 +463,7 @@ public class UserScreenController extends AbsController{
         }
         startfloor = 0;
         destfloor = 0;
-        midfloor = 0;
+        midfloor = 1;
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
@@ -480,7 +480,7 @@ public class UserScreenController extends AbsController{
                 System.out.println("Node.getfloor" + node.getFloor());
                 pointsEndFloor.add(getConvertedPoint(node));
             }
-            else if(node.getFloor() == 1 && startfloor != 1 && destfloor != 1){
+            else if((node.getFloor() == 1) && (startfloor != 1) && (destfloor != 1)){
                 pointsMidFloor.add(getConvertedPoint(node));
             }
         }
