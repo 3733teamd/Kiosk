@@ -134,22 +134,6 @@ public class Pathfinder {
         }
 
         throw pathNotFound;
-
-        /*LinkedList<Node> path = new LinkedList<>();
-
-        Queue<Node> queue = new LinkedList();
-        queue.add(start);
-        while(!queue.isEmpty()){
-            Node current = queue.remove();
-
-            if(current == end){
-                break; // pathfound
-            }
-
-            for(Node n: current.getNodes()){
-
-            }
-        }*/
     }
 
     private LinkedList<Node> dfsPath() throws PathNotFoundException {
