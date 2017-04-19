@@ -115,6 +115,9 @@ public class UserScreenController extends AbsController{
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            floors.addLast(102);
+            floors.addLast(103);
+            floors.addLast(104);
         }
         floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);

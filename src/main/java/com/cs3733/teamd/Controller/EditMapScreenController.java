@@ -134,8 +134,12 @@ setFloorSliderListener();
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
-        //get the professional version of the floor(1000+)
-         floorMap.setImage(imgInt.display(floor+1000));
+        //if floor<100 its falkner, so display the prof verions
+        if(floor<100) {
+            floorMap.setImage(imgInt.display(floor + 1000));
+        }else{
+            floorMap.setImage(imgInt.display(floor));
+        }
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -157,6 +161,9 @@ setFloorSliderListener();
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            floors.addLast(102);
+            floors.addLast(103);
+            floors.addLast(104);
         }
         floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
@@ -167,8 +174,12 @@ setFloorSliderListener();
                                 Number old_val, Number new_val) {
                     floor = new_val.intValue();
                     FloorMenu.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(floor));
+                //if floor<100 its falkner, so display the prof verions
+                if(floor<100) {
+                    floorMap.setImage(imgInt.display(floor + 1000));
+                }else{
                     floorMap.setImage(imgInt.display(floor));
+                }
 
                     //TODO: heart of error
                     imagePane.getChildren().removeAll(floorCircs);
