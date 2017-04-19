@@ -254,7 +254,7 @@ public class DBHandlerTest {
 
         try {
             assertNotEquals(-1, result);
-            assertTrue(handler.updateTag("my-result-2",result));
+            assertTrue(handler.updateTag("my-result-2",result, true));
         } catch(AssertionError e) {
             dropSchemas(handler);
             fail();
