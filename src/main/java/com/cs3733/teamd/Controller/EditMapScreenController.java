@@ -122,7 +122,7 @@ public class EditMapScreenController extends AbsController{
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
     @FXML
     public void initialize(){
-        setFloorSliderListener();
+        //setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -563,7 +563,7 @@ public class EditMapScreenController extends AbsController{
             System.out.println(select1.toString() + " " + select2.toString());
         }
 
-        setConnectingTags();
+        //setConnectingTags();
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
@@ -592,7 +592,7 @@ public class EditMapScreenController extends AbsController{
         }
     }
 
-
+    @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
@@ -603,15 +603,22 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
-            setConnectingTags();
+            selectedTag.updateConnections();
             drawfloorNodes();
             currentTagBox.refresh();
         }
 
     }
-
+    @FXML
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
+            //setConnectingTags();
+            // Remove Connecting Tags...
+            for(Node n2: select1.referenceNode.getNodes()) {
+                if(n2.getFloor() != select1.referenceNode.getFloor()) {
+                    dir.deleteEdge(select1.referenceNode, n2);
+                }
+            }
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
             if(response){
                 errorBox.setText("");
@@ -620,11 +627,13 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
-            setConnectingTags();
+
             drawfloorNodes();
             currentTagBox.refresh();
         }
     }
+
+
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         //System.out.print(select1.lineMap.get(select2).getStartX());

@@ -113,6 +113,7 @@ public class Tag {
 
     public boolean updateConnections(){
         // Is it connectable?
+        System.out.println("Update Connections");
         if(isConnectable()){
             // Check each node in the tag...check what it is connected to
             for (int i=0; i<nodes.size()-1; i++){
@@ -120,13 +121,14 @@ public class Tag {
                 for (int j=i+1; j<nodes.size(); j++){
                     Node nn = nodes.get(j);
                     if(n.getID() != nn.getID()
-                            && (n.getNodes().contains(nn)== false)
-                            && n.getFloor() != nn.getFloor()){
+                            && (!n.getNodes().contains(nn))
+                            && (n.getFloor() != nn.getFloor())){
                         dir.saveEdge(n, nn);
                         System.out.println("Connecting ID1: "+n.getID()+"ID2: "+nn.getID());
                     }
                 }
             }
+            System.out.println("isConnectable() size:" + nodes.size());
             return true;
         }else{
             for (int i=0; i<nodes.size()-1; i++){
@@ -141,10 +143,11 @@ public class Tag {
                         System.out.println("Disconnected ID1: "+n.getID()+"ID2: "+nn.getID());
 
                     } else {
-                        System.out.println("Failed to Disconnect ID1: "+n.getID()+"ID2: "+nn.getID());
+                        System.out.println("Failed to Disconnect ID1: "+n.getID()+"ID2: "+nn.getID()+" in Tag: "+this.getTagName());
                     }
                 }
             }
+            System.out.println("!isConnectable() size:" + nodes.size());
 
         }
         return false;
