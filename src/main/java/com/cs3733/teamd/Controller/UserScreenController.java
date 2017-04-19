@@ -377,7 +377,7 @@ public class UserScreenController extends AbsController{
         //stores the destination inputted
         Main.DestinationSelected = tagAssociations.get(TypeDestination.getText());
 
-        //findStartTag();
+        findStartTag();
         //Makes a temporary holder for values
         Tag currentTag;
         int tagCount = dir.getTags().size();
@@ -502,7 +502,7 @@ public class UserScreenController extends AbsController{
             System.out.println("startfloor");
             drawPathFromPoints(gc, pointsStartFloor);
             EndFloorButton.setVisible(true);
-            if(midfloor != 0){
+            if(pointsMidFloor.size()>0){
                 MiddleFloorButton.setVisible(true);
             }
         }
