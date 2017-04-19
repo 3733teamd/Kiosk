@@ -42,6 +42,7 @@ public class AboutPopupController extends AbsController{
     public Button exitAbout;
     public AnchorPane MMGpane;
 
+
     @FXML
     public void leaveAbout(ActionEvent actionEvent) throws IOException {
         Stage closeStage= (Stage) exitAbout.getScene().getWindow();
@@ -49,4 +50,6 @@ public class AboutPopupController extends AbsController{
         //System.out.println("should be closing!!!");
 
     }
+
+
 }

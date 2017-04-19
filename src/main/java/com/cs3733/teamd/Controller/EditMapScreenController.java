@@ -60,6 +60,7 @@ public class EditMapScreenController extends AbsController{
     public RadioButton chooseDFSButton;
     public RadioButton chooseBFSButton;
     public ToggleGroup algSelectGorup;
+    public Button bugReports;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
     ApplicationConfiguration config = ApplicationConfiguration.getInstance();
@@ -720,5 +721,9 @@ public class EditMapScreenController extends AbsController{
         for (Tag t: dir.getTags()){
             t.updateConnections();
         }
+    }
+
+    public void viewBugReports(ActionEvent actionEvent) throws IOException {
+        popupScreen(MMGpane, "/Views/ViewBugScreen.fxml", "View Bug Reports");
     }
 }

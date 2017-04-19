@@ -52,7 +52,6 @@ public class UserScreenController extends AbsController{
     private static int USERSCREEN_X_OFFSET = -5;
     private static int USERSCREEN_Y_OFFSET = -90;
 
-    Directory dir = Directory.getInstance();
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
@@ -198,7 +197,7 @@ public class UserScreenController extends AbsController{
     }
 
 
-    private void panMethods(){
+    private void panMethods() {
 
         //zoom functions
         imagePane.getChildren();
@@ -218,7 +217,6 @@ public class UserScreenController extends AbsController{
 
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
-
 
 
         // Panning via drag....
@@ -248,6 +246,7 @@ public class UserScreenController extends AbsController{
                 }
             }
         });
+    }
 
     //report Bug button pressed
     @FXML
@@ -259,10 +258,6 @@ public class UserScreenController extends AbsController{
     @FXML
     public void getAbout(ActionEvent event) throws IOException{
         popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
-    }
-
-
-
     }
 
     /**

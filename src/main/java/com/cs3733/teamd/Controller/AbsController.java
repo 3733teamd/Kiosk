@@ -22,20 +22,33 @@ import java.util.ResourceBundle;
  */
 public abstract class AbsController {
 
+    public FXMLLoader switchScreen(AnchorPane gp, String ViewPath) throws IOException{
 
-    public void switchScreen(AnchorPane gp, String ViewPath) throws IOException{
-        Stage stage = (Stage) gp.getScene().getWindow();
-        AnchorPane pane ;
+        AnchorPane pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
+        //Main.backString =currView;
+        // System.out.println(Main.backString);
 
-        pane = loader.load();
+        pane = (AnchorPane) loader.load();
+        gp.getChildren().setAll(pane);
+        fitToParent(gp);
 
-        Scene scene = new Scene(pane);
-        stage.setMaximized(true);
-        stage.setScene(scene);
-        stage.show();
-    //
+        return loader;
     }
+
+//    public void switchScreen(AnchorPane gp, String ViewPath) throws IOException{
+//        Stage stage = (Stage) gp.getScene().getWindow();
+//        AnchorPane pane ;
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
+//
+//        pane = loader.load();
+//
+//        Scene scene = new Scene(pane);
+//        stage.setMaximized(true);
+//        stage.setScene(scene);
+//        stage.show();
+//    //
+//    }
 
     //public Stage popupStage= new Stage();
 
