@@ -335,7 +335,8 @@ public class UserScreenController extends AbsController{
         findStartTag();
         //Makes a temporary holder for values
         Tag currentTag;
-
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
         String startTagString = "Kiosk";
         if(starttag == null) {
             for (int itr = 0; itr < tagCount; itr++) {
@@ -347,8 +348,7 @@ public class UserScreenController extends AbsController{
 
             }
         }
-        int tagCount = dir.getTags().size();
-        int nodeCount = dir.getNodes().size();
+
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
