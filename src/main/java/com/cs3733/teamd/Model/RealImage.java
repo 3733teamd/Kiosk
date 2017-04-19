@@ -13,22 +13,22 @@ public class RealImage implements ImageInterface {
         Image flr_img ;
         switch (floor) {
             case 1:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser1.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
                 break;
             case 2:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser2.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf2.png"));
                 break;
             case 3:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser3.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3.png"));
                 break;
             case 5:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser5.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf5.png"));
                 break;
             case 6:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser6.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf6.png"));
                 break;
             case 7:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser7.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf7.png"));
                 break;
             case 102:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk2.png"));

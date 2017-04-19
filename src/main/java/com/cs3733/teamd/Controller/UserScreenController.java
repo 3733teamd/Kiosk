@@ -49,8 +49,8 @@ public class UserScreenController extends AbsController{
     DirectoryInterface dir = Directory.getInstance();
 
     //shift nodes to align with image
-    private static int USERSCREEN_X_OFFSET = -5;
-    private static int USERSCREEN_Y_OFFSET = 100;
+    private static int USERSCREEN_X_OFFSET = 60;
+    private static int USERSCREEN_Y_OFFSET = 30;
 
     public Button LoginButton;
     public Button SpanishButton;
@@ -103,10 +103,36 @@ public class UserScreenController extends AbsController{
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
     private Map<String, String> tagAssociations;
 
+    private class Offset {
+        public Offset(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+        int x;
+        int y;
+    }
+
+    private Map<Integer, Offset> offsets= new HashMap<Integer, Offset>();
+
+    private void setOffsets() {
+        this.offsets.put(1, new Offset(0, 0));
+        this.offsets.put(2, new Offset(0, 0));
+        this.offsets.put(3, new Offset(0, 0));
+        this.offsets.put(4, new Offset(0, -10));
+        this.offsets.put(5, new Offset(0, 0));
+        this.offsets.put(6, new Offset(0, 0));
+        this.offsets.put(7, new Offset(0, 0));
+        this.offsets.put(101, new Offset(0, 0));
+        this.offsets.put(102, new Offset(0, 0));
+        this.offsets.put(103, new Offset(0, 0));
+        this.offsets.put(104, new Offset(0, 0));
+    }
+
 
     @FXML
     private void initialize()
     {
+        setOffsets();
         /*
             This code will find all of the tags and then all of the professionals and then merge the two.
             The final result is a list of all the tags and professionals intertwined so that
@@ -427,8 +453,8 @@ public class UserScreenController extends AbsController{
 
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX() + USERSCREEN_X_OFFSET;
-        int y = node.getY() + USERSCREEN_Y_OFFSET+25;
+        int x = node.getX() + this.offsets.get(node.getFloor()).x;
+        int y = node.getY() + this.offsets.get(node.getFloor()).y;
         //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         Point p = new Point(x, y);
         return p;

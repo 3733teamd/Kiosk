@@ -88,8 +88,8 @@
                      <content>
                         <AnchorPane fx:id="imagePane" prefHeight="702.0" prefWidth="1097.0">
                            <children>
-                              <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
-                              <Canvas fx:id="MapCanvas" height="693.0" width="1091.0">
+                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
+                              <Canvas fx:id="MapCanvas" height="636.0" width="1091.0">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor></Canvas>
