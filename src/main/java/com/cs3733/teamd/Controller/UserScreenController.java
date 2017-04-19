@@ -376,14 +376,14 @@ public class UserScreenController extends AbsController{
     public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
         Main.DestinationSelected = tagAssociations.get(TypeDestination.getText());
-
-        findStartTag();
+        
         //Makes a temporary holder for values
         Tag currentTag;
         int tagCount = dir.getTags().size();
         int nodeCount = dir.getNodes().size();
 
         // Do we have a starting tag???
+        System.out.println(starttag);
         if(starttag != null) {
             // What floor is the Kiosk on?
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
@@ -428,7 +428,9 @@ public class UserScreenController extends AbsController{
             currentTag = dir.getTags().get(itr);
             //If match is found create path to node from start nodes
             if (startTagString.equals(currentTag.getTagName())) {
+                System.out.println(currentTag.getTagName());
                 starttag = currentTag;
+                break;
             }
 
         }
