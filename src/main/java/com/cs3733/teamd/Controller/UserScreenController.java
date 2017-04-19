@@ -348,7 +348,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+//        switchScreen(MMGpane, "/Views/UserScreen.fxml");
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
