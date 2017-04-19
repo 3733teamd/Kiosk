@@ -62,7 +62,7 @@ public class EditMapScreenController extends AbsController{
     public ToggleGroup algSelectGorup;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
-    ApplicationConfiguration config = ApplicationConfiguration;
+    ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
     public Button EditProf;
     public Button EditTag;
@@ -127,14 +127,57 @@ public class EditMapScreenController extends AbsController{
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
     private void setAlgGroupListener() {
+        chooseAStarButton.setUserData(ApplicationConfiguration.SearchAlgorithm.A_STAR);
+        chooseDFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.DFS);
+        chooseBFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.BFS);
+
+        switch (config.getCurrentSearchAlgorithm()){
+            case A_STAR:
+                algSelectGorup.selectToggle(chooseAStarButton);
+                break;
+            case DFS:
+                algSelectGorup.selectToggle(chooseDFSButton);
+                break;
+            case BFS:
+                algSelectGorup.selectToggle(chooseBFSButton);
+                break;
+        }
+
+
         algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
-                if (algSelectGorup.getSelectedToggle() != null) {
-
+                if (new_toggle != null) {
+                    config.setCurrentSearchAlgorithm((ApplicationConfiguration.SearchAlgorithm) new_toggle.getUserData());
                 }
             }
         });
+        /*
+        chooseAStarButton.setUserData("A*");
+        chooseDFSButton.setUserData("DFS");
+        chooseBFSButton.setUserData("BFS");
+
+
+        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (new_toggle != null) {
+                    switch (new_toggle.getUserData().toString()){
+                        case "A*":
+                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.A_STAR);
+                            break;
+                        case "DFS":
+                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.DFS);
+                            break;
+                        case "BFS":
+                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.BFS);
+                            break;
+
+                    }
+                }
+            }
+        });
+        */
     }
     @FXML
     public void initialize(){
