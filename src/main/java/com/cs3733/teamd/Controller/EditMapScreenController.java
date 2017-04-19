@@ -152,32 +152,6 @@ public class EditMapScreenController extends AbsController{
                 }
             }
         });
-        /*
-        chooseAStarButton.setUserData("A*");
-        chooseDFSButton.setUserData("DFS");
-        chooseBFSButton.setUserData("BFS");
-
-
-        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ov,
-                                Toggle old_toggle, Toggle new_toggle) {
-                if (new_toggle != null) {
-                    switch (new_toggle.getUserData().toString()){
-                        case "A*":
-                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.A_STAR);
-                            break;
-                        case "DFS":
-                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.DFS);
-                            break;
-                        case "BFS":
-                            config.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.BFS);
-                            break;
-
-                    }
-                }
-            }
-        });
-        */
     }
     @FXML
     public void initialize(){
