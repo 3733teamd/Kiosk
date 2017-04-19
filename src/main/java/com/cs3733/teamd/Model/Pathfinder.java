@@ -50,12 +50,12 @@ public class Pathfinder {
 
         for(Node n: ends){
             double estimate = distanceEstimate(start, n);
-            if(estimate > lowestCost){
+
+            if(estimate < lowestCost){
                 closest = n;
                 lowestCost = estimate;
             }
         }
-
         this.end = closest;
 
     }
