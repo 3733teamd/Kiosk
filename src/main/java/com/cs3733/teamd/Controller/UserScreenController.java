@@ -369,39 +369,7 @@ public class UserScreenController extends AbsController{
 
 
             pathNodes = pf.shortestPath();
-            /*for (int itr = 0; itr < tagCount; itr++) {
 
-                currentTag = dir.getTags().get(itr);
-                // Have we found our destination?
-                if (Main.DestinationSelected.equals(currentTag.getTagName())) {
-                    double record = 9999999999999999999999.0;
-                    Pathfinder bestPath = null;
-
-                    for (Node n : currentTag.getNodes()) {
-                        // Let's find the shortest path
-                        Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        try {
-                            if (attempt.pathLength(attempt.shortestPath()) < record) {
-                                bestPath = attempt;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    // Is there a path from the source to the destination?
-                    if (bestPath != null) {
-                        pathNodes = bestPath.shortestPath();
-                    } else {
-                        System.out.println("Failed to find best path out of many\n");
-                        Pathfinder pathfinder = new Pathfinder(
-                                starttag.getNodes().getFirst(),
-                                currentTag.getNodes().getFirst()
-                        );
-                        //use the shortest path
-                        pathNodes = pathfinder.shortestPath();
-                    }
-                }
-            }*/
         }
         // Clear the canvas
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
