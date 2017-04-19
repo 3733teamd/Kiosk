@@ -120,7 +120,8 @@ public class DBHandler {
         while (RoomTupleRslt.next()) {
             String newName = RoomTupleRslt.getString("name");
             int id = RoomTupleRslt.getInt("id");
-            Tag newTag = new Tag(newName, id);
+            boolean connectable = RoomTupleRslt.getBoolean("connectable");
+            Tag newTag = new Tag(newName, id, connectable);
             tagMap.put(id, newTag);
             //newTag.addNode(nodeMap.get(ID)); //Association
         }
@@ -351,58 +352,6 @@ public class DBHandler {
         connection.close();
     }
 
-    //saves dir into the database
-    public void save() throws SQLException{
-
-        Directory dir = Directory.getInstance();
-        Statement s = connection.createStatement();
-        //wipe everything
-        emptyExceptTitles();
-        //for each node
-        for(Node n: dir.getNodes()){
-            //add to Node
-            String sql = "INSERT INTO Node VALUES "+n.toSql();
-            System.out.println(sql);
-            s.execute(sql);
-        }
-        //for each prof.
-        for(Professional p : dir.getProfessionals()){
-            System.out.println(p.toSql());
-            s.execute("INSERT INTO HCP VALUES "+p.toSql());
-        }
-        //for each tag
-        for(Tag t : dir.getTags()){
-            String sql = "INSERT INTO Tag VALUES ('"
-                    + t.getTagName() + "')";
-            System.out.println(sql);
-            s.execute(sql);
-        }
-
-        //fill in adjacentNode
-        for(Node n : dir.getNodes()){
-            for(Node edge : n.getNodes()){
-                //create adjacent node
-                s.execute("INSERT INTO AdjacentNode VALUES ("+n.getID()+","+edge.getID()+")");
-            }
-            //fills in NODETAG
-            for(Tag t : n.getTags()){
-                //add a nodetag
-                s.execute("INSERT INTO NodeTag VALUES ("
-                    + n.getID() + ", '"
-                    + t.getTagName() + "')");
-            }
-        }
-        //fill HCPTag
-        for(Tag t : dir.getTags()){
-            for(Professional p : t.getProfs()){
-                s.execute("INSERT INTO HCPTag VALUES ('"
-                    +t.getTagName()
-                    +"',"
-                    +p.getID() + ")");
-            }
-        }
-    }
-
     /**
      * Save's a Node into the database and return the associated id.
      * @param x - x coordinate of the node
@@ -517,12 +466,13 @@ public class DBHandler {
         }
     }
 
-    public boolean updateTag(String name, int id) {
-        String sqlUpdate = "UPDATE Tag SET name=? WHERE id=?";
+    public boolean updateTag(String name, int id, boolean connectable) {
+        String sqlUpdate = "UPDATE Tag SET name=?,connectable=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, name);
-            statement.setInt(2, id);
+            statement.setBoolean(2, connectable);
+            statement.setInt(3, id);
             statement.executeUpdate();
             statement.close();
             return true;
@@ -894,7 +844,8 @@ public class DBHandler {
                     id = id - (GENERATE_ID_START - maxTagId) + 1;
                 }
                 String name = rs.getString(2);
-                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"')\n");
+                boolean connectable = rs.getBoolean(3);
+                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+")\n");
             }
             rs.close();
             // Node Tag

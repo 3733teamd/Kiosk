@@ -47,7 +47,7 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <HBox prefHeight="78.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
+            <HBox prefHeight="59.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
                <children>
                   <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP">
                      <font>
@@ -90,14 +90,14 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="629.0" prefWidth="1292.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="673.0" prefWidth="1292.0">
                <children>
-                  <ScrollPane fx:id="scrollPane" prefHeight="629.0" prefWidth="1092.0">
+                  <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="1092.0">
                      <content>
                         <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="1091.0">
                            <children>
                               <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
-                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="606.0" prefWidth="1091.0" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="39.0" />
+                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="636.0" prefWidth="1091.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="39.0" />
                               <Label fx:id="errorBox" alignment="CENTER" layoutX="877.0" layoutY="14.0" prefHeight="119.0" prefWidth="200.0" text="Label" />
                            </children>
                         </AnchorPane>

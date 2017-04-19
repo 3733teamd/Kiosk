@@ -104,6 +104,7 @@
                                  <children>
                                     <Label text="%currTag" />
                                     <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="272.0" />
+                                    <TextField fx:id="searchTagList" promptText="%selTag" />
                                     <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="49.0" prefWidth="282.0" text="%addTag" />
                                     <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="52.0" prefWidth="300.0" text="%remTag" />
                                  </children>
