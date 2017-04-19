@@ -56,10 +56,11 @@ public class EditMapScreenController extends AbsController{
     public Button removeNodeButton;
     public Button disconnectNodeButton;
     public Label errorBox;
-    public ToggleGroup algSelectGroup;
     public RadioButton chooseDFSButton;
     public RadioButton chooseBFSButton;
     public RadioButton chooseAStarButton;
+    public ToggleGroup algSelectGorup;
+
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
@@ -134,18 +135,18 @@ public class EditMapScreenController extends AbsController{
 
         switch (config.getCurrentSearchAlgorithm()){
             case A_STAR:
-                algSelectGroup.selectToggle(chooseAStarButton);
+                algSelectGorup.selectToggle(chooseAStarButton);
                 break;
             case DFS:
-                algSelectGroup.selectToggle(chooseDFSButton);
+                algSelectGorup.selectToggle(chooseDFSButton);
                 break;
             case BFS:
-                algSelectGroup.selectToggle(chooseBFSButton);
+                algSelectGorup.selectToggle(chooseBFSButton);
                 break;
         }
 
 
-        algSelectGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle old_toggle, Toggle new_toggle) {
                 if (new_toggle != null) {
@@ -365,11 +366,14 @@ public class EditMapScreenController extends AbsController{
                     event.consume();
                 }
 
+                //scales with scroll wheel
+                /*
                 floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
                 floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
                 mapCanvas.setScaleX(mapCanvas.getScaleX() * scaleFactor);
                 mapCanvas.setScaleY(mapCanvas.getScaleY() * scaleFactor);
                 event.consume();
+                */
             }
         });
     }

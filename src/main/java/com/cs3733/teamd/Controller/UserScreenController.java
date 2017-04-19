@@ -285,12 +285,13 @@ public class UserScreenController extends AbsController{
                 }
 
                 //scale on scroll
-                
+                /*
                 floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
                 floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
                 MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
                 MapCanvas.setScaleY(MapCanvas.getScaleY() * scaleFactor);
                 event.consume();
+                */
             }
         });
     }
