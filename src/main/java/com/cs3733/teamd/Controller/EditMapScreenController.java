@@ -128,7 +128,7 @@ public class EditMapScreenController extends AbsController{
 
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
-    
+
     private void setAlgGroupListener() {
         chooseAStarButton.setUserData(ApplicationConfiguration.SearchAlgorithm.A_STAR);
         chooseDFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.DFS);
