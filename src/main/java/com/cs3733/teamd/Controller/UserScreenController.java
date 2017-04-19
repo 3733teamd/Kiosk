@@ -1,6 +1,5 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Controller.IterationOne.MapDirectionsController;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import javafx.beans.value.ChangeListener;
@@ -15,11 +14,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Color;
 import org.controlsfx.control.textfield.TextFields;
 
 //import javax.xml.soap.Text;
@@ -48,6 +44,10 @@ public class UserScreenController extends AbsController{
     public Label directionLabel;
     @FXML
     private Slider floorSlider;
+    @FXML
+    public Button aboutButton;
+    @FXML
+    public Button reportButton;
 
     public ImageView floorMap;
 
@@ -78,7 +78,7 @@ public class UserScreenController extends AbsController{
     @FXML private void initialize()
     {
         TextFields.bindAutoCompletion(TypeDestination,nodeList);
-        setText();
+//        setText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
 
@@ -108,6 +108,19 @@ public class UserScreenController extends AbsController{
             draw();
         }
     }
+
+    //report Bug button pressed
+    @FXML
+    public void reportBug(ActionEvent event) throws IOException {
+        popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
+    }
+
+    //About button pressed
+    @FXML
+    public void getAbout(ActionEvent event) throws IOException{
+        popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
+    }
+
 
 
     //Spanish button to change language to Spanish

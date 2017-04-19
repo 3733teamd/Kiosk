@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -17,11 +10,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MMGpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
+<AnchorPane fx:id="MMGpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -126,24 +122,31 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <AnchorPane prefHeight="712.0" prefWidth="962.0">
+                  <AnchorPane prefHeight="688.0" prefWidth="1024.0">
                      <children>
                         <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1019.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
                         <Canvas fx:id="MapCanvas" height="685.0" layoutY="36.0" width="1011.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="1">
+                  <VBox prefHeight="633.0" prefWidth="1024.0">
                      <children>
-                        <VBox prefHeight="699.0" prefWidth="244.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1">
+                        <AnchorPane prefHeight="64.0" prefWidth="189.0">
                            <children>
-                              <Label fx:id="directionLabel" text="Directions:">
-                                 <font>
-                                    <Font size="38.0" />
-                                 </font>
-                              </Label>
-                              <TextArea fx:id="directions" prefHeight="656.0" prefWidth="189.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                              <HBox layoutX="91.0" layoutY="-6.0" prefHeight="96.0" prefWidth="195.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
-                        </VBox>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextArea fx:id="directions" layoutX="10.0" layoutY="70.0" prefHeight="325.0" prefWidth="233.0" wrapText="true" />
+                        <Label fx:id="directionLabel" layoutX="48.0" layoutY="12.0" text="Directions:">
+                           <font>
+                              <Font size="38.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="aboutButton" layoutX="55.0" layoutY="418.0" mnemonicParsing="false" onAction="#getAbout" text="%About" AnchorPane.rightAnchor="55.0" />
+                        <Button fx:id="reportButton" layoutX="59.0" layoutY="485.0" mnemonicParsing="false" onAction="#reportBug" prefHeight="53.0" prefWidth="105.0" text="%ReportBug" AnchorPane.rightAnchor="55.0" />
                      </children>
                   </AnchorPane>
                </children>

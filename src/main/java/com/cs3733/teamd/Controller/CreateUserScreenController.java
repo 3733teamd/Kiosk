@@ -47,6 +47,8 @@ public class CreateUserScreenController extends AbsController {
     @FXML
     private ChoiceBox roleSelection;
 
+
+
     static ObservableList<String> rolesList =
             FXCollections.observableArrayList( "admin", "prof" );
 
