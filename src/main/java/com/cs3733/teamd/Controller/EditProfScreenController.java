@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -111,7 +112,7 @@ public class EditProfScreenController extends AbsController {
         @Override
         public void run() {
             counter++;
-            System.out.println(counter);
+            System.out.println("editProf counting: "+counter);
         }
     };
 
@@ -121,7 +122,7 @@ public class EditProfScreenController extends AbsController {
             while (running) {
                 try {
 
-                    if (counter == 5) {
+                    if (counter == 10) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -218,6 +219,12 @@ public class EditProfScreenController extends AbsController {
         pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
                 counter = 0;
             }
         });

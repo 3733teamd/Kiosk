@@ -77,7 +77,7 @@ public class EditTagScreenController extends AbsController {
         @Override
         public void run() {
             counter++;
-            System.out.println(counter);
+            System.out.println("editTag counting: "+counter);
         }
     };
 
@@ -87,7 +87,7 @@ public class EditTagScreenController extends AbsController {
             while (running) {
                 try {
 
-                    if (counter == 5) {
+                    if (counter == 10) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -240,6 +240,12 @@ public class EditTagScreenController extends AbsController {
         MMGpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        MMGpane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
                 counter = 0;
             }
         });

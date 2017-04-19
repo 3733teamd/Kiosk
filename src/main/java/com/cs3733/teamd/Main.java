@@ -40,7 +40,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("/Views/EditMapScreen.fxml"), bundle);
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/UserScreen.fxml"), bundle);
 
 
         MainScene=new Scene(rootMain);
