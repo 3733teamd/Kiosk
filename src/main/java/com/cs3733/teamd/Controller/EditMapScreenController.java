@@ -463,27 +463,29 @@ public class EditMapScreenController extends AbsController{
                     double x_percent = event.getX()/IMAGE_WIDTH;
                     double y_percent = event.getY()/IMAGE_HEIGHT;
                     System.out.println("Percent: "+zoomPercent+" X:" +x_percent+" Y: "+y_percent);
+
+                    //scales with scroll wheel
+
+                    floorMap.setScaleX(zoomPercent/100.0);
+                    floorMap.setScaleY(zoomPercent/100.0);
+                    mapCanvas.setScaleX(zoomPercent/100.0);
+                    mapCanvas.setScaleY(zoomPercent/100.0);
+
+
+                    //scrollPane.setHvalue(zoomPercent - 100.0);
+                    //scrollPane.setVvalue(zoomPercent - 100.0);
+                    System.out.println(scrollPane.getHvalue());
+                    System.out.println(scrollPane.getVvalue());
+
+                    // Figure out the X and Y of where the zoom occured
+                    double viewportWidth = IMAGE_WIDTH / floorMap.getScaleX();
+                    double viewportHeight = IMAGE_HEIGHT / floorMap.getScaleY();
+
                 } else {
                     event.consume();
                 }
 
-                System.out.println(floorMap.getScaleX());
-                System.out.println(floorMap.getScaleY());
-                System.out.println(mapCanvas.getScaleX());
-                System.out.println(mapCanvas.getScaleY());
 
-                //scales with scroll wheel
-
-                floorMap.setScaleX(zoomPercent/100.0);
-                floorMap.setScaleY(zoomPercent/100.0);
-                mapCanvas.setScaleX(zoomPercent/100.0);
-                mapCanvas.setScaleY(zoomPercent/100.0);
-
-
-                //scrollPane.setHvalue(zoomPercent - 100.0);
-                //scrollPane.setVvalue(zoomPercent - 100.0);
-                System.out.println(scrollPane.getHvalue());
-                System.out.println(scrollPane.getVvalue());
                 event.consume();
 
             }
