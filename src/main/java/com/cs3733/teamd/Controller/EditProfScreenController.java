@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.ProTitle;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
@@ -22,7 +24,8 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -84,9 +87,6 @@ public class EditProfScreenController extends AbsController {
     private TextField searchTitle1;
 
     @FXML
-    private TextField searchTagList;
-
-    @FXML
     private Button addTag;
 
     @FXML
@@ -103,15 +103,68 @@ public class EditProfScreenController extends AbsController {
     List<Professional> allTheProfs= dir.getProfessionals();
     List<String> allProfNames = new ArrayList<String>();
 
-    List<Professional> filtered = new ArrayList<Professional>();
-    List<Tag> filteredTag = new ArrayList<>();
+    //timeout
+    Timer timer = new Timer();
+    int counter = 0;
+    private volatile boolean running = true;
 
-    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
-    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            counter++;
+            System.out.println("editProf counting: "+counter);
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+
+                    if (counter == timeoutTime) {
+                        running = false;
+                        timer.cancel();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    break;
+                }
+            }
+        }
+    };
+    Thread timerThread = new Thread(runnable);
+    Runnable resetKiosk = new Runnable() {
+        @Override
+        public void run() {
+            timer.cancel();
+            timer.purge();
+            running = false;
+            timerThread.interrupt();
+
+            //logout user
+            dir.logoutUser();
+            try {
+                switchScreen(pane, "/Views/UserScreen.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    };
 
 
     @FXML
     public void initialize(){
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
+
         //fill in alltags
         setAllTagsList();
         //fill in allProfs
@@ -147,26 +200,34 @@ public class EditProfScreenController extends AbsController {
         for (int i = 0 ; i<allTheProfs.size(); i++) {
             allProfNames.add(allTheProfs.get(i).getName());
         }
-        //TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
+        TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
 
-
-        searchProfessionalBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        //timer resets if mouse moved
+        pane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                //String text = searchTagBar.getText();
-
-                displayResult(searchProfessionalBar.getText() + event.getText());
+            public void handle(MouseEvent event) {
+                counter = 0;
+                System.out.println("counter resets");
             }
         });
-        searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                //String text = searchTagBar.getText();
-
-                displayResultAllTag(searchTagList.getText() + event.getText());
+            public void handle(MouseEvent event) {
+                counter = 0;
             }
         });
-
+        pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                counter = 0;
+            }
+        });
     }
 
     private void createCurTagListListener(){
@@ -265,6 +326,10 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void onBack(ActionEvent actionEvent) throws IOException {
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(pane, "/Views/EditMapScreen.fxml");
     }
 
@@ -353,28 +418,7 @@ public class EditProfScreenController extends AbsController {
 
 
 
-    public void displayResult(String value){
 
-        for (Professional d: dir.getProfessionals()){
-            filtered = dir.getProfessionals().stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
-        }
-
-        searchResults.setAll(filtered);
-
-        allProfList.setItems(searchResults);
-    }
-
-    @FXML
-    public void displayResultAllTag(String value){
-
-        for (Tag d: dir.getTags()){
-            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
-        }
-
-        searchResultsTag.setAll(filteredTag);
-
-        allTagsList.setItems(searchResultsTag);
-    }
 
     private void updateCurrentProfList(Professional p){
 
