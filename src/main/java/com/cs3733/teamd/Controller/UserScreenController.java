@@ -50,7 +50,7 @@ public class UserScreenController extends AbsController{
 
     //shift nodes to align with image
     private static int USERSCREEN_X_OFFSET = -5;
-    private static int USERSCREEN_Y_OFFSET = -90;
+    private static int USERSCREEN_Y_OFFSET = 100;
 
     public Button LoginButton;
     public Button SpanishButton;
