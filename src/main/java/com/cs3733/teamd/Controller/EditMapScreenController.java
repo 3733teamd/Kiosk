@@ -423,7 +423,11 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }else {
                 if(select2 != null) {
-                    select2.setFill(Color.RED);
+                    if(select2.referenceNode.hasElevator()){
+                        select2.setFill(Color.YELLOW);
+                    }else {
+                        select2.setFill(Color.RED);
+                    }
                 }
 
                 select2 = select1;
@@ -435,7 +439,11 @@ public class EditMapScreenController extends AbsController{
         });
         circle.setOnMouseReleased((t)->{
 
-            circle.setFill(Color.RED);
+            if(circle.referenceNode.hasElevator()){
+                circle.setFill(Color.YELLOW);
+            }else {
+                circle.setFill(Color.RED);
+            }
 
             select1.setFill(Color.GREEN);
             if(select2 != null && select1 != select2){
@@ -506,10 +514,12 @@ public class EditMapScreenController extends AbsController{
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
                 CircleNode circ = createCircle(n, 5, Color.YELLOW);
+
             }else {
                 CircleNode circ = createCircle(n, 5, Color.RED);
             }
         }
+
     }
 
     private void drawfloorNodes(){
@@ -530,10 +540,13 @@ public class EditMapScreenController extends AbsController{
             System.out.println(select1.toString() + " " + select2.toString());
         }
 
+        setConnectingTags();
+
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
             //select1 = circ;
+
 
             if(n.getFloor()==floor){
 
@@ -569,7 +582,6 @@ public class EditMapScreenController extends AbsController{
 
             if(selectedTag.isConnectable()){
                 selectedTag.updateConnections();
-                //initialize();
             }
 
             currentTagBox.refresh();
@@ -587,6 +599,7 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
+            setConnectingTags();
             currentTagBox.refresh();
         }
     }
@@ -636,5 +649,11 @@ public class EditMapScreenController extends AbsController{
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+    }
+
+    public void setConnectingTags(){
+        for (Tag t: dir.getTags()){
+            t.updateConnections();
+        }
     }
 }
