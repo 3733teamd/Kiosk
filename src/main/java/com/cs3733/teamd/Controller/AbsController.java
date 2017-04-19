@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
  */
 public abstract class AbsController {
 
+    public int timeoutTime=20;
+
     public FXMLLoader switchScreen(AnchorPane gp, String ViewPath) throws IOException{
 
         AnchorPane pane;

@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -157,12 +158,95 @@ public class EditMapScreenController extends AbsController{
             }
         });
     }
+    //timeout
+    Timer timer = new Timer();
+    int counter = 0;
+    private volatile boolean running = true;
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            counter++;
+            System.out.println("edit map" + counter);
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+
+                    if (counter == timeoutTime) {
+                        running = false;
+                        timer.cancel();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    break;
+                }
+            }
+        }
+    };
+    Thread timerThread = new Thread(runnable);
+    Runnable resetKiosk = new Runnable() {
+        @Override
+        public void run() {
+            timer.cancel();
+            timer.purge();
+            running = false;
+            timerThread.interrupt();
+
+            //logout user
+            dir.logoutUser();
+            try {
+                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    };
+
     @FXML
     public void initialize(){
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
         setAlgGroupListener();
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
+
+        MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {counter = 0;
+                System.out.println("counter resets");
+            }
+        });
+        MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        MMGpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        MMGpane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                counter = 0;
+            }
+        });
 
         errorBox.setText("");
         xLoc.setText("");
@@ -385,30 +469,51 @@ public class EditMapScreenController extends AbsController{
 
 
 
+
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 
     @FXML
     public void toEditProf() throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
     }
     @FXML
     public void toEditTag() throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
 
