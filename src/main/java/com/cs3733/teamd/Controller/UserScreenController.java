@@ -8,6 +8,7 @@ import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import com.cs3733.teamd.Model.Entities.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -37,8 +38,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.awt.Point;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -97,10 +97,40 @@ public class UserScreenController extends AbsController{
     private int midfloor = 0;
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
+    private Map<String, String> tagAssociations;
+
 
     @FXML
     private void initialize()
     {
+        /*
+            This code will find all of the tags and then all of the professionals and then merge the two.
+            The final result is a list of all the tags and professionals intertwined so that
+            a user can see a list of rooms and a list of professionals...
+         */
+        Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
+        tagAssociations = new HashMap<String, String>();
+        for(Tag t: dir.getTags()) {
+            professionalTagMerge.put(t.toString(), new ArrayList<String>());
+        }
+        for(Professional p: dir.getProfessionals()) {
+            for(Tag t: p.getTags()) {
+                professionalTagMerge.get(t.toString()).add(p.getName());
+            }
+        }
+        // Now convert it into a list...
+        List<String> mergedTagProfessionalList = new ArrayList<String>();
+        for(String tag: professionalTagMerge.keySet()) {
+            for(String professional: professionalTagMerge.get(tag)) {
+                String textDisplay = tag+"-"+professional;
+                mergedTagProfessionalList.add(textDisplay);
+                tagAssociations.put(textDisplay, tag);
+            }
+            mergedTagProfessionalList.add(tag);
+            tagAssociations.put(tag, tag);
+        }
+
+        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
@@ -215,6 +245,28 @@ public class UserScreenController extends AbsController{
 
     }
 
+    /**
+     * Find's the start tag...
+     */
+    private void findStartTag() {
+        //Gets nodes and tags from directory
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
+        //Makes a temporary holder for values
+        Tag currentTag;
+
+        String startTagString = "Kiosk";
+        for(int itr = 0; itr < tagCount; itr++){
+            currentTag = dir.getTags().get(itr);
+            //If match is found create path to node from start nodes
+            if(startTagString.equals(currentTag.getTagName())){
+                starttag = currentTag;
+            }
+
+        }
+    }
+
+
     private void overrideScrollWheel() {
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
@@ -243,7 +295,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
-        pathNodes = null;
+        //pathNodes = null;
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
         setSpanishText();
     }
@@ -276,12 +328,11 @@ public class UserScreenController extends AbsController{
 
     //Search button, generates path and directions on submit
     @FXML
-    public void onSearch(ActionEvent actionEvent) throws IOException{
+    public void onSearch(ActionEvent actionEvent) throws Exception {
         //stores the destination inputted
-        Main.DestinationSelected = TypeDestination.getText();
-        //Gets nodes and tags from directory
-        int tagCount = dir.getTags().size();
-        int nodeCount = dir.getNodes().size();
+        Main.DestinationSelected = tagAssociations.get(TypeDestination.getText());
+
+        findStartTag();
         //Makes a temporary holder for values
         Tag currentTag;
 
@@ -296,6 +347,8 @@ public class UserScreenController extends AbsController{
 
             }
         }
+        int tagCount = dir.getTags().size();
+        int nodeCount = dir.getNodes().size();
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
@@ -313,8 +366,12 @@ public class UserScreenController extends AbsController{
                     for (Node n : currentTag.getNodes()) {
                         // Let's find the shortest path
                         Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        if (attempt.pathLength(attempt.shortestPath()) < record) {
-                            bestPath = attempt;
+                        try {
+                            if (attempt.pathLength(attempt.shortestPath()) < record) {
+                                bestPath = attempt;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                     // Is there a path from the source to the destination?
@@ -383,6 +440,10 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
         // ensure values are reset
         int index = 0;
+        if(starttag == null) {
+            System.err.println("Start Tag is Not Populated");
+            return;
+        }
         startfloor = 0;
         destfloor = 0;
         midfloor = 0;

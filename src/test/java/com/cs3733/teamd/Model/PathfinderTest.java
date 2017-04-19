@@ -48,7 +48,12 @@ public class PathfinderTest {
         c.addNode(d);
 
         Pathfinder pf = new Pathfinder(a,d);
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calulatedPath = new LinkedList<>();
+        try {
+            calulatedPath = pf.shortestPath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(d); actualPath.add(c); actualPath.add(a); // backwards path
 
@@ -84,7 +89,12 @@ public class PathfinderTest {
 
 
         Pathfinder pf = new Pathfinder(a,f);
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calulatedPath = new LinkedList<>();
+        try {
+            calulatedPath = pf.shortestPath();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(f); actualPath.add(h); actualPath.add(g); actualPath.add(c); actualPath.add(b); actualPath.add(a); // backwards path
 
@@ -93,7 +103,7 @@ public class PathfinderTest {
     }
 
     @Test
-    public void testSameFloorPriority(){
+    public void testSameFloorPriority() throws Exception {
 
         Node i = new Node(0, 0, 4);
         Node j = new Node(1, 0, 4);

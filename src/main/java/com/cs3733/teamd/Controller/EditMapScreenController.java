@@ -337,10 +337,12 @@ setFloorSliderListener();
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
+        dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
+        dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 
