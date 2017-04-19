@@ -56,8 +56,13 @@ public class EditMapScreenController extends AbsController{
     public Button removeNodeButton;
     public Button disconnectNodeButton;
     public Label errorBox;
+    public RadioButton chooseAStarButton;
+    public RadioButton chooseDFSButton;
+    public RadioButton chooseBFSButton;
+    public ToggleGroup algSelectGorup;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
+    ApplicationConfiguration config = ApplicationConfiguration;
 
     public Button EditProf;
     public Button EditTag;
@@ -121,8 +126,19 @@ public class EditMapScreenController extends AbsController{
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
+    private void setAlgGroupListener() {
+        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (algSelectGorup.getSelectedToggle() != null) {
+
+                }
+            }
+        });
+    }
     @FXML
     public void initialize(){
+        setAlgGroupListener();
 setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
