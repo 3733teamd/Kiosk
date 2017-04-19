@@ -167,7 +167,7 @@ public class EditMapScreenController extends AbsController{
         @Override
         public void run() {
             counter++;
-            System.out.println("edit map" + counter);
+            //System.out.println("edit map" + counter);
         }
     };
 
