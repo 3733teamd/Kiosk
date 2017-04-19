@@ -45,44 +45,7 @@ public class Directory implements DirectoryInterface {
         this.nextProfID = nextProfID;
         this.titles = titles;
     }
-    @Deprecated
-    public void notifyUpdate() {
-        try {
-            dbHandler.open();
-            dbHandler.save();
-            dbHandler.close();
-        } catch (SQLException e) {
-            System.out.println("UNABLE TO PERSIST TO DATABASE");
-            e.printStackTrace();
-        } catch(Exception e) {
-            System.out.println("UNABLE TO PERSIST TO DATABASE");
-            e.printStackTrace();
-        }
-    }
 
-    @Deprecated
-    public synchronized Tag createNewTag(String tagName){
-
-        return  null;
-    }
-    @Deprecated
-    public Node createNewNode(int x, int y, int ID){
-
-        return null;
-    }
-    @Deprecated
-    public synchronized Professional creaNewProf(String name, ArrayList<ProTitle> titles, int ID){
-
-        return  null;
-    }
-
-    /*
-    public void deleteTag(Tag t){
-        allTags.remove(t);
-        //REMOVE FROM DATABSE
-        notifyUpdate();
-    }
-*/
     @Override
     public synchronized Node saveNode(int x, int y, int floor) {
         int id = this.dbHandler.saveNode(x,y,floor);
@@ -159,7 +122,10 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public synchronized boolean updateTag(Tag t) {
-        boolean dbResult = dbHandler.updateTag(t.getTagName(),t.getId());
+        boolean dbResult = dbHandler.updateTag(
+                t.getTagName(),
+                t.getId(),
+                t.isConnectable());
         return dbResult;
     }
 
@@ -371,12 +337,6 @@ public class Directory implements DirectoryInterface {
         return dbHandler.addRoleToUser(user_id,role);
     }
 
-    @Deprecated
-    public void deleteProf(Professional p){
-        allProfs.remove(p);
-        //REMOVE FROM DATABASE
-        notifyUpdate();
-    }
 
     @Override
     public List<ProTitle> getTitles() {

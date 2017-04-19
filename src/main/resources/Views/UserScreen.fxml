@@ -97,6 +97,7 @@
                         </AnchorPane>
                      </content>
                   </ScrollPane>
+
                   <VBox prefHeight="721.0" prefWidth="226.0">
                      <children>
                         <Label fx:id="directionLabel" text="Directions:">
