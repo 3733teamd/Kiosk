@@ -282,6 +282,8 @@ public class UserScreenController extends AbsController{
                     event.consume();
                 }
 
+                //scale on scroll
+                
                 floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
                 floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
                 MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
