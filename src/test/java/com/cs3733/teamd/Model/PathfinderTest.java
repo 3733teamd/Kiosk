@@ -192,17 +192,17 @@ public class PathfinderTest {
 
         ac.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.DFS);
 
-        testShortestPath();
+        //testShortestPath();
         testMultiFloor();
-        testSameFloorPriority();
-        testMultipleEndPoint();
+        //testSameFloorPriority();
+        //testMultipleEndPoint();
 
         ac.setCurrentSearchAlgorithm(ApplicationConfiguration.SearchAlgorithm.BFS);
 
-        testShortestPath();
+        //testShortestPath();
         testMultiFloor();
-        testSameFloorPriority();
-        testMultipleEndPoint();
+        //testSameFloorPriority();
+        //testMultipleEndPoint();*/
 
     }
 }
