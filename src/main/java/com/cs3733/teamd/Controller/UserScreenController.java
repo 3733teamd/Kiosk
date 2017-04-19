@@ -355,7 +355,21 @@ public class UserScreenController extends AbsController{
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
             System.out.println("HEre");
             //Iterates through all existing tags
-            for (int itr = 0; itr < tagCount; itr++) {
+            currentTag = null;
+
+            for(Tag tag: dir.getTags()){
+                if (Main.DestinationSelected.equals(tag.getTagName())){
+                    currentTag = tag;
+                }
+            }
+
+
+
+            Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
+
+
+            pathNodes = pf.shortestPath();
+            /*for (int itr = 0; itr < tagCount; itr++) {
 
                 currentTag = dir.getTags().get(itr);
                 // Have we found our destination?
@@ -387,7 +401,7 @@ public class UserScreenController extends AbsController{
                         pathNodes = pathfinder.shortestPath();
                     }
                 }
-            }
+            }*/
         }
         // Clear the canvas
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
