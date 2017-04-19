@@ -142,7 +142,6 @@ public class Pathfinder {
 
        Node currentNode = start;
        while (currentNode != end){
-           System.out.println(currentNode);
            boolean foundNewNode = false;
            for(Node node: currentNode.getNodes()){
                if(!visitedNodes.contains(node)){
