@@ -155,8 +155,10 @@ public class UserScreenController extends AbsController{
             floors.addLast(103);
             floors.addLast(104);
         }
+
         floorDropDown.clear();
         floorDropDown.addAll(floors);
+
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
         setFloorMenuListener();
@@ -373,39 +375,21 @@ public class UserScreenController extends AbsController{
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
             System.out.println("HEre");
             //Iterates through all existing tags
-            for (int itr = 0; itr < tagCount; itr++) {
+            currentTag = null;
 
-                currentTag = dir.getTags().get(itr);
-                // Have we found our destination?
-                if (Main.DestinationSelected.equals(currentTag.getTagName())) {
-                    double record = 9999999999999999999999.0;
-                    Pathfinder bestPath = null;
-
-                    for (Node n : currentTag.getNodes()) {
-                        // Let's find the shortest path
-                        Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        try {
-                            if (attempt.pathLength(attempt.shortestPath()) < record) {
-                                bestPath = attempt;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    // Is there a path from the source to the destination?
-                    if (bestPath != null) {
-                        pathNodes = bestPath.shortestPath();
-                    } else {
-                        System.out.println("Failed to find best path out of many\n");
-                        Pathfinder pathfinder = new Pathfinder(
-                                starttag.getNodes().getFirst(),
-                                currentTag.getNodes().getFirst()
-                        );
-                        //use the shortest path
-                        pathNodes = pathfinder.shortestPath();
-                    }
+            for(Tag tag: dir.getTags()){
+                if (Main.DestinationSelected.equals(tag.getTagName())){
+                    currentTag = tag;
                 }
             }
+
+
+
+            Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
+
+
+            pathNodes = pf.shortestPath();
+
         }
         // Clear the canvas
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -508,6 +492,7 @@ public class UserScreenController extends AbsController{
                 MiddleFloorButton.setVisible(true);
             }
         }
+        
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);

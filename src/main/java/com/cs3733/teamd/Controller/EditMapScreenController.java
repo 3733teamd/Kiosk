@@ -56,8 +56,13 @@ public class EditMapScreenController extends AbsController{
     public Button removeNodeButton;
     public Button disconnectNodeButton;
     public Label errorBox;
+    public RadioButton chooseAStarButton;
+    public RadioButton chooseDFSButton;
+    public RadioButton chooseBFSButton;
+    public ToggleGroup algSelectGorup;
     //public Label errorBox;
     Directory dir = Directory.getInstance();
+    ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
     public Button EditProf;
     public Button EditTag;
@@ -121,9 +126,37 @@ public class EditMapScreenController extends AbsController{
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
+    private void setAlgGroupListener() {
+        chooseAStarButton.setUserData(ApplicationConfiguration.SearchAlgorithm.A_STAR);
+        chooseDFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.DFS);
+        chooseBFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.BFS);
+
+        switch (config.getCurrentSearchAlgorithm()){
+            case A_STAR:
+                algSelectGorup.selectToggle(chooseAStarButton);
+                break;
+            case DFS:
+                algSelectGorup.selectToggle(chooseDFSButton);
+                break;
+            case BFS:
+                algSelectGorup.selectToggle(chooseBFSButton);
+                break;
+        }
+
+
+        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (new_toggle != null) {
+                    config.setCurrentSearchAlgorithm((ApplicationConfiguration.SearchAlgorithm) new_toggle.getUserData());
+                }
+            }
+        });
+    }
     @FXML
     public void initialize(){
-setFloorSliderListener();
+        setAlgGroupListener();
+        setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -172,12 +205,12 @@ setFloorSliderListener();
                     }
 
                 }
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
 
-                    drawfloorNodes();
+                drawfloorNodes();
 
             }
         });
@@ -206,7 +239,7 @@ setFloorSliderListener();
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedTag = newValue;
+                selectedTag = newValue;
             }
 
 
@@ -216,7 +249,7 @@ setFloorSliderListener();
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedCurrentTag = newValue;
+                selectedCurrentTag = newValue;
             }
 
 
@@ -241,10 +274,26 @@ setFloorSliderListener();
 
     }//initialize end
 
-
     private void setFloorSliderListener(){
 
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                floor = new_val.intValue();
+                FloorMenu.setValue(floor);
+                //floorMap.setImage(imageHashMap.get(floor));
+                floorMap.setImage(imgInt.display(floor));
 
+                /*//TODO: heart of error
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+*/
+                drawfloorNodes();
+
+            }
+        });
     }
     private void panMethods(){
 
@@ -431,7 +480,11 @@ setFloorSliderListener();
                 c.setFill(Color.BLACK);
             }else {
                 if(select2 != null) {
-                    select2.setFill(Color.RED);
+                    if(select2.referenceNode.hasElevator()){
+                        select2.setFill(Color.YELLOW);
+                    }else {
+                        select2.setFill(Color.RED);
+                    }
                 }
 
                 select2 = select1;
@@ -443,7 +496,11 @@ setFloorSliderListener();
         });
         circle.setOnMouseReleased((t)->{
 
-            circle.setFill(Color.RED);
+            if(circle.referenceNode.hasElevator()){
+                circle.setFill(Color.YELLOW);
+            }else {
+                circle.setFill(Color.RED);
+            }
 
             select1.setFill(Color.GREEN);
             if(select2 != null && select1 != select2){
@@ -512,8 +569,14 @@ setFloorSliderListener();
 
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
-            CircleNode circ = createCircle(n, 5, Color.RED);
+            if(n.hasElevator()) {
+                CircleNode circ = createCircle(n, 5, Color.YELLOW);
+
+            }else {
+                CircleNode circ = createCircle(n, 5, Color.RED);
+            }
         }
+
     }
 
     private void drawfloorNodes(){
@@ -534,10 +597,13 @@ setFloorSliderListener();
             System.out.println(select1.toString() + " " + select2.toString());
         }
 
+        //setConnectingTags();
+
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
             //select1 = circ;
+
 
             if(n.getFloor()==floor){
 
@@ -560,7 +626,7 @@ setFloorSliderListener();
         }
     }
 
-
+    @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
@@ -571,13 +637,22 @@ setFloorSliderListener();
                 errorBox.setText(errorString);
             }
 
+            selectedTag.updateConnections();
+            drawfloorNodes();
             currentTagBox.refresh();
         }
 
     }
-
+    @FXML
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
+            //setConnectingTags();
+            // Remove Connecting Tags...
+            for(Node n2: select1.referenceNode.getNodes()) {
+                if(n2.getFloor() != select1.referenceNode.getFloor()) {
+                    dir.deleteEdge(select1.referenceNode, n2);
+                }
+            }
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
             if(response){
                 errorBox.setText("");
@@ -586,9 +661,13 @@ setFloorSliderListener();
                 errorBox.setText(errorString);
             }
 
+
+            drawfloorNodes();
             currentTagBox.refresh();
         }
     }
+
+
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         //System.out.print(select1.lineMap.get(select2).getStartX());
@@ -635,5 +714,11 @@ setFloorSliderListener();
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+    }
+
+    public void setConnectingTags(){
+        for (Tag t: dir.getTags()){
+            t.updateConnections();
+        }
     }
 }

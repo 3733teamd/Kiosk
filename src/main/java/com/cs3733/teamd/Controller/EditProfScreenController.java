@@ -10,8 +10,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
@@ -20,6 +22,7 @@ import org.controlsfx.control.textfield.TextFields;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -81,6 +84,9 @@ public class EditProfScreenController extends AbsController {
     private TextField searchTitle1;
 
     @FXML
+    private TextField searchTagList;
+
+    @FXML
     private Button addTag;
 
     @FXML
@@ -96,6 +102,14 @@ public class EditProfScreenController extends AbsController {
     Directory dir = Directory.getInstance();
     List<Professional> allTheProfs= dir.getProfessionals();
     List<String> allProfNames = new ArrayList<String>();
+
+    List<Professional> filtered = new ArrayList<Professional>();
+    List<Tag> filteredTag = new ArrayList<>();
+
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
+
+
     @FXML
     public void initialize(){
         //fill in alltags
@@ -133,7 +147,26 @@ public class EditProfScreenController extends AbsController {
         for (int i = 0 ; i<allTheProfs.size(); i++) {
             allProfNames.add(allTheProfs.get(i).getName());
         }
-        TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
+        //TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
+
+
+        searchProfessionalBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResult(searchProfessionalBar.getText() + event.getText());
+            }
+        });
+        searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResultAllTag(searchTagList.getText() + event.getText());
+            }
+        });
+
     }
 
     private void createCurTagListListener(){
@@ -320,7 +353,28 @@ public class EditProfScreenController extends AbsController {
 
 
 
+    public void displayResult(String value){
 
+        for (Professional d: dir.getProfessionals()){
+            filtered = dir.getProfessionals().stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResults.setAll(filtered);
+
+        allProfList.setItems(searchResults);
+    }
+
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagsList.setItems(searchResultsTag);
+    }
 
     private void updateCurrentProfList(Professional p){
 
