@@ -119,6 +119,12 @@ public class EditMapScreenController extends AbsController{
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
+    // Height and width of the ImageView(from the FXML)
+    private static final double IMAGE_WIDTH = 844.0;
+    private static final double IMAGE_HEIGHT = 606.0;
+
+    private double zoomPercent;
+
 
     @FXML
     private Pane mapCanvas;
@@ -216,8 +222,11 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
-        timerThread.start();
+        this.zoomPercent = 100.0;
+        if(ApplicationConfiguration.getInstance().timeoutEnabled()) {
+            timer.scheduleAtFixedRate(timerTask, 30, 1000);
+            timerThread.start();
+        }
         setAlgGroupListener();
         setFloorSliderListener();
         overrideScrollWheel();
@@ -225,7 +234,8 @@ public class EditMapScreenController extends AbsController{
 
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {counter = 0;
+            public void handle(MouseEvent event) {
+                counter = 0;
                 System.out.println("counter resets");
             }
         });
@@ -442,25 +452,40 @@ public class EditMapScreenController extends AbsController{
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
-                double scaleFactor = 0;
-                if (event.getDeltaY() > 0) {
-                    scaleFactor = SCALE_DELTA;
 
-
-                } else if (event.getDeltaY() < 0) {
-                    scaleFactor = 1 / SCALE_DELTA;
+                if (event.getDeltaY() != 0.0) {
+                    zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
+                    if(zoomPercent < 100.0) {
+                        zoomPercent = 100.0;
+                    } else if(zoomPercent > 500.0) {
+                        zoomPercent = 500.0;
+                    }
+                    double x_percent = event.getX()/IMAGE_WIDTH;
+                    double y_percent = event.getY()/IMAGE_HEIGHT;
+                    System.out.println("Percent: "+zoomPercent+" X:" +x_percent+" Y: "+y_percent);
                 } else {
                     event.consume();
                 }
 
+                System.out.println(floorMap.getScaleX());
+                System.out.println(floorMap.getScaleY());
+                System.out.println(mapCanvas.getScaleX());
+                System.out.println(mapCanvas.getScaleY());
+
                 //scales with scroll wheel
-                /*
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                mapCanvas.setScaleX(mapCanvas.getScaleX() * scaleFactor);
-                mapCanvas.setScaleY(mapCanvas.getScaleY() * scaleFactor);
+
+                floorMap.setScaleX(zoomPercent/100.0);
+                floorMap.setScaleY(zoomPercent/100.0);
+                mapCanvas.setScaleX(zoomPercent/100.0);
+                mapCanvas.setScaleY(zoomPercent/100.0);
+
+
+                //scrollPane.setHvalue(zoomPercent - 100.0);
+                //scrollPane.setVvalue(zoomPercent - 100.0);
+                System.out.println(scrollPane.getHvalue());
+                System.out.println(scrollPane.getVvalue());
                 event.consume();
-                */
+
             }
         });
     }
@@ -576,7 +601,6 @@ public class EditMapScreenController extends AbsController{
         circle.setOnMousePressed((t) -> {
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
-
 
             CircleNode c = (CircleNode) (t.getSource());
             c.toFront();

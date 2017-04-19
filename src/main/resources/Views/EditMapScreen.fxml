@@ -93,12 +93,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="673.0" prefWidth="1292.0">
                <children>
-                  <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="1092.0">
+                  <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0">
                      <content>
-                        <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="1091.0">
+                        <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="845.0">
                            <children>
-                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
-                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="636.0" prefWidth="1091.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="39.0" />
+                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="844.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
+                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="606.0" prefWidth="844.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="39.0" />
                               <Label fx:id="errorBox" alignment="CENTER" layoutX="877.0" layoutY="14.0" prefHeight="119.0" prefWidth="200.0" text="Label" />
                            </children>
                         </AnchorPane>

@@ -68,4 +68,8 @@ public class ApplicationConfiguration {
     public void setCurrentSearchAlgorithm(SearchAlgorithm currentSearchAlgorithm) {
         this.currentSearchAlgorithm = currentSearchAlgorithm;
     }
+
+    public boolean timeoutEnabled() {
+        return false;
+    }
 }
