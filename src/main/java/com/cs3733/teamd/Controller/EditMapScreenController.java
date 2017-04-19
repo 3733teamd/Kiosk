@@ -5,7 +5,6 @@ import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -49,6 +48,7 @@ public class EditMapScreenController extends AbsController{
     public String errorString = Main.bundle.getString("InvalidAction");
 
     public boolean loading=false;
+    public boolean edgeTail = false;
     public ListView currentTagBox;
     public TextField searchAllTags;
     public ListView allTagBox;
@@ -57,8 +57,16 @@ public class EditMapScreenController extends AbsController{
     public Button removeNodeButton;
     public Button disconnectNodeButton;
     public Label errorBox;
+    public RadioButton chooseDFSButton;
+    public RadioButton chooseBFSButton;
+    public RadioButton chooseAStarButton;
+    public ToggleGroup algSelectGorup;
+
+    public Button bugReports;
+
     //public Label errorBox;
     Directory dir = Directory.getInstance();
+    ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
     public Button EditProf;
     public Button EditTag;
@@ -77,6 +85,7 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
+    //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
 
@@ -88,6 +97,7 @@ public class EditMapScreenController extends AbsController{
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
     /*replaced with proxy pattern*/
+//    public Map<Integer, Image> imageHashMap = new HashMap<>();
     ImageInterface imgInt = new ProxyImage();
 
     private Tag selectedTag;
@@ -120,67 +130,36 @@ public class EditMapScreenController extends AbsController{
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
-    //timeout
-    Timer timer = new Timer();
-    int counter = 0;
-    private volatile boolean running = true;
+    private void setAlgGroupListener() {
+        chooseAStarButton.setUserData(ApplicationConfiguration.SearchAlgorithm.A_STAR);
+        chooseDFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.DFS);
+        chooseBFSButton.setUserData(ApplicationConfiguration.SearchAlgorithm.BFS);
 
-    TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            counter++;
-            System.out.println("edit map" + counter);
+        switch (config.getCurrentSearchAlgorithm()){
+            case A_STAR:
+                algSelectGorup.selectToggle(chooseAStarButton);
+                break;
+            case DFS:
+                algSelectGorup.selectToggle(chooseDFSButton);
+                break;
+            case BFS:
+                algSelectGorup.selectToggle(chooseBFSButton);
+                break;
         }
-    };
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            while (running) {
-                try {
 
-                    if (counter == timeoutTime) {
-                        running = false;
-                        timer.cancel();
-                        timerTask.cancel();
-                        Platform.runLater(resetKiosk);
-                        break;
-                    }
-                    Thread.sleep(1000);
-                } catch (InterruptedException exception) {
-                    timer.cancel();
-                    timerTask.cancel();
-                    running = false;
-                    break;
+        algSelectGorup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                                Toggle old_toggle, Toggle new_toggle) {
+                if (new_toggle != null) {
+                    config.setCurrentSearchAlgorithm((ApplicationConfiguration.SearchAlgorithm) new_toggle.getUserData());
                 }
             }
-        }
-    };
-    Thread timerThread = new Thread(runnable);
-    Runnable resetKiosk = new Runnable() {
-        @Override
-        public void run() {
-            timer.cancel();
-            timer.purge();
-            running = false;
-            timerThread.interrupt();
-
-            //logout user
-            dir.logoutUser();
-            try {
-                switchScreen(MMGpane, "/Views/UserScreen.fxml");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    };
-
-
+        });
+    }
     @FXML
     public void initialize(){
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
-        timerThread.start();
+        setAlgGroupListener();
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
@@ -192,7 +171,13 @@ public class EditMapScreenController extends AbsController{
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
-         floorMap.setImage(imgInt.display(floor));
+        System.out.println(floor);
+        //if floor<100 its falkner, so display the prof verions
+        if(floor<100) {
+            floorMap.setImage(imgInt.display(floor + 1000));
+        }else{
+            floorMap.setImage(imgInt.display(floor));
+        }
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -206,6 +191,35 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
+
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if(new_val!=null) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    System.out.println(floor);
+
+                    //if floor<100 its falkner, so display the prof verions
+                    if (floor < 100) {
+                        floorMap.setImage(imgInt.display(floor + 1000));
+                    } else {
+                        floorMap.setImage(imgInt.display(floor));
+                    }
+
+                }
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+
+                drawfloorNodes();
+
+            }
+        });
+
+        floors.clear();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -214,21 +228,22 @@ public class EditMapScreenController extends AbsController{
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            floors.addLast(102);
+            floors.addLast(103);
+            floors.addLast(104);
         }
-        if(floorDropDown.size() == 0) {
-            floorDropDown.addAll(floors);
-        }
+        floorDropDown.clear();
+
+        floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
-
-
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedTag = newValue;
+                selectedTag = newValue;
             }
 
 
@@ -238,7 +253,7 @@ public class EditMapScreenController extends AbsController{
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedCurrentTag = newValue;
+                selectedCurrentTag = newValue;
             }
 
 
@@ -258,51 +273,17 @@ public class EditMapScreenController extends AbsController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-        MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {counter = 0;
-               System.out.println("counter resets");
-            }
-        });
-        MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                counter = 0;
-            }
-        });
-        MMGpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                counter = 0;
-            }
-        });
-        MMGpane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                counter = 0;
-            }
-        });
-            }//initialize end
+        //drawfloorNodes();
+//
 
+    }//initialize end
 
     private void setFloorSliderListener(){
-        /*floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val)  {
-                if (!floorSlider.isValueChanging()) {
-                    floor = new_val.intValue();
-                    floorSlider.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(onFloor));
-                    floorMap.setImage(imgInt.display(floor));
-                    drawfloorNodes();
-
-                }
-            }
-        });*/
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
+                if(new_val!=null && old_val!=null)
                 floor = new_val.intValue();
                 FloorMenu.setValue(floor);
                 //floorMap.setImage(imageHashMap.get(floor));
@@ -388,11 +369,14 @@ public class EditMapScreenController extends AbsController{
                     event.consume();
                 }
 
+                //scales with scroll wheel
+                /*
                 floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
                 floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
                 mapCanvas.setScaleX(mapCanvas.getScaleX() * scaleFactor);
                 mapCanvas.setScaleY(mapCanvas.getScaleY() * scaleFactor);
                 event.consume();
+                */
             }
         });
     }
@@ -404,47 +388,27 @@ public class EditMapScreenController extends AbsController{
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 
     @FXML
     public void toEditProf() throws  IOException{
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
     }
     @FXML
     public void toEditTag() throws  IOException{
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
 
@@ -468,27 +432,29 @@ public class EditMapScreenController extends AbsController{
 
     private void connectNode(CircleNode s1, CircleNode s2){
 
+        if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-        Line line = connect(s1,s2);
-        line.setStyle("-fx-stroke: red;");
-        s1.lineMap.put(s2,line);
-        s2.lineMap.put(s1,line);
+            Line line = connect(s1, s2);
+            line.setStyle("-fx-stroke: red;");
+            s1.lineMap.put(s2, line);
+            s2.lineMap.put(s1, line);
 
-        if(loading==false) {
-            boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
-            if(response == false){
-                errorBox.setText(errorString);
-            }else{
-                errorBox.setText("");
+            if (loading == false) {
+                boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
+                if (response == false) {
+                    errorBox.setText(errorString);
+                } else {
+                    errorBox.setText("");
+                }
             }
-        }
 
-        if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
-            line.setFill(Color.YELLOW);
-            line.setStrokeWidth(2);
-            mapCanvas.getChildren().add(line);
-        }else{
-            mapCanvas.getChildren().add(line);
+            if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
+                line.setFill(Color.YELLOW);
+                line.setStrokeWidth(2);
+                mapCanvas.getChildren().add(line);
+            } else {
+                mapCanvas.getChildren().add(line);
+            }
         }
 
     }
@@ -524,7 +490,11 @@ public class EditMapScreenController extends AbsController{
                 c.setFill(Color.BLACK);
             }else {
                 if(select2 != null) {
-                    select2.setFill(Color.RED);
+                    if(select2.referenceNode.hasElevator()){
+                        select2.setFill(Color.YELLOW);
+                    }else {
+                        select2.setFill(Color.RED);
+                    }
                 }
 
                 select2 = select1;
@@ -536,7 +506,11 @@ public class EditMapScreenController extends AbsController{
         });
         circle.setOnMouseReleased((t)->{
 
-            circle.setFill(Color.RED);
+            if(circle.referenceNode.hasElevator()){
+                circle.setFill(Color.YELLOW);
+            }else {
+                circle.setFill(Color.RED);
+            }
 
             select1.setFill(Color.GREEN);
             if(select2 != null && select1 != select2){
@@ -605,8 +579,14 @@ public class EditMapScreenController extends AbsController{
 
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
-            CircleNode circ = createCircle(n, 5, Color.RED);
+            if(n.hasElevator()) {
+                CircleNode circ = createCircle(n, 5, Color.YELLOW);
+
+            }else {
+                CircleNode circ = createCircle(n, 5, Color.RED);
+            }
         }
+
     }
 
     private void drawfloorNodes(){
@@ -627,10 +607,13 @@ public class EditMapScreenController extends AbsController{
             System.out.println(select1.toString() + " " + select2.toString());
         }
 
+        //setConnectingTags();
+
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
             //select1 = circ;
+
 
             if(n.getFloor()==floor){
 
@@ -653,7 +636,7 @@ public class EditMapScreenController extends AbsController{
         }
     }
 
-
+    @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedTag != null||select1==null){
             boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
@@ -664,13 +647,22 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
+            selectedTag.updateConnections();
+            drawfloorNodes();
             currentTagBox.refresh();
         }
 
     }
-
+    @FXML
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
+            //setConnectingTags();
+            // Remove Connecting Tags...
+            for(Node n2: select1.referenceNode.getNodes()) {
+                if(n2.getFloor() != select1.referenceNode.getFloor()) {
+                    dir.deleteEdge(select1.referenceNode, n2);
+                }
+            }
             boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
             if(response){
                 errorBox.setText("");
@@ -679,9 +671,13 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
+
+            drawfloorNodes();
             currentTagBox.refresh();
         }
     }
+
+
 
     public void disconnectCircleNodes(ActionEvent actionEvent) {
         //System.out.print(select1.lineMap.get(select2).getStartX());
@@ -697,6 +693,7 @@ public class EditMapScreenController extends AbsController{
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
             select2.lineMap.remove(select1);
+            drawfloorNodes();
         }else{
             errorBox.setText(errorString);
         }
@@ -730,6 +727,13 @@ public class EditMapScreenController extends AbsController{
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
 
+    public void setConnectingTags(){
+        for (Tag t: dir.getTags()){
+            t.updateConnections();
+        }
+    }
 
-
+    public void viewBugReports(ActionEvent actionEvent) throws IOException {
+        popupScreen(MMGpane, "/Views/ViewBugScreen.fxml", "View Bug Reports");
+    }
 }

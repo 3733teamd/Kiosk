@@ -88,8 +88,8 @@
                      <content>
                         <AnchorPane fx:id="imagePane" prefHeight="702.0" prefWidth="1097.0">
                            <children>
-                              <ImageView fx:id="floorMap" fitHeight="702.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
-                              <Canvas fx:id="MapCanvas" height="693.0" width="1091.0">
+                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" />
+                              <Canvas fx:id="MapCanvas" height="636.0" width="1091.0">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor></Canvas>
@@ -105,10 +105,12 @@
                               <Font size="38.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="directions" prefHeight="633.0" prefWidth="230.0" wrapText="true" />
-                        <Button fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="55.0" prefWidth="151.0" text="Show Starting Floor" />
-                        <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="55.0" prefWidth="151.0" text="Show Intermediate Floor" />
-                        <Button fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="55.0" prefWidth="151.0" text="Show Ending Floor" />
+                        <TextArea fx:id="directions" prefHeight="408.0" prefWidth="219.0" wrapText="true" />
+                        <Button fx:id="aboutButton" mnemonicParsing="false" onAction="#getAbout" text="%About" />
+                        <Button fx:id="reportButton" mnemonicParsing="false" onAction="#reportBug" text="%ReportBug" />
+                        <Button fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="37.0" prefWidth="107.0" text="Show Starting Floor" />
+                        <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="33.0" prefWidth="151.0" text="Show Intermediate Floor" />
+                        <Button fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="23.0" prefWidth="151.0" text="Show Ending Floor" />
                      </children>
                   </VBox>
                </children>

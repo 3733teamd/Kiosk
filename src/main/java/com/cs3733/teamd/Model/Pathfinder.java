@@ -137,34 +137,32 @@ public class Pathfinder {
     }
 
     private LinkedList<Node> dfsPath() throws PathNotFoundException {
-        Stack<Node> openSet = new Stack<Node>();
-        LinkedList<Node> discovered = new LinkedList<Node>();
+       LinkedList<Node> path = new LinkedList<>();
+       Set<Node> visitedNodes = new HashSet<>();
 
-        Map<Node, Node> cameFrom = new HashMap<>();
+       Node currentNode = start;
+       while (currentNode != end){
+           boolean foundNewNode = false;
+           for(Node node: currentNode.getNodes()){
+               if(!visitedNodes.contains(node)){
+                   path.push(currentNode);
+                   visitedNodes.add(node);
+                   currentNode = node;
+                   foundNewNode = true;
+                   break;
+               }
+           }
+           if(foundNewNode){
+               continue;
+           }
+           if(path.isEmpty()){
+               throw pathNotFound;
+           }
 
-        Node current;
-
-        openSet.push(start);
-        while(!openSet.isEmpty()){
-            current = openSet.pop();
-
-            if (current == end) {
-                return reconstructPath(cameFrom, current);
-            }
-            if(!discovered.contains(current)){
-                discovered.add(current);
-                for(Node n : current.getNodes()){
-                    cameFrom.put(n,current);
-                    openSet.push(n);
-                }
-            }
-            //No path found
-            throw new PathNotFoundException("Path not found between " + start + " and " + end);
-        }
-
-
-
-        throw new PathNotFoundException("Path not found between " + start + " and " + end);
+           currentNode = path.pop();
+       }
+       path.push(end);
+       return path;
     }
 
     /**

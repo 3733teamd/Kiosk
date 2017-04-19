@@ -2,28 +2,23 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.cs3733.teamd.Model.Entities.Tag;
-import com.cs3733.teamd.Model.Entities.Professional;
-import com.cs3733.teamd.Model.Entities.Node;
-import javafx.beans.property.ObjectProperty;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
-
-import com.cs3733.teamd.Model.Entities.Professional;
-
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import com.cs3733.teamd.Model.Entities.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -31,23 +26,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
+
+
+import java.awt.Point;
 import java.io.IOException;
 import java.util.*;
-
-//import javax.xml.soap.Text;
-import java.awt.Point;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -58,27 +49,32 @@ public class UserScreenController extends AbsController{
     DirectoryInterface dir = Directory.getInstance();
 
     //shift nodes to align with image
-    private static int USERSCREEN_X_OFFSET = -5;
-    private static int USERSCREEN_Y_OFFSET = -90;
+    private static int USERSCREEN_X_OFFSET = 60;
+    private static int USERSCREEN_Y_OFFSET = 30;
 
-    //Boundary objects
-    @FXML
     public Button LoginButton;
     public Button SpanishButton;
     public Button SearchButton;
+    public Button SetButton;
     public TextField TypeDestination;
-    public Label EnterDest;
-    public Label floor;
+    public Text EnterDest;
+    public Text floor;
     public Label directionLabel;
     public ChoiceBox FloorMenu;
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
     @FXML
+    private Slider floorSlider;
+    @FXML
+    public Button aboutButton;
+    @FXML
+    public Button reportButton;
+
     public ImageView floorMap;
+    public AnchorPane imagePane;
     public Canvas MapCanvas;
     public AnchorPane MMGpane;
-    public AnchorPane imagePane;
     @FXML
     private TextArea directions;
     public GraphicsContext gc;
@@ -90,8 +86,8 @@ public class UserScreenController extends AbsController{
     private static LinkedList<Node> pathNodes;
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
-    private String output = "";
-    private Tag starttag = null;
+    String output = "";
+    Tag starttag = null;
     private int startfloor = 0;
     private int destfloor = 0;
 
@@ -100,14 +96,43 @@ public class UserScreenController extends AbsController{
 
     public ScrollPane scrollPane;
 
-    private Map<String, String> tagAssociations;
+
+
     private int midfloor = 0;
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
+    private Map<String, String> tagAssociations;
+
+    private class Offset {
+        public Offset(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+        int x;
+        int y;
+    }
+
+    private Map<Integer, Offset> offsets= new HashMap<Integer, Offset>();
+
+    private void setOffsets() {
+        this.offsets.put(1, new Offset(0, 0));
+        this.offsets.put(2, new Offset(0, 0));
+        this.offsets.put(3, new Offset(0, 0));
+        this.offsets.put(4, new Offset(0, -10));
+        this.offsets.put(5, new Offset(0, 0));
+        this.offsets.put(6, new Offset(0, 0));
+        this.offsets.put(7, new Offset(0, 0));
+        this.offsets.put(101, new Offset(0, 0));
+        this.offsets.put(102, new Offset(0, 0));
+        this.offsets.put(103, new Offset(0, 0));
+        this.offsets.put(104, new Offset(0, 0));
+    }
+
 
     @FXML
     private void initialize()
     {
+        setOffsets();
         /*
             This code will find all of the tags and then all of the professionals and then merge the two.
             The final result is a list of all the tags and professionals intertwined so that
@@ -135,9 +160,14 @@ public class UserScreenController extends AbsController{
             tagAssociations.put(tag, tag);
         }
 
-
+        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
+        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        setSpanishText();
+        directions.setText(output);
+        floorMap.setImage(imgInt.display(floorNum));
+        floors.clear();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -146,36 +176,36 @@ public class UserScreenController extends AbsController{
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            floors.addLast(102);
+            floors.addLast(103);
+            floors.addLast(104);
         }
-        if(floorDropDown.size() == 0) {
-            floorDropDown.addAll(floors);
-        }
+
+        floorDropDown.clear();
+        floorDropDown.addAll(floors);
+
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
         setFloorMenuListener();
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
-        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
-        setSpanishText();
-        directions.setText(output);
-        floorMap.setImage(imgInt.display(floorNum));
 
-        findStartTag();
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
             draw();
         }
     }
 
-    @FXML
     //Function to set the listener for the floor choice box
     private void setFloorMenuListener(){
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                onFloor = new_val.intValue();
-                FloorMenu.setValue(onFloor);
+                if(new_val != null) {
+                    onFloor = new_val.intValue();
+                    FloorMenu.setValue(onFloor);
+                }
                 floorMap.setImage(imgInt.display(onFloor));
                 gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
                 output = "";
@@ -192,7 +222,8 @@ public class UserScreenController extends AbsController{
 
     }
 
-    private void panMethods(){
+
+    private void panMethods() {
 
         //zoom functions
         imagePane.getChildren();
@@ -212,7 +243,6 @@ public class UserScreenController extends AbsController{
 
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
-
 
 
         // Panning via drag....
@@ -242,34 +272,19 @@ public class UserScreenController extends AbsController{
                 }
             }
         });
-
-
     }
 
-    private void overrideScrollWheel() {
-        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                double scaleFactor = 0;
-                if (event.getDeltaY() > 0) {
-                    scaleFactor = SCALE_DELTA;
-
-
-                } else if (event.getDeltaY() < 0) {
-                    scaleFactor = 1 / SCALE_DELTA;
-                } else {
-                    event.consume();
-                }
-
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
-                MapCanvas.setScaleY(MapCanvas.getScaleY() * scaleFactor);
-                event.consume();
-            }
-        });
+    //report Bug button pressed
+    @FXML
+    public void reportBug(ActionEvent event) throws IOException {
+        popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
     }
 
+    //About button pressed
+    @FXML
+    public void getAbout(ActionEvent event) throws IOException{
+        popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
+    }
 
     /**
      * Find's the start tag...
@@ -292,6 +307,34 @@ public class UserScreenController extends AbsController{
         }
     }
 
+
+    private void overrideScrollWheel() {
+        scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                double scaleFactor = 0;
+                if (event.getDeltaY() > 0) {
+                    scaleFactor = SCALE_DELTA;
+
+
+                } else if (event.getDeltaY() < 0) {
+                    scaleFactor = 1 / SCALE_DELTA;
+                } else {
+                    event.consume();
+                }
+
+                //scale on scroll
+                /*
+                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
+                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
+                MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
+                MapCanvas.setScaleY(MapCanvas.getScaleY() * scaleFactor);
+                event.consume();
+                */
+            }
+        });
+    }
+
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
@@ -304,10 +347,7 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-
-
-       // switchScreen(MMGpane, "/Views/UserScreen.fxml");
-
+        switchScreen(MMGpane, "/Views/UserScreen.fxml");
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 
@@ -341,45 +381,39 @@ public class UserScreenController extends AbsController{
         Tag currentTag;
         int tagCount = dir.getTags().size();
         int nodeCount = dir.getNodes().size();
+        String startTagString = "Kiosk";
+        if(starttag == null) {
+            for (int itr = 0; itr < tagCount; itr++) {
+                currentTag = dir.getTags().get(itr);
+                //If match is found create path to node from start nodes
+                if (startTagString.equals(currentTag.getTagName())) {
+                    starttag = currentTag;
+                }
+
+            }
+        }
+
         // Do we have a starting tag???
         if(starttag != null) {
             // What floor is the Kiosk on?
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
-            System.out.println("Here");
+            System.out.println("HEre");
             //Iterates through all existing tags
-            for (int itr = 0; itr < tagCount; itr++) {
+            currentTag = null;
 
-                currentTag = dir.getTags().get(itr);
-                // Have we found our destination?
-                if (Main.DestinationSelected.equals(currentTag.getTagName())) {
-                    double record = 9999999999999999999999.0;
-                    Pathfinder bestPath = null;
-
-                    for (Node n : currentTag.getNodes()) {
-                        // Let's find the shortest path
-                        Pathfinder attempt = new Pathfinder(starttag.getNodes().getFirst(), n);
-                        try {
-                            if (attempt.pathLength(attempt.shortestPath()) < record) {
-                                bestPath = attempt;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    // Is there a path from the source to the destination?
-                    if (bestPath != null) {
-                        pathNodes = bestPath.shortestPath();
-                    } else {
-                        System.out.println("Failed to find best path out of many\n");
-                        Pathfinder pathfinder = new Pathfinder(
-                                starttag.getNodes().getFirst(),
-                                currentTag.getNodes().getFirst()
-                        );
-                        //use the shortest path
-                        pathNodes = pathfinder.shortestPath();
-                    }
+            for(Tag tag: dir.getTags()){
+                if (Main.DestinationSelected.equals(tag.getTagName())){
+                    currentTag = tag;
                 }
             }
+
+
+
+            Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
+
+
+            pathNodes = pf.shortestPath();
+
         }
         // Clear the canvas
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -419,8 +453,8 @@ public class UserScreenController extends AbsController{
 
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX() + USERSCREEN_X_OFFSET;
-        int y = node.getY() + USERSCREEN_Y_OFFSET;
+        int x = node.getX() + this.offsets.get(node.getFloor()).x;
+        int y = node.getY() + this.offsets.get(node.getFloor()).y;
         //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
         Point p = new Point(x, y);
         return p;
@@ -431,17 +465,18 @@ public class UserScreenController extends AbsController{
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsMidFloor = new LinkedList<>();
         LinkedList<Point> pointsEndFloor = new LinkedList<>();
+        // ensure values are reset
         int index = 0;
+        if(starttag == null) {
+            System.err.println("Start Tag is Not Populated");
+            return;
+        }
         startfloor = 0;
         destfloor = 0;
         midfloor = 0;
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
-        if(starttag == null) {
-            System.err.println("Start Tag is Not Populated");
-            return;
-        }
         startfloor = starttag.getNodes().getFirst().getFloor();
         destfloor = path.getFirst().getFloor();
         System.out.println(destfloor);
@@ -481,6 +516,7 @@ public class UserScreenController extends AbsController{
                 MiddleFloorButton.setVisible(true);
             }
         }
+        
         else if(destfloor == onFloor){
             System.out.println("destfloor");
             drawPathFromPoints(gc, pointsEndFloor);
@@ -554,7 +590,6 @@ public class UserScreenController extends AbsController{
         }
     }
 
-
     @FXML
     //Function to allow the user to change to the starting floor of path
     public  void ShowStart(ActionEvent actionEvent) throws IOException{
@@ -609,4 +644,3 @@ public class UserScreenController extends AbsController{
         }
     }
 }
-

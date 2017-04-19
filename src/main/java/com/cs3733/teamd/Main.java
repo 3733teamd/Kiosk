@@ -42,12 +42,13 @@ public class Main extends Application {
         window=primaryStage;
         rootMain = FXMLLoader.load(getClass().getResource("/Views/UserScreen.fxml"), bundle);
 
-        MainScene=new Scene(rootMain, 1291, 800);
 
+        MainScene=new Scene(rootMain);
+       // window.setMaximized(true);
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
-        // window.setFullScreen(true);
+       // window.setFullScreen(true);
     }
 
     public static void main(String[] args) {
@@ -146,7 +147,7 @@ public class Main extends Application {
         
         //database.dumpDatabaseToSqlStatements("DBImports.txt");
         try {
-            database.dumpDatabaseToSqlStatements("dump.sql.import");
+            //database.dumpDatabaseToSqlStatements("dump.sql.import");
             database.close();
         }catch (SQLException e){
             System.out.println(e);
