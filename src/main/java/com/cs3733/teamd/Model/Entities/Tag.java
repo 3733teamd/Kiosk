@@ -8,6 +8,7 @@ import java.util.LinkedList;
 public class Tag {
 
 
+    Directory dir = Directory.getInstance();
     private String tagName;
     private LinkedList<Node> nodes = new LinkedList<Node>();
     private LinkedList<Professional> profs = new LinkedList<Professional>();
@@ -119,7 +120,7 @@ public class Tag {
                     if(n != nn
                             && n.getNodes().contains(nn)== false
                             && n.getFloor() != nn.getFloor()){
-                        n.addNode(nn);
+                        dir.saveEdge(n, nn);
                     }
                 }
             }
@@ -129,10 +130,11 @@ public class Tag {
                 Node n = nodes.get(i);
                 for (int j=i+1; j<nodes.size(); j++){
                     Node nn = nodes.get(j);
-                    if(n != nn
-                            && n.getNodes().contains(nn)== true
-                            && n.getFloor() != nn.getFloor()){
-                        n.removeNeighbor(nn);
+                    if((n != nn)
+                            && (n.getNodes().contains(nn))
+                            && (n.getFloor() != nn.getFloor())){
+                        dir.deleteEdge(n,nn);
+                        System.out.println(getTagName());
 
                     }
                 }

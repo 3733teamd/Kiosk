@@ -580,10 +580,8 @@ public class EditMapScreenController extends AbsController{
                 errorBox.setText(errorString);
             }
 
-            if(selectedTag.isConnectable()){
-                selectedTag.updateConnections();
-            }
-
+            setConnectingTags();
+            drawfloorNodes();
             currentTagBox.refresh();
         }
 
@@ -600,6 +598,7 @@ public class EditMapScreenController extends AbsController{
             }
 
             setConnectingTags();
+            drawfloorNodes();
             currentTagBox.refresh();
         }
     }

@@ -194,6 +194,7 @@ public class EditTagScreenController extends AbsController {
             dir.updateTag(selectedTag);
             tagList.refresh();
         }
+
     }
 
     @FXML
