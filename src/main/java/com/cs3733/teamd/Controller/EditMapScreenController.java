@@ -134,6 +134,7 @@ setFloorSliderListener();
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
+        System.out.println(floor);
         //if floor<100 its falkner, so display the prof verions
         if(floor<100) {
             floorMap.setImage(imgInt.display(floor + 1000));
@@ -153,6 +154,35 @@ setFloorSliderListener();
             }
         });
 
+
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if(new_val!=null) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    System.out.println(floor);
+
+                    //if floor<100 its falkner, so display the prof verions
+                    if (floor < 100) {
+                        floorMap.setImage(imgInt.display(floor + 1000));
+                    } else {
+                        floorMap.setImage(imgInt.display(floor));
+                    }
+
+                }
+                    imagePane.getChildren().removeAll(floorCircs);
+                    imagePane.getChildren().removeAll(floorLines);
+                    floorCircs.clear();
+                    floorLines.clear();
+
+                    drawfloorNodes();
+
+            }
+        });
+
+        floors.clear();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -165,32 +195,11 @@ setFloorSliderListener();
             floors.addLast(103);
             floors.addLast(104);
         }
+        floorDropDown.clear();
+
         floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
-
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                //if floor<100 its falkner, so display the prof verions
-                if(floor<100) {
-                    floorMap.setImage(imgInt.display(floor + 1000));
-                }else{
-                    floorMap.setImage(imgInt.display(floor));
-                }
-
-                    //TODO: heart of error
-                    imagePane.getChildren().removeAll(floorCircs);
-                    imagePane.getChildren().removeAll(floorLines);
-                    floorCircs.clear();
-                    floorLines.clear();
-
-                    drawfloorNodes();
-
-            }
-        });
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override

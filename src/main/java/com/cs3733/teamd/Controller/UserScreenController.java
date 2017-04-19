@@ -107,6 +107,7 @@ public class UserScreenController extends AbsController{
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
+        floors.clear();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -119,6 +120,7 @@ public class UserScreenController extends AbsController{
             floors.addLast(103);
             floors.addLast(104);
         }
+        floorDropDown.clear();
         floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
@@ -138,8 +140,10 @@ public class UserScreenController extends AbsController{
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                onFloor = new_val.intValue();
-                FloorMenu.setValue(onFloor);
+                if(new_val != null) {
+                    onFloor = new_val.intValue();
+                    FloorMenu.setValue(onFloor);
+                }
                 floorMap.setImage(imgInt.display(onFloor));
                 gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
                 output = "";
