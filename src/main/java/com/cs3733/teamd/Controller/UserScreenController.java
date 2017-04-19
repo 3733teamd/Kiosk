@@ -44,8 +44,8 @@ public class UserScreenController extends AbsController{
     public Button SpanishButton;
     public Button SearchButton;
     public TextField TypeDestination;
-    public Text EnterDest;
-    public Text floor;
+    public Label EnterDest;
+    public Label floor;
     public Label directionLabel;
     @FXML
     private Slider floorSlider;
@@ -105,7 +105,6 @@ public class UserScreenController extends AbsController{
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
-        setFloorSliderListener();
 
         findStartTag();
         gc = MapCanvas.getGraphicsContext2D();
@@ -114,28 +113,29 @@ public class UserScreenController extends AbsController{
         }
     }
 
-    private void setFloorSliderListener(){
-        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if (!floorSlider.isValueChanging()) {
-                    onFloor = new_val.intValue();
-                    floorSlider.setValue(onFloor);
-                    //floorMap.setImage(imageHashMap.get(onFloor));
-                    floorMap.setImage(imgInt.display(onFloor));
-                    gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-                    output = "";
-                    directions.setText(output);
-                    System.out.println(onFloor);
+//    private void setFloorSliderListener(){
+//        floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
+//            public void changed(ObservableValue<? extends Number> ov,
+//                                Number old_val, Number new_val) {
+//                if (!floorSlider.isValueChanging()) {
+//                    onFloor = new_val.intValue();
+//                    floorSlider.setValue(onFloor);
+//                    //floorMap.setImage(imageHashMap.get(onFloor));
+//                    floorMap.setImage(imgInt.display(onFloor));
+//                    gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+//                    output = "";
+//                    directions.setText(output);
+//                    System.out.println(onFloor);
+//
+//                    if(pathNodes != null) {
+//                        draw();
+//                    }
+//
+//                }
+//            }
+//        });
+//    }
 
-                    if(pathNodes != null) {
-                        draw();
-                    }
-
-                }
-            }
-        });
-    }
 
     /**
      * Find's the start tag...
@@ -170,7 +170,10 @@ public class UserScreenController extends AbsController{
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+
+
+       // switchScreen(MMGpane, "/Views/UserScreen.fxml");
+
         switchScreen(MMGpane, "/Views/LoginScreen.fxml");
     }
 

@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,12 +14,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 /**
@@ -64,15 +68,78 @@ public class EditTagScreenController extends AbsController {
 
     @FXML
     private ListView<Professional> currentProfessionals;
+    //timeout
+    Timer timer = new Timer();
+    int counter = 0;
+    private volatile boolean running = true;
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            counter++;
+            System.out.println(counter);
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+
+                    if (counter == 5) {
+                        running = false;
+                        timer.cancel();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    break;
+                }
+            }
+        }
+    };
+    Thread timerThread = new Thread(runnable);
+    Runnable resetKiosk = new Runnable() {
+        @Override
+        public void run() {
+            timer.cancel();
+            timer.purge();
+            running = false;
+            timerThread.interrupt();
+
+            //logout user
+            dir.logoutUser();
+            try {
+                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    };
+
 
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws IOException {
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
     }
     @FXML
     public void initialize(){
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
+
         //make some buttons opaque
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
@@ -156,7 +223,26 @@ public class EditTagScreenController extends AbsController {
                 displayResult(profSearchField.getText() + event.getText());
             }
         });
-        
+        //timer resets if mouse moved
+        MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+                System.out.println("counter resets");
+            }
+        });
+        MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        MMGpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
     }
 
     @FXML

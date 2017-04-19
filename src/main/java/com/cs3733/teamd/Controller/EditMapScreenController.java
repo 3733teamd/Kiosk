@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -76,7 +77,6 @@ public class EditMapScreenController extends AbsController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
-    //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
 
@@ -88,7 +88,6 @@ public class EditMapScreenController extends AbsController{
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
 
     /*replaced with proxy pattern*/
-//    public Map<Integer, Image> imageHashMap = new HashMap<>();
     ImageInterface imgInt = new ProxyImage();
 
     private Tag selectedTag;
@@ -121,8 +120,67 @@ public class EditMapScreenController extends AbsController{
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
 
+    //timeout
+    Timer timer = new Timer();
+    int counter = 0;
+    private volatile boolean running = true;
+
+    TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            counter++;
+            System.out.println("edit map" + counter);
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            while (running) {
+                try {
+
+                    if (counter == 5) {
+                        running = false;
+                        timer.cancel();
+                        timerTask.cancel();
+                        Platform.runLater(resetKiosk);
+                        break;
+                    }
+                    Thread.sleep(1000);
+                } catch (InterruptedException exception) {
+                    timer.cancel();
+                    timerTask.cancel();
+                    running = false;
+                    break;
+                }
+            }
+        }
+    };
+    Thread timerThread = new Thread(runnable);
+    Runnable resetKiosk = new Runnable() {
+        @Override
+        public void run() {
+            timer.cancel();
+            timer.purge();
+            running = false;
+            timerThread.interrupt();
+
+            //logout user
+            dir.logoutUser();
+            try {
+                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    };
+
+
     @FXML
     public void initialize(){
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
@@ -200,10 +258,25 @@ public class EditMapScreenController extends AbsController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-        //drawfloorNodes();
-//
-
-    }//initialize end
+        MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {counter = 0;
+               System.out.println("counter resets");
+            }
+        });
+        MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+        MMGpane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+            }//initialize end
 
 
     private void setFloorSliderListener(){
@@ -325,27 +398,47 @@ public class EditMapScreenController extends AbsController{
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
     }
 
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 
     @FXML
     public void toEditProf() throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
     }
     @FXML
     public void toEditTag() throws  IOException{
+        timer.cancel();
+        timer.purge();
+        running = false;
+        timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
 
@@ -630,4 +723,7 @@ public class EditMapScreenController extends AbsController{
         super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
+
+
+
 }

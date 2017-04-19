@@ -40,22 +40,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         window=primaryStage;
-        rootMain = FXMLLoader.load(getClass().getResource("/Views/UserScreen.fxml"), bundle);
+        rootMain = FXMLLoader.load(getClass().getResource("/Views/EditMapScreen.fxml"), bundle);
 
 
         MainScene=new Scene(rootMain);
-       // window.setMaximized(true);
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();
-       // window.setFullScreen(true);
     }
 
     public static void main(String[] args) {
-
-
-
-
         DBHandler database;
         Directory dir = Directory.getInstance();
 
