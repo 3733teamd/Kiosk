@@ -120,7 +120,6 @@ public class EditMapScreenController extends AbsController{
 
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
-
     @FXML
     public void initialize(){
         setFloorSliderListener();
@@ -134,7 +133,13 @@ public class EditMapScreenController extends AbsController{
         initializeCircleMap();
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
-         floorMap.setImage(imgInt.display(floor));
+        System.out.println(floor);
+        //if floor<100 its falkner, so display the prof verions
+        if(floor<100) {
+            floorMap.setImage(imgInt.display(floor + 1000));
+        }else{
+            floorMap.setImage(imgInt.display(floor));
+        }
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -148,6 +153,35 @@ public class EditMapScreenController extends AbsController{
             }
         });
 
+
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if(new_val!=null) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    System.out.println(floor);
+
+                    //if floor<100 its falkner, so display the prof verions
+                    if (floor < 100) {
+                        floorMap.setImage(imgInt.display(floor + 1000));
+                    } else {
+                        floorMap.setImage(imgInt.display(floor));
+                    }
+
+                }
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+
+                drawfloorNodes();
+
+            }
+        });
+
+        floors.clear();
         if(floors.size() == 0){
             floors.addLast(1);
             floors.addLast(2);
@@ -156,21 +190,22 @@ public class EditMapScreenController extends AbsController{
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            floors.addLast(102);
+            floors.addLast(103);
+            floors.addLast(104);
         }
-        if(floorDropDown.size() == 0) {
-            floorDropDown.addAll(floors);
-        }
+        floorDropDown.clear();
+
+        floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
-
-
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedTag = newValue;
+                selectedTag = newValue;
             }
 
 
@@ -180,7 +215,7 @@ public class EditMapScreenController extends AbsController{
             public void changed(ObservableValue<? extends Tag> observable,
                                 Tag oldValue, Tag newValue) {
 
-                    selectedCurrentTag = newValue;
+                selectedCurrentTag = newValue;
             }
 
 
@@ -205,21 +240,7 @@ public class EditMapScreenController extends AbsController{
 
     }//initialize end
 
-
     private void setFloorSliderListener(){
-        /*floorSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val)  {
-                if (!floorSlider.isValueChanging()) {
-                    floor = new_val.intValue();
-                    floorSlider.setValue(floor);
-                    //floorMap.setImage(imageHashMap.get(onFloor));
-                    floorMap.setImage(imgInt.display(floor));
-                    drawfloorNodes();
-
-                }
-            }
-        });*/
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
@@ -331,10 +352,12 @@ public class EditMapScreenController extends AbsController{
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
+        dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
+        dir.logoutUser();
         switchScreen(MMGpane, "/Views/UserScreen.fxml");
     }
 

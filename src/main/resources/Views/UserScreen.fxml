@@ -84,7 +84,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="696.0" prefWidth="1292.0">
                <children>
-                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="692.0" prefWidth="1094.0" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="693.0" prefWidth="1080.0" vbarPolicy="NEVER">
                      <content>
                         <AnchorPane fx:id="imagePane" prefHeight="702.0" prefWidth="1097.0">
                            <children>
@@ -97,16 +97,17 @@
                         </AnchorPane>
                      </content>
                   </ScrollPane>
-                  <VBox alignment="TOP_CENTER" prefHeight="607.0" prefWidth="203.0">
+
+                  <VBox prefHeight="721.0" prefWidth="226.0">
                      <children>
                         <Label fx:id="directionLabel" text="Directions:">
                            <font>
                               <Font size="38.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="directions" prefHeight="337.0" prefWidth="201.0" wrapText="true" />
+                        <TextArea fx:id="directions" prefHeight="633.0" prefWidth="230.0" wrapText="true" />
                         <Button fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="55.0" prefWidth="151.0" text="Show Starting Floor" />
-                        <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="55.0" prefWidth="151.0" text="Show Intermediate Floor" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="55.0" prefWidth="151.0" text="Show Intermediate Floor" />
                         <Button fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="55.0" prefWidth="151.0" text="Show Ending Floor" />
                      </children>
                   </VBox>
