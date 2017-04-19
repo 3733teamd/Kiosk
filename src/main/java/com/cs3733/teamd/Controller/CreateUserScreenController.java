@@ -1,9 +1,9 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.Directory;
+import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Permissions;
-import com.cs3733.teamd.Model.User;
+import com.cs3733.teamd.Model.Entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -1,10 +1,8 @@
 package com.cs3733.teamd.Database;
 
-import com.cs3733.teamd.Model.Node;
+import com.cs3733.teamd.Model.Entities.Node;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
 
 import java.io.IOException;
 import java.sql.*;

@@ -4,8 +4,12 @@ package com.cs3733.teamd.Model;
  * Created by tom on 3/31/17.
  */
 
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Exceptions.PathNotFoundException;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import static org.junit.Assert.*;
@@ -47,11 +51,16 @@ public class PathfinderTest {
         c.addNode(d);
 
         Pathfinder pf = new Pathfinder(a,d);
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calculatedPath = new LinkedList<>();
+        try {
+            calculatedPath = pf.shortestPath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(d); actualPath.add(c); actualPath.add(a); // backwards path
 
-        assertArrayEquals(calulatedPath.toArray(), actualPath.toArray());
+        assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
     }
 
     @Test
@@ -83,16 +92,21 @@ public class PathfinderTest {
 
 
         Pathfinder pf = new Pathfinder(a,f);
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calculatedPath = new LinkedList<>();
+        try {
+            calculatedPath = pf.shortestPath();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(f); actualPath.add(h); actualPath.add(g); actualPath.add(c); actualPath.add(b); actualPath.add(a); // backwards path
 
-        assertArrayEquals(calulatedPath.toArray(), actualPath.toArray());
+        assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
 
     }
 
     @Test
-    public void testSameFloorPriority(){
+    public void testSameFloorPriority() throws PathNotFoundException {
 
         Node i = new Node(0, 0, 4);
         Node j = new Node(1, 0, 4);
@@ -116,7 +130,7 @@ public class PathfinderTest {
 
         Pathfinder pf = new Pathfinder(k, j);
 
-        LinkedList<Node> calulatedPath = pf.shortestPath();
+        LinkedList<Node> calculatedPath = pf.shortestPath();
         LinkedList<Node> actualPath = new LinkedList<>();
         actualPath.add(j); actualPath.add(i); actualPath.add(k); // backwards path
 
@@ -124,7 +138,45 @@ public class PathfinderTest {
         assertTrue((k.getDist(m) + m.getDist(l) + l.getDist(j)) < (k.getDist(i) + i.getDist(j)));
 
         // pathfinder correctly chooses longer k-i-j path, because it stays on the same floor
-        assertArrayEquals(calulatedPath.toArray(), actualPath.toArray());
+        assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
 
+    }
+
+
+    @Test
+    public void testMultipleEndPoint(){
+        Node a = new Node(0, 0, 4);
+        Node b = new Node(0, 0, 3);
+        Node c = new Node(0, 400, 4);
+
+        a.addNode(b); a.addNode(c);
+        Pathfinder pf = new Pathfinder(a, new LinkedList<>(Arrays.asList(b,c)));
+        LinkedList<Node> calculatedPath = new LinkedList<>();
+        LinkedList<Node> actualPath = new LinkedList<>();
+        try {
+            calculatedPath = pf.shortestPath();
+        } catch (PathNotFoundException e) {
+            e.printStackTrace();
+        }
+        actualPath.add(c); actualPath.add(a); // backwards path
+
+        assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
+
+        Node d = new Node(0, 0, 4);
+        Node e = new Node(0, 0, 3);
+        Node f = new Node(0, 700, 4);
+
+        d.addNode(e); d.addNode(f);
+        pf = new Pathfinder(d, new LinkedList<>(Arrays.asList(e, f)));
+        calculatedPath = new LinkedList<>();
+        actualPath = new LinkedList<>();
+        try {
+            calculatedPath = pf.shortestPath();
+        } catch (PathNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        actualPath.add(e); actualPath.add(d); // backwards path
+
+        assertArrayEquals(calculatedPath.toArray(), actualPath.toArray());
     }
 }

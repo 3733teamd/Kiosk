@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.User;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,30 +10,27 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 /**
  * Created by Anh Dao on 4/6/2017.
  */
 public class LoginScreenController extends AbsController {
+
     public TextField username;
     public PasswordField password;
     public Button LoginButton;
     public Button BackButton;
-
     public AnchorPane MMGpane;
     public Label errorIndicator;
-    public Label userText;
-    public Label pwText;
+    public Text userText;
+    public Text pwText;
     @FXML
     public void initialize(){
         setText();
     }
-
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws  IOException{
@@ -50,7 +47,7 @@ public class LoginScreenController extends AbsController {
        User u = dir.loginUser(user,pass);
 
        if (u != null){
-           System.out.print("Successful log in as admin.\n");
+           System.out.println("Successful log in as admin.\n");
            switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
       } else{
            errorIndicator.setText(Main.bundle.getString("InvalidloginCredentials"));

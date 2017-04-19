@@ -1,8 +1,8 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Model.Directory;
-import com.cs3733.teamd.Model.Professional;
-import com.cs3733.teamd.Model.Tag;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,35 +26,27 @@ import java.util.stream.Collectors;
  */
 public class EditTagScreenController extends AbsController {
     Directory dir = Directory.getInstance();
+    @FXML
     public TextArea tagTextArea;
     public TextField searchTagBar;
-    ObservableList<String> seasonList = FXCollections.<String>observableArrayList("Spring", "Summer", "Fall", "Winter");
-
     public Button BackButton;
     public AnchorPane MMGpane;
+    @FXML
     public Button addNewTag;
     public TextField tagNameTxt;
-
     @FXML
     private Button addProf;
-
     @FXML
     private Button newTagNameBtn;
-
     @FXML
     private Button deleteProf;
-
     @FXML
     private TextField profSearchField;
 
-    List tags = dir.getTags();
-    List Profs= dir.getProfessionals();
-    List<Professional> unfiltered = dir.getProfessionals();
     List<Professional> filtered = new ArrayList<Professional>();
     ObservableList<Professional> searchResults = FXCollections.observableArrayList();
-    List<Tag> allTheTags= dir.getTags();
-    List<String> allTagNames = new ArrayList<String>();
-    private Tag chosenTag=null;
+
+    private Tag chosenTag = null;
 
     @FXML
     private Button addNewTagBtn;
@@ -83,29 +75,25 @@ public class EditTagScreenController extends AbsController {
     }
     @FXML
     public void initialize(){
+        //make some buttons opaque
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
+        //disable buttons
         addProf.setDisable(true);
         deleteProf.setDisable(true);
         newTagNameBtn.setDisable(true);
-       // List chosenProf=chosenTag.getProfs();
-        for (int i = 0 ; i<allTheTags.size(); i++) {
-            allTagNames.add(allTheTags.get(i).getTagName());
+        //Get all tag names and list them in searchTagBar
+        List<String> allTagNames = new ArrayList<String>();
+        for (Tag t : dir.getTags()) {
+            allTagNames.add(t.getTagName());
         }
         TextFields.bindAutoCompletion(searchTagBar, allTagNames);
-
+        //List all tags in tagList
         tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
-        ObservableList<String> names = FXCollections.observableArrayList(Profs);
+        ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
         System.out.println(names);
         allProffessionals.setItems(names);
-        //ObservableList<String> chosen = FXCollections.observableArrayList(chosenProf);
-       // allProffessionals.setItems(chosen);
-
-        //List all tags in tagList,
-        tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
-        //put all professionals in allProffessionals
-        allProffessionals.setItems(FXCollections.observableArrayList((List)dir.getProfessionals()));
 
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -209,8 +197,8 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void displayResult(String value){
 
-        for (Professional d: unfiltered){
-            filtered = unfiltered.stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        for (Professional d: dir.getProfessionals()){
+            filtered = dir.getProfessionals().stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
         }
 
         searchResults.setAll(filtered);

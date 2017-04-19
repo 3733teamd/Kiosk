@@ -1,23 +1,22 @@
 package com.cs3733.teamd.Controller;
 
-import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.sun.org.apache.xpath.internal.SourceTree;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.ProTitle;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +114,7 @@ public class EditProfScreenController extends AbsController {
         createAllTitleListListener();
         createCurTitleListListener();
 
-        //change opacity
+        //disable buttons
         deleteTitle.setOpacity(.5);
         deleteTag.setOpacity(.5);
         addTitle.setOpacity(.5);
@@ -203,17 +202,17 @@ public class EditProfScreenController extends AbsController {
     }
 
      private void createAllTagListListener(){
-            allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
-                @Override
-                public void changed(ObservableValue<? extends Tag> observable,
-                                    Tag oldValue, Tag newValue) {
+        allTagsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
+            @Override
+            public void changed(ObservableValue<? extends Tag> observable,
+                                Tag oldValue, Tag newValue) {
 
-                    updateCurrentTagList(newValue);
-                }
+                updateCurrentTagList(newValue);
+            }
 
 
-            });
-        }
+        });
+    }
 
     private void setAllTagsList(){
         //ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());
@@ -295,14 +294,12 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void deleteProf(ActionEvent event) {
-
         if(selectedProf!=null){
             System.out.println(dir.removeProfessional(selectedProf));
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
         }
-
     }
 
     @FXML
@@ -336,11 +333,10 @@ public class EditProfScreenController extends AbsController {
     }
 
     private void updateCurrentTagList(Tag t){
-
-            if(t != null) {
-                selectedTag = t;
-            }
+        if(t != null) {
+            selectedTag = t;
         }
+    }
 
 
 
@@ -353,7 +349,8 @@ public class EditProfScreenController extends AbsController {
         */
 
     private void setText(){
-        if(Main.Langugage=="Spanish"){
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.SPANISH){
             addNewProf.setFont(Font.font("System",14));
             deleteProf.setFont(Font.font("System",14));
         }
