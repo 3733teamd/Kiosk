@@ -9,7 +9,6 @@ import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import com.cs3733.teamd.Model.Entities.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -30,6 +28,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -40,6 +40,7 @@ import org.controlsfx.control.textfield.TextFields;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -74,11 +75,11 @@ public class UserScreenController extends MapController {
 
     public ImageView floorMap;
     public AnchorPane imagePane;
-    public Canvas MapCanvas;
+    @FXML
+    public Pane mapCanvas;
     public AnchorPane MMGpane;
     @FXML
     private TextArea directions;
-    public GraphicsContext gc;
 
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
@@ -90,6 +91,7 @@ public class UserScreenController extends MapController {
     String output = "";
     Tag starttag = null;
     private int startfloor = 0;
+    private int midfloor = 0;
     private int destfloor = 0;
 
     final double SCALE_DELTA = 1.1;
@@ -98,8 +100,6 @@ public class UserScreenController extends MapController {
     public ScrollPane scrollPane;
 
 
-
-    private int midfloor = 0;
     LinkedList<Integer> floors = new LinkedList<Integer>();
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
     private Map<String, String> tagAssociations;
@@ -134,7 +134,7 @@ public class UserScreenController extends MapController {
     private void initialize()
     {
         setOffsets();
-        super.initialize(this.scrollPane, this.floorMap, this.imagePane);
+        super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
         /*
             This code will find all of the tags and then all of the professionals and then merge the two.
             The final result is a list of all the tags and professionals intertwined so that
@@ -164,7 +164,7 @@ public class UserScreenController extends MapController {
 
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
-        //panMethods();
+        panMethods();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);
@@ -193,9 +193,73 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
         findStartTag();
-        gc = MapCanvas.getGraphicsContext2D();
+        super.setFloor(onFloor);
         if(pathNodes != null) {
-            draw();
+            drawPath();
+        }
+    }
+
+    private void drawPath() {
+        super.setNodes(pathNodes);
+        boolean haveMidFloor = false;
+        if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
+            midfloor = 1;
+            startfloor = pathNodes.getLast().getFloor();
+            destfloor = pathNodes.getFirst().getFloor();
+        }
+
+        // Add in points of interest
+        for(int i = 0; i < pathNodes.size(); i++) {
+            // Destination
+            if(i == 0) {
+                super.addCircle(pathNodes.get(0), Color.RED, 7.0);
+                continue;
+            }
+            if(i < (pathNodes.size() - 1)) {
+                if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
+                    super.addCircle(pathNodes.get(i), Color.GREEN, 7.0);
+                    super.addCircle(pathNodes.get(i + 1), Color.YELLOW, 7.0);
+                }
+            }
+            if((pathNodes.get(i).getFloor() == midfloor) && (destfloor != midfloor) && (startfloor != midfloor)) {
+                haveMidFloor = true;
+            }
+        }
+        super.addCircle(pathNodes.getLast(), Color.GREEN, 8.0);
+        /*
+        if(pathNodes.size() > 0) {
+            // Last Node
+            super.addCircle(pathNodes.getFirst(), Color.RED);
+        }
+        if(pathNodes.size() > 1) {
+            super.addCircle(pathNodes.getLast(), Color.GREEN);
+        }*/
+
+        super.drawNodes();
+
+        StartFloorButton.setVisible(true);
+        MiddleFloorButton.setVisible(true);
+        EndFloorButton.setVisible(true);
+
+        StartFloorButton.setDisable(true);
+        MiddleFloorButton.setDisable(true);
+        EndFloorButton.setDisable(true);
+
+        if((onFloor == startfloor)
+                &&(onFloor != destfloor)) {
+            StartFloorButton.setDisable(true);
+            EndFloorButton.setDisable(false);
+        } else if((onFloor != startfloor)
+                &&(onFloor == destfloor)) {
+            StartFloorButton.setDisable(false);
+            EndFloorButton.setDisable(true);
+        }
+
+        if(haveMidFloor && (onFloor != midfloor)) {
+            MiddleFloorButton.setDisable(false);
+        } else if(haveMidFloor && (onFloor == midfloor)) {
+            StartFloorButton.setDisable(false);
+            EndFloorButton.setDisable(false);
         }
     }
 
@@ -209,15 +273,15 @@ public class UserScreenController extends MapController {
                     FloorMenu.setValue(onFloor);
                 }
                 floorMap.setImage(imgInt.display(onFloor));
-                gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+                // Notify super class
+                setFloor(onFloor);
                 output = "";
                 directions.setText(output);
                 System.out.println(onFloor);
 
                 if(pathNodes != null) {
-                    draw();
-
-
+                    setNodes(pathNodes);
+                    drawNodes();
                 }
             }
         });
@@ -232,7 +296,7 @@ public class UserScreenController extends MapController {
         floorMap.setPreserveRatio(true);
         final double SCALE_DELTA = 1.1;
 
-        final Group scrollContent = new Group(floorMap, MapCanvas);
+        final Group scrollContent = new Group(floorMap, mapCanvas);
         scrollPane.setContent(scrollContent);
 
         scrollPane.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -408,13 +472,13 @@ public class UserScreenController extends MapController {
 
         }
         // Clear the canvas
-        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+        //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
         directions.setText(output);
         System.out.println(onFloor);
 
         if(pathNodes != null) {
-            draw();
+            drawPath();
         }
 
     }
@@ -438,13 +502,6 @@ public class UserScreenController extends MapController {
         }
     }
 
-    @FXML
-    //Starts path displaying process
-    private void draw(){
-        System.out.println("Begin drawing");
-        plotPath(UserScreenController.pathNodes);
-    }
-
     //Converts a node to a point to display on map
     private Point getConvertedPoint(Node node) { //conversion from database to canvas
         int x = node.getX() + this.offsets.get(node.getFloor()).x;
@@ -455,6 +512,7 @@ public class UserScreenController extends MapController {
     }
 
     //Converts a given path of nodes to a path of points and then draws it
+
     public void plotPath(LinkedList<Node> path){
         LinkedList<Point> pointsStartFloor = new LinkedList<>();
         LinkedList<Point> pointsMidFloor = new LinkedList<>();
@@ -504,7 +562,7 @@ public class UserScreenController extends MapController {
         indexOfElevator = index;
         if(startfloor == onFloor) {
             System.out.println("startfloor");
-            drawPathFromPoints(gc, pointsStartFloor);
+            //drawPathFromPoints(gc, pointsStartFloor);
             EndFloorButton.setVisible(true);
             if(pointsMidFloor.size()>0){
                 MiddleFloorButton.setVisible(true);
@@ -513,7 +571,7 @@ public class UserScreenController extends MapController {
         
         else if(destfloor == onFloor){
             System.out.println("destfloor");
-            drawPathFromPoints(gc, pointsEndFloor);
+            //drawPathFromPoints(gc, pointsEndFloor);
             StartFloorButton.setVisible(true);
             if(midfloor != 0){
                 MiddleFloorButton.setVisible(true);
@@ -521,7 +579,7 @@ public class UserScreenController extends MapController {
         }
         else if(midfloor == onFloor){
             System.out.println("midfloor");
-            drawPathFromPoints(gc, pointsMidFloor);
+            //drawPathFromPoints(gc, pointsMidFloor);
             StartFloorButton.setVisible(true);
             EndFloorButton.setVisible(true);
         }
@@ -533,7 +591,7 @@ public class UserScreenController extends MapController {
             }
         }
     }
-
+    /*
     //Function to actually draw a path
     private void drawPathFromPoints(GraphicsContext gc, LinkedList<Point> path) {
         System.out.println("Drawing");
@@ -582,22 +640,22 @@ public class UserScreenController extends MapController {
             gc.setFill(javafx.scene.paint.Color.BLUE);
             radius = 5;
         }
-    }
+    }*/
 
     @FXML
     //Function to allow the user to change to the starting floor of path
     public  void ShowStart(ActionEvent actionEvent) throws IOException{
-        if(startfloor != 0) {
-            onFloor = startfloor;
+        if((pathNodes != null) && (pathNodes.getLast() != null)) {
+            onFloor = pathNodes.getLast().getFloor();
             FloorMenu.setValue(onFloor);
             floorMap.setImage(imgInt.display(onFloor));
-            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             directions.setText(output);
             System.out.println(onFloor);
 
             if (pathNodes != null) {
-                draw();
+                drawPath();
             }
         }
     }
@@ -609,13 +667,13 @@ public class UserScreenController extends MapController {
             onFloor = midfloor;
             FloorMenu.setValue(onFloor);
             floorMap.setImage(imgInt.display(onFloor));
-            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             directions.setText(output);
             System.out.println(onFloor);
 
             if (pathNodes != null) {
-                draw();
+                drawPath();
             }
         }
     }
@@ -623,17 +681,17 @@ public class UserScreenController extends MapController {
     @FXML
     //Function to allow the user to change to the ending floor of path
     public  void ShowEnd(ActionEvent actionEvent) throws IOException{
-        if(destfloor != 0) {
-            onFloor = destfloor;
+        if((pathNodes != null) && (pathNodes.getFirst() != null)) {
+            onFloor = pathNodes.getFirst().getFloor();
             FloorMenu.setValue(onFloor);
             floorMap.setImage(imgInt.display(onFloor));
-            gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             directions.setText(output);
             System.out.println(onFloor);
 
             if (pathNodes != null) {
-                draw();
+                drawPath();
             }
         }
     }
