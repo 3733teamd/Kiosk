@@ -123,8 +123,8 @@ public class MapController extends AbsController {
         Line l = new Line();
         l.setStartX(n1.getX());
         l.setEndX(n2.getX());
-        l.setEndY(n1.getY());
-        l.setStartY(n2.getY());
+        l.setStartY(n1.getY());
+        l.setEndY(n2.getY());
 
         l.setStrokeWidth(3.0);
         l.setStroke(Color.BLACK);
