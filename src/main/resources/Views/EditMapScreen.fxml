@@ -162,7 +162,7 @@
                         <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="845.0">
                            <children>
                               <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="844.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
-                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="685.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="606.0" prefWidth="844.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <Label fx:id="errorBox" alignment="CENTER" layoutX="877.0" layoutY="14.0" prefHeight="119.0" prefWidth="200.0" text="Label" />
                            </children>
                         </AnchorPane>
