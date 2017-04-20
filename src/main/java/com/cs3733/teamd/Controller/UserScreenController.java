@@ -213,7 +213,6 @@ public class UserScreenController extends MapController {
             // Destination
             if(i == 0) {
                 super.addCircle(pathNodes.get(0), Color.RED, 7.0);
-                continue;
             }
             if(i < (pathNodes.size() - 1)) {
                 if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
