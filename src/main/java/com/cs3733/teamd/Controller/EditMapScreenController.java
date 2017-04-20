@@ -570,7 +570,6 @@ public class EditMapScreenController extends MapController{
                 mapCanvas.getChildren().add(line);
             }
         }
-
     }
 
     private CircleNode createCircle(Node n, double r, Color color) {

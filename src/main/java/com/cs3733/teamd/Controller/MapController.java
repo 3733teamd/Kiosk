@@ -2,12 +2,20 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.Node;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +40,10 @@ public class MapController extends AbsController {
 
     private Map<Node, CircleNode> circleNodeMap;
 
+    private Label label;
+
+    private List<Line> lines;
+
     public void initialize(ScrollPane pane, ImageView floorMap, Pane mapCanvas) {
         this.scrollPane = pane;
         this.floorMap = floorMap;
@@ -41,6 +53,10 @@ public class MapController extends AbsController {
         this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         this.circleNodeMap = new HashMap<Node, CircleNode>();
+
+        this.label = new Label("Informative Text");
+
+        lines = new ArrayList<Line>();
 
         zoomPercent = 100.0;
     }
@@ -96,15 +112,52 @@ public class MapController extends AbsController {
     }
 
     protected void addCircle(Node n, Color c) {
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), 5.0, c,n);
-        circle.setCursor(Cursor.HAND);
-        System.out.println(n);
-        circleNodeMap.put(n, circle);
+        addCircle(n,c,5.0);
+    }
+
+    protected void removeConnections() {
+        this.lines.clear();
+    }
+
+    protected void connectNode(Node n1, Node n2) {
+        Line l = new Line();
+        l.setStartX(n1.getX());
+        l.setEndX(n2.getX());
+        l.setEndY(n1.getY());
+        l.setStartY(n2.getY());
+
+        l.setStrokeWidth(3.0);
+        l.setStroke(Color.BLACK);
+
+        this.lines.add(l);
     }
 
     protected void addCircle(Node n, Color c, double r) {
         CircleNode circle = new CircleNode(n.getX(), n.getY(), r, c,n);
         circle.setCursor(Cursor.HAND);
+        circle.setOnMouseEntered((event) -> {
+            if(n.getTags().size() > 0) {
+                System.out.println("Hover");
+                label.setText(n.getTags().getFirst().getTagName());
+                mapCanvas.getChildren().add(label);
+                label.setLayoutX(n.getX() - 35.0);
+                label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+                label.setPadding(new Insets(10));
+                label.setTextFill(Color.WHITE);
+                if(n.getY() < 50) {
+                    label.setLayoutY(n.getY() + 50);
+                } else {
+                    label.setLayoutY(n.getY() - 50);
+                }
+
+            }
+        });
+        circle.setOnMouseExited((event) -> {
+            if(n.getTags().size() > 0) {
+                System.out.println("End Hover");
+                mapCanvas.getChildren().removeAll(label);
+            }
+        });
         System.out.println(n);
         circleNodeMap.put(n, circle);
     }
@@ -118,6 +171,7 @@ public class MapController extends AbsController {
 
     protected void drawNodes() {
         mapCanvas.getChildren().clear();
+        mapCanvas.getChildren().addAll(this.lines);
         // Draw all of the nodes that are on the current floor
         for(Node n: nodes) {
             CircleNode currentNode = circleNodeMap.get(n);
@@ -130,6 +184,7 @@ public class MapController extends AbsController {
                 mapCanvas.getChildren().add(currentNode);
             }
         }
+
     }
     // What floor do we draw on?
     protected void setFloor(int floor) {

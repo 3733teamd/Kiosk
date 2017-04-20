@@ -193,9 +193,24 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
         findStartTag();
+
         super.setFloor(onFloor);
         if(pathNodes != null) {
             drawPath();
+        } else {
+            if(starttag != null) {
+                drawStartTag();
+            }
+        }
+    }
+
+    private void drawStartTag() {
+        if(starttag.getNodes().size() > 0) {
+            List<Node> startNodes = starttag.getNodes();
+            super.setNodes(startNodes);
+            super.removeConnections();
+            super.addCircle(startNodes.get(0), Color.GREEN, 10.0);
+            super.drawNodes();
         }
     }
 
@@ -212,6 +227,7 @@ public class UserScreenController extends MapController {
         directions.setText(output);
 
         super.setNodes(pathNodes);
+        super.removeConnections();
         boolean haveMidFloor = false;
         if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
             midfloor = 1;
@@ -229,7 +245,12 @@ public class UserScreenController extends MapController {
                 if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
                     super.addCircle(pathNodes.get(i), Color.GREEN, 7.0);
                     super.addCircle(pathNodes.get(i + 1), Color.YELLOW, 7.0);
+                } else {
+                    if(pathNodes.get(i).getFloor() == onFloor) {
+                        super.connectNode(pathNodes.get(i), pathNodes.get(i+1));
+                    }
                 }
+
             }
             if((pathNodes.get(i).getFloor() == midfloor) && (destfloor != midfloor) && (startfloor != midfloor)) {
                 haveMidFloor = true;
@@ -292,6 +313,8 @@ public class UserScreenController extends MapController {
                 if(pathNodes != null) {
                     setNodes(pathNodes);
                     drawNodes();
+                }else if(starttag != null) {
+                    drawStartTag();
                 }
             }
         });
@@ -506,151 +529,12 @@ public class UserScreenController extends MapController {
             if (startTagString.equals(currentTag.getTagName())) {
                 System.out.println(currentTag.getTagName());
                 starttag = currentTag;
+                drawStartTag();
                 break;
             }
 
         }
     }
-
-    //Converts a node to a point to display on map
-    private Point getConvertedPoint(Node node) { //conversion from database to canvas
-        int x = node.getX() + this.offsets.get(node.getFloor()).x;
-        int y = node.getY() + this.offsets.get(node.getFloor()).y;
-        //Point p = new Point((int) ((x-offset_x)/scale), (int) (imageH-(y-offset_y)/scale));
-        Point p = new Point(x, y);
-        return p;
-    }
-
-    //Converts a given path of nodes to a path of points and then draws it
-
-    public void plotPath(LinkedList<Node> path){
-        LinkedList<Point> pointsStartFloor = new LinkedList<>();
-        LinkedList<Point> pointsMidFloor = new LinkedList<>();
-        LinkedList<Point> pointsEndFloor = new LinkedList<>();
-        // ensure values are reset
-        int index = 0;
-        if(starttag == null) {
-            System.err.println("Start Tag is Not Populated");
-            return;
-        }
-        startfloor = 0;
-        destfloor = 0;
-        midfloor = 1;
-        StartFloorButton.setVisible(false);
-        MiddleFloorButton.setVisible(false);
-        EndFloorButton.setVisible(false);
-        startfloor = starttag.getNodes().getFirst().getFloor();
-        destfloor = path.getFirst().getFloor();
-        System.out.println(destfloor);
-        for (Node node: path) {
-            if(node.getFloor() == startfloor) {
-                System.out.println("Node.getfloor" + node.getFloor());
-                System.out.println("plot"+ startfloor);
-                pointsStartFloor.add(getConvertedPoint(node));
-                index++;
-            } else if(node.getFloor() == destfloor){
-                System.out.println("Node.getfloor" + node.getFloor());
-                pointsEndFloor.add(getConvertedPoint(node));
-            }
-            else if((node.getFloor() == 1) && (startfloor != 1) && (destfloor != 1)){
-                pointsMidFloor.add(getConvertedPoint(node));
-            }
-        }
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                path,
-                onFloor
-        );
-        List<String> directionsArray = g.generateTextDirections();
-        String output = "";
-        for(String directionString: directionsArray) {
-            output += directionString + "\n";
-        }
-        directions.setText(output);
-        for(String token: directionsArray) {
-            System.out.println(token);
-        }
-        indexOfElevator = index;
-        if(startfloor == onFloor) {
-            System.out.println("startfloor");
-            //drawPathFromPoints(gc, pointsStartFloor);
-            EndFloorButton.setVisible(true);
-            if(pointsMidFloor.size()>0){
-                MiddleFloorButton.setVisible(true);
-            }
-        }
-        
-        else if(destfloor == onFloor){
-            System.out.println("destfloor");
-            //drawPathFromPoints(gc, pointsEndFloor);
-            StartFloorButton.setVisible(true);
-            if(midfloor != 0){
-                MiddleFloorButton.setVisible(true);
-            }
-        }
-        else if(midfloor == onFloor){
-            System.out.println("midfloor");
-            //drawPathFromPoints(gc, pointsMidFloor);
-            StartFloorButton.setVisible(true);
-            EndFloorButton.setVisible(true);
-        }
-        else{
-            StartFloorButton.setVisible(true);
-            EndFloorButton.setVisible(true);
-            if(midfloor != 0){
-                MiddleFloorButton.setVisible(true);
-            }
-        }
-    }
-    /*
-    //Function to actually draw a path
-    private void drawPathFromPoints(GraphicsContext gc, LinkedList<Point> path) {
-        System.out.println("Drawing");
-        //color for start node
-        gc.setFill(javafx.scene.paint.Color.GREEN);
-        //color for edges
-        gc.setStroke(javafx.scene.paint.Color.BLUE);
-        //intialize point previous as null due to start not having a previous
-        Point previous = null;
-        //Create a list to hold text directions
-        LinkedList<String> TextDirections = new LinkedList<String>();
-        //Set line width
-        gc.setLineWidth(3);
-        //Saving the length of the path
-        int pathlength = path.size();
-        //holder for straight indicator
-        String curdir = "";
-        //Generate placeholders for text directions
-        for (int str = 0; str < pathlength; str++){
-            TextDirections.add("");
-        }
-        //Set radius of first node
-        int radius = 7;
-
-
-        //Iterate through the path
-        for  (int i = 0; i < pathlength; i++){
-            //get the point for current iterations
-            Point current = path.get(i);
-            //If it is the last point in the path
-            if(i == pathlength-1){
-                radius = 7;
-                gc.setFill(javafx.scene.paint.Color.RED);
-            }
-            //draw the point
-            gc.fillOval(current.getX(), current.getY(), radius*2, radius*2);
-            //draw line from previous to current
-            if(previous != null){
-                gc.strokeLine(previous.getX() + radius, previous.getY() + radius,
-                        current.getX() + radius, current.getY() + radius);
-            }
-
-            //Update for next loop
-            previous = current;
-            //Set intermediate points to be smaller and blue
-            gc.setFill(javafx.scene.paint.Color.BLUE);
-            radius = 5;
-        }
-    }*/
 
     @FXML
     //Function to allow the user to change to the starting floor of path
