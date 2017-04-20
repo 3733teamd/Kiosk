@@ -200,6 +200,17 @@ public class UserScreenController extends MapController {
     }
 
     private void drawPath() {
+        TextDirectionGenerator g = new TextDirectionGenerator(
+                pathNodes,
+                onFloor
+        );
+        List<String> directionsArray = g.generateTextDirections();
+        String output = "";
+        for(String directionString: directionsArray) {
+            output += directionString + "\n";
+        }
+        directions.setText(output);
+
         super.setNodes(pathNodes);
         boolean haveMidFloor = false;
         if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
