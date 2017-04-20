@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -66,12 +67,12 @@
                      <children>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <TextField fx:id="username" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <JFXTextField fx:id="username" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <PasswordField fx:id="password" layoutX="-14.0" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <JFXPasswordField fx:id="password" prefHeight="41.0" prefWidth="303.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1">
@@ -90,18 +91,14 @@
                         </AnchorPane>
                         <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <Button fx:id="LoginButton" alignment="CENTER" layoutX="77.0" layoutY="36.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="55.0" prefWidth="150.0" text="\%login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="76.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Button>
+                              <JFXButton fx:id="LoginButton" buttonType="RAISED" layoutX="77.0" layoutY="70.0" onAction="#onLogin" style="-fx-background-color: DCDCDC;" text="%login" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="76.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </GridPane>
                   <AnchorPane layoutX="14.0" layoutY="706.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
                      <children>
-                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="40.0" prefWidth="150.0" text="\%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton fx:id="BackButton" buttonType="RAISED" onAction="#onBack" style="-fx-background-color: DCDCDC;" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>

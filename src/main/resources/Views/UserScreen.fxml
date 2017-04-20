@@ -19,7 +19,7 @@
 
 <AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1292.0">
+      <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="67.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>

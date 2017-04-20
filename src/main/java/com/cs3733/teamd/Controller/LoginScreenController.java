@@ -3,6 +3,8 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.User;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.jfoenix.controls.JFXTextField;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -26,10 +29,10 @@ import java.util.TimerTask;
 public class LoginScreenController extends AbsController {
 
     Directory dir = Directory.getInstance();
-    public TextField username;
-    public PasswordField password;
-    public Button LoginButton;
-    public Button BackButton;
+    public JFXTextField username;
+    public JFXPasswordField password;
+    public JFXButton LoginButton;
+    public JFXButton BackButton;
     public AnchorPane MMGpane;
     public Label errorIndicator;
     public Label userText;
