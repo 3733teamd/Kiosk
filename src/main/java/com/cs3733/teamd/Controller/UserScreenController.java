@@ -44,7 +44,7 @@ import java.util.*;
 /**
  * Created by Anh Dao on 4/6/2017.
  */
-public class UserScreenController extends AbsController{
+public class UserScreenController extends MapController {
 
     //connect to facade
     DirectoryInterface dir = Directory.getInstance();
@@ -134,6 +134,7 @@ public class UserScreenController extends AbsController{
     private void initialize()
     {
         setOffsets();
+        super.initialize(this.scrollPane, this.floorMap, this.imagePane);
         /*
             This code will find all of the tags and then all of the professionals and then merge the two.
             The final result is a list of all the tags and professionals intertwined so that
@@ -163,7 +164,7 @@ public class UserScreenController extends AbsController{
 
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
-        panMethods();
+        //panMethods();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);
@@ -191,7 +192,7 @@ public class UserScreenController extends AbsController{
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
-
+        findStartTag();
         gc = MapCanvas.getGraphicsContext2D();
         if(pathNodes != null) {
             draw();
@@ -313,25 +314,26 @@ public class UserScreenController extends AbsController{
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
-                double scaleFactor = 0;
-                if (event.getDeltaY() > 0) {
-                    scaleFactor = SCALE_DELTA;
+                if (event.getDeltaY() != 0.0) {
+                    zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
+                    if(zoomPercent < 100.0) {
+                        zoomPercent = 100.0;
+                    } else if(zoomPercent > 500.0) {
+                        zoomPercent = 500.0;
+                    }
+                    double xPercent = event.getX()/IMAGE_WIDTH;
+                    double yPercent = event.getY()/IMAGE_HEIGHT;
+                    System.out.println(
+                            "Percent: "+zoomPercent+" X:" +
+                                    getImageXFromZoom(event.getX())
+                                    +" Y: "+getImageYFromZoom(event.getY()));
 
-
-                } else if (event.getDeltaY() < 0) {
-                    scaleFactor = 1 / SCALE_DELTA;
+                    //scales with scroll wheel
+                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
-
-                //scale on scroll
-                /*
-                floorMap.setScaleX(floorMap.getScaleX() * scaleFactor);
-                floorMap.setScaleY(floorMap.getScaleY() * scaleFactor);
-                MapCanvas.setScaleX(MapCanvas.getScaleX() * scaleFactor);
-                MapCanvas.setScaleY(MapCanvas.getScaleY() * scaleFactor);
                 event.consume();
-                */
             }
         });
     }

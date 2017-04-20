@@ -450,7 +450,6 @@ public class EditMapScreenController extends MapController{
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
-
                 if (event.getDeltaY() != 0.0) {
                     zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
                     if(zoomPercent < 100.0) {
@@ -467,16 +466,10 @@ public class EditMapScreenController extends MapController{
 
                     //scales with scroll wheel
                     setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
-
-
-
                 } else {
                     event.consume();
                 }
-
-
                 event.consume();
-
             }
         });
     }

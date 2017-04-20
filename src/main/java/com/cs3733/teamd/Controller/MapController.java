@@ -22,6 +22,8 @@ public class MapController extends AbsController {
         this.scrollPane = pane;
         this.floorMap = floorMap;
         this.mapCanvas = mapCanvas;
+
+        zoomPercent = 100.0;
     }
 
     protected double getImageXFromZoom(double xClick) {

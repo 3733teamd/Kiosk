@@ -196,12 +196,12 @@
                         </AnchorPane>
                      </children>
                   </GridPane>
-                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="693.0" prefWidth="1080.0" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="662.0" prefWidth="846.0" vbarPolicy="NEVER">
                      <content>
-                        <AnchorPane fx:id="imagePane" prefHeight="691.0" prefWidth="1025.0">
+                        <AnchorPane fx:id="imagePane" prefHeight="622.0" prefWidth="845.0">
                            <children>
-                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="1091.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <Canvas fx:id="MapCanvas" height="636.0" width="1033.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="844.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Canvas fx:id="MapCanvas" height="606.0" width="844.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <cursor>
                                     <Cursor fx:constant="OPEN_HAND" />
                                  </cursor>
