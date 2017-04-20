@@ -448,6 +448,31 @@ public class EditMapScreenController extends AbsController{
 
     }
 
+    private double getImageXFromZoom(double xClick) {
+        // Figure out the X and Y of where the zoom occured
+        double viewportWidth = IMAGE_WIDTH / floorMap.getScaleX();
+
+        // Bar center will go between 0.0 and 1.0 which is (viewportWidth/2) to (IMAGE_WIDTH-(viewportWidth/2))
+        double xUpperLeft = (scrollPane.getHvalue() * (IMAGE_WIDTH - viewportWidth));
+
+        double xPercent = xClick/IMAGE_WIDTH;
+
+        return (xUpperLeft + (xPercent * viewportWidth));
+    }
+
+    private double getImageYFromZoom(double yClick) {
+        // Figure out the X and Y of where the zoom occured
+
+        double viewportHeight = IMAGE_HEIGHT / floorMap.getScaleY();
+
+        // Bar center will go between 0.0 and 1.0 which is (viewportWidth/2) to (IMAGE_WIDTH-(viewportWidth/2))
+        double yUpperLeft = (scrollPane.getVvalue() * (IMAGE_HEIGHT - viewportHeight));
+
+        double yPercent = yClick/IMAGE_HEIGHT;
+
+        return (yUpperLeft + (yPercent * viewportHeight));
+    }
+
     private void overrideScrollWheel() {
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
@@ -460,9 +485,12 @@ public class EditMapScreenController extends AbsController{
                     } else if(zoomPercent > 500.0) {
                         zoomPercent = 500.0;
                     }
-                    double x_percent = event.getX()/IMAGE_WIDTH;
-                    double y_percent = event.getY()/IMAGE_HEIGHT;
-                    System.out.println("Percent: "+zoomPercent+" X:" +x_percent+" Y: "+y_percent);
+                    double xPercent = event.getX()/IMAGE_WIDTH;
+                    double yPercent = event.getY()/IMAGE_HEIGHT;
+                    System.out.println(
+                            "Percent: "+zoomPercent+" X:" +
+                            getImageXFromZoom(event.getX())
+                            +" Y: "+getImageYFromZoom(event.getY()));
 
                     //scales with scroll wheel
 
@@ -471,15 +499,14 @@ public class EditMapScreenController extends AbsController{
                     mapCanvas.setScaleX(zoomPercent/100.0);
                     mapCanvas.setScaleY(zoomPercent/100.0);
 
+                    if(event.getDeltaY() > 1.0) {
+                        scrollPane.setHvalue(xPercent);
+                        scrollPane.setVvalue(yPercent);
+                    } else {
+                        scrollPane.setHvalue(scrollPane.getHvalue());
+                        scrollPane.setVvalue(scrollPane.getVvalue());
+                    }
 
-                    //scrollPane.setHvalue(zoomPercent - 100.0);
-                    //scrollPane.setVvalue(zoomPercent - 100.0);
-                    System.out.println(scrollPane.getHvalue());
-                    System.out.println(scrollPane.getVvalue());
-
-                    // Figure out the X and Y of where the zoom occured
-                    double viewportWidth = IMAGE_WIDTH / floorMap.getScaleX();
-                    double viewportHeight = IMAGE_HEIGHT / floorMap.getScaleY();
 
                 } else {
                     event.consume();
