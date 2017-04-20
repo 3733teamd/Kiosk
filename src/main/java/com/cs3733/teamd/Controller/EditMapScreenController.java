@@ -44,7 +44,7 @@ import java.util.*;
 /**
  * Created by Anh Dao on 4/6/2017.
  */
-public class EditMapScreenController extends AbsController{
+public class EditMapScreenController extends MapController{
 
     public String errorString = Main.bundle.getString("InvalidAction");
 
@@ -119,11 +119,7 @@ public class EditMapScreenController extends AbsController{
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
-    // Height and width of the ImageView(from the FXML)
-    private static final double IMAGE_WIDTH = 844.0;
-    private static final double IMAGE_HEIGHT = 606.0;
 
-    private double zoomPercent;
 
 
     @FXML
@@ -222,6 +218,8 @@ public class EditMapScreenController extends AbsController{
 
     @FXML
     public void initialize(){
+        super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
+
         this.zoomPercent = 100.0;
         if(ApplicationConfiguration.getInstance().timeoutEnabled()) {
             timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -448,31 +446,6 @@ public class EditMapScreenController extends AbsController{
 
     }
 
-    private double getImageXFromZoom(double xClick) {
-        // Figure out the X and Y of where the zoom occured
-        double viewportWidth = IMAGE_WIDTH / floorMap.getScaleX();
-
-        // Bar center will go between 0.0 and 1.0 which is (viewportWidth/2) to (IMAGE_WIDTH-(viewportWidth/2))
-        double xUpperLeft = (scrollPane.getHvalue() * (IMAGE_WIDTH - viewportWidth));
-
-        double xPercent = xClick/IMAGE_WIDTH;
-
-        return (xUpperLeft + (xPercent * viewportWidth));
-    }
-
-    private double getImageYFromZoom(double yClick) {
-        // Figure out the X and Y of where the zoom occured
-
-        double viewportHeight = IMAGE_HEIGHT / floorMap.getScaleY();
-
-        // Bar center will go between 0.0 and 1.0 which is (viewportWidth/2) to (IMAGE_WIDTH-(viewportWidth/2))
-        double yUpperLeft = (scrollPane.getVvalue() * (IMAGE_HEIGHT - viewportHeight));
-
-        double yPercent = yClick/IMAGE_HEIGHT;
-
-        return (yUpperLeft + (yPercent * viewportHeight));
-    }
-
     private void overrideScrollWheel() {
         scrollPane.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
             @Override
@@ -493,19 +466,8 @@ public class EditMapScreenController extends AbsController{
                             +" Y: "+getImageYFromZoom(event.getY()));
 
                     //scales with scroll wheel
+                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
 
-                    floorMap.setScaleX(zoomPercent/100.0);
-                    floorMap.setScaleY(zoomPercent/100.0);
-                    mapCanvas.setScaleX(zoomPercent/100.0);
-                    mapCanvas.setScaleY(zoomPercent/100.0);
-
-                    if(event.getDeltaY() > 1.0) {
-                        scrollPane.setHvalue(xPercent);
-                        scrollPane.setVvalue(yPercent);
-                    } else {
-                        scrollPane.setHvalue(scrollPane.getHvalue());
-                        scrollPane.setVvalue(scrollPane.getVvalue());
-                    }
 
 
                 } else {
