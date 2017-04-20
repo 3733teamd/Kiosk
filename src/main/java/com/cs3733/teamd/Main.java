@@ -44,7 +44,7 @@ public class Main extends Application {
 
 
         MainScene=new Scene(rootMain);
-       // window.setMaximized(true);
+        window.setMaximized(true);
         window.setTitle("Pathfinding Application");
         window.setScene(MainScene);
         window.show();

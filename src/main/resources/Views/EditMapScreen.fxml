@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -18,9 +24,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1292.0">
+      <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="67.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
@@ -47,104 +53,227 @@
                   <Insets />
                </VBox.margin>
             </AnchorPane>
-            <HBox prefHeight="59.0" prefWidth="1292.0" style="-fx-background-color: #e9ebee;">
+            <GridPane prefHeight="58.0" prefWidth="1291.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" />
-                  <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="151.0" text="%CreatenewUser" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0">
+                  <AnchorPane GridPane.columnIndex="4">
+                     <children>
+                        <ChoiceBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="7">
+                     <children>
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="45.0" prefWidth="115.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="9">
+                     <children>
+                        <VBox prefHeight="78.0" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="9">
+                           <children>
+                              <RadioButton fx:id="chooseAStarButton" mnemonicParsing="false" text="A*">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="algSelectGorup" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="chooseDFSButton" mnemonicParsing="false" text="DFS" toggleGroup="$algSelectGorup" />
+                              <RadioButton fx:id="chooseBFSButton" mnemonicParsing="false" text="BFS" toggleGroup="$algSelectGorup" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="8">
+                     <children>
+                        <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="45.0" prefWidth="103.0" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="8" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="2">
+                     <children>
+                        <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="192.0" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2" />
+                     </children>
+                  </AnchorPane>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0" GridPane.columnIndex="3">
                      <font>
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <ChoiceBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="187.0" />
-                  <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="44.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#toSpanish" prefHeight="44.0" prefWidth="150.0" text="%spanish">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="44.0" prefWidth="115.0" text="%back">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="43.0" prefWidth="61.0" text="%ViewBugs" />
-                  <VBox prefHeight="78.0" prefWidth="191.0">
+                  <AnchorPane GridPane.columnIndex="6">
                      <children>
-                        <RadioButton fx:id="chooseAStarButton" mnemonicParsing="false" text="A*">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="algSelectGorup" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="chooseDFSButton" mnemonicParsing="false" text="DFS" toggleGroup="$algSelectGorup" />
-                        <RadioButton fx:id="chooseBFSButton" mnemonicParsing="false" text="BFS" toggleGroup="$algSelectGorup" />
+                        <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#toSpanish" prefHeight="45.0" prefWidth="150.0" text="%spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
                      </children>
-                  </VBox>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="5">
+                     <children>
+                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="45.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="673.0" prefWidth="1292.0">
+            </GridPane>
+            <GridPane prefHeight="637.0" prefWidth="1291.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="80.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
                   <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0">
                      <content>
                         <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="845.0">
                            <children>
                               <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="844.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
-                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="606.0" prefWidth="844.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="39.0" />
+                              <Pane fx:id="mapCanvas" layoutY="39.0" prefHeight="685.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <Label fx:id="errorBox" alignment="CENTER" layoutX="877.0" layoutY="14.0" prefHeight="119.0" prefWidth="200.0" text="Label" />
                            </children>
                         </AnchorPane>
                      </content>
                   </ScrollPane>
-                  <VBox layoutX="-50.0" prefHeight="640.0" prefWidth="201.0">
+                  <GridPane prefHeight="594.0" prefWidth="259.0" GridPane.columnIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="6.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Button fx:id="addNode" mnemonicParsing="false" onAction="#addNode" prefHeight="57.0" prefWidth="201.0" text="%addN" />
-                        <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="47.0" prefWidth="201.0" text="%remN" />
-                        <HBox prefHeight="60.0" prefWidth="201.0">
+                        <AnchorPane GridPane.rowIndex="2">
                            <children>
-                              <Label text="X:">
-                                 <font>
-                                    <Font size="38.0" />
-                                 </font>
-                              </Label>
-                              <Label text="128" fx:id="xLoc">
-                                 <font>
-                                    <Font size="38.0" />
-                                 </font>
-                              </Label>
-                              <Label text=" Y:">
-                                 <font>
-                                    <Font size="38.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="yLoc" text="200">
-                                 <font>
-                                    <Font size="38.0" />
-                                 </font>
-                              </Label>
+                              <HBox prefHeight="41.0" prefWidth="259.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label text="X:">
+                                       <font>
+                                          <Font size="38.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="128" fx:id="xLoc">
+                                       <font>
+                                          <Font size="38.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text=" Y:">
+                                       <font>
+                                          <Font size="38.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="yLoc" text="200">
+                                       <font>
+                                          <Font size="38.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                        <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNodePressed" prefHeight="51.0" prefWidth="201.0" text="%connect" />
-                        <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="33.0" prefWidth="201.0" text="%disconnect" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="298.0" text="%currTag" />
-                        <ListView fx:id="currentTagBox" prefHeight="200.0" prefWidth="200.0" />
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="200.0" text="%avaTags" />
-                        <TextField fx:id="searchAllTags" promptText="%seavaTags" />
-                        <ListView fx:id="allTagBox" prefHeight="225.0" prefWidth="201.0" />
-                        <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="25.0" prefWidth="235.0" text="%addTToNode" />
-                        <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="25.0" prefWidth="250.0" text="%remTToNode" />
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="3">
+                           <children>
+                              <Button fx:id="connectNode" mnemonicParsing="false" onAction="#connectNodePressed" prefHeight="51.0" prefWidth="259.0" text="%connect" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="3" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="1">
+                           <children>
+                              <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="47.0" prefWidth="259.0" text="%remN" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="9">
+                           <children>
+                              <ListView fx:id="allTagBox" prefHeight="225.0" prefWidth="259.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="9" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="8">
+                           <children>
+                              <TextField fx:id="searchAllTags" prefHeight="41.0" prefWidth="259.0" promptText="%seavaTags" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="8" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="5">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="41.0" prefWidth="298.0" text="%currTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="5" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="4">
+                           <children>
+                              <Button fx:id="disconnectNodeButton" mnemonicParsing="false" onAction="#disconnectCircleNodes" prefHeight="41.0" prefWidth="259.0" text="%disconnect" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="4" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="6">
+                           <children>
+                              <ListView fx:id="currentTagBox" prefHeight="135.0" prefWidth="259.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="6" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="10">
+                           <children>
+                              <Button fx:id="addTagButton" mnemonicParsing="false" onAction="#addTagToCurrentNode" prefHeight="41.0" prefWidth="259.0" text="%addTToNode" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="10" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="addNode" mnemonicParsing="false" onAction="#addNode" prefHeight="57.0" prefWidth="259.0" text="%addN" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="7">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="41.0" prefWidth="259.0" text="%avaTags" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="7" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="11">
+                           <children>
+                              <Button fx:id="removeTagButton" mnemonicParsing="false" onAction="#removeTagFromCurrentNode" prefHeight="41.0" prefWidth="259.0" text="%remTToNode" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="11" />
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </VBox>
+                  </GridPane>
                </children>
-            </HBox>
+            </GridPane>
          </children>
       </VBox>
    </children>
