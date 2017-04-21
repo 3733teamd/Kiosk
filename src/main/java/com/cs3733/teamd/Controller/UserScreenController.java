@@ -165,7 +165,7 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
