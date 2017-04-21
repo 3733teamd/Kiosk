@@ -229,7 +229,7 @@ public class EditMapScreenController extends MapController{
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
-        setDeleteListener();
+        setKeyListeners();
 
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -539,7 +539,7 @@ public class EditMapScreenController extends MapController{
 
         if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-            Line line = connect(s1, s2);
+            Line line = connectCircleNodes(s1, s2);
             line.setStyle("-fx-stroke: red;");
             s1.lineMap.put(s2, line);
             s2.lineMap.put(s1, line);
@@ -646,7 +646,7 @@ public class EditMapScreenController extends MapController{
         return circle;
     }
 
-    private Line connect(CircleNode c1, CircleNode c2) {
+    private Line connectCircleNodes(CircleNode c1, CircleNode c2) {
         Line line = new Line();
         floorLines.add(line);
 
@@ -782,16 +782,15 @@ public class EditMapScreenController extends MapController{
         }
     }
 
-    public void disconnectCircleNodes(ActionEvent actionEvent) {
-        //System.out.print(select1.lineMap.get(select2).getStartX());
+    public void disconnectCircleNodesButton(ActionEvent actionEvent) {
+        disconnectCircleNodes();
+    }
 
+    private void disconnectCircleNodes(){
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
             errorBox.setText("");
             Line l = select1.lineMap.get(select2);
-
-            //System.out.println("Line xcoord" +l.getEndX());
-
             mapCanvas.getChildren().remove(l);
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
@@ -800,9 +799,6 @@ public class EditMapScreenController extends MapController{
         }else{
             errorBox.setText(errorString);
         }
-
-
-
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
@@ -840,24 +836,39 @@ public class EditMapScreenController extends MapController{
     }
 
 
-    public void setDeleteListener() {
+    private void setKeyListeners() {
         MMGpane.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke) {
-                if(ke.getCode() == KeyCode.DELETE){
-                    if(select1 != null){
-                        boolean response = dir.deleteNode(select1.referenceNode);
-                        if(response){
-                            errorBox.setText("");
-                            mapCanvas.getChildren().remove(select1);
-                            select1 = select2;
-                            select2= null;
-                        }else{
-                            errorBox.setText(errorString);
+                switch (ke.getCode()){
+                    case DELETE:
+                            if(select1 != null){
+                                boolean response = dir.deleteNode(select1.referenceNode);
+                                if(response){
+                                    errorBox.setText("");
+                                    mapCanvas.getChildren().remove(select1);
+                                    select1 = select2;
+                                    select2= null;
+                                }else{
+                                    errorBox.setText(errorString);
+                                }
+                            }
+                        break;
+                    case BACK_SPACE:
+                        if(select1 != null && select2 != null){
+                            disconnectCircleNodes();
                         }
-                    }
+                        break;
+                    case ENTER:
+                        if(select1 != null && select2 != null){
+                            connectNode(select1,select2);
+                        }
+                        break;
                 }
+
             }
         });
     }
+
+
 }
