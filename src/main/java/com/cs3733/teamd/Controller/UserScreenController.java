@@ -195,13 +195,7 @@ public class UserScreenController extends MapController {
         findStartTag();
 
         super.setFloor(onFloor);
-        if(pathNodes != null) {
-            drawPath();
-        } else {
-            if(starttag != null) {
-                drawStartTag();
-            }
-        }
+        setupMap();
     }
 
     private void drawStartTag() {
@@ -284,6 +278,9 @@ public class UserScreenController extends MapController {
                 &&(onFloor == destfloor)) {
             StartFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
+        } else {
+            StartFloorButton.setDisable(false);
+            EndFloorButton.setDisable(false);
         }
 
         if(haveMidFloor && (onFloor != midfloor)) {
@@ -291,6 +288,8 @@ public class UserScreenController extends MapController {
         } else if(haveMidFloor && (onFloor == midfloor)) {
             StartFloorButton.setDisable(false);
             EndFloorButton.setDisable(false);
+        } else if(haveMidFloor) {
+            MiddleFloorButton.setDisable(false);
         }
     }
 
@@ -310,12 +309,7 @@ public class UserScreenController extends MapController {
                 directions.setText(output);
                 System.out.println(onFloor);
 
-                if(pathNodes != null) {
-                    setNodes(pathNodes);
-                    drawNodes();
-                }else if(starttag != null) {
-                    drawStartTag();
-                }
+                setupMap();
             }
         });
 
@@ -510,9 +504,7 @@ public class UserScreenController extends MapController {
         directions.setText(output);
         System.out.println(onFloor);
 
-        if(pathNodes != null) {
-            drawPath();
-        }
+        setupMap();
 
     }
 
@@ -548,9 +540,7 @@ public class UserScreenController extends MapController {
             directions.setText(output);
             System.out.println(onFloor);
 
-            if (pathNodes != null) {
-                drawPath();
-            }
+            setupMap();
         }
     }
 
@@ -566,9 +556,7 @@ public class UserScreenController extends MapController {
             directions.setText(output);
             System.out.println(onFloor);
 
-            if (pathNodes != null) {
-                drawPath();
-            }
+            setupMap();
         }
     }
 
@@ -584,8 +572,19 @@ public class UserScreenController extends MapController {
             directions.setText(output);
             System.out.println(onFloor);
 
-            if (pathNodes != null) {
-                drawPath();
+            setupMap();
+        }
+    }
+
+    /**
+     * Set's up the map
+     */
+    private void setupMap() {
+        if(pathNodes != null) {
+            drawPath();
+        } else {
+            if(starttag != null) {
+                drawStartTag();
             }
         }
     }
