@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +35,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.TextFlow;
 import org.controlsfx.control.textfield.TextFields;
 
 
@@ -79,7 +81,7 @@ public class UserScreenController extends MapController {
     public Pane mapCanvas;
     public AnchorPane MMGpane;
     @FXML
-    private TextArea directions;
+    private TextFlow directions;
 
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
@@ -89,6 +91,7 @@ public class UserScreenController extends MapController {
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
     String output = "";
+    //Text text = new Text(output);
     Tag starttag = null;
     private int startfloor = 0;
     private int midfloor = 0;
@@ -167,7 +170,9 @@ public class UserScreenController extends MapController {
         panMethods();
         TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
-        directions.setText(output);
+       // directions.setText(output);
+       // directions.getChildren().add(text);
+
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
@@ -218,7 +223,16 @@ public class UserScreenController extends MapController {
         for(String directionString: directionsArray) {
             output += directionString + "\n";
         }
-        directions.setText(output);
+      //  directions.setText(output);
+        List<Image> icons = g.generateIcons();
+        for (int i=0;i<icons.size();i++) {
+            Text text = new Text("\n"+directionsArray.get(i));
+            ImageView iconView = new ImageView(icons.get(i));
+            iconView.setFitHeight(50);
+            iconView.setFitWidth(50);
+            directions.getChildren().addAll(text,iconView);
+
+        }
 
         super.setNodes(pathNodes);
         super.removeConnections();
@@ -306,7 +320,9 @@ public class UserScreenController extends MapController {
                 // Notify super class
                 setFloor(onFloor);
                 output = "";
-                directions.setText(output);
+             //   directions.setText(output);
+              //  directions.getChildren().add(text);
+
                 System.out.println(onFloor);
 
                 setupMap();
@@ -501,7 +517,9 @@ public class UserScreenController extends MapController {
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
-        directions.setText(output);
+       // directions.setText(output);
+
+        //directions.getChildren().add(text);
         System.out.println(onFloor);
 
         setupMap();
@@ -537,7 +555,9 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+           // directions.setText(output);
+          //  directions.getChildren().add(text);
+
             System.out.println(onFloor);
 
             setupMap();
@@ -553,7 +573,8 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+          //  directions.setText(output);
+          //  directions.getChildren().add(text);
             System.out.println(onFloor);
 
             setupMap();
@@ -569,7 +590,8 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+          //  directions.setText(output);
+           // directions.getChildren().add(text);
             System.out.println(onFloor);
 
             setupMap();

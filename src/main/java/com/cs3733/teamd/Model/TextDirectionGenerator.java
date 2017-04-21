@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Model;
 
 import com.cs3733.teamd.Model.Entities.Node;
+import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -78,7 +79,51 @@ public class TextDirectionGenerator {
         Collections.reverse(this.points);
         return getDirectionsInLanguage(directions, pointsOfInterestNames);
     }
+    public List<Image> generateIcons() {
+        List<Image> icons = new ArrayList<Image>();
+        List<Direction> directions = reduceDirections(
+                generateDirections()
+        );
+        for (Direction d: directions) {
+            System.out.println("icon: "+d);
 
+            if (d.equals(Direction.PROCEED_FROM_TAG)) {
+            //   case PROCEED_FROM_TAG:
+                   icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+           }
+            if (d.equals(Direction.GO_STRAIGHT)) {
+//                case GO_STRAIGHT:
+                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
+            if (d.equals(Direction.TURN_LEFT)) {
+             //   case TURN_LEFT:
+                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
+            if (d.equals(Direction.SLIGHT_LEFT)) {
+                //case SLIGHT_LEFT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
+            }
+            if (d.equals(Direction.TURN_RIGHT)) {
+                //              case TURN_RIGHT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
+            }
+            if (d.equals(Direction.SLIGHT_RIGHT)) {
+                //case SLIGHT_RIGHT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
+            }
+            if (d.equals(Direction.ARRIVED)) {
+
+                //case ARRIVED:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
+            if (d.equals(Direction.PROCEED_TO_ELEVATOR)) {
+                //case PROCEED_TO_ELEVATOR:
+                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                    break;
+            }
+        }
+        return icons;
+    }
     public static List<String> getDirectionsInLanguage(
             List<Direction> directions,
             List<String> pointsOfInterestNames) {
