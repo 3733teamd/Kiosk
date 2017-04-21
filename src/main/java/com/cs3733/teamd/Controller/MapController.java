@@ -44,7 +44,10 @@ public class MapController extends AbsController {
 
     private List<Line> lines;
 
+    private Map<Integer, ZoomRestriction> zoomRestrictionMap;
+
     public void initialize(ScrollPane pane, ImageView floorMap, Pane mapCanvas) {
+        this.zoomRestrictionMap = new HashMap<Integer, ZoomRestriction>();
         this.scrollPane = pane;
         this.floorMap = floorMap;
         this.mapCanvas = mapCanvas;
@@ -61,6 +64,10 @@ public class MapController extends AbsController {
         lines = new ArrayList<Line>();
 
         zoomPercent = 100.0;
+    }
+
+    public void addZoomRestriction(Integer floor, ZoomRestriction restriction) {
+        this.zoomRestrictionMap.put(floor,restriction);
     }
 
     protected double getImageXFromZoom(double xClick) {
@@ -89,6 +96,47 @@ public class MapController extends AbsController {
     }
 
     protected void setZoomAndScale(double xBarPosition, double yBarPosition, boolean zoomIn) {
+        double zoomMin = 100.0;
+        double zoomMax = 500.0;
+
+        if(this.zoomRestrictionMap.get(this.floor) != null) {
+            // We have zoom restrictions on this floor
+            double minYPixels = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
+            double minXPixels = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
+
+            double maxYPixels = this.zoomRestrictionMap.get(this.floor).maxY * IMAGE_HEIGHT;
+            double maxXPixels = this.zoomRestrictionMap.get(this.floor).maxX * IMAGE_WIDTH;
+
+            double viewportMaxWidth = maxXPixels - minXPixels;
+            double viewportMaxHeight = maxYPixels - minYPixels;
+
+            double aspectRatio = (IMAGE_WIDTH/IMAGE_HEIGHT);
+
+            if((viewportMaxHeight * aspectRatio) > viewportMaxWidth) {
+                viewportMaxHeight = viewportMaxWidth / aspectRatio;
+            } else {
+                viewportMaxWidth = viewportMaxHeight * aspectRatio;
+            }
+
+            zoomMin = (100.0) * (IMAGE_WIDTH)/viewportMaxWidth;
+            System.out.println("Zoom Min: "+this.zoomRestrictionMap.get(this.floor).minX);
+            zoomMax = 1000.0;
+
+            //scrollPane.setHmin(this.zoomRestrictionMap.get(this.floor).minY);
+            //scrollPane.setHvalue(0.5);
+
+        } else {
+            scrollPane.setHmin(0.0);
+            scrollPane.setHmax(1.0);
+            scrollPane.setVmin(0.0);
+            scrollPane.setVmax(1.0);
+        }
+
+        if(zoomPercent < zoomMin) {
+            zoomPercent = zoomMin;
+        } else if(zoomPercent > zoomMax) {
+            zoomPercent = zoomMax;
+        }
 
         floorMap.setScaleX(zoomPercent/100.0);
         floorMap.setScaleY(zoomPercent/100.0);
@@ -191,5 +239,18 @@ public class MapController extends AbsController {
     // What floor do we draw on?
     protected void setFloor(int floor) {
         this.floor = floor;
+        this.zoomPercent = 100.0;
+        this.setZoomAndScale(0.5, 0.5, false);
+    }
+
+    protected class ZoomRestriction {
+        public double minX, minY, maxX, maxY;
+
+        public ZoomRestriction(double minX, double minY, double maxX, double maxY) {
+            this.minX = minX;
+            this.minY = minY;
+            this.maxX = maxX;
+            this.maxY = maxY;
+        }
     }
 }

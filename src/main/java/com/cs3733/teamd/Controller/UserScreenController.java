@@ -193,7 +193,7 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
         findStartTag();
-
+        super.addZoomRestriction(3, new ZoomRestriction(0.36,0.0,0.63,1.0));
         super.setFloor(onFloor);
         setupMap();
     }
@@ -407,11 +407,7 @@ public class UserScreenController extends MapController {
             public void handle(ScrollEvent event) {
                 if (event.getDeltaY() != 0.0) {
                     zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
-                    if(zoomPercent < 100.0) {
-                        zoomPercent = 100.0;
-                    } else if(zoomPercent > 500.0) {
-                        zoomPercent = 500.0;
-                    }
+
                     double xPercent = event.getX()/IMAGE_WIDTH;
                     double yPercent = event.getY()/IMAGE_HEIGHT;
                     System.out.println(
