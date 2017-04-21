@@ -582,6 +582,7 @@ public class EditMapScreenController extends MapController{
         //nodes.put(circle, n);
 
         circle.setOnMousePressed((t) -> {
+            scrollPane.setPannable(false);
             orgSceneX = t.getSceneX();
             orgSceneY = t.getSceneY();
 
@@ -630,6 +631,7 @@ public class EditMapScreenController extends MapController{
             }
 
             updatePosition(t);
+            scrollPane.setPannable(true);
         });
 
         circle.setOnMouseDragged((t) -> {
