@@ -52,6 +52,8 @@ public class MapController extends AbsController {
         this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
+        this.scrollPane.setPannable(true);
+
         this.circleNodeMap = new HashMap<Node, CircleNode>();
 
         this.label = new Label("Informative Text");
