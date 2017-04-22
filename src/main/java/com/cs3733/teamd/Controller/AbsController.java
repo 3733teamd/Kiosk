@@ -2,6 +2,10 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.ApplicationConfiguration;
+import com.cs3733.teamd.Controller.MementoController;
+
+import com.cs3733.teamd.Model.CareTaker;
+import com.cs3733.teamd.Model.Originator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,10 +26,15 @@ import java.util.ResourceBundle;
  */
 public abstract class AbsController {
 
-    public int timeoutTime=20;
+
+    protected Boolean init=true;
+
 
     public void switchScreen(AnchorPane gp, String ViewPath) throws IOException{
+        //for memento
+        MementoController.addCareTaker(ViewPath);
 
+        //
         Stage stage = (Stage) gp.getScene().getWindow();
         Parent pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
@@ -33,6 +42,7 @@ public abstract class AbsController {
 
         stage.getScene().setRoot(pane);
     }
+
 
     public void popupScreen(AnchorPane popupGP, String popupViewPath, String title) throws IOException{
 

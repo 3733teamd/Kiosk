@@ -97,7 +97,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="9">
                      <children>
-                        <VBox prefHeight="78.0" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="9">
+                        <VBox prefHeight="78.0" prefWidth="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="9">
                            <children>
                               <RadioButton fx:id="chooseAStarButton" mnemonicParsing="false" text="A*">
                                  <toggleGroup>
@@ -108,6 +108,7 @@
                               <RadioButton fx:id="chooseBFSButton" mnemonicParsing="false" text="BFS" toggleGroup="$algSelectGorup" />
                            </children>
                         </VBox>
+                        <TextField fx:id="timeoutField" prefHeight="31.0" prefWidth="73.0" promptText="Timeout" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="5.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="8">

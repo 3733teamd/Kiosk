@@ -79,7 +79,7 @@ public class CreateUserScreenController extends AbsController {
             while (running) {
                 try {
 
-                    if (counter == timeoutTime) {
+                    if (counter == MementoController.timeoutTime) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -108,7 +108,12 @@ public class CreateUserScreenController extends AbsController {
             //logout user
             dir.logoutUser();
             try {
-                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+                /*originator.getStateFromMemento(careTaker.get(0));
+                switchScreen(MMGpane, originator.getState());*/
+                MementoController.toOriginalScreen(MMGpane);
+                MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
+                switchScreen(MMGpane, MementoController.originator.getState());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

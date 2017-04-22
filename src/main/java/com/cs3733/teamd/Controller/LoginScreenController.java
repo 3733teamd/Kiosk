@@ -46,8 +46,9 @@ public class LoginScreenController extends AbsController {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
+            
             counter++;
-            System.out.println("edit map" + counter);
+            //System.out.println("login " + counter);
         }
     };
 
@@ -57,7 +58,7 @@ public class LoginScreenController extends AbsController {
             while (running) {
                 try {
 
-                    if (counter == timeoutTime) {
+                    if (counter == MementoController.timeoutTime) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -86,7 +87,9 @@ public class LoginScreenController extends AbsController {
             //logout user
             dir.logoutUser();
             try {
-                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+               MementoController.toOriginalScreen(MMGpane);
+               MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
+                switchScreen(MMGpane, MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -105,7 +108,7 @@ public class LoginScreenController extends AbsController {
             @Override
             public void handle(MouseEvent event) {
                 counter = 0;
-                System.out.println("counter resets");
+                //System.out.println("counter resets");
             }
         });
         MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -123,14 +126,14 @@ public class LoginScreenController extends AbsController {
         username.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("key pressed");
+                //System.out.println("key pressed");
                 counter = 0;
             }
         });
         password.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("pw pressed");
+                //System.out.println("pw pressed");
                 counter = 0;
             }
         });
