@@ -20,12 +20,12 @@
       </AnchorPane>
       <Button fx:id="submitBug" layoutX="488.0" layoutY="332.0" mnemonicParsing="false" onAction="#submitBugPress" text="%submit" />
       <Button fx:id="cancelBug" layoutY="332.0" mnemonicParsing="false" onAction="#cancelBugPress" text="%Cancel" />
-      <TextField fx:id="destinationBugField" layoutX="14.0" layoutY="85.0" prefHeight="53.0" prefWidth="298.0" promptText="%NavigatingTo">
+      <TextField fx:id="destinationBugField" layoutX="16.0" layoutY="102.0" prefHeight="53.0" prefWidth="298.0" promptText="%NavigatingTo">
          <font>
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextArea fx:id="commentField" layoutX="14.0" layoutY="143.0" prefHeight="152.0" prefWidth="606.0" promptText="%Comment">
+      <TextArea fx:id="commentField" layoutX="16.0" layoutY="161.0" prefHeight="152.0" prefWidth="606.0" promptText="%Comment">
          <font>
             <Font size="18.0" />
          </font>

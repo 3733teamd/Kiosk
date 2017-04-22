@@ -125,7 +125,8 @@ public class Directory implements DirectoryInterface {
         boolean dbResult = dbHandler.updateTag(
                 t.getTagName(),
                 t.getId(),
-                t.isConnectable());
+                t.isConnectable(),
+                t.isRestricted());
         return dbResult;
     }
 
@@ -353,6 +354,16 @@ public class Directory implements DirectoryInterface {
             titles.add(t);
             return t;
         }
+    }
+
+    @Override
+    public boolean addBugReport(String tag, String comment) {
+        return dbHandler.addBugReport(tag, comment);
+    }
+
+    @Override
+    public List<String> getBugReports() {
+        return dbHandler.getBugReports();
     }
 
 }

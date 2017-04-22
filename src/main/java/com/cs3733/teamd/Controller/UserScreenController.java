@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -39,10 +38,8 @@ import javafx.scene.text.TextFlow;
 import org.controlsfx.control.textfield.TextFields;
 
 
-import java.awt.Point;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -82,6 +79,9 @@ public class UserScreenController extends MapController {
     public AnchorPane MMGpane;
     @FXML
     private TextFlow directions;
+
+    @FXML
+    private ImageView aboutImage;
 
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
@@ -168,7 +168,7 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
        // directions.setText(output);
        // directions.getChildren().add(text);
@@ -198,16 +198,25 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
         findStartTag();
-
+        //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
         setupMap();
+        
     }
 
-    private void drawStartTag() {
+    private void drawStartTagAndTags() {
         if(starttag.getNodes().size() > 0) {
             List<Node> startNodes = starttag.getNodes();
             super.setNodes(startNodes);
             super.removeConnections();
+            for(Tag t: dir.getTags()) {
+                if(t != starttag) {
+                    for(Node n: t.getNodes()) {
+                        super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
+                    }
+                    super.appendNodes(t.getNodes());
+                }
+            }
             super.addCircle(startNodes.get(0), Color.GREEN, 10.0);
             super.drawNodes();
         }
@@ -391,7 +400,7 @@ public class UserScreenController extends MapController {
 
     //About button pressed
     @FXML
-    public void getAbout(ActionEvent event) throws IOException{
+    public void getAbout( ) throws IOException{
         popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
     }
 
@@ -423,11 +432,7 @@ public class UserScreenController extends MapController {
             public void handle(ScrollEvent event) {
                 if (event.getDeltaY() != 0.0) {
                     zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
-                    if(zoomPercent < 100.0) {
-                        zoomPercent = 100.0;
-                    } else if(zoomPercent > 500.0) {
-                        zoomPercent = 500.0;
-                    }
+
                     double xPercent = event.getX()/IMAGE_WIDTH;
                     double yPercent = event.getY()/IMAGE_HEIGHT;
                     System.out.println(
@@ -528,10 +533,10 @@ public class UserScreenController extends MapController {
 
     //Function to allow the user to change the start to wherever they wish
     @FXML
-    public  void onSet(ActionEvent actionEvent) throws IOException{
+    public void onSet(ActionEvent actionEvent) throws IOException{
         int tagCount = dir.getTags().size();
         Tag currentTag;
-        String startTagString = TypeDestination.getText();
+        String startTagString = tagAssociations.get(TypeDestination.getText());
 
         for (int itr = 0; itr < tagCount; itr++) {
             currentTag = dir.getTags().get(itr);
@@ -539,7 +544,7 @@ public class UserScreenController extends MapController {
             if (startTagString.equals(currentTag.getTagName())) {
                 System.out.println(currentTag.getTagName());
                 starttag = currentTag;
-                drawStartTag();
+                drawStartTagAndTags();
                 break;
             }
 
@@ -605,8 +610,9 @@ public class UserScreenController extends MapController {
         if(pathNodes != null) {
             drawPath();
         } else {
+            // Draw Tags
             if(starttag != null) {
-                drawStartTag();
+                drawStartTagAndTags();
             }
         }
     }
