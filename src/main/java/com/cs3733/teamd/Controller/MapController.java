@@ -99,7 +99,7 @@ public class MapController extends AbsController {
         double zoomMin = 100.0;
         double zoomMax = 500.0;
 
-        if(this.zoomRestrictionMap.get(this.floor) != null) {
+        /*if(this.zoomRestrictionMap.get(this.floor) != null) {
             // We have zoom restrictions on this floor
             double minYPixels = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
             double minXPixels = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
@@ -125,12 +125,7 @@ public class MapController extends AbsController {
             //scrollPane.setHmin(this.zoomRestrictionMap.get(this.floor).minY);
             //scrollPane.setHvalue(0.5);
 
-        } else {
-            scrollPane.setHmin(0.0);
-            scrollPane.setHmax(1.0);
-            scrollPane.setVmin(0.0);
-            scrollPane.setVmax(1.0);
-        }
+        }*/
 
         if(zoomPercent < zoomMin) {
             zoomPercent = zoomMin;
@@ -182,22 +177,40 @@ public class MapController extends AbsController {
         this.lines.add(l);
     }
 
+    private double getNodeX(Node n) {
+        if(this.zoomRestrictionMap.get(this.floor) != null) {
+            double xOffset = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
+            return n.getX() - xOffset;
+        } else {
+            return (double)n.getX();
+        }
+    }
+
+    private double getNodeY(Node n) {
+        if(this.zoomRestrictionMap.get(this.floor) != null) {
+            double yOffset = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
+            return n.getY() - yOffset;
+        } else {
+            return (double)n.getY();
+        }
+    }
+
     protected void addCircle(Node n, Color c, double r) {
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), r, c,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r, c,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
                 System.out.println("Hover");
                 label.setText(n.getTags().getFirst().getTagName());
                 mapCanvas.getChildren().add(label);
-                label.setLayoutX(n.getX() - 35.0);
+                label.setLayoutX(getNodeX(n) - 35.0);
                 label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
                 label.setPadding(new Insets(10));
                 label.setTextFill(Color.WHITE);
                 if(n.getY() < 50) {
-                    label.setLayoutY(n.getY() + 50);
+                    label.setLayoutY(getNodeY(n) + 50);
                 } else {
-                    label.setLayoutY(n.getY() - 50);
+                    label.setLayoutY(getNodeY(n) - 50);
                 }
 
             }
@@ -213,7 +226,7 @@ public class MapController extends AbsController {
     }
 
     private CircleNode createDefaultCircle(Node n) {
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), 5.0, Color.BLUE,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), 5.0, Color.BLUE,n);
         circle.setCursor(Cursor.HAND);
 
         return circle;

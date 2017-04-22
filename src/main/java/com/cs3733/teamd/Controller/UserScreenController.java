@@ -193,7 +193,7 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
         findStartTag();
-        super.addZoomRestriction(3, new ZoomRestriction(0.36,0.0,0.63,1.0));
+        //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
         setupMap();
     }
