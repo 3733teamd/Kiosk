@@ -714,13 +714,12 @@ public class EditMapScreenController extends MapController{
     }
     private void disconnectAllSelectedNodes(){
         for(CircleNode cn: selectedCircles){
-            for(Node neighbor : cn.referenceNode.getNodes()){
-                //TODO: delete all connections in selection
-                /*
-                if(selectedCircles.contains(circleMap.get)){
-                    disconnectCircleNodes(cn,);
+            for(CircleNode other: selectedCircles){
+                try{
+                    disconnectCircleNodes(cn, other);
+                }catch(NullPointerException e){
+
                 }
-                */
             }
         }
     }
@@ -860,35 +859,35 @@ public class EditMapScreenController extends MapController{
     }
 
     public void disconnectCircleNodesButton(ActionEvent actionEvent) {
-        disconnectCircleNodes();
+        disconnectCircleNodes(select1,select2);
     }
 
-    private void disconnectCircleNodes(){
-        boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
+    private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
+        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
         if(response){
             errorBox.setText("");
-            Line l = select1.lineMap.get(select2);
+            Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println(select1.lineMap.size());
-            select1.lineMap.remove(select2);
-            select2.lineMap.remove(select1);
+            System.out.println(cn1.lineMap.size());
+            cn1.lineMap.remove(cn2);
+            cn2.lineMap.remove(cn1);
             drawfloorNodes();
         }else{
             errorBox.setText(errorString);
         }
     }
 
-    public void removeCircleNode(ActionEvent actionEvent) {
-        boolean response = dir.deleteNode(select1.referenceNode);
-        if(response){
+    public void removeCircleNodePressed(ActionEvent actionEvent) {
+        deleteAllSelectedNodes();
+    }
+
+    private void removeCircleNode(CircleNode cn){
+        if(dir.deleteNode(cn.referenceNode)){
             errorBox.setText("");
-            mapCanvas.getChildren().remove(select1);
-            select1 = select2;
-            select2= null;
+            mapCanvas.getChildren().remove(cn);
         }else{
             errorBox.setText(errorString);
         }
-
     }
 
     public void doneDrag(DragEvent dragEvent) {
@@ -919,17 +918,7 @@ public class EditMapScreenController extends MapController{
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
                     case DELETE:
-                            if(select1 != null){
-                                boolean response = dir.deleteNode(select1.referenceNode);
-                                if(response){
-                                    errorBox.setText("");
-                                    mapCanvas.getChildren().remove(select1);
-                                    select1 = select2;
-                                    select2= null;
-                                }else{
-                                    errorBox.setText(errorString);
-                                }
-                            }
+                        deleteAllSelectedNodes();
                         break;
                     case BACK_SPACE:
                         disconnectAllSelectedNodes();
@@ -943,7 +932,11 @@ public class EditMapScreenController extends MapController{
         });
     }
 
-
+    private void deleteAllSelectedNodes() {
+        for(CircleNode cn : selectedCircles){
+            removeCircleNode(cn);
+        }
+    }
 
 
 }
