@@ -19,7 +19,7 @@ public class RealImage implements ImageInterface {
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf2.png"));
                 break;
             case 3:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3Restrict.png"));
                 break;
             case 5:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf5.png"));

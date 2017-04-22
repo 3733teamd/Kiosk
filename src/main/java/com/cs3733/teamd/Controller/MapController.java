@@ -44,7 +44,10 @@ public class MapController extends AbsController {
 
     private List<Line> lines;
 
+    private Map<Integer, ZoomRestriction> zoomRestrictionMap;
+
     public void initialize(ScrollPane pane, ImageView floorMap, Pane mapCanvas) {
+        this.zoomRestrictionMap = new HashMap<Integer, ZoomRestriction>();
         this.scrollPane = pane;
         this.floorMap = floorMap;
         this.mapCanvas = mapCanvas;
@@ -61,6 +64,10 @@ public class MapController extends AbsController {
         lines = new ArrayList<Line>();
 
         zoomPercent = 100.0;
+    }
+
+    public void addZoomRestriction(Integer floor, ZoomRestriction restriction) {
+        this.zoomRestrictionMap.put(floor,restriction);
     }
 
     protected double getImageXFromZoom(double xClick) {
@@ -89,6 +96,42 @@ public class MapController extends AbsController {
     }
 
     protected void setZoomAndScale(double xBarPosition, double yBarPosition, boolean zoomIn) {
+        double zoomMin = 100.0;
+        double zoomMax = 500.0;
+
+        /*if(this.zoomRestrictionMap.get(this.floor) != null) {
+            // We have zoom restrictions on this floor
+            double minYPixels = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
+            double minXPixels = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
+
+            double maxYPixels = this.zoomRestrictionMap.get(this.floor).maxY * IMAGE_HEIGHT;
+            double maxXPixels = this.zoomRestrictionMap.get(this.floor).maxX * IMAGE_WIDTH;
+
+            double viewportMaxWidth = maxXPixels - minXPixels;
+            double viewportMaxHeight = maxYPixels - minYPixels;
+
+            double aspectRatio = (IMAGE_WIDTH/IMAGE_HEIGHT);
+
+            if((viewportMaxHeight * aspectRatio) > viewportMaxWidth) {
+                viewportMaxHeight = viewportMaxWidth / aspectRatio;
+            } else {
+                viewportMaxWidth = viewportMaxHeight * aspectRatio;
+            }
+
+            zoomMin = (100.0) * (IMAGE_WIDTH)/viewportMaxWidth;
+            System.out.println("Zoom Min: "+this.zoomRestrictionMap.get(this.floor).minX);
+            zoomMax = 1000.0;
+
+            //scrollPane.setHmin(this.zoomRestrictionMap.get(this.floor).minY);
+            //scrollPane.setHvalue(0.5);
+
+        }*/
+
+        if(zoomPercent < zoomMin) {
+            zoomPercent = zoomMin;
+        } else if(zoomPercent > zoomMax) {
+            zoomPercent = zoomMax;
+        }
 
         floorMap.setScaleX(zoomPercent/100.0);
         floorMap.setScaleY(zoomPercent/100.0);
@@ -107,6 +150,10 @@ public class MapController extends AbsController {
 
     protected void setNodes(List<Node> nodes) {
         this.nodes = nodes;
+    }
+
+    protected void appendNodes(List<Node> nodes) {
+        this.nodes.addAll(nodes);
     }
 
     protected void setCircleMap(Map<Node, CircleNode> circleMap) {
@@ -134,22 +181,40 @@ public class MapController extends AbsController {
         this.lines.add(l);
     }
 
+    private double getNodeX(Node n) {
+        if(this.zoomRestrictionMap.get(this.floor) != null) {
+            double xOffset = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
+            return n.getX() - xOffset;
+        } else {
+            return (double)n.getX();
+        }
+    }
+
+    private double getNodeY(Node n) {
+        if(this.zoomRestrictionMap.get(this.floor) != null) {
+            double yOffset = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
+            return n.getY() - yOffset;
+        } else {
+            return (double)n.getY();
+        }
+    }
+
     protected void addCircle(Node n, Color c, double r) {
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), r, c,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r, c,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
                 System.out.println("Hover");
                 label.setText(n.getTags().getFirst().getTagName());
                 mapCanvas.getChildren().add(label);
-                label.setLayoutX(n.getX() - 35.0);
+                label.setLayoutX(getNodeX(n) - 35.0);
                 label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
                 label.setPadding(new Insets(10));
                 label.setTextFill(Color.WHITE);
                 if(n.getY() < 50) {
-                    label.setLayoutY(n.getY() + 50);
+                    label.setLayoutY(getNodeY(n) + 50);
                 } else {
-                    label.setLayoutY(n.getY() - 50);
+                    label.setLayoutY(getNodeY(n) - 50);
                 }
 
             }
@@ -165,7 +230,7 @@ public class MapController extends AbsController {
     }
 
     private CircleNode createDefaultCircle(Node n) {
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), 5.0, Color.BLUE,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), 5.0, Color.BLUE,n);
         circle.setCursor(Cursor.HAND);
 
         return circle;
@@ -183,6 +248,7 @@ public class MapController extends AbsController {
             }
             // Draw it
             if(n.getFloor() == floor) {
+                mapCanvas.getChildren().removeAll(currentNode);
                 mapCanvas.getChildren().add(currentNode);
             }
         }
@@ -191,5 +257,18 @@ public class MapController extends AbsController {
     // What floor do we draw on?
     protected void setFloor(int floor) {
         this.floor = floor;
+        this.zoomPercent = 100.0;
+        this.setZoomAndScale(0.5, 0.5, false);
+    }
+
+    protected class ZoomRestriction {
+        public double minX, minY, maxX, maxY;
+
+        public ZoomRestriction(double minX, double minY, double maxX, double maxY) {
+            this.minX = minX;
+            this.minY = minY;
+            this.maxX = maxX;
+            this.maxY = maxY;
+        }
     }
 }

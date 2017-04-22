@@ -121,7 +121,8 @@ public class DBHandler {
             String newName = RoomTupleRslt.getString("name");
             int id = RoomTupleRslt.getInt("id");
             boolean connectable = RoomTupleRslt.getBoolean("connectable");
-            Tag newTag = new Tag(newName, id, connectable);
+            boolean restricted = RoomTupleRslt.getBoolean("restricted");
+            Tag newTag = new Tag(newName, id, connectable, restricted);
             tagMap.put(id, newTag);
             //newTag.addNode(nodeMap.get(ID)); //Association
         }
@@ -314,20 +315,6 @@ public class DBHandler {
         s.close();
     }
 
-    public void emptyExceptTitles() throws SQLException {
-        Statement s = connection.createStatement();
-        connection.setAutoCommit(false);
-
-        for (Table table : Table.values()){
-            if(table != Table.ProfessionalTitles){
-                s.execute(table.emptyStatement());
-
-            }
-        }
-        connection.setAutoCommit(true);
-        s.close();
-    }
-
     /**
      * Drops all tables
      * @throws SQLException
@@ -466,13 +453,14 @@ public class DBHandler {
         }
     }
 
-    public boolean updateTag(String name, int id, boolean connectable) {
-        String sqlUpdate = "UPDATE Tag SET name=?,connectable=? WHERE id=?";
+    public boolean updateTag(String name, int id, boolean connectable, boolean restricted) {
+        String sqlUpdate = "UPDATE Tag SET name=?,connectable=?, restricted=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, name);
             statement.setBoolean(2, connectable);
-            statement.setInt(3, id);
+            statement.setBoolean(3, restricted);
+            statement.setInt(4, id);
             statement.executeUpdate();
             statement.close();
             return true;
@@ -845,7 +833,8 @@ public class DBHandler {
                 }
                 String name = rs.getString(2);
                 boolean connectable = rs.getBoolean(3);
-                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+")\n");
+                boolean restricted = rs.getBoolean(4);
+                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+","+((restricted)?"TRUE":"FALSE")+")\n");
             }
             rs.close();
             // Node Tag
@@ -920,6 +909,45 @@ public class DBHandler {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public boolean addBugReport(String tag, String comment) {
+        String sqlSelect = "INSERT INTO BugReport VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlSelect);
+            statement.setString(1, tag);
+            statement.setString(2, comment);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<String> getBugReports() {
+        String sqlSelect = "SELECT * FROM BugReport";
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sqlSelect);
+
+            List<String> reports = new ArrayList<String>();
+            while(rs.next()) {
+                String addition = "";
+                addition = rs.getString(1);
+                addition += " - ";
+                addition += rs.getString(2);
+                reports.add(addition);
+            }
+
+            rs.close();
+            s.close();
+            return reports;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<String>();
         }
     }
 }

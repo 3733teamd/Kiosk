@@ -2,6 +2,8 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -43,12 +45,21 @@ public class ReportBugController {
     public TextField destinationBugField;
     public Button submitBug;
 
+    private DirectoryInterface dir;
+
+    @FXML
+    public void initialize() {
+        dir = Directory.getInstance();
+    }
+
     public void submitBugPress(ActionEvent actionEvent) {
         String nodeName = destinationBugField.getText();
         String comment = commentField.getText();
 
-
-
+        boolean result = dir.addBugReport(nodeName, comment);
+        if(!result) {
+            System.err.println("Error Saving Bug Report");
+        }
         closeReportBug();
     }
 
