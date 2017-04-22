@@ -86,6 +86,9 @@ public class EditMapScreenController extends MapController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
+    @FXML
+    private TextField timeoutField;
+
     //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
@@ -179,7 +182,7 @@ public class EditMapScreenController extends MapController{
             while (running) {
                 try {
 
-                    if (counter == timeoutTime) {
+                    if (counter == MementoController.timeoutTime) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -208,7 +211,11 @@ public class EditMapScreenController extends MapController{
             //logout user
             dir.logoutUser();
             try {
-                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+               /* originator.getStateFromMemento(careTaker.get(0));
+                switchScreen(MMGpane, originator.getState());*/
+                MementoController.toOriginalScreen(MMGpane);
+                MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
+                switchScreen(MMGpane, MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -229,7 +236,8 @@ public class EditMapScreenController extends MapController{
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
-
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -367,6 +375,18 @@ public class EditMapScreenController extends MapController{
 
         //drawfloorNodes();
 //
+        timeoutField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER && !timeoutField.getText().isEmpty())  {
+                        if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
+                            MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
+                            System.out.println("timeout"+ MementoController.timeoutTime);
+                        }
+
+                }
+            }
+        });
 
     }//initialize end
 

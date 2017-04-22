@@ -46,6 +46,7 @@ public class LoginScreenController extends AbsController {
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
+            
             counter++;
             //System.out.println("login " + counter);
         }

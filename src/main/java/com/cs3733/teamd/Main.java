@@ -3,6 +3,7 @@ package com.cs3733.teamd;
 import com.cs3733.teamd.Database.DBHandler;
 
 import com.cs3733.teamd.Model.Entities.*;
+import com.cs3733.teamd.Model.Originator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -199,6 +199,16 @@ public class UserScreenController extends MapController {
 
         super.setFloor(onFloor);
         setupMap();
+
+        if(init=true){
+            //originator.setState("/Views/UserScreen.fxml");
+            //careTaker.add(originator.saveStateToMemento());
+            //added
+            //originator.getStateFromMemento(careTaker.get(0));
+            //System.out.println("first  "+originator.getState());
+            MementoController.addCareTaker("/Views/UserScreen.fxml");
+            init=false;
+        }
         
     }
 
@@ -311,7 +321,7 @@ public class UserScreenController extends MapController {
                 setFloor(onFloor);
                 output = "";
                 directions.setText(output);
-                System.out.println(onFloor);
+                //System.out.println(onFloor);
 
                 setupMap();
             }
@@ -418,10 +428,10 @@ public class UserScreenController extends MapController {
                     }
                     double xPercent = event.getX()/IMAGE_WIDTH;
                     double yPercent = event.getY()/IMAGE_HEIGHT;
-                    System.out.println(
+                    /*System.out.println(
                             "Percent: "+zoomPercent+" X:" +
                                     getImageXFromZoom(event.getX())
-                                    +" Y: "+getImageYFromZoom(event.getY()));
+                                    +" Y: "+getImageYFromZoom(event.getY()));*/
 
                     //scales with scroll wheel
                     setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
@@ -480,11 +490,11 @@ public class UserScreenController extends MapController {
         int nodeCount = dir.getNodes().size();
 
         // Do we have a starting tag???
-        System.out.println(starttag);
+        //System.out.println(starttag);
         if(starttag != null) {
             // What floor is the Kiosk on?
             Main.currentFloor = starttag.getNodes().getFirst().getFloor();
-            System.out.println("HEre");
+            //System.out.println("HEre");
             //Iterates through all existing tags
             currentTag = null;
 
@@ -506,7 +516,7 @@ public class UserScreenController extends MapController {
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
         directions.setText(output);
-        System.out.println(onFloor);
+        //System.out.println(onFloor);
 
         setupMap();
 
@@ -523,7 +533,7 @@ public class UserScreenController extends MapController {
             currentTag = dir.getTags().get(itr);
             //If match is found create path to node from start nodes
             if (startTagString.equals(currentTag.getTagName())) {
-                System.out.println(currentTag.getTagName());
+                //System.out.println(currentTag.getTagName());
                 starttag = currentTag;
                 drawStartTag();
                 break;
@@ -542,7 +552,7 @@ public class UserScreenController extends MapController {
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             directions.setText(output);
-            System.out.println(onFloor);
+            //System.out.println(onFloor);
 
             setupMap();
         }
@@ -558,7 +568,7 @@ public class UserScreenController extends MapController {
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             directions.setText(output);
-            System.out.println(onFloor);
+            //System.out.println(onFloor);
 
             setupMap();
         }

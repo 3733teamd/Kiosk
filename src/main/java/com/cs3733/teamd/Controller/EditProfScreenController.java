@@ -131,7 +131,7 @@ public class EditProfScreenController extends AbsController {
             while (running) {
                 try {
 
-                    if (counter == timeoutTime) {
+                    if (counter == MementoController.timeoutTime) {
                         running = false;
                         timer.cancel();
                         timerTask.cancel();
@@ -160,7 +160,9 @@ public class EditProfScreenController extends AbsController {
             //logout user
             dir.logoutUser();
             try {
-                switchScreen(pane, "/Views/UserScreen.fxml");
+                MementoController.toOriginalScreen(pane);
+                MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
+                switchScreen(pane, MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -212,6 +214,8 @@ public class EditProfScreenController extends AbsController {
        // TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
 
         //timer resets if mouse moved
+        timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        timerThread.start();
         pane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
