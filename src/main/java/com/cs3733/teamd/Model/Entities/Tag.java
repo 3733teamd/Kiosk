@@ -14,6 +14,16 @@ public class Tag {
     private LinkedList<Professional> profs = new LinkedList<Professional>();
     private boolean connectable;
 
+    public boolean isRestricted() {
+        return restricted;
+    }
+
+    public void setRestricted(boolean restricted) {
+        this.restricted = restricted;
+    }
+
+    private boolean restricted;
+
 
     public boolean isConnectable() {
         return connectable;
@@ -43,12 +53,20 @@ public class Tag {
          this.tagName = name;
          this.id = id;
          this.connectable = false;
+         this.restricted = false;
     }
 
     public Tag(String name, int id, boolean c){
         this.tagName = name;
         this.id = id;
         this.connectable = c;
+    }
+
+    public Tag(String name, int id, boolean c, boolean r){
+        this.tagName = name;
+        this.id = id;
+        this.connectable = c;
+        this.restricted = r;
     }
 
     public String getTagName(){

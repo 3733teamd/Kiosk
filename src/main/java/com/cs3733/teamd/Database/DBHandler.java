@@ -121,7 +121,8 @@ public class DBHandler {
             String newName = RoomTupleRslt.getString("name");
             int id = RoomTupleRslt.getInt("id");
             boolean connectable = RoomTupleRslt.getBoolean("connectable");
-            Tag newTag = new Tag(newName, id, connectable);
+            boolean restricted = RoomTupleRslt.getBoolean("restricted");
+            Tag newTag = new Tag(newName, id, connectable, restricted);
             tagMap.put(id, newTag);
             //newTag.addNode(nodeMap.get(ID)); //Association
         }
@@ -466,13 +467,14 @@ public class DBHandler {
         }
     }
 
-    public boolean updateTag(String name, int id, boolean connectable) {
-        String sqlUpdate = "UPDATE Tag SET name=?,connectable=? WHERE id=?";
+    public boolean updateTag(String name, int id, boolean connectable, boolean restricted) {
+        String sqlUpdate = "UPDATE Tag SET name=?,connectable=?, restricted=? WHERE id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, name);
             statement.setBoolean(2, connectable);
-            statement.setInt(3, id);
+            statement.setBoolean(3, restricted);
+            statement.setInt(4, id);
             statement.executeUpdate();
             statement.close();
             return true;
@@ -845,7 +847,8 @@ public class DBHandler {
                 }
                 String name = rs.getString(2);
                 boolean connectable = rs.getBoolean(3);
-                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+")\n");
+                boolean restricted = rs.getBoolean(4);
+                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+","+((restricted)?"TRUE":"FALSE")+")\n");
             }
             rs.close();
             // Node Tag

@@ -125,7 +125,8 @@ public class Directory implements DirectoryInterface {
         boolean dbResult = dbHandler.updateTag(
                 t.getTagName(),
                 t.getId(),
-                t.isConnectable());
+                t.isConnectable(),
+                t.isRestricted());
         return dbResult;
     }
 
