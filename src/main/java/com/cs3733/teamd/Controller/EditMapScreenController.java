@@ -466,9 +466,11 @@ public class EditMapScreenController extends MapController{
     }
 
     private void deselectMostRecentNode() {
-        selectedCircles.getLast();
+        selectedCircles.getLast().setFill(selectedCircles.getLast().defaultColor);
         selectedCircles.removeLast();
         selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        currentTagBox.setItems(FXCollections.observableList(selectedCircles.getLast().referenceNode.getTags()));
+        currentTagBox.refresh();
     }
 
     private void overrideScrollWheel() {
@@ -606,8 +608,7 @@ public class EditMapScreenController extends MapController{
                 xLoc.setText(new Integer((int) c.getCenterX()).toString());
                 yLoc.setText(new Integer((int) c.getCenterY()).toString());
 
-                currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
-                currentTagBox.refresh();
+
 
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
@@ -687,6 +688,10 @@ public class EditMapScreenController extends MapController{
             //stub
         }
         //colors
+
+        currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
+        currentTagBox.refresh();
+
         if(!selectedCircles.isEmpty()) {
             selectedCircles.getLast().setFill(OTHER_SELECTED_COLOR);
         }
@@ -705,6 +710,18 @@ public class EditMapScreenController extends MapController{
     private void connectAllSelectedNodes(){
         for(int i = 0; i<selectedCircles.size()-1;i++){
             connectNode(selectedCircles.get(i),selectedCircles.get(i+1));
+        }
+    }
+    private void disconnectAllSelectedNodes(){
+        for(CircleNode cn: selectedCircles){
+            for(Node neighbor : cn.referenceNode.getNodes()){
+                //TODO: delete all connections in selection
+                /*
+                if(selectedCircles.contains(circleMap.get)){
+                    disconnectCircleNodes(cn,);
+                }
+                */
+            }
         }
     }
 
@@ -803,11 +820,11 @@ public class EditMapScreenController extends MapController{
 
     @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
-        if(selectedTag != null||select1==null){
-            boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
+        if(selectedCircles.getLast() != null){
+            boolean response = dir.addNodeTag(selectedCircles.getLast().referenceNode,selectedTag);
             if(response){
                 errorBox.setText("");
-                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+                currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
@@ -915,14 +932,10 @@ public class EditMapScreenController extends MapController{
                             }
                         break;
                     case BACK_SPACE:
-                        if(select1 != null && select2 != null){
-                            disconnectCircleNodes();
-                        }
+                        disconnectAllSelectedNodes();
                         break;
                     case ENTER:
-
-                            connectAllSelectedNodes();
-
+                        connectAllSelectedNodes();
                         break;
                 }
 
