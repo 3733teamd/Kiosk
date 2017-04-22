@@ -152,6 +152,10 @@ public class MapController extends AbsController {
         this.nodes = nodes;
     }
 
+    protected void appendNodes(List<Node> nodes) {
+        this.nodes.addAll(nodes);
+    }
+
     protected void setCircleMap(Map<Node, CircleNode> circleMap) {
         this.circleNodeMap = circleMap;
     }
@@ -244,6 +248,7 @@ public class MapController extends AbsController {
             }
             // Draw it
             if(n.getFloor() == floor) {
+                mapCanvas.getChildren().removeAll(currentNode);
                 mapCanvas.getChildren().add(currentNode);
             }
         }

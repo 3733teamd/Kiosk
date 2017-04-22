@@ -229,6 +229,7 @@ public class EditMapScreenController extends MapController{
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
+        setKeyListeners();
 
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -473,12 +474,6 @@ public class EditMapScreenController extends MapController{
             }
         });
     }
-
-
-
-
-
-
     //Login button
     @FXML
     public void onCreateUser(ActionEvent actionEvent) throws IOException {
@@ -525,20 +520,16 @@ public class EditMapScreenController extends MapController{
         timerThread.interrupt();
         switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
     }
-
-
     @FXML
-    public void addNode(){
-        CircleNode circ = createCircle(dir.saveNode(50,50,floor), 5, Color.RED);
+    public void addNodeButtonPressed(){
+        addNode(50,50);
+
+    }
+    private void addNode(int x, int y){
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, Color.RED);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
-
-        //Node newn = new Node//dir.saveNode((int)circ.getCenterX(), (int)circ.getCenterY(), floor);
-        //nodeList.add(newn);
-
-        //add to directory
     }
-
     @FXML
     public void connectNodePressed(){
         connectNode(select1,select2);
@@ -548,7 +539,7 @@ public class EditMapScreenController extends MapController{
 
         if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-            Line line = connect(s1, s2);
+            Line line = connectCircleNodes(s1, s2);
             line.setStyle("-fx-stroke: red;");
             s1.lineMap.put(s2, line);
             s2.lineMap.put(s1, line);
@@ -655,8 +646,7 @@ public class EditMapScreenController extends MapController{
         return circle;
     }
 
-
-    private Line connect(CircleNode c1, CircleNode c2) {
+    private Line connectCircleNodes(CircleNode c1, CircleNode c2) {
         Line line = new Line();
         floorLines.add(line);
 
@@ -685,10 +675,11 @@ public class EditMapScreenController extends MapController{
 
     }
 
-
     @FXML
     private void clickedOnPane(MouseEvent m){
-
+        if(m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2){
+            addNode((int)m.getX(),(int)m.getY());
+        }
     }
 
     private void initializeCircleMap(){
@@ -791,18 +782,15 @@ public class EditMapScreenController extends MapController{
         }
     }
 
+    public void disconnectCircleNodesButton(ActionEvent actionEvent) {
+        disconnectCircleNodes();
+    }
 
-
-    public void disconnectCircleNodes(ActionEvent actionEvent) {
-        //System.out.print(select1.lineMap.get(select2).getStartX());
-
+    private void disconnectCircleNodes(){
         boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
         if(response){
             errorBox.setText("");
             Line l = select1.lineMap.get(select2);
-
-            //System.out.println("Line xcoord" +l.getEndX());
-
             mapCanvas.getChildren().remove(l);
             System.out.println(select1.lineMap.size());
             select1.lineMap.remove(select2);
@@ -811,9 +799,6 @@ public class EditMapScreenController extends MapController{
         }else{
             errorBox.setText(errorString);
         }
-
-
-
     }
 
     public void removeCircleNode(ActionEvent actionEvent) {
@@ -828,7 +813,6 @@ public class EditMapScreenController extends MapController{
         }
 
     }
-
 
     public void doneDrag(DragEvent dragEvent) {
 
@@ -850,4 +834,41 @@ public class EditMapScreenController extends MapController{
     public void viewBugReports(ActionEvent actionEvent) throws IOException {
         popupScreen(MMGpane, "/Views/ViewBugScreen.fxml", "View Bug Reports");
     }
+
+
+    private void setKeyListeners() {
+        MMGpane.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                switch (ke.getCode()){
+                    case DELETE:
+                            if(select1 != null){
+                                boolean response = dir.deleteNode(select1.referenceNode);
+                                if(response){
+                                    errorBox.setText("");
+                                    mapCanvas.getChildren().remove(select1);
+                                    select1 = select2;
+                                    select2= null;
+                                }else{
+                                    errorBox.setText(errorString);
+                                }
+                            }
+                        break;
+                    case BACK_SPACE:
+                        if(select1 != null && select2 != null){
+                            disconnectCircleNodes();
+                        }
+                        break;
+                    case ENTER:
+                        if(select1 != null && select2 != null){
+                            connectNode(select1,select2);
+                        }
+                        break;
+                }
+
+            }
+        });
+    }
+
+
 }

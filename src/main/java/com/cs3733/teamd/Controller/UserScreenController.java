@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -37,10 +36,8 @@ import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
 
 
-import java.awt.Point;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -198,11 +195,19 @@ public class UserScreenController extends MapController {
         setupMap();
     }
 
-    private void drawStartTag() {
+    private void drawStartTagAndTags() {
         if(starttag.getNodes().size() > 0) {
             List<Node> startNodes = starttag.getNodes();
             super.setNodes(startNodes);
             super.removeConnections();
+            for(Tag t: dir.getTags()) {
+                if(t != starttag) {
+                    for(Node n: t.getNodes()) {
+                        super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
+                    }
+                    super.appendNodes(t.getNodes());
+                }
+            }
             super.addCircle(startNodes.get(0), Color.GREEN, 10.0);
             super.drawNodes();
         }
@@ -517,7 +522,7 @@ public class UserScreenController extends MapController {
             if (startTagString.equals(currentTag.getTagName())) {
                 System.out.println(currentTag.getTagName());
                 starttag = currentTag;
-                drawStartTag();
+                drawStartTagAndTags();
                 break;
             }
 
@@ -579,8 +584,9 @@ public class UserScreenController extends MapController {
         if(pathNodes != null) {
             drawPath();
         } else {
+            // Draw Tags
             if(starttag != null) {
-                drawStartTag();
+                drawStartTagAndTags();
             }
         }
     }
