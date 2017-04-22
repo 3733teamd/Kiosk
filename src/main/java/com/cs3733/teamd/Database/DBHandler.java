@@ -925,4 +925,19 @@ public class DBHandler {
             return false;
         }
     }
+
+    public boolean addBugReport(String tag, String comment) {
+        String sqlSelect = "INSERT INTO BugReport VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlSelect);
+            statement.setString(1, tag);
+            statement.setString(2, comment);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
