@@ -358,7 +358,7 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean addBugReport(String tag, String comment) {
-        return false;
+        return dbHandler.addBugReport(tag, comment);
     }
 
 }
