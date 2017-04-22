@@ -34,7 +34,7 @@
                         <Font size="26.0" />
                      </font>
                   </Text>
-                  <Text layoutX="39.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Manager- Ryan Wittenberg&#10;Lead Software Engineer- Stephen Michelini&#10;Assistant Software Engineer- Thomas Koker &#10;Assistant Software Engineer- Andrew Nemeth &#10;Product Owner- William Kelley &#10;Test Engineer- Derrek Rueger &#10;Documentation Analyst- Alexandra Wheeler &#10;Software Engineer- Benjamin Shaffer &#10;Software Engineer- Anh Dao &#10;Software Engineer- Ryan Vereque WPI CS Department, CS 3733 " textAlignment="CENTER" wrappingWidth="718.23583984375">
+                  <Text layoutX="39.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Manager- Ryan Wittenberg&#10;Lead Software Engineer- Stephen Michelini&#10;Assistant Software Engineer- Thomas Koker &#10;Assistant Software Engineer- Andrew Nemeth &#10;Product Owner- William Kelley &#10;Test Engineer- Derrek Rueger &#10;Documentation Analyst- Alexandra Wheeler &#10;Software Engineer- Benjamin Shaffer &#10;Software Engineer- Anh Dao &#10;Software Engineer- Ryan Vereque &#10;&#10;WPI CS Department, CS 3733 " textAlignment="CENTER" wrappingWidth="718.23583984375">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -43,18 +43,23 @@
             </AnchorPane>
             <AnchorPane prefHeight="300.0" prefWidth="800.0">
                <children>
-                  <Text layoutX="177.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank You!" textAlignment="CENTER" wrappingWidth="445.6708984375">
+                  <Text layoutX="177.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank You!" textAlignment="CENTER" wrappingWidth="445.6708984375">
                      <font>
                         <Font size="55.0" />
                      </font>
                   </Text>
-                  <Button fx:id="exitAbout" layoutY="231.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leaveAbout" prefHeight="59.0" prefWidth="165.0" text="%Exit">
+                  <Button fx:id="exitAbout" layoutX="14.0" layoutY="195.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leaveAbout" prefHeight="59.0" prefWidth="165.0" text="%Exit">
                      <font>
                         <Font size="42.0" />
                      </font></Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="332.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="338.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/floor_imgs/fkthumb.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="241.0" fitWidth="243.0" layoutX="553.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/floor_imgs/ceberus.png" />
                      </image>
                   </ImageView>
                </children></AnchorPane>

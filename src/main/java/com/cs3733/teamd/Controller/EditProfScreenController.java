@@ -222,7 +222,7 @@ public class EditProfScreenController extends AbsController {
         pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                
+
                 counter = 0;
             }
         });

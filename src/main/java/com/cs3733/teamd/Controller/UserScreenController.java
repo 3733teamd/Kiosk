@@ -81,6 +81,9 @@ public class UserScreenController extends MapController {
     @FXML
     private TextArea directions;
 
+    @FXML
+    private ImageView aboutImage;
+
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
     public int floorNum = Main.currentFloor;
@@ -196,6 +199,7 @@ public class UserScreenController extends MapController {
 
         super.setFloor(onFloor);
         setupMap();
+        
     }
 
     private void drawStartTag() {
@@ -375,7 +379,7 @@ public class UserScreenController extends MapController {
 
     //About button pressed
     @FXML
-    public void getAbout(ActionEvent event) throws IOException{
+    public void getAbout( ) throws IOException{
         popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
     }
 
