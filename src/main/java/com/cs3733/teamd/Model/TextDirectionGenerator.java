@@ -80,24 +80,28 @@ public class TextDirectionGenerator {
         return getDirectionsInLanguage(directions, pointsOfInterestNames);
     }
     public List<Image> generateIcons() {
+        Collections.reverse(this.points);
         List<Image> icons = new ArrayList<Image>();
         List<Direction> directions = reduceDirections(
                 generateDirections()
         );
         for (Direction d: directions) {
-            System.out.println("icon: "+d);
+            System.out.println("iconblue: "+d);
 
             if (d.equals(Direction.PROCEED_FROM_TAG)) {
-            //   case PROCEED_FROM_TAG:
-                   icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-           }
+                System.out.println(".PROCEED_FROM_TAG");
+                //   case PROCEED_FROM_TAG:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
             if (d.equals(Direction.GO_STRAIGHT)) {
+                System.out.println(".go straight");
 //                case GO_STRAIGHT:
-                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
             }
             if (d.equals(Direction.TURN_LEFT)) {
-             //   case TURN_LEFT:
-                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                System.out.println(".turn left");
+                //   case TURN_LEFT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
             }
             if (d.equals(Direction.SLIGHT_LEFT)) {
                 //case SLIGHT_LEFT:
@@ -118,10 +122,11 @@ public class TextDirectionGenerator {
             }
             if (d.equals(Direction.PROCEED_TO_ELEVATOR)) {
                 //case PROCEED_TO_ELEVATOR:
-                    icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-                    break;
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                break;
             }
         }
+        Collections.reverse(this.points);
         return icons;
     }
     public static List<String> getDirectionsInLanguage(
@@ -264,7 +269,7 @@ public class TextDirectionGenerator {
             }
             if(
                     (previousPoint == null) ||
-                    (previousPoint.getFloor() != currentPoint.getFloor())
+                            (previousPoint.getFloor() != currentPoint.getFloor())
                     ) {
                 directions.add(Direction.PROCEED_FROM_TAG);
                 if(currentPoint.getTags().size() > 0) {

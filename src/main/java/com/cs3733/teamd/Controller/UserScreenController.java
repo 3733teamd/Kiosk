@@ -34,7 +34,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextFlow;
 import org.controlsfx.control.textfield.TextFields;
 
 
@@ -77,8 +76,12 @@ public class UserScreenController extends MapController {
     @FXML
     public Pane mapCanvas;
     public AnchorPane MMGpane;
+
+    //text directions
     @FXML
-    private TextFlow directions;
+    //private TextArea directions;
+    private ListView<String> directions ;
+    private ObservableList<String> dirList;
 
     @FXML
     private ImageView aboutImage;
@@ -91,7 +94,7 @@ public class UserScreenController extends MapController {
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
     String output = "";
-    //Text text = new Text(output);
+
     Tag starttag = null;
     private int startfloor = 0;
     private int midfloor = 0;
@@ -168,11 +171,9 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
-       // directions.setText(output);
-       // directions.getChildren().add(text);
-
+//        directions.setText(output); //dir change type
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
@@ -201,7 +202,7 @@ public class UserScreenController extends MapController {
         //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
         setupMap();
-        
+
     }
 
     private void drawStartTagAndTags() {
@@ -232,16 +233,31 @@ public class UserScreenController extends MapController {
         for(String directionString: directionsArray) {
             output += directionString + "\n";
         }
-      //  directions.setText(output);
-        List<Image> icons = g.generateIcons();
-        for (int i=0;i<icons.size();i++) {
-            Text text = new Text("\n"+directionsArray.get(i));
-            ImageView iconView = new ImageView(icons.get(i));
-            iconView.setFitHeight(50);
-            iconView.setFitWidth(50);
-            directions.getChildren().addAll(text,iconView);
+        dirList = FXCollections.observableArrayList(directionsArray);
+        directions.setItems(dirList);
+        directions.setCellFactory(dir -> new ListCell<String>() {
+            ImageView iconView = new ImageView();
 
-        }
+            int i=0;
+            @Override
+            protected void updateItem(String dir, boolean empty) {
+                super.updateItem(dir,empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    List<Image> icons=g.generateIcons();
+                    iconView.setImage(icons.get(i));
+                    iconView.setFitHeight(50);
+                    iconView.setFitWidth(50);
+                    setText(dir);
+                    setGraphic(iconView);
+                }
+                i=i+1;
+            }
+        });
+
+//        directions.setText(output);
 
         super.setNodes(pathNodes);
         super.removeConnections();
@@ -329,8 +345,9 @@ public class UserScreenController extends MapController {
                 // Notify super class
                 setFloor(onFloor);
                 output = "";
-             //   directions.setText(output);
-              //  directions.getChildren().add(text);
+                dirList = FXCollections.observableArrayList(output);
+//                directions.setText(output);
+                directions.setItems(dirList);
 
                 System.out.println(onFloor);
 
@@ -522,9 +539,10 @@ public class UserScreenController extends MapController {
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
-       // directions.setText(output);
+        dirList = FXCollections.observableArrayList(output);
+//        directions.setText(output);
+        directions.setItems(dirList);
 
-        //directions.getChildren().add(text);
         System.out.println(onFloor);
 
         setupMap();
@@ -560,8 +578,9 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-           // directions.setText(output);
-          //  directions.getChildren().add(text);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
 
             System.out.println(onFloor);
 
@@ -578,8 +597,10 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-          //  directions.setText(output);
-          //  directions.getChildren().add(text);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
+
             System.out.println(onFloor);
 
             setupMap();
@@ -595,8 +616,9 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-          //  directions.setText(output);
-           // directions.getChildren().add(text);
+            dirList = FXCollections.observableArrayList(output);
+            directions.setItems(dirList);
+//            directions.setText(output);
             System.out.println(onFloor);
 
             setupMap();
