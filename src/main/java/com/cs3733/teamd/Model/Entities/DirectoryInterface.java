@@ -177,4 +177,12 @@ public interface DirectoryInterface {
      * @return
      */
     ProTitle addTitle(String acronym, String title);
+
+    /**
+     * Add's a bug report
+     * @param tag - string of the tag
+     * @param comment - command associated
+     * @return
+     */
+    boolean addBugReport(String tag, String comment);
 }

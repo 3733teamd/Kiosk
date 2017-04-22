@@ -515,10 +515,10 @@ public class UserScreenController extends MapController {
 
     //Function to allow the user to change the start to wherever they wish
     @FXML
-    public  void onSet(ActionEvent actionEvent) throws IOException{
+    public void onSet(ActionEvent actionEvent) throws IOException{
         int tagCount = dir.getTags().size();
         Tag currentTag;
-        String startTagString = TypeDestination.getText();
+        String startTagString = tagAssociations.get(TypeDestination.getText());
 
         for (int itr = 0; itr < tagCount; itr++) {
             currentTag = dir.getTags().get(itr);
