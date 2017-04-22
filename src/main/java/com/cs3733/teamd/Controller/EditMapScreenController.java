@@ -46,6 +46,14 @@ import java.util.*;
  */
 public class EditMapScreenController extends MapController{
 
+
+    //color constants for convenience
+    private static Color CUR_SELECTED_COLOR = Color.GREEN;
+    private static Color OTHER_SELECTED_COLOR = Color.BLUE;
+    private static Color DEFAULT_COLOR = Color.RED;
+    private static Color ELEVATOR_COLOR = Color.YELLOW;
+    private static Color CLICKED_ON_COLOR = Color.BLACK;
+
     public String errorString = Main.bundle.getString("InvalidAction");
 
     public boolean loading=false;
@@ -86,13 +94,13 @@ public class EditMapScreenController extends MapController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
-    //HashMap<List<CircleNode>,Line> circleLines;
 
     public ScrollPane scrollPane;
 
     @FXML
     private Button disconnectNodeBtn;
 
+    LinkedList<CircleNode> selectedCircles = new LinkedList<CircleNode>();
     LinkedList<Line> floorLines = new LinkedList<Line>();
     LinkedList<CircleNode> floorCircs = new LinkedList<CircleNode>();
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
@@ -421,7 +429,10 @@ public class EditMapScreenController extends MapController{
         scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+                //only pan with lmb
+                if(event.isPrimaryButtonDown()) {
+                    lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+                }
             }
         });
 
@@ -526,7 +537,7 @@ public class EditMapScreenController extends MapController{
 
     }
     private void addNode(int x, int y){
-        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, Color.RED);
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, DEFAULT_COLOR);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
     }
@@ -539,7 +550,7 @@ public class EditMapScreenController extends MapController{
 
         if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-            Line line = connectCircleNodes(s1, s2);
+            Line line = makeLineForCircleNodes(s1, s2);
             line.setStyle("-fx-stroke: red;");
             s1.lineMap.put(s2, line);
             s2.lineMap.put(s1, line);
@@ -570,50 +581,59 @@ public class EditMapScreenController extends MapController{
         circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
-        //nodes.put(circle, n);
 
-        circle.setOnMousePressed((t) -> {
-            scrollPane.setPannable(false);
-            orgSceneX = t.getSceneX();
-            orgSceneY = t.getSceneY();
+        circle.setOnMousePressed((mouse) -> {
+            if(mouse.isPrimaryButtonDown()) {
+                scrollPane.setPannable(false);
+                orgSceneX = mouse.getSceneX();
+                orgSceneY = mouse.getSceneY();
 
-            CircleNode c = (CircleNode) (t.getSource());
-            c.toFront();
-            xLoc.setText(new Integer((int)c.getCenterX()).toString());
-            yLoc.setText(new Integer((int)c.getCenterY()).toString());
+                CircleNode c = (CircleNode) (mouse.getSource());
+                c.toFront();
+                xLoc.setText(new Integer((int) c.getCenterX()).toString());
+                yLoc.setText(new Integer((int) c.getCenterY()).toString());
 
-            currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
-            currentTagBox.refresh();
+                currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
+                currentTagBox.refresh();
 
-            scirc = c;
+                if(!mouse.isShiftDown()){
+                    deselectAllNodes();
+                    addNodeToSelection(c);
 
-            if (select1 == null){
-                select1 = c;
-                s1.setID(n.getID());
-                s= n.getID();
-                c.setFill(Color.BLACK);
-            }else {
-                if(select2 != null) {
-                    if(select2.referenceNode.hasElevator()){
-                        select2.setFill(Color.YELLOW);
-                    }else {
-                        select2.setFill(Color.RED);
-                    }
+                }else{
+                    addNodeToSelection(c);
                 }
+                scirc = c;
+                /*
+                if (select1 == null) {
+                    select1 = c;
+                    s1.setID(n.getID());
+                    s = n.getID();
+                    c.setFill(CLICKED_ON_COLOR);
+                } else {
+                    if (select2 != null) {
+                        if (select2.referenceNode.hasElevator()) {
+                            select2.setFill(ELEVATOR_COLOR);
+                        } else {
+                            select2.setFill(DEFAULT_COLOR);
+                        }
+                    }
 
-                select2 = select1;
-                select1 = c;
-                s= n.getID();
-                c.setFill(Color.BLACK);
+                    select2 = select1;
+                    select1 = c;
+                    s = n.getID();
+                    c.setFill(CLICKED_ON_COLOR);
+                }
+                */
             }
-
         });
         circle.setOnMouseReleased((t)->{
 
+            /*
             if(circle.referenceNode.hasElevator()){
-                circle.setFill(Color.YELLOW);
+                circle.setFill(ELEVATOR_COLOR);
             }else {
-                circle.setFill(Color.RED);
+                circle.setFill(DEFAULT_COLOR);
             }
 
             select1.setFill(Color.GREEN);
@@ -623,6 +643,7 @@ public class EditMapScreenController extends MapController{
 
             updatePosition(t);
             scrollPane.setPannable(true);
+            */
         });
 
         circle.setOnMouseDragged((t) -> {
@@ -646,7 +667,34 @@ public class EditMapScreenController extends MapController{
         return circle;
     }
 
-    private Line connectCircleNodes(CircleNode c1, CircleNode c2) {
+    private void addNodeToSelection(CircleNode c) {
+        //order matters so we know what the chain is to connect them
+        for(CircleNode cn : selectedCircles){
+            //stub
+        }
+        //colors
+        if(!selectedCircles.isEmpty()) {
+            selectedCircles.getLast().setFill(OTHER_SELECTED_COLOR);
+        }
+        selectedCircles.addLast(c);
+        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+
+    }
+
+    private void deselectAllNodes() {
+        for(CircleNode cn : selectedCircles){
+            cn.setFill(cn.defaultColor);
+        }
+        selectedCircles.clear();
+    }
+
+    private void connectAllSelectedNodes(){
+        for(int i = 0; i<selectedCircles.size()-1;i++){
+            connectNode(selectedCircles.get(i),selectedCircles.get(i+1));
+        }
+    }
+
+    private Line makeLineForCircleNodes(CircleNode c1, CircleNode c2) {
         Line line = new Line();
         floorLines.add(line);
 
@@ -685,13 +733,11 @@ public class EditMapScreenController extends MapController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-                CircleNode circ = createCircle(n, 5, Color.YELLOW);
-
-            }else {
-                CircleNode circ = createCircle(n, 5, Color.RED);
+                CircleNode circ = createCircle(n, 5, ELEVATOR_COLOR);
+            }else{
+                CircleNode circ = createCircle(n, 5, DEFAULT_COLOR);
             }
         }
-
     }
 
     private void drawfloorNodes(){
@@ -860,15 +906,17 @@ public class EditMapScreenController extends MapController{
                         }
                         break;
                     case ENTER:
-                        if(select1 != null && select2 != null){
-                            connectNode(select1,select2);
-                        }
+
+                            connectAllSelectedNodes();
+
                         break;
                 }
 
             }
         });
     }
+
+
 
 
 }
