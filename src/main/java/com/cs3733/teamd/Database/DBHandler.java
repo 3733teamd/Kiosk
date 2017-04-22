@@ -315,20 +315,6 @@ public class DBHandler {
         s.close();
     }
 
-    public void emptyExceptTitles() throws SQLException {
-        Statement s = connection.createStatement();
-        connection.setAutoCommit(false);
-
-        for (Table table : Table.values()){
-            if(table != Table.ProfessionalTitles){
-                s.execute(table.emptyStatement());
-
-            }
-        }
-        connection.setAutoCommit(true);
-        s.close();
-    }
-
     /**
      * Drops all tables
      * @throws SQLException
@@ -938,6 +924,30 @@ public class DBHandler {
         } catch(SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public List<String> getBugReports() {
+        String sqlSelect = "SELECT * FROM BugReport";
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(sqlSelect);
+
+            List<String> reports = new ArrayList<String>();
+            while(rs.next()) {
+                String addition = "";
+                addition = rs.getString(1);
+                addition += " - ";
+                addition += rs.getString(2);
+                reports.add(addition);
+            }
+
+            rs.close();
+            s.close();
+            return reports;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<String>();
         }
     }
 }

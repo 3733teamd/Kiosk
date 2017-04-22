@@ -361,4 +361,9 @@ public class Directory implements DirectoryInterface {
         return dbHandler.addBugReport(tag, comment);
     }
 
+    @Override
+    public List<String> getBugReports() {
+        return dbHandler.getBugReports();
+    }
+
 }

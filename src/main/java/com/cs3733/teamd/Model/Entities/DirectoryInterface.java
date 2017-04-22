@@ -185,4 +185,6 @@ public interface DirectoryInterface {
      * @return
      */
     boolean addBugReport(String tag, String comment);
+
+    List<String> getBugReports();
 }
