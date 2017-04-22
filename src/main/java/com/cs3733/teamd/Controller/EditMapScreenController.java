@@ -558,7 +558,7 @@ public class EditMapScreenController extends MapController{
     }
     @FXML
     public void connectNodePressed(){
-        connectNode(select1,select2);
+        connectAllSelectedNodes();
     }
 
     private void connectNode(CircleNode s1, CircleNode s2){
@@ -755,7 +755,7 @@ public class EditMapScreenController extends MapController{
 
     @FXML
     private void clickedOnPane(MouseEvent m){
-        if(m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2){
+        if(m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2 ){
             addNode((int)m.getX(),(int)m.getY());
         }
     }
@@ -859,7 +859,7 @@ public class EditMapScreenController extends MapController{
     }
 
     public void disconnectCircleNodesButton(ActionEvent actionEvent) {
-        disconnectCircleNodes(select1,select2);
+        disconnectAllSelectedNodes();
     }
 
     private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
@@ -918,7 +918,12 @@ public class EditMapScreenController extends MapController{
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
                     case DELETE:
-                        deleteAllSelectedNodes();
+                        if(!ke.isShiftDown()){
+                            deleteAllSelectedNodes();
+                        }else{
+                            forceDeleteAllSelectedNodes();
+                        }
+
                         break;
                     case BACK_SPACE:
                         disconnectAllSelectedNodes();
@@ -930,6 +935,11 @@ public class EditMapScreenController extends MapController{
 
             }
         });
+    }
+
+    private void forceDeleteAllSelectedNodes() {
+        disconnectAllSelectedNodes();
+        deleteAllSelectedNodes();
     }
 
     private void deleteAllSelectedNodes() {
