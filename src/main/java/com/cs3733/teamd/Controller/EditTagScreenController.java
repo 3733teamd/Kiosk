@@ -170,7 +170,15 @@ public class EditTagScreenController extends AbsController {
             @Override
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
-
+                //make some buttons opaque
+                addProf.setOpacity(.5);
+                deleteProf.setOpacity(.5);
+                newTagNameBtn.setOpacity(.5);
+                //disable buttons
+                selectConnectable.setDisable(true);
+                addProf.setDisable(true);
+                deleteProf.setDisable(true);
+                newTagNameBtn.setDisable(true);
                 displayResultAllTag(searchTagBar.getText() + event.getText());
             }
         });

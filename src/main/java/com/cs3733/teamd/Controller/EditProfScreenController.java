@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 /**
  * Created by Anh Dao on 4/6/2017.
@@ -92,6 +93,8 @@ public class EditProfScreenController extends AbsController {
     @FXML
     private Button deleteTag;
 
+    @FXML
+    private TextField searchTagList;
 
     private Professional selectedProf;
     private Tag selectedTag;
@@ -102,6 +105,12 @@ public class EditProfScreenController extends AbsController {
     Directory dir = Directory.getInstance();
     List<Professional> allTheProfs= dir.getProfessionals();
     List<String> allProfNames = new ArrayList<String>();
+
+    List<Professional> filtered = new ArrayList<Professional>();
+    List<Tag> filteredTag = new ArrayList<>();
+
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
     //timeout
     Timer timer = new Timer();
@@ -200,7 +209,7 @@ public class EditProfScreenController extends AbsController {
         for (int i = 0 ; i<allTheProfs.size(); i++) {
             allProfNames.add(allTheProfs.get(i).getName());
         }
-        TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
+       // TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
 
         //timer resets if mouse moved
         pane.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -213,6 +222,7 @@ public class EditProfScreenController extends AbsController {
         pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+
                 counter = 0;
             }
         });
@@ -226,6 +236,30 @@ public class EditProfScreenController extends AbsController {
             @Override
             public void handle(KeyEvent event) {
                 counter = 0;
+            }
+        });
+        allProfList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                counter = 0;
+            }
+        });
+
+        //make list view dynamic
+        searchProfessionalBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResult(searchProfessionalBar.getText() + event.getText());
+            }
+        });
+        searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                //String text = searchTagBar.getText();
+
+                displayResultAllTag(searchTagList.getText() + event.getText());
             }
         });
     }
@@ -307,6 +341,30 @@ public class EditProfScreenController extends AbsController {
 
         });
     }
+
+    public void displayResult(String value){
+
+        for (Professional d: dir.getProfessionals()){
+            filtered = dir.getProfessionals().stream().filter((p) -> p.getName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResults.setAll(filtered);
+
+        allProfList.setItems(searchResults);
+    }
+
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagsList.setItems(searchResultsTag);
+    }
+
 
     private void setAllTagsList(){
         //ObservableList<Tag> tagObjList = FXCollections.observableArrayList(dir.getTags());

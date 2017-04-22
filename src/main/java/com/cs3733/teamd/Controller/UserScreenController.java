@@ -78,6 +78,9 @@ public class UserScreenController extends MapController {
     @FXML
     private TextArea directions;
 
+    @FXML
+    private ImageView aboutImage;
+
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
     public int floorNum = Main.currentFloor;
@@ -162,7 +165,7 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-        TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
         directions.setText(output);
         floorMap.setImage(imgInt.display(floorNum));
@@ -193,6 +196,7 @@ public class UserScreenController extends MapController {
         //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
         setupMap();
+        
     }
 
     private void drawStartTagAndTags() {
@@ -380,7 +384,7 @@ public class UserScreenController extends MapController {
 
     //About button pressed
     @FXML
-    public void getAbout(ActionEvent event) throws IOException{
+    public void getAbout( ) throws IOException{
         popupScreen(MMGpane, "/Views/AboutPopupScreen.fxml", "About");
     }
 
