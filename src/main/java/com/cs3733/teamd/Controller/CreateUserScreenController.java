@@ -56,7 +56,7 @@ public class CreateUserScreenController extends AbsController {
 
 
     static ObservableList<String> rolesList =
-            FXCollections.observableArrayList( "admin", "prof" );
+            FXCollections.observableArrayList( "admin", "prof" , "employee");
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
@@ -143,14 +143,12 @@ public class CreateUserScreenController extends AbsController {
         newUsername.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("key pressed");
                 counter = 0;
             }
         });
         newPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println("pw pressed");
                 counter = 0;
             }
         });

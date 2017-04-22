@@ -429,12 +429,19 @@ public class EditMapScreenController extends MapController{
         scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //only pan with lmb
-                if(event.isPrimaryButtonDown()) {
-                    lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+                if(event.isSecondaryButtonDown()){
+                    if(!event.isShiftDown()){
+                        deselectAllNodes();
+                    }else{
+                        deselectMostRecentNode();
+                    }
+
                 }
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
             }
+
         });
+
 
         scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -456,6 +463,12 @@ public class EditMapScreenController extends MapController{
         });
 
 
+    }
+
+    private void deselectMostRecentNode() {
+        selectedCircles.getLast();
+        selectedCircles.removeLast();
+        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
     }
 
     private void overrideScrollWheel() {
@@ -642,8 +655,9 @@ public class EditMapScreenController extends MapController{
             }
 
             updatePosition(t);
-            scrollPane.setPannable(true);
             */
+            scrollPane.setPannable(true);
+
         });
 
         circle.setOnMouseDragged((t) -> {
