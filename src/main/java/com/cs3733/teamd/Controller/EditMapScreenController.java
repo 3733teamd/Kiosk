@@ -384,22 +384,27 @@ public class EditMapScreenController extends MapController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-        //drawfloorNodes();
-//
+        setUpTimeoutField();
+
+    }//initialize end
+
+
+    private void setUpTimeoutField(){
         timeoutField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER && !timeoutField.getText().isEmpty())  {
-                        if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
-                            MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
-                            System.out.println("timeout"+ MementoController.timeoutTime);
-                        }
+                    if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
+                        MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
+                        System.out.println("timeout"+ MementoController.timeoutTime);
+                    }
 
                 }
             }
         });
 
-    }//initialize end
+        timeoutField.setText(String.valueOf( MementoController.timeoutTime));
+    }
 
     private void setFloorSliderListener(){
 
