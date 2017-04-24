@@ -646,51 +646,15 @@ public class EditMapScreenController extends MapController{
                     addNodeToSelection(c);
                 }
                 scirc = c;
-                /*
-                if (select1 == null) {
-                    select1 = c;
-                    s1.setID(n.getID());
-                    s = n.getID();
-                    c.setFill(CLICKED_ON_COLOR);
-                } else {
-                    if (select2 != null) {
-                        if (select2.referenceNode.hasElevator()) {
-                            select2.setFill(ELEVATOR_COLOR);
-                        } else {
-                            select2.setFill(DEFAULT_COLOR);
-                        }
-                    }
 
-                    select2 = select1;
-                    select1 = c;
-                    s = n.getID();
-                    c.setFill(CLICKED_ON_COLOR);
-                }
-                */
             }
         });
-        circle.setOnMouseReleased((t)->{
 
-            /*
-            if(circle.referenceNode.hasElevator()){
-                circle.setFill(ELEVATOR_COLOR);
-            }else {
-                circle.setFill(DEFAULT_COLOR);
-            }
-
-            select1.setFill(Color.GREEN);
-            if(select2 != null && select1 != select2){
-                select2.setFill(Color.BLUE);
-            }
-
-            updatePosition(t);
-            */
-            scrollPane.setPannable(true);
-
-        });
 
         circle.setOnMouseDragged((t) -> {
-            //if(state ==states.add) {
+
+            circle.beingDragged = true;
+            mapCanvas.getChildren().removeAll(hoverNodeLabel);
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
 
@@ -705,7 +669,14 @@ public class EditMapScreenController extends MapController{
             xLoc.setText(new Integer((int) c.getCenterX()).toString());
             yLoc.setText(new Integer((int) c.getCenterY()).toString());
 
-            //}
+        });
+
+        circle.setOnMouseReleased((t)->{
+
+            circle.beingDragged = false;
+            scrollPane.setPannable(true);
+            displayTagHoverLabel(circle);
+
         });
         return circle;
     }
@@ -982,7 +953,9 @@ public class EditMapScreenController extends MapController{
     public void setHoverProperties(CircleNode circ) {
         //TODO: Make so the label always follows a node being dragged
         circ.setOnMouseEntered((event) -> {
-            displayTagHoverLabel(circ);
+            if(!circ.beingDragged) {
+                displayTagHoverLabel(circ);
+            }
         });
 
         circ.setOnMouseExited((event) -> {

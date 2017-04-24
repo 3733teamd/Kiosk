@@ -14,11 +14,15 @@ public class CircleNode extends Circle {
     public Node referenceNode;
     public HashMap<CircleNode,Line> lineMap = new HashMap<CircleNode,Line>();
     public Color defaultColor;
+    public boolean beingDragged;
+    public boolean beingHovered;
 
     public CircleNode(double x, double y, double r, Color c, Node n){
         super(x,y,r,c);
         defaultColor = c;
         this.referenceNode = n;
+        beingDragged = false;
+        beingHovered = false;
     }
 
 
