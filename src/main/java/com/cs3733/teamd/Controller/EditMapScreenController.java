@@ -980,29 +980,33 @@ public class EditMapScreenController extends MapController{
 
 
     public void setHoverProperties(CircleNode circ) {
+        //TODO: Make so the label always follows a node being dragged
         circ.setOnMouseEntered((event) -> {
-            if(circ.referenceNode.getTags().size() > 0) {
-                System.out.println("Hover");
-                hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
-                mapCanvas.getChildren().add(hoverNodeLabel);
-                hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
-                hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-                hoverNodeLabel.setPadding(new Insets(10));
-                hoverNodeLabel.setTextFill(Color.WHITE);
-                if(circ.referenceNode.getY() < 50) {
-                    hoverNodeLabel.setLayoutY(circ.getCenterY() + 50);
-                } else {
-                    hoverNodeLabel.setLayoutY(circ.getCenterY() - 50);
-                }
-
-            }
+            displayTagHoverLabel(circ);
         });
+
         circ.setOnMouseExited((event) -> {
             if(circ.referenceNode.getTags().size() > 0) {
-                System.out.println("End Hover");
                 mapCanvas.getChildren().removeAll(hoverNodeLabel);
             }
         });
+    }
+
+    private void displayTagHoverLabel(CircleNode circ){
+        if(circ.referenceNode.getTags().size() > 0) {
+            hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
+            mapCanvas.getChildren().add(hoverNodeLabel);
+            hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
+            hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            hoverNodeLabel.setPadding(new Insets(10));
+            hoverNodeLabel.setTextFill(Color.WHITE);
+            if(circ.referenceNode.getY() < 50) {
+                hoverNodeLabel.setLayoutY(circ.getCenterY() + 50);
+            } else {
+                hoverNodeLabel.setLayoutY(circ.getCenterY() - 50);
+            }
+
+        }
     }
 
     private String getHoverTextFromNode(Node n){
