@@ -119,10 +119,8 @@ public class EditMapScreenController extends MapController{
 
     double orgSceneX, orgSceneY;
 
-    public Node s1 = new Node(1,1,0);
-    public Node s2 = new Node(1,1,0);
-    public CircleNode select1 = null; //=createCircle(s1,1,Color.TRANSPARENT);
-    public CircleNode select2 = null;//=createCircle(s2,1,Color.TRANSPARENT);
+
+
 
     public int s;
     public int sa;
@@ -294,14 +292,7 @@ public class EditMapScreenController extends MapController{
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         TextFields.bindAutoCompletion(searchAllTags,allTagNames);
-        connectNode.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER && select1 != null && select2 != null)  {
-                    connectNode(select1,select2);
-                }
-            }
-        });
+
 
 
 
@@ -739,18 +730,7 @@ public class EditMapScreenController extends MapController{
         return line;
     }
 
-    private void updatePosition(MouseEvent m){
-        select1.referenceNode.setCoord((int)select1.getCenterX(),(int)select1.getCenterY());
 
-        boolean response = dir.updateNode(select1.referenceNode);
-
-        if(response){
-            errorBox.setText("");
-        }else{
-            errorBox.setText(errorString);
-        }
-
-    }
 
     @FXML
     private void clickedOnPane(MouseEvent m){
@@ -788,25 +768,19 @@ public class EditMapScreenController extends MapController{
             }
         }
 
-        if(select1 != null && select2 != null) {
-            System.out.println(select1.toString() + " " + select2.toString());
-        }
 
-        //setConnectingTags();
+
+
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
-            //select1 = circ;
 
 
             if(n.getFloor()==floor){
-
-                //for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
                 for (Node n2 : circ.referenceNode.getNodes()){
 
                     CircleNode circ2 = circleMap.get(n2);
-                    //select2 = circ2;
                     loading = true;
                     connectNode(circ,circ2);
                     loading = false;
@@ -838,17 +812,10 @@ public class EditMapScreenController extends MapController{
     @FXML
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
-            //setConnectingTags();
-            // Remove Connecting Tags...
-            for(Node n2: select1.referenceNode.getNodes()) {
-                if(n2.getFloor() != select1.referenceNode.getFloor()) {
-                    dir.deleteEdge(select1.referenceNode, n2);
-                }
-            }
-            boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
-            if(response){
+
+            if(dir.removeNodeTag(selectedCircles.getLast().referenceNode,selectedCurrentTag)){
                 errorBox.setText("");
-                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+                currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
