@@ -277,11 +277,12 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
 
-        disableAppropriateFloorButtons();
+        disableAppropriateFloorButtons(haveMidFloor);
 
     }
 
-    private void disableAppropriateFloorButtons() {
+    private void disableAppropriateFloorButtons(boolean hasMidFloor) {
+
         if(onFloor == startfloor){
             StartFloorButton.setDisable(true);
             MiddleFloorButton.setDisable(false);
@@ -298,6 +299,9 @@ public class UserScreenController extends MapController {
             StartFloorButton.setDisable(true);
             MiddleFloorButton.setDisable(true);
             EndFloorButton.setDisable(true);
+        }
+        if(!hasMidFloor){
+            MiddleFloorButton.setDisable(true);
         }
     }
 
