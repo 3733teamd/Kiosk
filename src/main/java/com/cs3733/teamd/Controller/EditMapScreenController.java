@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -23,8 +24,7 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -94,6 +94,7 @@ public class EditMapScreenController extends MapController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
+    public Label hoverNodeLabel = new Label("Informative Text");;
     @FXML
     private TextField timeoutField;
 
@@ -791,9 +792,13 @@ public class EditMapScreenController extends MapController{
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
                 CircleNode circ = createCircle(n, 5, ELEVATOR_COLOR);
+                setHoverProperties(circ);
             }else{
                 CircleNode circ = createCircle(n, 5, DEFAULT_COLOR);
+                setHoverProperties(circ);
             }
+
+
         }
     }
 
@@ -805,6 +810,7 @@ public class EditMapScreenController extends MapController{
                 try {
                     mapCanvas.getChildren().add(circleMap.get(n));
                     floorCircs.add(circleMap.get(n));
+
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
@@ -839,9 +845,6 @@ public class EditMapScreenController extends MapController{
 
         }
 
-        if(select1 != null && select2 != null) {
-            System.out.println(select1.toString() + " " + select2.toString());
-        }
     }
 
     @FXML
@@ -975,5 +978,42 @@ public class EditMapScreenController extends MapController{
         }
     }
 
+
+    public void setHoverProperties(CircleNode circ) {
+        circ.setOnMouseEntered((event) -> {
+            if(circ.referenceNode.getTags().size() > 0) {
+                System.out.println("Hover");
+                hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
+                mapCanvas.getChildren().add(hoverNodeLabel);
+                hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
+                hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+                hoverNodeLabel.setPadding(new Insets(10));
+                hoverNodeLabel.setTextFill(Color.WHITE);
+                if(circ.referenceNode.getY() < 50) {
+                    hoverNodeLabel.setLayoutY(circ.getCenterY() + 50);
+                } else {
+                    hoverNodeLabel.setLayoutY(circ.getCenterY() - 50);
+                }
+
+            }
+        });
+        circ.setOnMouseExited((event) -> {
+            if(circ.referenceNode.getTags().size() > 0) {
+                System.out.println("End Hover");
+                mapCanvas.getChildren().removeAll(hoverNodeLabel);
+            }
+        });
+    }
+
+    private String getHoverTextFromNode(Node n){
+        String output = "";
+        for(int i = 0; i<n.getTags().size();i++){
+            output += n.getTags().get(i);
+            if(i != n.getTags().size()-1){
+                output += ", ";
+            }
+        }
+        return output;
+    }
 
 }
