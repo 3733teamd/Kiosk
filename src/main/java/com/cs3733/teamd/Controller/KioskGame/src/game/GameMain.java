@@ -27,7 +27,7 @@ public class GameMain extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();*/
 
-        primaryStage.setTitle( "Timeline Example" );
+        primaryStage.setTitle( "Walkthrough Path" );
 
         Group root = new Group();
         Scene theScene = new Scene( root );
@@ -81,9 +81,9 @@ public class GameMain extends Application {
                 gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
                 if(floorNum == 1) {
-                    gc.drawImage(flkuser1, 0, 0, canvas.getWidth(), canvas.getHeight());
+                    gc.drawImage(flkuser1, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 2){
-                    gc.drawImage(flkuser2, 0, 0, canvas.getWidth(), canvas.getHeight());
+                    gc.drawImage(flkuser2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }
 
                 if(curx < 0){
@@ -97,40 +97,54 @@ public class GameMain extends Application {
                 double y = cury;
 
 
-                gc.setFill( Color.RED );
+                gc.setFill( Color.BLUE );
                 gc.setStroke( Color.BLACK );
                 gc.setLineWidth(2);
-                Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 12 );
+                Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 24 );
                 gc.setFont( theFont );
-                if (input.contains("LEFT"))
+                if (input.contains("LEFT")) {
                     x -= 1;
-                else
+                } else {
                     x = x;
-
-                if (input.contains("RIGHT"))
-                   x += 1;
-                else
+                }
+                if (input.contains("RIGHT")) {
+                    x += 1;
+                } else {
                     x = x;
-                if (input.contains("UP"))
+                }
+                if (input.contains("UP")){
                     y -= 1;
-                else
+                } else {
                     y = y;
-
-                if (input.contains("DOWN"))
+                }
+                if (input.contains("DOWN")) {
                     y += 1;
-                else
+                } else {
                     y = y;
-                if (input.contains("ENTER"))
-                    if(floorNum == 1)
+                }
+                if (input.contains("ENTER")) {
+                    if (floorNum == 1) {
                         changer = "B";
-                System.out.println(floorNum);
-                if(changer == "B")
+                    }
+                    if (floorNum == 2) {
+                        changer = "A";
+                    }
+                }
+                //System.out.println(floorNum);
+                if(changer == "A") {
+                    floorNum = 1;
+                }
+                if(changer == "B") {
                     floorNum = 2;
+                }
 
                 curx = x;
                 cury = y;
                 gc.fillText( "o", x, y);
-                gc.strokeText( "o", x, y);
+                //gc.strokeText( "o", x, y);
+                gc.fillText( "Use arrow keys to move", 10, canvas.getHeight() - 5);
+                //gc.strokeText( "Use arrow keys to move", 10, canvas.getHeight() - 5);
+                gc.fillText( "Use enter to change floors", 300, canvas.getHeight() - 5);
 
             }
         }.start();
