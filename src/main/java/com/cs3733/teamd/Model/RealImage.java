@@ -49,7 +49,7 @@ public class RealImage implements ImageInterface {
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3.png"));
                 break;
             case 1004:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf4.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/4thFloorProfViewFinal.png"));
                 break;
             case 1005:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf5.png"));
@@ -62,7 +62,7 @@ public class RealImage implements ImageInterface {
                 break;
             //default to user-view lv 4
             default:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser4.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/4thFloorUserViewFinal.png"));
                 break;
         }
         return flr_img;
