@@ -528,7 +528,6 @@ public class UserScreenController extends MapController {
 
 
             pathNodes = pf.shortestPath();
-            findZoomWithPath();
         }
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -671,13 +670,13 @@ public class UserScreenController extends MapController {
      * Set's up the map
      */
     private void setupMap() {
+        // Draw Tags
+        if(starttag != null) {
+            drawStartTagAndTags();
+        }
         if(pathNodes != null) {
+            findZoomWithPath();
             drawPath();
-        } else {
-            // Draw Tags
-            if(starttag != null) {
-                drawStartTagAndTags();
-            }
         }
     }
 }
