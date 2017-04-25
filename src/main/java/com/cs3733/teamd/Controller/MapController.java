@@ -141,6 +141,16 @@ public class MapController extends AbsController {
         addCircle(n,c,5.0);
     }
 
+    protected void clearCircleMap() {
+        this.circleNodeMap.clear();
+    }
+
+    protected void clearNodes() {
+        if(this.nodes != null) {
+            this.nodes.clear();
+        }
+    }
+
     protected void removeConnections() {
         this.lines.clear();
     }
