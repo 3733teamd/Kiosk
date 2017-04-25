@@ -283,12 +283,9 @@ public class EditMapScreenController extends MapController{
 
         allTagBox.setItems(FXCollections.observableList(allTheTags));
         System.out.println(floor);
-        //if floor<100 its falkner, so display the prof verions
-        if(floor<100) {
-            floorMap.setImage(imgInt.display(floor + 1000));
-        }else{
-            floorMap.setImage(imgInt.display(floor));
-        }
+
+        floorMap.setImage(imgInt.display(floor + 1000));
+
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -305,12 +302,8 @@ public class EditMapScreenController extends MapController{
                     FloorMenu.setValue(floor);
                     System.out.println(floor);
 
-                    //if floor<100 its falkner, so display the prof verions
-                    if (floor < 100) {
-                        floorMap.setImage(imgInt.display(floor + 1000));
-                    } else {
-                        floorMap.setImage(imgInt.display(floor));
-                    }
+                    floorMap.setImage(imgInt.display(floor + 1000));
+
 
                 }
                 imagePane.getChildren().removeAll(floorCircs);
@@ -407,15 +400,9 @@ public class EditMapScreenController extends MapController{
                 if(new_val!=null && old_val!=null)
                 floor = new_val.intValue();
                 FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                floorMap.setImage(imgInt.display(floor+1000));
 
-                /*//TODO: heart of error
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-*/
+
                 drawfloorNodes();
 
             }
@@ -590,7 +577,7 @@ public class EditMapScreenController extends MapController{
             s1.lineMap.put(s2, line);
             s2.lineMap.put(s1, line);
 
-            if (loading == false) {
+            if (!loading) {
                 boolean response = dir.saveEdge(s1.referenceNode, s2.referenceNode);
                 if (response == false) {
                     errorBox.setText(errorString);
@@ -905,7 +892,6 @@ public class EditMapScreenController extends MapController{
                         }else{
                             forceDeleteAllSelectedNodes();
                         }
-
                         break;
                     case BACK_SPACE:
                         disconnectAllSelectedNodes();
@@ -949,7 +935,9 @@ public class EditMapScreenController extends MapController{
     private void displayTagHoverLabel(CircleNode circ){
         if(circ.referenceNode.getTags().size() > 0) {
             hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
-            mapCanvas.getChildren().add(hoverNodeLabel);
+            if(!mapCanvas.getChildren().contains(hoverNodeLabel)) {
+                mapCanvas.getChildren().add(hoverNodeLabel);
+            }
             hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
             hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
             hoverNodeLabel.setPadding(new Insets(10));
