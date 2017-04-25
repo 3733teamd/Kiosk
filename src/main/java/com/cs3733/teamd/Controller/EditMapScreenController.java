@@ -667,9 +667,22 @@ public class EditMapScreenController extends MapController{
             circle.beingDragged = false;
             scrollPane.setPannable(true);
             displayTagHoverLabel(circle);
+            updatePosition(t);
 
         });
         return circle;
+    }
+    private void updatePosition(MouseEvent m){
+        selectedCircles.getLast().referenceNode.setCoord((int)selectedCircles.getLast().getCenterX(),(int)selectedCircles.getLast().getCenterY());
+
+        boolean response = dir.updateNode(selectedCircles.getLast().referenceNode);
+
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
+
     }
 
     private void addNodeToSelection(CircleNode c) {
