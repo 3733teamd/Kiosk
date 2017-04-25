@@ -35,7 +35,7 @@ public class Main extends Application {
     public static Locale local = new Locale("en", "US");
     public static Locale spanish = new Locale("es","SP");
     public static ResourceBundle bundle =ResourceBundle.getBundle("MyLabels", local);
-    public static String backString;// = "/Views/Iteration1/Main.fxml";
+    public static String backString;// = "/Views/Iteration1/GameMain.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception{

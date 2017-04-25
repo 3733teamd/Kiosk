@@ -7,6 +7,7 @@ import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Controller.KioskGame.src.game.GameMain;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +34,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
+import java.lang.Object;
+import javafx.application.Platform;
 
 
 import java.io.IOException;
@@ -63,6 +67,7 @@ public class UserScreenController extends MapController {
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
+    public Button WalkPathButton;
     @FXML
     private Slider floorSlider;
     @FXML
@@ -192,6 +197,7 @@ public class UserScreenController extends MapController {
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
+        WalkPathButton.setVisible(false);
         findStartTag();
         //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
@@ -284,6 +290,7 @@ public class UserScreenController extends MapController {
         StartFloorButton.setVisible(true);
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
+        WalkPathButton.setVisible(true);
 
         StartFloorButton.setDisable(true);
         MiddleFloorButton.setDisable(true);
@@ -603,5 +610,20 @@ public class UserScreenController extends MapController {
                 drawStartTagAndTags();
             }
         }
+    }
+
+    @FXML
+    //Function to allow the user to walk through a path
+    public  void PlayPath(ActionEvent actionEvent) throws IOException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new GameMain().start(new Stage());
+                }catch(Exception e){
+                    System.out.println("Failed to run game");
+                }
+            }
+        });
     }
 }
