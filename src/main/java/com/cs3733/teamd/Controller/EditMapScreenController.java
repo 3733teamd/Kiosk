@@ -53,6 +53,7 @@ public class EditMapScreenController extends MapController{
     private static Color DEFAULT_COLOR = Color.RED;
     private static Color ELEVATOR_COLOR = Color.YELLOW;
     private static Color CLICKED_ON_COLOR = Color.BLACK;
+    //test
 
     public String errorString = Main.bundle.getString("InvalidAction");
 
@@ -667,9 +668,22 @@ public class EditMapScreenController extends MapController{
             circle.beingDragged = false;
             scrollPane.setPannable(true);
             displayTagHoverLabel(circle);
+            updatePosition(t);
 
         });
         return circle;
+    }
+    private void updatePosition(MouseEvent m){
+        selectedCircles.getLast().referenceNode.setCoord((int)selectedCircles.getLast().getCenterX(),(int)selectedCircles.getLast().getCenterY());
+
+        boolean response = dir.updateNode(selectedCircles.getLast().referenceNode);
+
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
+
     }
 
     private void addNodeToSelection(CircleNode c) {

@@ -63,6 +63,7 @@ public class UserScreenController extends MapController {
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
+    boolean haveMidFloor = false;
     @FXML
     private Slider floorSlider;
     @FXML
@@ -229,10 +230,7 @@ public class UserScreenController extends MapController {
     }
 
     private void drawPath() {
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                pathNodes,
-                onFloor
-        );
+        TextDirectionGenerator g = new TextDirectionGenerator(pathNodes, onFloor);
         List<String> directionsArray = g.generateTextDirections();
         String output = "";
         for(String directionString: directionsArray) {
@@ -242,7 +240,7 @@ public class UserScreenController extends MapController {
 
         super.setNodes(pathNodes);
         super.removeConnections();
-        boolean haveMidFloor = false;
+
         if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
             midfloor = 1;
             startfloor = pathNodes.getLast().getFloor();
@@ -278,11 +276,11 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
 
-        disableAppropriateFloorButtons(haveMidFloor);
+        disableAppropriateFloorButtons();
 
     }
 
-    private void disableAppropriateFloorButtons(boolean hasMidFloor) {
+    private void disableAppropriateFloorButtons() {
 
         if(onFloor == startfloor){
             StartFloorButton.setDisable(true);
@@ -301,7 +299,7 @@ public class UserScreenController extends MapController {
             MiddleFloorButton.setDisable(true);
             EndFloorButton.setDisable(true);
         }
-        if(!hasMidFloor){
+        if(!haveMidFloor){
             MiddleFloorButton.setDisable(true);
         }
     }
@@ -561,6 +559,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -577,6 +577,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -593,6 +595,8 @@ public class UserScreenController extends MapController {
             System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
