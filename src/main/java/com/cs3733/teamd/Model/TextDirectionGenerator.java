@@ -91,7 +91,7 @@ public class TextDirectionGenerator {
             if (d.equals(Direction.PROCEED_FROM_TAG)) {
                 System.out.println(".PROCEED_FROM_TAG");
                 //   case PROCEED_FROM_TAG:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
             }
             if (d.equals(Direction.GO_STRAIGHT)) {
                 System.out.println(".go straight");
@@ -118,12 +118,11 @@ public class TextDirectionGenerator {
             if (d.equals(Direction.ARRIVED)) {
 
                 //case ARRIVED:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
             }
             if (d.equals(Direction.PROCEED_TO_ELEVATOR)) {
                 //case PROCEED_TO_ELEVATOR:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-                break;
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
             }
         }
         Collections.reverse(this.points);
@@ -177,7 +176,7 @@ public class TextDirectionGenerator {
      * @param directions - directions that need to be reduced
      * @return - Reduced Direction Set
      */
-    private List<Direction> reduceDirections(List<Direction> directions) {
+    public List<Direction> reduceDirections(List<Direction> directions) {
         List<Direction> reducedDirections = new ArrayList<Direction>();
         boolean lastGoStraight = false;
         for(Direction d: directions) {
@@ -237,7 +236,7 @@ public class TextDirectionGenerator {
 
     }
 
-    private List<Direction> generateDirections() {
+    public List<Direction> generateDirections() {
         ArrayList<Direction> directions = new ArrayList<Direction>();
         System.out.println("Generating Directions..");
         Node currentPoint, previousPoint, nextPoint;

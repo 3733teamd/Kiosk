@@ -246,14 +246,35 @@ public class UserScreenController extends MapController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    List<Image> icons=g.generateIcons();
-                    iconView.setImage(icons.get(i));
-                    iconView.setFitHeight(50);
-                    iconView.setFitWidth(50);
-                    setText(dir);
-                    setGraphic(iconView);
+ //                   for (TextDirectionGenerator.Direction d : dirText) {
+                        if (dir.contains("proceed from") || dir.contains("Proceed from")) {
+                            System.out.println(".PROCEED_FROM_TAG");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
+                        }
+                        else if (dir.contains("straight")) {
+                            System.out.println(".go straight");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/straight.png")));
+                        } else if (dir.contains("turn left")) {
+                            System.out.println(".turn left");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                        } else if (dir.contains("slight left")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
+                        }else if (dir.contains("turn right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
+                        } else if (dir.contains("slight right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
+                        }else if (dir.contains("arrive")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
+                        }else if (dir.contains("elevator")) {
+                            System.out.println(".proccede to elevator");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
+                        }
+                        setGraphic(iconView);
+                        iconView.setFitHeight(50);
+                        iconView.setFitWidth(50);
+                        setText(dir);
                 }
-                i=i+1;
+//                i=i+1;
             }
         });
 
