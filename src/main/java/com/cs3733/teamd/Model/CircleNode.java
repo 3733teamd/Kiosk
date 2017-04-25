@@ -25,6 +25,15 @@ public class CircleNode extends Circle {
         beingHovered = false;
     }
 
+    public void setDefaultColor(){
+        if(referenceNode.hasElevator()){
+            defaultColor = Color.YELLOW;
+        }else if(referenceNode.hasRestricted()){
+            defaultColor = Color.DARKGRAY;
+        }else{
+            defaultColor = Color.RED;
+        }
+    }
 
 
 }
