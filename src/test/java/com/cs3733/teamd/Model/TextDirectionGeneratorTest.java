@@ -14,14 +14,14 @@ import static org.junit.Assert.assertEquals;
 public class TextDirectionGeneratorTest {
     @Test
     public void testGoStraight() {
-        assertEquals(TextDirectionGenerator.Direction.GO_STRAIGHT,
+        assertEquals(TextDirectionGenerator.DirectionType.GO_STRAIGHT,
                 TextDirectionGenerator.getDirectionFromDeltas(
                         10.0, 0.0, 10.0, 0.0));
     }
 
     @Test
     public void testTurnLeft() {
-        assertEquals(TextDirectionGenerator.Direction.TURN_RIGHT,
+        assertEquals(TextDirectionGenerator.DirectionType.TURN_RIGHT,
                 TextDirectionGenerator.getDirectionFromDeltas(
                         10.0, 0.0, 0.0, 10.0));
     }
@@ -35,11 +35,11 @@ public class TextDirectionGeneratorTest {
                         "and then you have arrived at your destination")
         );
         assertEquals(expectedOutput, TextDirectionGenerator.getDirectionsInLanguage(
-                new ArrayList<TextDirectionGenerator.Direction>(
+                new ArrayList<TextDirectionGenerator.DirectionType>(
                         Arrays.asList(
-                                TextDirectionGenerator.Direction.GO_STRAIGHT,
-                                TextDirectionGenerator.Direction.TURN_LEFT,
-                                TextDirectionGenerator.Direction.ARRIVED)
+                                TextDirectionGenerator.DirectionType.GO_STRAIGHT,
+                                TextDirectionGenerator.DirectionType.TURN_LEFT,
+                                TextDirectionGenerator.DirectionType.ARRIVED)
                 ),
                 new ArrayList<String>()
         ));
@@ -54,11 +54,11 @@ public class TextDirectionGeneratorTest {
                         "and then you have arrived at your destination")
         );
         assertEquals(expectedOutput, TextDirectionGenerator.getDirectionsInLanguage(
-                new ArrayList<TextDirectionGenerator.Direction>(
+                new ArrayList<TextDirectionGenerator.DirectionType>(
                         Arrays.asList(
-                                TextDirectionGenerator.Direction.GO_STRAIGHT,
-                                TextDirectionGenerator.Direction.TURN_RIGHT,
-                                TextDirectionGenerator.Direction.ARRIVED)
+                                TextDirectionGenerator.DirectionType.GO_STRAIGHT,
+                                TextDirectionGenerator.DirectionType.TURN_RIGHT,
+                                TextDirectionGenerator.DirectionType.ARRIVED)
                 ),
                 new ArrayList<String>()
         ));

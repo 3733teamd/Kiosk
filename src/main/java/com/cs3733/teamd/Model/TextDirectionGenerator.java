@@ -24,7 +24,7 @@ public class TextDirectionGenerator {
     private List<String> pointsOfInterestNames;
 
     /**
-     * Creates a Text Direction Generator
+     * Creates a Text DirectionType Generator
      * @param points - Points to Create Text Directions from
      */
     public TextDirectionGenerator(List<Node> points, int onFloor) {
@@ -33,34 +33,34 @@ public class TextDirectionGenerator {
         this.pointsOfInterestNames = new ArrayList<String>();
     }
 
-    private static Map<Direction, String[]> getTranslations() {
-        Map<Direction, String[]> translations = new HashMap<Direction, String[]>();
+    private static Map<DirectionType, String[]> getTranslations() {
+        Map<DirectionType, String[]> translations = new HashMap<DirectionType, String[]>();
         String[] proceedFrom = { "proceed from ", "precdeder desde " };
-        translations.put(Direction.PROCEED_FROM_TAG, proceedFrom);
+        translations.put(DirectionType.PROCEED_FROM_TAG, proceedFrom);
 
         String[] goStraight = { "proceed straight", "proceder recto"};
-        translations.put(Direction.GO_STRAIGHT, goStraight);
+        translations.put(DirectionType.GO_STRAIGHT, goStraight);
 
         String[] turnLeft = {"turn left", "girar a la izquierda"};
-        translations.put(Direction.TURN_LEFT, turnLeft);
+        translations.put(DirectionType.TURN_LEFT, turnLeft);
 
         String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda"};
-        translations.put(Direction.SLIGHT_LEFT, slightLeft);
+        translations.put(DirectionType.SLIGHT_LEFT, slightLeft);
 
         String[] turnRight = {"turn right", "dobla a la derecha"};
-        translations.put(Direction.TURN_RIGHT, turnRight);
+        translations.put(DirectionType.TURN_RIGHT, turnRight);
 
         String[] slightRight = {"make a slight right", "hacer un ligero derecho"};
-        translations.put(Direction.SLIGHT_RIGHT, slightRight);
+        translations.put(DirectionType.SLIGHT_RIGHT, slightRight);
 
         String[] arrived = {"you have arrived at your destination", "has llegado a tu destino"};
-        translations.put(Direction.ARRIVED, arrived);
+        translations.put(DirectionType.ARRIVED, arrived);
 
         String[] proceedToElevator = {
                 "take the elevator to your destination floor",
                 "tomar el ascensor hasta el piso de destino"
         };
-        translations.put(Direction.PROCEED_TO_ELEVATOR, proceedToElevator);
+        translations.put(DirectionType.PROCEED_TO_ELEVATOR, proceedToElevator);
         return translations;
 
     }
@@ -69,10 +69,10 @@ public class TextDirectionGenerator {
 
     public List<String> generateTextDirections() {
         Collections.reverse(this.points);
-        List<Direction> directions = reduceDirections(
+        List<DirectionType> directions = reduceDirections(
                 generateDirections()
         );
-        for(Direction d: directions) {
+        for(DirectionType d: directions) {
             System.out.println(d);
         }
         Collections.reverse(this.points);
@@ -80,14 +80,14 @@ public class TextDirectionGenerator {
     }
 
     public static List<String> getDirectionsInLanguage(
-            List<Direction> directions,
+            List<DirectionType> directions,
             List<String> pointsOfInterestNames) {
         int textIndex = (ApplicationConfiguration.getInstance().getCurrentLanguage()
                 == ApplicationConfiguration.Language.ENGLISH) ? 0 : 1;
         List<String> directionList = new ArrayList<String>();
         String tagName = (pointsOfInterestNames.size() > 0) ? pointsOfInterestNames.get(0) : "starting point.";
         boolean isFirstElement = true;
-        for(Direction d: directions) {
+        for(DirectionType d: directions) {
             String addition = "";
             switch(d) {
                 case PROCEED_FROM_TAG:
@@ -125,20 +125,20 @@ public class TextDirectionGenerator {
     /**
      * Reduce the directions so that they are simplified
      * @param directions - directions that need to be reduced
-     * @return - Reduced Direction Set
+     * @return - Reduced DirectionType Set
      */
-    private List<Direction> reduceDirections(List<Direction> directions) {
-        List<Direction> reducedDirections = new ArrayList<Direction>();
+    private List<DirectionType> reduceDirections(List<DirectionType> directions) {
+        List<DirectionType> reducedDirections = new ArrayList<DirectionType>();
         boolean lastGoStraight = false;
-        for(Direction d: directions) {
+        for(DirectionType d: directions) {
             if(lastGoStraight) {
-                if(d == Direction.GO_STRAIGHT) {
+                if(d == DirectionType.GO_STRAIGHT) {
                     continue;
                 } else {
                     lastGoStraight = false;
                 }
             }
-            if(d == Direction.GO_STRAIGHT) {
+            if(d == DirectionType.GO_STRAIGHT) {
                 lastGoStraight = true;
             }
             reducedDirections.add(d);
@@ -152,9 +152,9 @@ public class TextDirectionGenerator {
      * @param prevToCurrentY - delta from previous y to current y
      * @param currentToNextX - delta from current x to next x
      * @param currentToNextY - delta from current y to next y
-     * @return - Direction of travel about the current point
+     * @return - DirectionType of travel about the current point
      */
-    public static Direction getDirectionFromDeltas(
+    public static DirectionType getDirectionFromDeltas(
             double prevToCurrentX,
             double prevToCurrentY,
             double currentToNextX,
@@ -168,27 +168,27 @@ public class TextDirectionGenerator {
 
         //System.out.println(previousToCurrentAngle+" "+currentToNewAngle+" "+angle);
         if(Math.abs(angle) <= SLIGHT_THRESHOLD) {
-            return Direction.GO_STRAIGHT;
+            return DirectionType.GO_STRAIGHT;
         } else if(Math.abs(angle) > 180.0){
-            return Direction.GO_STRAIGHT;
+            return DirectionType.GO_STRAIGHT;
         }else if(Math.abs(angle) < FULL_THRESHOLD) {
             if(angle > 0) {
-                return Direction.SLIGHT_RIGHT;
+                return DirectionType.SLIGHT_RIGHT;
             } else {
-                return  Direction.SLIGHT_LEFT;
+                return  DirectionType.SLIGHT_LEFT;
             }
         } else {
             if(angle > 0) {
-                return Direction.TURN_RIGHT;
+                return DirectionType.TURN_RIGHT;
             } else {
-                return Direction.TURN_LEFT;
+                return DirectionType.TURN_LEFT;
             }
         }
 
     }
 
-    private List<Direction> generateDirections() {
-        ArrayList<Direction> directions = new ArrayList<Direction>();
+    private List<DirectionType> generateDirections() {
+        ArrayList<DirectionType> directions = new ArrayList<DirectionType>();
         System.out.println("Generating Directions..");
         Node currentPoint, previousPoint, nextPoint;
 
@@ -211,17 +211,17 @@ public class TextDirectionGenerator {
             }
 
             if(nextPoint == null) {
-                directions.add(Direction.ARRIVED);
+                directions.add(DirectionType.ARRIVED);
                 break;
             } else if(nextPoint.getFloor() != onFloor) {
-                directions.add(Direction.PROCEED_TO_ELEVATOR);
+                directions.add(DirectionType.PROCEED_TO_ELEVATOR);
                 break;
             }
             if(
                     (previousPoint == null) ||
                     (previousPoint.getFloor() != currentPoint.getFloor())
                     ) {
-                directions.add(Direction.PROCEED_FROM_TAG);
+                directions.add(DirectionType.PROCEED_FROM_TAG);
                 if(currentPoint.getTags().size() > 0) {
                     pointsOfInterestNames.add(currentPoint.getTags().getFirst().getTagName());
                 }
@@ -236,10 +236,10 @@ public class TextDirectionGenerator {
             double deltaCurrentToNextX = nextPoint.getX() - currentPoint.getX();
             double deltaCurrentToNextY = nextPoint.getY() - currentPoint.getY();
 
-            Direction d = getDirectionFromDeltas(
+            DirectionType d = getDirectionFromDeltas(
                     deltaPrevToCurrentX, deltaPrevToCurrentY, deltaCurrentToNextX, deltaCurrentToNextY
             );
-            if(d != Direction.GO_STRAIGHT) {
+            if(d != DirectionType.GO_STRAIGHT) {
                 System.out.println(currentPoint.getTags().size());
             }
             directions.add(d);
@@ -248,15 +248,5 @@ public class TextDirectionGenerator {
         return directions;
     }
 
-    public enum Direction {
-        PROCEED_FROM_TAG,
-        GO_STRAIGHT,
-        TURN_LEFT,
-        SLIGHT_LEFT,
-        TURN_RIGHT,
-        SLIGHT_RIGHT,
-        PROCEED_TO_ELEVATOR,
-        LEAVE_ELEVATOR,
-        ARRIVED
-    }
+
 }
