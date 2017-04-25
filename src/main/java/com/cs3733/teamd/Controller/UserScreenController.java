@@ -144,10 +144,18 @@ public class UserScreenController extends MapController {
         Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
         tagAssociations = new HashMap<String, String>();
         for(Tag t: dir.getTags()) {
+            // Don't add restricted
+            if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                continue;
+            }
             professionalTagMerge.put(t.toString(), new ArrayList<String>());
         }
         for(Professional p: dir.getProfessionals()) {
             for(Tag t: p.getTags()) {
+                // Don't add restricted
+                if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                    continue;
+                }
                 professionalTagMerge.get(t.toString()).add(p.getName());
             }
         }
@@ -216,7 +224,13 @@ public class UserScreenController extends MapController {
             List<Node> startNodes = starttag.getNodes();
             super.setNodes(startNodes);
             super.removeConnections();
+            boolean restrictedTagsAllowed = false;
+            restrictedTagsAllowed = (dir.getCurrentUser() != null);
             for(Tag t: dir.getTags()) {
+                // Don't add restricted tag if user can't see them
+                if(t.isRestricted() && !restrictedTagsAllowed) {
+                    continue;
+                }
                 if(t != starttag) {
                     for(Node n: t.getNodes()) {
                         super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
