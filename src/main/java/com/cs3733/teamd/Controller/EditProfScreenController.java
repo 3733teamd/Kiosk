@@ -214,8 +214,8 @@ public class EditProfScreenController extends AbsController {
        // TextFields.bindAutoCompletion(searchProfessionalBar, allProfNames);
 
         //timer resets if mouse moved
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
-        timerThread.start();
+        //timer.scheduleAtFixedRate(timerTask, 30, 1000);
+        //timerThread.start();
         pane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
