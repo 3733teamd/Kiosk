@@ -96,6 +96,13 @@ public class EditMapScreenController extends MapController{
     @FXML
     private Button disconnectNodeBtn;
 
+    private Color elevatorColor = Color.YELLOW;
+    private Color circleNodeColor = Color.RED;
+    private Color selct1Color = Color.GREEN;
+    private Color selct2Color = Color.BLUE;
+    private Color restrictedColor = Color.DARKGRAY;
+    private Color movingColor = Color.BLACK;
+
     LinkedList<Line> floorLines = new LinkedList<Line>();
     LinkedList<CircleNode> floorCircs = new LinkedList<CircleNode>();
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
@@ -547,7 +554,7 @@ public class EditMapScreenController extends MapController{
 
     }
     private void addNode(int x, int y){
-        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, Color.RED);
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, circleNodeColor);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
     }
@@ -575,7 +582,7 @@ public class EditMapScreenController extends MapController{
             }
 
             if (s1.referenceNode.getFloor() != s2.referenceNode.getFloor()) {
-                line.setFill(Color.YELLOW);
+                line.setFill(elevatorColor);
                 line.setStrokeWidth(2);
                 mapCanvas.getChildren().add(line);
             } else {
@@ -612,34 +619,36 @@ public class EditMapScreenController extends MapController{
                 select1 = c;
                 s1.setID(n.getID());
                 s= n.getID();
-                c.setFill(Color.BLACK);
+                c.setFill(movingColor);
             }else {
                 if(select2 != null) {
                     if(select2.referenceNode.hasElevator()){
-                        select2.setFill(Color.YELLOW);
+                        select2.setFill(elevatorColor);
+                    }else if(1==2) {
+                        
                     }else {
-                        select2.setFill(Color.RED);
+                        select2.setFill(circleNodeColor);
                     }
                 }
 
                 select2 = select1;
                 select1 = c;
                 s= n.getID();
-                c.setFill(Color.BLACK);
+                c.setFill(movingColor);
             }
 
         });
         circle.setOnMouseReleased((t)->{
 
             if(circle.referenceNode.hasElevator()){
-                circle.setFill(Color.YELLOW);
+                circle.setFill(elevatorColor);
             }else {
-                circle.setFill(Color.RED);
+                circle.setFill(circleNodeColor);
             }
 
-            select1.setFill(Color.GREEN);
+            select1.setFill(selct1Color);
             if(select2 != null && select1 != select2){
-                select2.setFill(Color.BLUE);
+                select2.setFill(selct2Color);
             }
 
             updatePosition(t);
@@ -706,10 +715,10 @@ public class EditMapScreenController extends MapController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-                CircleNode circ = createCircle(n, 5, Color.YELLOW);
+                CircleNode circ = createCircle(n, 5, elevatorColor);
 
             }else {
-                CircleNode circ = createCircle(n, 5, Color.RED);
+                CircleNode circ = createCircle(n, 5, circleNodeColor);
             }
         }
 
@@ -719,7 +728,7 @@ public class EditMapScreenController extends MapController{
         mapCanvas.getChildren().clear();
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
-                //CircleNode circ = createCircle(n, 5, Color.RED);
+
                 try {
                     mapCanvas.getChildren().add(circleMap.get(n));
                     floorCircs.add(circleMap.get(n));
