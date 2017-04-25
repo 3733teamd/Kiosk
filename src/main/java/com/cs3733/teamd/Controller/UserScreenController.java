@@ -56,10 +56,10 @@ public class UserScreenController extends MapController {
     public Button SearchButton;
     public Button SetButton;
     public TextField TypeDestination;
-    public Text EnterDest;
+    //public Text EnterDest;
     public Text floor;
     public Label directionLabel;
-    public ChoiceBox FloorMenu;
+    public ComboBox FloorMenu;
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
@@ -457,7 +457,7 @@ public class UserScreenController extends MapController {
         SearchButton.setText(Main.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
         directionLabel.setText(Main.bundle.getString("directions"));
-        EnterDest.setText(Main.bundle.getString("enterDes"));
+        //EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
 
         if(ApplicationConfiguration.getInstance().getCurrentLanguage()
