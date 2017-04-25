@@ -755,6 +755,22 @@ public class EditMapScreenController extends MapController{
 
     private void drawfloorNodes(){
         mapCanvas.getChildren().clear();
+
+        for(int i=0; i<circleMap.size(); i++){
+            CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
+            Node n = circ.referenceNode;
+            if(n.getFloor()==floor){
+                for (Node n2 : circ.referenceNode.getNodes()){
+
+                    CircleNode circ2 = circleMap.get(n2);
+                    loading = true;
+                    connectNode(circ,circ2);
+                    loading = false;
+
+                }
+            }
+        }
+
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
@@ -767,29 +783,6 @@ public class EditMapScreenController extends MapController{
                 }
             }
         }
-
-
-
-
-
-        for(int i=0; i<circleMap.size(); i++){
-            CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
-            Node n = circ.referenceNode;
-
-
-            if(n.getFloor()==floor){
-                for (Node n2 : circ.referenceNode.getNodes()){
-
-                    CircleNode circ2 = circleMap.get(n2);
-                    loading = true;
-                    connectNode(circ,circ2);
-                    loading = false;
-
-                }
-            }
-
-        }
-
     }
 
     @FXML
