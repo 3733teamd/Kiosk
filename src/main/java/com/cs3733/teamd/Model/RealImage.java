@@ -13,7 +13,7 @@ public class RealImage implements ImageInterface {
         Image flr_img ;
         switch (floor) {
             case 1:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/1stFloorUserViewFinal.png"));
                 break;
             case 2:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/2ndFloorUserViewFinal.png"));
@@ -40,7 +40,7 @@ public class RealImage implements ImageInterface {
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk4.png"));
                 break;
             case 1001:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/1stFloorUserViewFinal.png"));
                 break;
             case 1002:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/2ndFloorProfViewFinal.png"));
