@@ -197,7 +197,7 @@ public class UserScreenController extends MapController {
         super.setFloor(onFloor);
         setupMap();
 
-        if(init=true){
+        if(init){
             //originator.setState("/Views/UserScreen.fxml");
             //careTaker.add(originator.saveStateToMemento());
             //added
@@ -206,8 +206,9 @@ public class UserScreenController extends MapController {
             MementoController.addCareTaker("/Views/UserScreen.fxml");
             init=false;
         }
-        
     }
+
+
 
     private void drawStartTagAndTags() {
         if(starttag.getNodes().size() > 0) {
@@ -449,15 +450,26 @@ public class UserScreenController extends MapController {
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
+        if(dir.getCurrentUser() != null) {
+            dir.logoutUser();
+            switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        } else {
+            switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+        }
 //        switchScreen(MMGpane, "/Views/UserScreen.fxml");
-        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+
     }
 
     //Spanish translation
     public void setSpanishText(){
         SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
-        LoginButton.setText(Main.bundle.getString("login"));
+        if(dir.getCurrentUser() != null) {
+            LoginButton.setText(Main.bundle.getString("Logout"));
+        } else {
+            LoginButton.setText(Main.bundle.getString("login"));
+        }
+
         directionLabel.setText(Main.bundle.getString("directions"));
         EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
