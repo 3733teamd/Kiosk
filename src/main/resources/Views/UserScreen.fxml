@@ -62,13 +62,14 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints />
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
                      <children>
                         <JFXButton fx:id="LoginButton" mnemonicParsing="false" onAction="#onLogin" prefHeight="45.0" prefWidth="176.0" text="Login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
                            <font>
@@ -79,10 +80,14 @@
                   </AnchorPane>
                   <AnchorPane GridPane.rowIndex="1">
                      <children>
-                        <JFXTextField fx:id="TypeDestination" prefHeight="45.0" prefWidth="259.0" promptText="%typeDes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Text fx:id="EnterDest" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Destination:" textAlignment="CENTER" wrappingWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="7" GridPane.rowIndex="1">
                      <children>
                         <JFXButton fx:id="SpanishButton" mnemonicParsing="false" onAction="#onSpanish" prefHeight="45.0" prefWidth="183.0" text="Spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
                            <font>
@@ -91,7 +96,7 @@
                         </JFXButton>
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <children>
                         <Text fx:id="floor" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor:" textAlignment="CENTER" wrappingWidth="119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4">
                            <font>
@@ -100,7 +105,7 @@
                         </Text>
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <children>
                         <JFXButton fx:id="SearchButton" mnemonicParsing="false" onAction="#onSearch" prefHeight="45.0" prefWidth="145.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2">
                            <font>
@@ -109,12 +114,17 @@
                         </JFXButton>
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <children>
                         <JFXComboBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <JFXTextField fx:id="TypeDestination" prefHeight="45.0" prefWidth="259.0" promptText="%typeDes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <children>
                         <JFXButton fx:id="SetButton" mnemonicParsing="false" onAction="#onSet" prefHeight="45.0" prefWidth="171.0" text="Set Start" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="3">
                            <font>
