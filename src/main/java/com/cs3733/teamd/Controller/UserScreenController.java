@@ -441,7 +441,7 @@ public class UserScreenController extends MapController {
                                     +" Y: "+getImageYFromZoom(event.getY()));*/
 
                     //scales with scroll wheel
-                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
+                    setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
@@ -528,7 +528,7 @@ public class UserScreenController extends MapController {
 
 
             pathNodes = pf.shortestPath();
-
+            findZoomWithPath();
         }
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -538,6 +538,59 @@ public class UserScreenController extends MapController {
 
         setupMap();
 
+    }
+
+    private void findZoomWithPath() {
+        // No path
+        if(pathNodes.size() == 0) {
+            return;
+        }
+        double minX = super.IMAGE_WIDTH;
+        double maxX = 0;
+        double minY = super.IMAGE_HEIGHT;
+        double maxY = 0;
+
+        for(Node n: pathNodes) {
+            if(n.getFloor() == onFloor) {
+                if(n.getX() > maxX) {
+                    maxX = n.getX();
+                }
+                if(n.getX() < minX) {
+                    minX = n.getX();
+                }
+                if(n.getY() > maxY) {
+                    maxY = n.getY();
+                }
+                if(n.getY() < minY) {
+                    minY = n.getY();
+                }
+            }
+        }
+        // What zoom will we be at?
+        double requiredWidth = maxX - minX;
+        double requiredHeight = maxY - minY;
+
+        double percentWidth = requiredWidth/super.IMAGE_WIDTH;
+        double percentHeight = requiredHeight/super.IMAGE_HEIGHT;
+
+        double zoom = 1.0;
+
+        if(percentHeight > percentWidth) {
+            zoom = (1.0/percentHeight);
+        } else {
+            zoom = (1.0/percentWidth);
+        }
+
+        double xPercent = (minX + (requiredWidth/2.0))/super.IMAGE_WIDTH;
+        double yPercent = (minY + (requiredHeight/2.0))/super.IMAGE_HEIGHT;
+
+        double zoomPercentNew = (zoom * 100.0)/2.0;
+
+        if(zoomPercentNew < 100.0) {
+            zoomPercentNew = 100.0;
+        }
+
+        super.setZoomAndBars(zoomPercentNew, xPercent, yPercent);
     }
 
     //Function to allow the user to change the start to wherever they wish

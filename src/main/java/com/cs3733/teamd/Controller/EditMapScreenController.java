@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -512,7 +511,7 @@ public class EditMapScreenController extends MapController{
                             +" Y: "+getImageYFromZoom(event.getY()));
 
                     //scales with scroll wheel
-                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
+                    setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
