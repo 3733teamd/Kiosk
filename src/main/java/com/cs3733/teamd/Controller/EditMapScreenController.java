@@ -624,8 +624,8 @@ public class EditMapScreenController extends MapController{
                 if(select2 != null) {
                     if(select2.referenceNode.hasElevator()){
                         select2.setFill(elevatorColor);
-                    }else if(1==2) {
-                        
+                    }else if(select2.referenceNode.hasRestricted()) {
+                        select2.setFill(restrictedColor);
                     }else {
                         select2.setFill(circleNodeColor);
                     }
