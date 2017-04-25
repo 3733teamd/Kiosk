@@ -229,10 +229,7 @@ public class UserScreenController extends MapController {
     }
 
     private void drawPath() {
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                pathNodes,
-                onFloor
-        );
+        TextDirectionGenerator g = new TextDirectionGenerator(pathNodes, onFloor);
         List<String> directionsArray = g.generateTextDirections();
         String output = "";
         for(String directionString: directionsArray) {
