@@ -221,7 +221,7 @@
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="1">
                            <children>
-                              <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNode" prefHeight="47.0" prefWidth="259.0" text="%remN" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="1" />
+                              <Button fx:id="removeNodeButton" mnemonicParsing="false" onAction="#removeCircleNodePressed" prefHeight="47.0" prefWidth="259.0" text="%remN" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="1" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="9">

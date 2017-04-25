@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -23,8 +24,7 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -45,6 +45,15 @@ import java.util.*;
  * Created by Anh Dao on 4/6/2017.
  */
 public class EditMapScreenController extends MapController{
+
+
+    //color constants for convenience
+    private static Color CUR_SELECTED_COLOR = Color.GREEN;
+    private static Color OTHER_SELECTED_COLOR = Color.BLUE;
+    private static Color DEFAULT_COLOR = Color.RED;
+    private static Color ELEVATOR_COLOR = Color.YELLOW;
+    private static Color CLICKED_ON_COLOR = Color.BLACK;
+    //test
 
     public String errorString = Main.bundle.getString("InvalidAction");
 
@@ -86,6 +95,7 @@ public class EditMapScreenController extends MapController{
     public AnchorPane imagePane;
     public TextField addTag;
     public ChoiceBox FloorMenu;
+    public Label hoverNodeLabel = new Label("Informative Text");;
     @FXML
     private TextField timeoutField;
 
@@ -96,6 +106,7 @@ public class EditMapScreenController extends MapController{
     @FXML
     private Button disconnectNodeBtn;
 
+    LinkedList<CircleNode> selectedCircles = new LinkedList<CircleNode>();
     LinkedList<Line> floorLines = new LinkedList<Line>();
     LinkedList<CircleNode> floorCircs = new LinkedList<CircleNode>();
     HashMap<Node, CircleNode> circleMap = new HashMap<Node, CircleNode>();
@@ -109,10 +120,8 @@ public class EditMapScreenController extends MapController{
 
     double orgSceneX, orgSceneY;
 
-    public Node s1 = new Node(1,1,0);
-    public Node s2 = new Node(1,1,0);
-    public CircleNode select1 = null; //=createCircle(s1,1,Color.TRANSPARENT);
-    public CircleNode select2 = null;//=createCircle(s2,1,Color.TRANSPARENT);
+
+
 
     public int s;
     public int sa;
@@ -284,14 +293,7 @@ public class EditMapScreenController extends MapController{
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         TextFields.bindAutoCompletion(searchAllTags,allTagNames);
-        connectNode.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER && select1 != null && select2 != null)  {
-                    connectNode(select1,select2);
-                }
-            }
-        });
+
 
 
 
@@ -375,22 +377,27 @@ public class EditMapScreenController extends MapController{
             CreateUserButton.setFont(Font.font("System",20));
         }
 
-        //drawfloorNodes();
-//
+        setUpTimeoutField();
+
+    }//initialize end
+
+
+    private void setUpTimeoutField(){
         timeoutField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER && !timeoutField.getText().isEmpty())  {
-                        if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
-                            MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
-                            System.out.println("timeout"+ MementoController.timeoutTime);
-                        }
+                    if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
+                        MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
+                        System.out.println("timeout"+ MementoController.timeoutTime);
+                    }
 
                 }
             }
         });
 
-    }//initialize end
+        timeoutField.setText(String.valueOf( MementoController.timeoutTime));
+    }
 
     private void setFloorSliderListener(){
 
@@ -442,9 +449,19 @@ public class EditMapScreenController extends MapController{
         scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if(event.isSecondaryButtonDown()){
+                    if(!event.isShiftDown()){
+                        deselectAllNodes();
+                    }else{
+                        deselectMostRecentNode();
+                    }
+
+                }
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
             }
+
         });
+
 
         scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -466,6 +483,14 @@ public class EditMapScreenController extends MapController{
         });
 
 
+    }
+
+    private void deselectMostRecentNode() {
+        selectedCircles.getLast().setFill(selectedCircles.getLast().defaultColor);
+        selectedCircles.removeLast();
+        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        currentTagBox.setItems(FXCollections.observableList(selectedCircles.getLast().referenceNode.getTags()));
+        currentTagBox.refresh();
     }
 
     private void overrideScrollWheel() {
@@ -547,20 +572,20 @@ public class EditMapScreenController extends MapController{
 
     }
     private void addNode(int x, int y){
-        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, Color.RED);
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, DEFAULT_COLOR);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
     }
     @FXML
     public void connectNodePressed(){
-        connectNode(select1,select2);
+        connectAllSelectedNodes();
     }
 
     private void connectNode(CircleNode s1, CircleNode s2){
 
         if((s1.referenceNode.getFloor() == s2.referenceNode.getFloor()) || edgeTail) {
 
-            Line line = connectCircleNodes(s1, s2);
+            Line line = makeLineForCircleNodes(s1, s2);
             line.setStyle("-fx-stroke: red;");
             s1.lineMap.put(s2, line);
             s2.lineMap.put(s1, line);
@@ -591,63 +616,37 @@ public class EditMapScreenController extends MapController{
         circleMap.put(n, circle);
 
         circle.setCursor(Cursor.HAND);
-        //nodes.put(circle, n);
 
-        circle.setOnMousePressed((t) -> {
-            scrollPane.setPannable(false);
-            orgSceneX = t.getSceneX();
-            orgSceneY = t.getSceneY();
+        circle.setOnMousePressed((mouse) -> {
+            if(mouse.isPrimaryButtonDown()) {
+                scrollPane.setPannable(false);
+                orgSceneX = mouse.getSceneX();
+                orgSceneY = mouse.getSceneY();
 
-            CircleNode c = (CircleNode) (t.getSource());
-            c.toFront();
-            xLoc.setText(new Integer((int)c.getCenterX()).toString());
-            yLoc.setText(new Integer((int)c.getCenterY()).toString());
+                CircleNode c = (CircleNode) (mouse.getSource());
+                c.toFront();
+                xLoc.setText(new Integer((int) c.getCenterX()).toString());
+                yLoc.setText(new Integer((int) c.getCenterY()).toString());
 
-            currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
-            currentTagBox.refresh();
 
-            scirc = c;
 
-            if (select1 == null){
-                select1 = c;
-                s1.setID(n.getID());
-                s= n.getID();
-                c.setFill(Color.BLACK);
-            }else {
-                if(select2 != null) {
-                    if(select2.referenceNode.hasElevator()){
-                        select2.setFill(Color.YELLOW);
-                    }else {
-                        select2.setFill(Color.RED);
-                    }
+                if(!mouse.isShiftDown()){
+                    deselectAllNodes();
+                    addNodeToSelection(c);
+
+                }else{
+                    addNodeToSelection(c);
                 }
+                scirc = c;
 
-                select2 = select1;
-                select1 = c;
-                s= n.getID();
-                c.setFill(Color.BLACK);
             }
-
         });
-        circle.setOnMouseReleased((t)->{
 
-            if(circle.referenceNode.hasElevator()){
-                circle.setFill(Color.YELLOW);
-            }else {
-                circle.setFill(Color.RED);
-            }
-
-            select1.setFill(Color.GREEN);
-            if(select2 != null && select1 != select2){
-                select2.setFill(Color.BLUE);
-            }
-
-            updatePosition(t);
-            scrollPane.setPannable(true);
-        });
 
         circle.setOnMouseDragged((t) -> {
-            //if(state ==states.add) {
+
+            circle.beingDragged = true;
+            mapCanvas.getChildren().removeAll(hoverNodeLabel);
             double offsetX = t.getSceneX() - orgSceneX;
             double offsetY = t.getSceneY() - orgSceneY;
 
@@ -662,12 +661,74 @@ public class EditMapScreenController extends MapController{
             xLoc.setText(new Integer((int) c.getCenterX()).toString());
             yLoc.setText(new Integer((int) c.getCenterY()).toString());
 
-            //}
+        });
+
+        circle.setOnMouseReleased((t)->{
+
+            circle.beingDragged = false;
+            scrollPane.setPannable(true);
+            displayTagHoverLabel(circle);
+            updatePosition(t);
+
         });
         return circle;
     }
+    private void updatePosition(MouseEvent m){
+        selectedCircles.getLast().referenceNode.setCoord((int)selectedCircles.getLast().getCenterX(),(int)selectedCircles.getLast().getCenterY());
 
-    private Line connectCircleNodes(CircleNode c1, CircleNode c2) {
+        boolean response = dir.updateNode(selectedCircles.getLast().referenceNode);
+
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
+
+    }
+
+    private void addNodeToSelection(CircleNode c) {
+        //order matters so we know what the chain is to connect them
+        for(CircleNode cn : selectedCircles){
+            //stub
+        }
+        //colors
+
+        currentTagBox.setItems(FXCollections.observableList(c.referenceNode.getTags()));
+        currentTagBox.refresh();
+
+        if(!selectedCircles.isEmpty()) {
+            selectedCircles.getLast().setFill(OTHER_SELECTED_COLOR);
+        }
+        selectedCircles.addLast(c);
+        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+
+    }
+
+    private void deselectAllNodes() {
+        for(CircleNode cn : selectedCircles){
+            cn.setFill(cn.defaultColor);
+        }
+        selectedCircles.clear();
+    }
+
+    private void connectAllSelectedNodes(){
+        for(int i = 0; i<selectedCircles.size()-1;i++){
+            connectNode(selectedCircles.get(i),selectedCircles.get(i+1));
+        }
+    }
+    private void disconnectAllSelectedNodes(){
+        for(CircleNode cn: selectedCircles){
+            for(CircleNode other: selectedCircles){
+                try{
+                    disconnectCircleNodes(cn, other);
+                }catch(NullPointerException e){
+
+                }
+            }
+        }
+    }
+
+    private Line makeLineForCircleNodes(CircleNode c1, CircleNode c2) {
         Line line = new Line();
         floorLines.add(line);
 
@@ -683,22 +744,11 @@ public class EditMapScreenController extends MapController{
         return line;
     }
 
-    private void updatePosition(MouseEvent m){
-        select1.referenceNode.setCoord((int)select1.getCenterX(),(int)select1.getCenterY());
 
-        boolean response = dir.updateNode(select1.referenceNode);
-
-        if(response){
-            errorBox.setText("");
-        }else{
-            errorBox.setText(errorString);
-        }
-
-    }
 
     @FXML
     private void clickedOnPane(MouseEvent m){
-        if(m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2){
+        if(m.getButton().equals(MouseButton.PRIMARY) && m.getClickCount() == 2 ){
             addNode((int)m.getX(),(int)m.getY());
         }
     }
@@ -706,13 +756,15 @@ public class EditMapScreenController extends MapController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-                CircleNode circ = createCircle(n, 5, Color.YELLOW);
-
-            }else {
-                CircleNode circ = createCircle(n, 5, Color.RED);
+                CircleNode circ = createCircle(n, 5, ELEVATOR_COLOR);
+                setHoverProperties(circ);
+            }else{
+                CircleNode circ = createCircle(n, 5, DEFAULT_COLOR);
+                setHoverProperties(circ);
             }
-        }
 
+
+        }
     }
 
     private void drawfloorNodes(){
@@ -723,31 +775,26 @@ public class EditMapScreenController extends MapController{
                 try {
                     mapCanvas.getChildren().add(circleMap.get(n));
                     floorCircs.add(circleMap.get(n));
+
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
             }
         }
 
-        if(select1 != null && select2 != null) {
-            System.out.println(select1.toString() + " " + select2.toString());
-        }
 
-        //setConnectingTags();
+
+
 
         for(int i=0; i<circleMap.size(); i++){
             CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
             Node n = circ.referenceNode;
-            //select1 = circ;
 
 
             if(n.getFloor()==floor){
-
-                //for (int j=0; j<circ.referenceNode.getNodes().size(); j++){
                 for (Node n2 : circ.referenceNode.getNodes()){
 
                     CircleNode circ2 = circleMap.get(n2);
-                    //select2 = circ2;
                     loading = true;
                     connectNode(circ,circ2);
                     loading = false;
@@ -757,18 +804,15 @@ public class EditMapScreenController extends MapController{
 
         }
 
-        if(select1 != null && select2 != null) {
-            System.out.println(select1.toString() + " " + select2.toString());
-        }
     }
 
     @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
-        if(selectedTag != null||select1==null){
-            boolean response = dir.addNodeTag(select1.referenceNode,selectedTag);
+        if(selectedCircles.getLast() != null){
+            boolean response = dir.addNodeTag(selectedCircles.getLast().referenceNode,selectedTag);
             if(response){
                 errorBox.setText("");
-                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+                currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
@@ -782,17 +826,10 @@ public class EditMapScreenController extends MapController{
     @FXML
     public void removeTagFromCurrentNode(ActionEvent actionEvent) {
         if(selectedCurrentTag != null){
-            //setConnectingTags();
-            // Remove Connecting Tags...
-            for(Node n2: select1.referenceNode.getNodes()) {
-                if(n2.getFloor() != select1.referenceNode.getFloor()) {
-                    dir.deleteEdge(select1.referenceNode, n2);
-                }
-            }
-            boolean response = dir.removeNodeTag(select1.referenceNode,selectedCurrentTag);
-            if(response){
+
+            if(dir.removeNodeTag(selectedCircles.getLast().referenceNode,selectedCurrentTag)){
                 errorBox.setText("");
-                currentTagBox.setItems(FXCollections.observableArrayList(select1.referenceNode.getTags()));
+                currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
                 errorBox.setText(errorString);
             }
@@ -804,35 +841,35 @@ public class EditMapScreenController extends MapController{
     }
 
     public void disconnectCircleNodesButton(ActionEvent actionEvent) {
-        disconnectCircleNodes();
+        disconnectAllSelectedNodes();
     }
 
-    private void disconnectCircleNodes(){
-        boolean response = dir.deleteEdge(select1.referenceNode,select2.referenceNode);
+    private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
+        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
         if(response){
             errorBox.setText("");
-            Line l = select1.lineMap.get(select2);
+            Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println(select1.lineMap.size());
-            select1.lineMap.remove(select2);
-            select2.lineMap.remove(select1);
+            System.out.println(cn1.lineMap.size());
+            cn1.lineMap.remove(cn2);
+            cn2.lineMap.remove(cn1);
             drawfloorNodes();
         }else{
             errorBox.setText(errorString);
         }
     }
 
-    public void removeCircleNode(ActionEvent actionEvent) {
-        boolean response = dir.deleteNode(select1.referenceNode);
-        if(response){
+    public void removeCircleNodePressed(ActionEvent actionEvent) {
+        deleteAllSelectedNodes();
+    }
+
+    private void removeCircleNode(CircleNode cn){
+        if(dir.deleteNode(cn.referenceNode)){
             errorBox.setText("");
-            mapCanvas.getChildren().remove(select1);
-            select1 = select2;
-            select2= null;
+            mapCanvas.getChildren().remove(cn);
         }else{
             errorBox.setText(errorString);
         }
-
     }
 
     public void doneDrag(DragEvent dragEvent) {
@@ -863,27 +900,18 @@ public class EditMapScreenController extends MapController{
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()){
                     case DELETE:
-                            if(select1 != null){
-                                boolean response = dir.deleteNode(select1.referenceNode);
-                                if(response){
-                                    errorBox.setText("");
-                                    mapCanvas.getChildren().remove(select1);
-                                    select1 = select2;
-                                    select2= null;
-                                }else{
-                                    errorBox.setText(errorString);
-                                }
-                            }
+                        if(!ke.isShiftDown()){
+                            deleteAllSelectedNodes();
+                        }else{
+                            forceDeleteAllSelectedNodes();
+                        }
+
                         break;
                     case BACK_SPACE:
-                        if(select1 != null && select2 != null){
-                            disconnectCircleNodes();
-                        }
+                        disconnectAllSelectedNodes();
                         break;
                     case ENTER:
-                        if(select1 != null && select2 != null){
-                            connectNode(select1,select2);
-                        }
+                        connectAllSelectedNodes();
                         break;
                 }
 
@@ -891,5 +919,59 @@ public class EditMapScreenController extends MapController{
         });
     }
 
+    private void forceDeleteAllSelectedNodes() {
+        disconnectAllSelectedNodes();
+        deleteAllSelectedNodes();
+    }
+
+    private void deleteAllSelectedNodes() {
+        for(CircleNode cn : selectedCircles){
+            removeCircleNode(cn);
+        }
+    }
+
+
+    public void setHoverProperties(CircleNode circ) {
+        //TODO: Make so the label always follows a node being dragged
+        circ.setOnMouseEntered((event) -> {
+            if(!circ.beingDragged) {
+                displayTagHoverLabel(circ);
+            }
+        });
+
+        circ.setOnMouseExited((event) -> {
+            if(circ.referenceNode.getTags().size() > 0) {
+                mapCanvas.getChildren().removeAll(hoverNodeLabel);
+            }
+        });
+    }
+
+    private void displayTagHoverLabel(CircleNode circ){
+        if(circ.referenceNode.getTags().size() > 0) {
+            hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
+            mapCanvas.getChildren().add(hoverNodeLabel);
+            hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
+            hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+            hoverNodeLabel.setPadding(new Insets(10));
+            hoverNodeLabel.setTextFill(Color.WHITE);
+            if(circ.referenceNode.getY() < 50) {
+                hoverNodeLabel.setLayoutY(circ.getCenterY() + 50);
+            } else {
+                hoverNodeLabel.setLayoutY(circ.getCenterY() - 50);
+            }
+
+        }
+    }
+
+    private String getHoverTextFromNode(Node n){
+        String output = "";
+        for(int i = 0; i<n.getTags().size();i++){
+            output += n.getTags().get(i);
+            if(i != n.getTags().size()-1){
+                output += ", ";
+            }
+        }
+        return output;
+    }
 
 }

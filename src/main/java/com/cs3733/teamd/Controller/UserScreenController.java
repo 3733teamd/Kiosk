@@ -63,6 +63,7 @@ public class UserScreenController extends MapController {
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
+    boolean haveMidFloor = false;
     @FXML
     private Slider floorSlider;
     @FXML
@@ -231,10 +232,7 @@ public class UserScreenController extends MapController {
     }
 
     private void drawPath() {
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                pathNodes,
-                onFloor
-        );
+        TextDirectionGenerator g = new TextDirectionGenerator(pathNodes, onFloor);
         List<String> directionsArray = g.generateTextDirections();
         String output = "";
         for(String directionString: directionsArray) {
@@ -244,7 +242,7 @@ public class UserScreenController extends MapController {
 
         super.setNodes(pathNodes);
         super.removeConnections();
-        boolean haveMidFloor = false;
+
         if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
             midfloor = 1;
             startfloor = pathNodes.getLast().getFloor();
@@ -273,14 +271,6 @@ public class UserScreenController extends MapController {
             }
         }
         super.addCircle(pathNodes.getLast(), Color.GREEN, 8.0);
-        /*
-        if(pathNodes.size() > 0) {
-            // Last Node
-            super.addCircle(pathNodes.getFirst(), Color.RED);
-        }
-        if(pathNodes.size() > 1) {
-            super.addCircle(pathNodes.getLast(), Color.GREEN);
-        }*/
 
         super.drawNodes();
 
@@ -288,30 +278,31 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
 
-        StartFloorButton.setDisable(true);
-        MiddleFloorButton.setDisable(true);
-        EndFloorButton.setDisable(true);
+        disableAppropriateFloorButtons();
 
-        if((onFloor == startfloor)
-                &&(onFloor != destfloor)) {
+    }
+
+    private void disableAppropriateFloorButtons() {
+
+        if(onFloor == startfloor){
             StartFloorButton.setDisable(true);
+            MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(false);
-        } else if((onFloor != startfloor)
-                &&(onFloor == destfloor)) {
+        }else if(onFloor == midfloor){
             StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(true);
+            EndFloorButton.setDisable(false);
+        }else if(onFloor == destfloor){
+            StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
-        } else {
-            StartFloorButton.setDisable(false);
-            EndFloorButton.setDisable(false);
+        }else{
+            StartFloorButton.setDisable(true);
+            MiddleFloorButton.setDisable(true);
+            EndFloorButton.setDisable(true);
         }
-
-        if(haveMidFloor && (onFloor != midfloor)) {
-            MiddleFloorButton.setDisable(false);
-        } else if(haveMidFloor && (onFloor == midfloor)) {
-            StartFloorButton.setDisable(false);
-            EndFloorButton.setDisable(false);
-        } else if(haveMidFloor) {
-            MiddleFloorButton.setDisable(false);
+        if(!haveMidFloor){
+            MiddleFloorButton.setDisable(true);
         }
     }
 
@@ -559,6 +550,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -575,6 +568,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -591,6 +586,8 @@ public class UserScreenController extends MapController {
             System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
