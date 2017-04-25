@@ -13,16 +13,31 @@ import java.util.HashMap;
 public class CircleNode extends Circle {
     public Node referenceNode;
     public HashMap<CircleNode,Line> lineMap = new HashMap<CircleNode,Line>();
-    public Color defaultColor;
+    private Color defaultColor;
     public boolean beingDragged;
     public boolean beingHovered;
 
-    public CircleNode(double x, double y, double r, Color c, Node n){
-        super(x,y,r,c);
-        defaultColor = c;
+    public CircleNode(double x, double y, double r, Node n){
+        super(x,y,r);
+        setDefaultColor();
         this.referenceNode = n;
         beingDragged = false;
         beingHovered = false;
+    }
+
+    public Color getDefaultColor(){
+        return defaultColor;
+    }
+
+    public void setDefaultColor(){
+        System.out.println("Setting Default Color");
+        if (referenceNode.hasElevator()){
+            defaultColor = Color.YELLOW;
+        }else if(referenceNode.hasRestricted()){
+            defaultColor = Color.DARKGRAY;
+        }else{
+            defaultColor = Color.RED;
+        }
     }
 
 
