@@ -187,7 +187,7 @@ public class MapController extends AbsController {
     }
 
     protected void addCircle(Node n, Color c, double r) {
-        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r, c,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
@@ -216,12 +216,7 @@ public class MapController extends AbsController {
         circleNodeMap.put(n, circle);
     }
 
-    private CircleNode createDefaultCircle(Node n) {
-        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), 5.0, Color.BLUE,n);
-        circle.setCursor(Cursor.HAND);
 
-        return circle;
-    }
 
     protected void drawNodes() {
         mapCanvas.getChildren().clear();
@@ -229,13 +224,12 @@ public class MapController extends AbsController {
         // Draw all of the nodes that are on the current floor
         for(Node n: nodes) {
             CircleNode currentNode = circleNodeMap.get(n);
-            System.out.println(currentNode);
-            if(currentNode == null) {
-                currentNode = createDefaultCircle(n);
-            }
+
             // Draw it
             if(n.getFloor() == floor) {
                 mapCanvas.getChildren().removeAll(currentNode);
+                currentNode.setDefaultColor();
+                //System.out.println(currentNode.defaultColor.getRed());
                 mapCanvas.getChildren().add(currentNode);
             }
         }
