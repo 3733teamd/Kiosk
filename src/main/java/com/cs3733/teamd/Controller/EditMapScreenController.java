@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -127,7 +126,7 @@ public class EditMapScreenController extends MapController{
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor = 1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -242,7 +241,7 @@ public class EditMapScreenController extends MapController{
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorSliderListener();
+        setFloorChoiceBoxListener();
         overrideScrollWheel();
         panMethods();
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -294,27 +293,7 @@ public class EditMapScreenController extends MapController{
 
 
 
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if(new_val!=null) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    System.out.println(floor);
 
-                    floorMap.setImage(imgInt.display(floor + 1000));
-
-
-                }
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-
-                drawfloorNodes();
-
-            }
-        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -392,16 +371,22 @@ public class EditMapScreenController extends MapController{
         timeoutField.setText(String.valueOf( MementoController.timeoutTime));
     }
 
-    private void setFloorSliderListener(){
+    private void setFloorChoiceBoxListener(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                floorMap.setImage(imgInt.display(floor+1000));
-
+                if(new_val!=null) {
+                    if((int)new_val != floor){
+                        floor = new_val.intValue();
+                        FloorMenu.setValue(floor);
+                        floorMap.setImage(imgInt.display(floor + 1000));
+                    }
+                }
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
 
                 drawfloorNodes();
 
