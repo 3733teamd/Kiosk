@@ -53,6 +53,7 @@ public class EditMapScreenController extends MapController{
     private static Color DEFAULT_COLOR = Color.RED;
     private static Color ELEVATOR_COLOR = Color.YELLOW;
     private static Color CLICKED_ON_COLOR = Color.BLACK;
+    //test
 
     public String errorString = Main.bundle.getString("InvalidAction");
 
