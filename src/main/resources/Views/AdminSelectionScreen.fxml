@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminSelectionScreenController">
+    <children>
+        <VBox prefHeight="800.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane prefHeight="26.0" prefWidth="1291.0" style="-fx-background-color: #4267b2;">
+                    <children>
+                        <HBox prefHeight="41.0" prefWidth="710.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="8.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="3.0">
+                                            <image>
+                                                <Image url="@/floor_imgs/fkthumb.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Text fill="WHITE" layoutX="48.0" layoutY="4.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="661.99998742342" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0">
+                                            <font>
+                                                <Font name="Tahoma" size="31.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </AnchorPane>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="770.0" prefWidth="1291.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <JFXButton layoutX="388.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: DCDCDC;" buttonType="RAISED" onAction="#onEnhancedMap" prefHeight="78.0" prefWidth="211.0" text="Enhanced Map" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="200.0" />
+                  <JFXButton layoutX="707.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: DCDCDC;" buttonType="RAISED" onAction="#onEditMap" prefHeight="78.0" prefWidth="211.0" text="Edit Map" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="200.0" />
+               </children>
+            </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
