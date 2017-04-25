@@ -172,6 +172,7 @@ public class UserScreenController extends MapController {
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
+            //user views
             floors.addLast(1);
             floors.addLast(2);
             floors.addLast(3);
@@ -179,9 +180,11 @@ public class UserScreenController extends MapController {
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            //belkin house view
             floors.addLast(102);
             floors.addLast(103);
             floors.addLast(104);
+            //add belkin professional views
         }
 
         floorDropDown.clear();
