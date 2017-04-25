@@ -237,7 +237,6 @@ public class MapController extends AbsController {
         // Draw all of the nodes that are on the current floor
         for(Node n: nodes) {
             CircleNode currentNode = circleNodeMap.get(n);
-            System.out.println(currentNode.defaultColor.toString());
 
             // Draw it
             if(n.getFloor() == floor) {
