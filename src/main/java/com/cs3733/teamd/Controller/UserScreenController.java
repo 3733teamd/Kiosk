@@ -144,10 +144,18 @@ public class UserScreenController extends MapController {
         Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
         tagAssociations = new HashMap<String, String>();
         for(Tag t: dir.getTags()) {
+            // Don't add restricted
+            if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                continue;
+            }
             professionalTagMerge.put(t.toString(), new ArrayList<String>());
         }
         for(Professional p: dir.getProfessionals()) {
             for(Tag t: p.getTags()) {
+                // Don't add restricted
+                if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                    continue;
+                }
                 professionalTagMerge.get(t.toString()).add(p.getName());
             }
         }
@@ -201,7 +209,7 @@ public class UserScreenController extends MapController {
         super.setFloor(onFloor);
         setupMap();
 
-        if(init=true){
+        if(init){
             //originator.setState("/Views/UserScreen.fxml");
             //careTaker.add(originator.saveStateToMemento());
             //added
@@ -210,15 +218,23 @@ public class UserScreenController extends MapController {
             MementoController.addCareTaker("/Views/UserScreen.fxml");
             init=false;
         }
-        
     }
+
+
 
     private void drawStartTagAndTags() {
         if(starttag.getNodes().size() > 0) {
             List<Node> startNodes = starttag.getNodes();
+            super.clearNodes();
             super.setNodes(startNodes);
             super.removeConnections();
+            boolean restrictedTagsAllowed = false;
+            restrictedTagsAllowed = (dir.getCurrentUser() != null);
             for(Tag t: dir.getTags()) {
+                // Don't add restricted tag if user can't see them
+                if(t.isRestricted() && !restrictedTagsAllowed) {
+                    continue;
+                }
                 if(t != starttag) {
                     for(Node n: t.getNodes()) {
                         super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
@@ -429,7 +445,7 @@ public class UserScreenController extends MapController {
                                     +" Y: "+getImageYFromZoom(event.getY()));*/
 
                     //scales with scroll wheel
-                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
+                    setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
@@ -450,15 +466,26 @@ public class UserScreenController extends MapController {
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
+        if(dir.getCurrentUser() != null) {
+            dir.logoutUser();
+            switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        } else {
+            switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+        }
 //        switchScreen(MMGpane, "/Views/UserScreen.fxml");
-        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+
     }
 
     //Spanish translation
     public void setSpanishText(){
         SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
-        LoginButton.setText(Main.bundle.getString("login"));
+        if(dir.getCurrentUser() != null) {
+            LoginButton.setText(Main.bundle.getString("Logout"));
+        } else {
+            LoginButton.setText(Main.bundle.getString("login"));
+        }
+
         directionLabel.setText(Main.bundle.getString("directions"));
         //EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
@@ -505,7 +532,6 @@ public class UserScreenController extends MapController {
 
 
             pathNodes = pf.shortestPath();
-
         }
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -515,6 +541,59 @@ public class UserScreenController extends MapController {
 
         setupMap();
 
+    }
+
+    private void findZoomWithPath() {
+        // No path
+        if(pathNodes.size() == 0) {
+            return;
+        }
+        double minX = super.IMAGE_WIDTH;
+        double maxX = 0;
+        double minY = super.IMAGE_HEIGHT;
+        double maxY = 0;
+
+        for(Node n: pathNodes) {
+            if(n.getFloor() == onFloor) {
+                if(n.getX() > maxX) {
+                    maxX = n.getX();
+                }
+                if(n.getX() < minX) {
+                    minX = n.getX();
+                }
+                if(n.getY() > maxY) {
+                    maxY = n.getY();
+                }
+                if(n.getY() < minY) {
+                    minY = n.getY();
+                }
+            }
+        }
+        // What zoom will we be at?
+        double requiredWidth = maxX - minX;
+        double requiredHeight = maxY - minY;
+
+        double percentWidth = requiredWidth/super.IMAGE_WIDTH;
+        double percentHeight = requiredHeight/super.IMAGE_HEIGHT;
+
+        double zoom = 1.0;
+
+        if(percentHeight > percentWidth) {
+            zoom = (1.0/percentHeight);
+        } else {
+            zoom = (1.0/percentWidth);
+        }
+
+        double xPercent = (minX + (requiredWidth/2.0))/super.IMAGE_WIDTH;
+        double yPercent = (minY + (requiredHeight/2.0))/super.IMAGE_HEIGHT;
+
+        double zoomPercentNew = (zoom * 100.0)/2.0;
+
+        if(zoomPercentNew < 100.0) {
+            zoomPercentNew = 100.0;
+        }
+
+        super.setZoomAndBars(zoomPercentNew, xPercent, yPercent);
     }
 
     //Function to allow the user to change the start to wherever they wish
@@ -595,13 +674,14 @@ public class UserScreenController extends MapController {
      * Set's up the map
      */
     private void setupMap() {
+        // Draw Tags
+        if(starttag != null) {
+            super.clearCircleMap();
+            drawStartTagAndTags();
+        }
         if(pathNodes != null) {
+            findZoomWithPath();
             drawPath();
-        } else {
-            // Draw Tags
-            if(starttag != null) {
-                drawStartTagAndTags();
-            }
         }
     }
 }

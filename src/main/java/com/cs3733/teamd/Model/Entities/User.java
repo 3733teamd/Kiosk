@@ -68,7 +68,7 @@ public class User {
                 hasPermission = this.hasRole("admin");
                 break;
             case EDIT_MAP:
-                hasPermission = (this.hasRole("admin") || this.hasRole("prof"));
+                hasPermission = this.hasRole("admin");
                 break;
             default:
                 break;

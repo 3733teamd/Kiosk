@@ -12,7 +12,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
@@ -95,37 +94,15 @@ public class MapController extends AbsController {
         return (yUpperLeft + (yPercent * viewportHeight));
     }
 
-    protected void setZoomAndScale(double xBarPosition, double yBarPosition, boolean zoomIn) {
+    protected void setZoomAndBars(double zoomPercent, double xBarPosition, double yBarPosition) {
+        this.zoomPercent = zoomPercent;
+        System.out.println(zoomPercent);
+        setBarPositions(xBarPosition, yBarPosition, true);
+    }
+
+    protected void setBarPositions(double xBarPosition, double yBarPosition, boolean zoomIn) {
         double zoomMin = 100.0;
-        double zoomMax = 500.0;
-
-        /*if(this.zoomRestrictionMap.get(this.floor) != null) {
-            // We have zoom restrictions on this floor
-            double minYPixels = this.zoomRestrictionMap.get(this.floor).minY * IMAGE_HEIGHT;
-            double minXPixels = this.zoomRestrictionMap.get(this.floor).minX * IMAGE_WIDTH;
-
-            double maxYPixels = this.zoomRestrictionMap.get(this.floor).maxY * IMAGE_HEIGHT;
-            double maxXPixels = this.zoomRestrictionMap.get(this.floor).maxX * IMAGE_WIDTH;
-
-            double viewportMaxWidth = maxXPixels - minXPixels;
-            double viewportMaxHeight = maxYPixels - minYPixels;
-
-            double aspectRatio = (IMAGE_WIDTH/IMAGE_HEIGHT);
-
-            if((viewportMaxHeight * aspectRatio) > viewportMaxWidth) {
-                viewportMaxHeight = viewportMaxWidth / aspectRatio;
-            } else {
-                viewportMaxWidth = viewportMaxHeight * aspectRatio;
-            }
-
-            zoomMin = (100.0) * (IMAGE_WIDTH)/viewportMaxWidth;
-            System.out.println("Zoom Min: "+this.zoomRestrictionMap.get(this.floor).minX);
-            zoomMax = 1000.0;
-
-            //scrollPane.setHmin(this.zoomRestrictionMap.get(this.floor).minY);
-            //scrollPane.setHvalue(0.5);
-
-        }*/
+        double zoomMax = 1500.0;
 
         if(zoomPercent < zoomMin) {
             zoomPercent = zoomMin;
@@ -164,6 +141,16 @@ public class MapController extends AbsController {
         addCircle(n,c,5.0);
     }
 
+    protected void clearCircleMap() {
+        this.circleNodeMap.clear();
+    }
+
+    protected void clearNodes() {
+        if(this.nodes != null) {
+            this.nodes.clear();
+        }
+    }
+
     protected void removeConnections() {
         this.lines.clear();
     }
@@ -200,7 +187,7 @@ public class MapController extends AbsController {
     }
 
     protected void addCircle(Node n, Color c, double r) {
-        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r, c,n);
+        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
@@ -229,12 +216,7 @@ public class MapController extends AbsController {
         circleNodeMap.put(n, circle);
     }
 
-    private CircleNode createDefaultCircle(Node n) {
-        CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), 5.0, Color.BLUE,n);
-        circle.setCursor(Cursor.HAND);
 
-        return circle;
-    }
 
     protected void drawNodes() {
         mapCanvas.getChildren().clear();
@@ -242,13 +224,12 @@ public class MapController extends AbsController {
         // Draw all of the nodes that are on the current floor
         for(Node n: nodes) {
             CircleNode currentNode = circleNodeMap.get(n);
-            System.out.println(currentNode);
-            if(currentNode == null) {
-                currentNode = createDefaultCircle(n);
-            }
+
             // Draw it
             if(n.getFloor() == floor) {
                 mapCanvas.getChildren().removeAll(currentNode);
+                currentNode.setDefaultColor();
+                //System.out.println(currentNode.defaultColor.getRed());
                 mapCanvas.getChildren().add(currentNode);
             }
         }
@@ -258,7 +239,7 @@ public class MapController extends AbsController {
     protected void setFloor(int floor) {
         this.floor = floor;
         this.zoomPercent = 100.0;
-        this.setZoomAndScale(0.5, 0.5, false);
+        this.setBarPositions(0.5, 0.5, false);
     }
 
     protected class ZoomRestriction {
