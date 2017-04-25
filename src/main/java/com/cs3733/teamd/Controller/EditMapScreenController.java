@@ -48,11 +48,8 @@ public class EditMapScreenController extends MapController{
 
 
     //color constants for convenience
-    private static Color CUR_SELECTED_COLOR = Color.GREEN;
-    private static Color OTHER_SELECTED_COLOR = Color.BLUE;
-    private static Color DEFAULT_COLOR = Color.RED;
-    private static Color ELEVATOR_COLOR = Color.YELLOW;
-    private static Color CLICKED_ON_COLOR = Color.BLACK;
+
+
     //test
 
     public String errorString = Main.bundle.getString("InvalidAction");
@@ -486,9 +483,9 @@ public class EditMapScreenController extends MapController{
     }
 
     private void deselectMostRecentNode() {
-        selectedCircles.getLast().setFill(selectedCircles.getLast().defaultColor);
+        selectedCircles.getLast().setDefaultColor();
         selectedCircles.removeLast();
-        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        selectedCircles.getLast().setSelected();
         currentTagBox.setItems(FXCollections.observableList(selectedCircles.getLast().referenceNode.getTags()));
         currentTagBox.refresh();
     }
@@ -572,7 +569,7 @@ public class EditMapScreenController extends MapController{
 
     }
     private void addNode(int x, int y){
-        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, DEFAULT_COLOR);
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
     }
@@ -609,9 +606,9 @@ public class EditMapScreenController extends MapController{
         }
     }
 
-    private CircleNode createCircle(Node n, double r, Color color) {
+    private CircleNode createCircle(Node n, double r) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
+        CircleNode circle = new CircleNode(n.getX(), n.getY(), r,n);
 
         circleMap.put(n, circle);
 
@@ -697,16 +694,16 @@ public class EditMapScreenController extends MapController{
         currentTagBox.refresh();
 
         if(!selectedCircles.isEmpty()) {
-            selectedCircles.getLast().setFill(OTHER_SELECTED_COLOR);
+            selectedCircles.getLast().setOtherSelected();
         }
         selectedCircles.addLast(c);
-        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        selectedCircles.getLast().setSelected();
 
     }
 
     private void deselectAllNodes() {
         for(CircleNode cn : selectedCircles){
-            cn.setFill(cn.defaultColor);
+            cn.setDefaultColor();
         }
         selectedCircles.clear();
     }
@@ -756,10 +753,10 @@ public class EditMapScreenController extends MapController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-                CircleNode circ = createCircle(n, 5, ELEVATOR_COLOR);
+                CircleNode circ = createCircle(n, 5);
                 setHoverProperties(circ);
             }else{
-                CircleNode circ = createCircle(n, 5, DEFAULT_COLOR);
+                CircleNode circ = createCircle(n, 5);
                 setHoverProperties(circ);
             }
 
@@ -773,7 +770,8 @@ public class EditMapScreenController extends MapController{
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
                 try {
-                    mapCanvas.getChildren().add(circleMap.get(n));
+                    CircleNode c = circleMap.get(n);
+                    mapCanvas.getChildren().add(c);
                     floorCircs.add(circleMap.get(n));
 
                 }catch (IllegalArgumentException e){
@@ -810,6 +808,9 @@ public class EditMapScreenController extends MapController{
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedCircles.getLast() != null){
             boolean response = dir.addNodeTag(selectedCircles.getLast().referenceNode,selectedTag);
+            selectedCircles.getLast().setDefaultColor();
+            selectedCircles.getLast().setSelected();
+
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
@@ -828,6 +829,8 @@ public class EditMapScreenController extends MapController{
         if(selectedCurrentTag != null){
 
             if(dir.removeNodeTag(selectedCircles.getLast().referenceNode,selectedCurrentTag)){
+                selectedCircles.getLast().setDefaultColor();
+                selectedCircles.getLast().setSelected();
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
