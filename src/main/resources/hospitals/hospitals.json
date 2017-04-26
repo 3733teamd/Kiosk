@@ -1,0 +1,20 @@
+{
+  "hospitals" : [
+    {
+      "name":"Faulkner",
+      "hospitalId":"faulkner",
+      "dbVersion":1,
+      "floors": [
+        {"number": 1, "file":"1stFloorUserViewFinal.jpg"},
+        {"number": 1001, "file":"1stFloorProfViewFinal.jpg"}
+      ]
+    },
+    {
+      "name":"New Hospital",
+      "hospitalId":"new_hospital",
+      "dbVersion":1,
+      "floors": [
+      ]
+    }
+  ]
+}
