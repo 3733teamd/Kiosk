@@ -66,16 +66,23 @@ public class VisitingBlock {
 
     public String getBlockRange(){
 
-        String range = open.get(Calendar.HOUR_OF_DAY) +
-                ":" +
-                open.get(Calendar.MINUTE) +
-                " to " +
-                close.get(Calendar.HOUR_OF_DAY) +
-                ":" +
-                close.get(Calendar.MINUTE);
+        String range = stringTime(open) + " to " + stringTime(close);
 
         return range;
 
     }
-    
+
+    public String stringTime(Calendar c){
+        String minutes = Integer.toString(c.get(Calendar.MINUTE));
+        String hours = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
+
+        if(minutes.length()<2){
+            minutes = "0" + minutes;
+        }
+        if(hours.length()<2){
+            hours = "0" + hours;
+        }
+        return (hours + ":" + minutes);
+
+    }
 }
