@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -23,27 +24,38 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
+                        <ImageView fitHeight="62.0" fitWidth="36.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/floor_imgs/fkthumb.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </children>
             </HBox>
             <AnchorPane prefHeight="443.0" prefWidth="800.0">
                <children>
-                  <Text layoutX="47.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Our application could not have been made without the help and guidance of Professor Wilson Wong, the support of our team coach Dominik Smreczak, and the collaboration of Andrew Shinn on behalf of Brigham and Women's Faulkner Hospital.&#10;" textAlignment="CENTER" wrappingWidth="706.0">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Text>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="190.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
                   <Text layoutX="39.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Manager- Ryan Wittenberg&#10;Lead Software Engineer- Stephen Michelini&#10;Assistant Software Engineer- Thomas Koker &#10;Assistant Software Engineer- Andrew Nemeth &#10;Product Owner- William Kelley &#10;Test Engineer- Derrek Rueger &#10;Documentation Analyst- Alexandra Wheeler &#10;Software Engineer- Benjamin Shaffer &#10;Software Engineer- Anh Dao &#10;Software Engineer- Ryan Vereque &#10;&#10;WPI CS Department, CS 3733 " textAlignment="CENTER" wrappingWidth="718.23583984375">
                      <font>
                         <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="47.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Our application could not have been made without the help and guidance of Professor Wilson Wong, the support of our team coach Dominik Smreczak, and the collaboration of Andrew Shinn on behalf of Brigham and Women's Faulkner Hospital.&#10;" textAlignment="CENTER" wrappingWidth="706.0">
+                     <font>
+                        <Font size="26.0" />
                      </font>
                   </Text>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="300.0" prefWidth="800.0">
                <children>
-                  <Text layoutX="177.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank You!" textAlignment="CENTER" wrappingWidth="445.6708984375">
+                  <ImageView fitHeight="268.0" fitWidth="222.0" layoutX="559.0" layoutY="-32.0" opacity="0.31" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/floor_imgs/ceberus.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="177.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank You!" textAlignment="CENTER" wrappingWidth="445.6708984375">
                      <font>
                         <Font size="55.0" />
                      </font>
@@ -52,14 +64,9 @@
                      <font>
                         <Font size="42.0" />
                      </font></Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="338.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="338.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/floor_imgs/fkthumb.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="241.0" fitWidth="243.0" layoutX="553.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/floor_imgs/ceberus.png" />
                      </image>
                   </ImageView>
                </children></AnchorPane>

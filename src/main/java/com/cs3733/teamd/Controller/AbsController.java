@@ -65,10 +65,37 @@ public abstract class AbsController {
     }
 
 
-    void switchLanguage() {
+    void switchLanguage(String lan) {
+
         ApplicationConfiguration appConfig = ApplicationConfiguration.getInstance();
         //TODO : CHANGE INTO SWITCH STATEMENT FOR MULTIPLE LANGUAGES
-        if(appConfig.getCurrentLanguage() == ApplicationConfiguration.Language.ENGLISH) {
+        if(lan.equals("English")){
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.ENGLISH);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getEnglishLocale());
+
+        }
+        else if(lan.equals("Español")){
+
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.SPANISH);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getSpanishLocale());
+
+        }
+        else if(lan.equalsIgnoreCase("Français")){
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.FRENCH);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getFrenchLocale());
+        }
+        else if(lan.equalsIgnoreCase("Chinese")){
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.CHINESE);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getChineseLocale());
+        }
+        else if(lan.equalsIgnoreCase("Portuguese")){
+            appConfig.setCurrentLangauge(ApplicationConfiguration.Language.PORTUGUESE);
+            Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getProtugeseLocale());
+        }
+        else{
+
+        }
+       /* if(appConfig.getCurrentLanguage() == ApplicationConfiguration.Language.ENGLISH) {
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.SPANISH);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getSpanishLocale());
         } else if(appConfig.getCurrentLanguage() == ApplicationConfiguration.Language.SPANISH){
@@ -76,7 +103,7 @@ public abstract class AbsController {
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getEnglishLocale());
         } else {
             System.out.println("ERROR: Undetected Langauge");
-        }
+        }*/
     }
 
 }

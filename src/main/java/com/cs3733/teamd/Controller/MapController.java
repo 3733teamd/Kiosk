@@ -225,7 +225,7 @@ public class MapController extends AbsController {
                 mapCanvas.getChildren().removeAll(label);
             }
         });
-        System.out.println(n);
+        //System.out.println(n);
         circleNodeMap.put(n, circle);
     }
 
@@ -242,7 +242,7 @@ public class MapController extends AbsController {
         // Draw all of the nodes that are on the current floor
         for(Node n: nodes) {
             CircleNode currentNode = circleNodeMap.get(n);
-            System.out.println(currentNode);
+            //System.out.println(currentNode);
             if(currentNode == null) {
                 currentNode = createDefaultCircle(n);
             }

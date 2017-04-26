@@ -842,7 +842,8 @@ public class EditMapScreenController extends MapController{
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguage();
+        String lan ="a";
+        super.switchLanguage(lan);
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
 

@@ -34,9 +34,12 @@ public class ApplicationConfiguration {
         FULL
     }
 
-    public enum Language {
+    public enum Language { //chinese, french, Portuguese
         ENGLISH,
-        SPANISH
+        SPANISH,
+        CHINESE,
+        FRENCH,
+        PORTUGUESE
     }
 
     public enum SearchAlgorithm {
@@ -60,6 +63,13 @@ public class ApplicationConfiguration {
     public static Locale getSpanishLocale() {
         return new Locale("es","SP");
     }
+    public static Locale getFrenchLocale() {
+        return new Locale("fr","FR");
+    } //
+    //zh-CN
+    public static Locale getChineseLocale() {return new Locale("zh","CN");}
+    public static Locale getProtugeseLocale() {return new Locale("pt","BR");} //pt-PT
+
 
     public SearchAlgorithm getCurrentSearchAlgorithm() {
         return currentSearchAlgorithm;
