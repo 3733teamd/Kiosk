@@ -239,8 +239,9 @@ public class MapController extends AbsController {
             CircleNode currentNode = circleNodeMap.get(n);
 
             // Draw it
-            if(n.getFloor() == floor) {
+            if(n.getFloor() == floor && currentNode != null) {
                 mapCanvas.getChildren().removeAll(currentNode);
+                //System.out.println( "+++++++++++++++++++++++++");
                 currentNode.setDefaultColor();
                 //System.out.println(currentNode.defaultColor.getRed());
                 mapCanvas.getChildren().add(currentNode);
