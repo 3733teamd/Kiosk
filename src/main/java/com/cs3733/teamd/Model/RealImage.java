@@ -62,13 +62,13 @@ public class RealImage implements ImageInterface {
                 break;
             //Professional Belking Views
             case 1102:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf2"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf2.png"));
                 break;
             case 1103:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf3"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf3.png"));
                 break;
             case 1104:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf4"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf4.png"));
                 break;
             //default to user-view lv 4
             default:
