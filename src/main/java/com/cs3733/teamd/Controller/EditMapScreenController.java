@@ -1,10 +1,13 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.ApplicationConfiguration;
+import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.ImageInterface;
+import com.cs3733.teamd.Model.ProxyImage;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
