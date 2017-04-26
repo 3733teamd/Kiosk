@@ -3,6 +3,7 @@ package com.cs3733.teamd.Model;
 import com.cs3733.teamd.Database.DBHandler;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.Locale;
 
 /**
@@ -99,6 +100,7 @@ public class ApplicationConfiguration {
     public String getFullFilePath(String relativePath) {
         try {
             String localFileName = getClass().getClassLoader().getResource(relativePath).getFile();
+            localFileName = URLDecoder.decode(localFileName, "UTF-8");
             return new File(localFileName).getAbsolutePath();
         } catch (Exception e) {
             return null;
