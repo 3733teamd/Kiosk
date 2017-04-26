@@ -218,12 +218,12 @@ public class UserScreenController extends MapController {
             for(Tag t: dir.getTags()) {
                 if(t != starttag) {
                     for(Node n: t.getNodes()) {
-                        super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
+                        super.addCircle(n, 7.0);
                     }
                     super.appendNodes(t.getNodes());
                 }
             }
-            super.addCircle(startNodes.get(0), Color.GREEN, 10.0);
+            super.addCircle(startNodes.get(0), 10.0);
             super.drawNodes();
         }
     }
@@ -250,12 +250,12 @@ public class UserScreenController extends MapController {
         for(int i = 0; i < pathNodes.size(); i++) {
             // Destination
             if(i == 0) {
-                super.addCircle(pathNodes.get(0), Color.RED, 7.0);
+                super.addCircle(pathNodes.get(0), 7.0);
             }
             if(i < (pathNodes.size() - 1)) {
                 if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
-                    super.addCircle(pathNodes.get(i), Color.GREEN, 7.0);
-                    super.addCircle(pathNodes.get(i + 1), Color.YELLOW, 7.0);
+                    super.addCircle(pathNodes.get(i), 7.0);
+                    super.addCircle(pathNodes.get(i + 1), 7.0);
                 } else {
                     if(pathNodes.get(i).getFloor() == onFloor) {
                         super.connectNode(pathNodes.get(i), pathNodes.get(i+1));
@@ -267,7 +267,7 @@ public class UserScreenController extends MapController {
                 haveMidFloor = true;
             }
         }
-        super.addCircle(pathNodes.getLast(), Color.GREEN, 8.0);
+        super.addCircle(pathNodes.getLast(), 8.0);
 
         super.drawNodes();
 

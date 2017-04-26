@@ -161,7 +161,7 @@ public class MapController extends AbsController {
     }
 
     protected void addCircle(Node n, Color c) {
-        addCircle(n,c,5.0);
+        addCircle(n,5.0);
     }
 
     protected void removeConnections() {
@@ -199,7 +199,7 @@ public class MapController extends AbsController {
         }
     }
 
-    protected void addCircle(Node n, Color c, double r) {
+    protected void addCircle(Node n, double r) {
         CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
