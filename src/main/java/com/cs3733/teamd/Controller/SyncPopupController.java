@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Hospital;
+import com.cs3733.teamd.Model.HospitalLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,12 +47,15 @@ public class SyncPopupController {
         String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
         System.out.println(filename);
         File f2 = new File(filename);
+        h.setDbVersion(h.getDbVersion() + 1);
         database.dumpDatabaseToSqlStatements(
                 f2.getAbsolutePath()
                         .replaceFirst(
                                 "hospitals.json",
                                 h.getHospitalId()+"/dump."+h.getDbVersion()+".sql")
         );
+
+        HospitalLoader.getInstance().saveHospital(h);
         System.out.println("Dumped");
     }
 

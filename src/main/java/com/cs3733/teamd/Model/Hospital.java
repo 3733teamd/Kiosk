@@ -24,6 +24,10 @@ public class Hospital {
         this.floorFiles = floorFiles;
     }
 
+    public void setDbVersion(Integer dbVersion) {
+        this.dbVersion = dbVersion;
+    }
+
     public String getName() {
         return name;
     }

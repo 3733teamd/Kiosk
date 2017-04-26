@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -17,6 +14,8 @@ import java.util.*;
 public class HospitalLoader {
     private static HospitalLoader instance = null;
     private JSONParser parser;
+
+    private JSONObject root;
 
     private HospitalLoader() {
         parser = new JSONParser();
@@ -37,8 +36,8 @@ public class HospitalLoader {
             File f2 = new File(filename);
             FileReader f = new FileReader(f2.getAbsolutePath());
             Object o = parser.parse(f);
-            JSONObject jsonObject = (JSONObject) o;
-            JSONArray hospitalsJson = (JSONArray) jsonObject.get("hospitals");
+            root = (JSONObject) o;
+            JSONArray hospitalsJson = (JSONArray) root.get("hospitals");
             return hospitalsJson;
         } catch(ParseException pe) {
             pe.printStackTrace();
@@ -93,5 +92,36 @@ public class HospitalLoader {
             }
         }
         return null;
+    }
+
+    public boolean saveHospital(Hospital h) {
+        JSONArray hospitalsJson = loadHospitalsObject();
+        if(hospitalsJson == null) {
+            return false;
+        }
+
+        Iterator<Object> it = hospitalsJson.iterator();
+
+        while(it.hasNext()) {
+            JSONObject hospitalJson = (JSONObject)it.next();
+            if(((String)hospitalJson.get("hospitalId")).compareTo(h.getHospitalId()) == 0) {
+                hospitalJson.put("dbVersion",(Long)h.getDbVersion().longValue());
+                System.out.println(root.toJSONString());
+                // try-with-resources statement based on post comment below :)
+                String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
+                System.out.println(filename);
+                File f2 = new File(filename);
+                try (FileWriter file = new FileWriter(f2.getAbsoluteFile())) {
+                    file.write(root.toJSONString());
+                    System.out.println("Successfully Copied JSON Object to File...");
+                    System.out.println("\nJSON Object: " + root);
+                    return true;
+                } catch (IOException e) {
+                    return false;
+                }
+
+            }
+        }
+        return false;
     }
 }
