@@ -533,8 +533,8 @@ public class EditMapScreenController extends MapController{
         timer.purge();
         running = false;
         timerThread.interrupt();
-        dir.logoutUser();
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        //dir.logoutUser();
+        popupScreen(MMGpane, "/Views/SyncPopupScreen.fxml", "Sync Status");
     }
     @FXML
     public void Logout() throws IOException{

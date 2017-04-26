@@ -24,6 +24,22 @@ public class Hospital {
         this.floorFiles = floorFiles;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getHospitalId() {
+        return hospitalId;
+    }
+
+    public Integer getDbVersion() {
+        return dbVersion;
+    }
+
+    public Map<Integer, String> getFloorFiles() {
+        return floorFiles;
+    }
+
     public Set<Integer> getFloorSet() {
         return floorFiles.keySet();
     }

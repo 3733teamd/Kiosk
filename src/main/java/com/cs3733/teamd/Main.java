@@ -2,7 +2,9 @@ package com.cs3733.teamd;
 
 import com.cs3733.teamd.Database.DBHandler;
 
+import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.cs3733.teamd.Model.Entities.*;
+import com.cs3733.teamd.Model.Hospital;
 import com.cs3733.teamd.Model.HospitalLoader;
 import com.cs3733.teamd.Model.Originator;
 import javafx.application.Application;
@@ -56,7 +58,11 @@ public class Main extends Application {
     public static void main(String[] args) {
 
 
-        System.out.println(HospitalLoader.getInstance().loadHospitalFromId("faulkner"));
+        Hospital h = HospitalLoader.getInstance().loadHospitalFromId("faulkner");
+        if(h == null) {
+            System.err.println("HOSPITAL CAN NOT BE LOADED");
+        }
+        ApplicationConfiguration.getInstance().setHospital(h);
 
         DBHandler database;
         Directory dir = Directory.getInstance();
@@ -109,6 +115,7 @@ public class Main extends Application {
 
         //set up DIRECTORY
         dir.initialize(nodes,tags,professionals,titles,database);
+        ApplicationConfiguration.getInstance().setDatabase(database);
 
         //Populate Search Menus
         /*try {

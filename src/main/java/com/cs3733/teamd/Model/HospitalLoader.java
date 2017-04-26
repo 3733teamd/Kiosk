@@ -55,6 +55,9 @@ public class HospitalLoader {
     public List<String> loadHospitals() {
 
         JSONArray hospitalsJson = loadHospitalsObject();
+        if(hospitalsJson == null) {
+            return null;
+        }
         Iterator<Object> it = hospitalsJson.iterator();
         List<String> ret = new ArrayList<String>();
         while(it.hasNext()) {
@@ -66,6 +69,9 @@ public class HospitalLoader {
 
     public Hospital loadHospitalFromId(String id) {
         JSONArray hospitalsJson = loadHospitalsObject();
+        if(hospitalsJson == null) {
+            return null;
+        }
 
         Iterator<Object> it = hospitalsJson.iterator();
 

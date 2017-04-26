@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Model;
 
+import com.cs3733.teamd.Database.DBHandler;
+
 import java.util.Locale;
 
 /**
@@ -12,6 +14,10 @@ public class ApplicationConfiguration {
     private Language currentLangauge;
 
     private SearchAlgorithm currentSearchAlgorithm;
+
+    private Hospital hospital;
+
+    private DBHandler database;
 
     private ApplicationConfiguration(){
         currentSearchAlgorithm = SearchAlgorithm.A_STAR;
@@ -67,6 +73,22 @@ public class ApplicationConfiguration {
 
     public void setCurrentSearchAlgorithm(SearchAlgorithm currentSearchAlgorithm) {
         this.currentSearchAlgorithm = currentSearchAlgorithm;
+    }
+
+    public void setHospital(Hospital h) {
+        this.hospital = h;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public DBHandler getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(DBHandler database) {
+        this.database = database;
     }
 
     public boolean timeoutEnabled() {

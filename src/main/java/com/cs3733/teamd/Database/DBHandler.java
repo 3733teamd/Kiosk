@@ -793,7 +793,8 @@ public class DBHandler {
 
     public boolean dumpDatabaseToSqlStatements(String filename) {
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(filename), "utf-8"))) {
             String sqlSelectNodes = "SELECT * FROM Node ORDER BY id ASC";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelectNodes);
