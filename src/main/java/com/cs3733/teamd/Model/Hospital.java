@@ -52,4 +52,11 @@ public class Hospital {
         return "hospitals/"+hospitalId+"/dump."+dbVersion.toString()+".sql";
     }
 
+    public String getImagePath(int floor) {
+        if(!floorFiles.keySet().contains(floor)) {
+            return null;
+        }
+        return "hospitals/"+hospitalId+"/"+floorFiles.get(floor);
+    }
+
 }

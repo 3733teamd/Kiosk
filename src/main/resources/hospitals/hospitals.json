@@ -5,8 +5,23 @@
       "hospitalId":"faulkner",
       "dbVersion":1,
       "floors": [
-        {"number": 1, "file":"1stFloorUserViewFinal.jpg"},
-        {"number": 1001, "file":"1stFloorProfViewFinal.jpg"}
+        {"number": 1, "file":"flkUser1.png"},
+        {"number": 2, "file":"flkUser2.png"},
+        {"number": 3, "file":"flkUser3.png"},
+        {"number": 4, "file":"flkUser4.png"},
+        {"number": 5, "file":"flkUser5.png"},
+        {"number": 6, "file":"flkUser6.png"},
+        {"number": 7, "file":"flkUser7.png"},
+        {"number": 102, "file":"blk2.png"},
+        {"number": 103, "file":"blk3.png"},
+        {"number": 104, "file":"blk4.png"},
+        {"number": 1001, "file":"flkProf1.jpg"},
+        {"number":1002, "file":"flkProf2.png"},
+        {"number":1003, "file":"flkProf3.png"},
+        {"number":1004, "file":"flkProf4.png"},
+        {"number":1005, "file":"flkProf5.png"},
+        {"number":1006, "file":"flkProf6.png"},
+        {"number":1007, "file":"flkProf7.png"}
       ]
     },
     {
