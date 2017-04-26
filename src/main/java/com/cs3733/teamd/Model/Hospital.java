@@ -48,4 +48,8 @@ public class Hospital {
         return floorFiles.keySet();
     }
 
+    public String getDbPath() {
+        return "hospitals/"+hospitalId+"/dump."+dbVersion.toString()+".sql";
+    }
+
 }

@@ -207,6 +207,10 @@ public class DBHandler {
      * Setup all tables and connectionstraints
      */
     public void setup() throws SQLException, IOException {
+        setupWithFileName("/DatabaseImports/dump.sql.import");
+    }
+
+    public void setupWithFileName(String filename) throws SQLException, IOException {
         // DOES THE TABLE EXIST???
         boolean empty = tablesExists(connection);
         //if no tables
@@ -228,7 +232,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/dump.sql.import");
+            loadDbEntriesFromFileIntoDb(s, filename);
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
@@ -289,8 +293,9 @@ public class DBHandler {
     public void loadDbEntriesFromFileIntoDb(Statement s, String filename) throws IOException, SQLException {
         BufferedReader br =
                 new BufferedReader(
-                        new InputStreamReader(getClass().getResourceAsStream(filename)));
+                        new InputStreamReader(getClass().getResourceAsStream("/"+filename)));
             String line;
+            System.out.println(filename);
             while ((line = br.readLine()) != null) {
                 if(line.length() > 0) {
                     executeStatement(s, line);

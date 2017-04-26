@@ -2,6 +2,7 @@ package com.cs3733.teamd.Model;
 
 import com.cs3733.teamd.Database.DBHandler;
 
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -93,5 +94,15 @@ public class ApplicationConfiguration {
 
     public boolean timeoutEnabled() {
         return false;
+    }
+
+    public String getFullFilePath(String relativePath) {
+        try {
+            String localFileName = getClass().getClassLoader().getResource(relativePath).getFile();
+            return new File(localFileName).getAbsolutePath();
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }

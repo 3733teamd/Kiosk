@@ -31,10 +31,12 @@ public class HospitalLoader {
 
     private JSONArray loadHospitalsObject() {
         try {
-            String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
-            System.out.println(filename);
-            File f2 = new File(filename);
-            FileReader f = new FileReader(f2.getAbsolutePath());
+            String filename = ApplicationConfiguration.getInstance()
+                    .getFullFilePath("hospitals/hospitals.json");
+            if(filename == null) {
+                return null;
+            }
+            FileReader f = new FileReader(filename);
             Object o = parser.parse(f);
             root = (JSONObject) o;
             JSONArray hospitalsJson = (JSONArray) root.get("hospitals");
@@ -108,10 +110,12 @@ public class HospitalLoader {
                 hospitalJson.put("dbVersion",(Long)h.getDbVersion().longValue());
                 System.out.println(root.toJSONString());
                 // try-with-resources statement based on post comment below :)
-                String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
-                System.out.println(filename);
-                File f2 = new File(filename);
-                try (FileWriter file = new FileWriter(f2.getAbsoluteFile())) {
+                String filename = ApplicationConfiguration.getInstance()
+                        .getFullFilePath("hospitals/hospitals.json");
+                if(filename == null) {
+                    return false;
+                }
+                try (FileWriter file = new FileWriter(filename)) {
                     file.write(root.toJSONString());
                     System.out.println("Successfully Copied JSON Object to File...");
                     System.out.println("\nJSON Object: " + root);

@@ -75,7 +75,13 @@ public class Main extends Application {
         }
 
         try {
-            database.setup();
+            if(h != null) {
+                database.setupWithFileName(h.getDbPath());
+            } else {
+                System.err.println("Loading from default import");
+                database.setup();
+            }
+
         } catch (SQLException e) {
              if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
                 System.out.println("Skipping setup as tables are already made");
