@@ -398,6 +398,7 @@ public class EditTagScreenController extends AbsController {
         try {
             VisitingBlock b = new VisitingBlock(openingString, closingString);
 
+
             System.out.println(b.getBlockRange());
         }catch(Exception e){
             System.out.println(e);

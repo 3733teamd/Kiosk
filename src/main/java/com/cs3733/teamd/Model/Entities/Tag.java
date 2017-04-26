@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Model.Entities;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Me on 3/31/2017.
@@ -13,6 +14,7 @@ public class Tag {
     private LinkedList<Node> nodes = new LinkedList<Node>();
     private LinkedList<Professional> profs = new LinkedList<Professional>();
     private boolean connectable;
+    private LinkedList<VisitingBlock> openHours = new LinkedList<VisitingBlock>();
 
     public boolean isRestricted() {
         return restricted;
@@ -169,6 +171,10 @@ public class Tag {
 
         }
         return false;
+    }
+
+    public void addBlock(VisitingBlock b){
+        
     }
 
 }
