@@ -280,11 +280,10 @@ public class EditMapScreenController extends MapController{
         allTagBox.setItems(FXCollections.observableList(allTheTags));
         System.out.println(floor);
         //if floor<100 its falkner, so display the prof verions
-        if(floor<100) {
-            floorMap.setImage(imgInt.display(floor + 1000));
-        }else{
-            floorMap.setImage(imgInt.display(floor));
-        }
+
+        floorMap.setImage(imgInt.display(floor + 1000));
+
+
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -302,11 +301,9 @@ public class EditMapScreenController extends MapController{
                     System.out.println(floor);
 
                     //if floor<100 its falkner, so display the prof verions
-                    if (floor < 100) {
-                        floorMap.setImage(imgInt.display(floor + 1000));
-                    } else {
-                        floorMap.setImage(imgInt.display(floor));
-                    }
+
+                    floorMap.setImage(imgInt.display(floor + 1000));
+
 
                 }
                 imagePane.getChildren().removeAll(floorCircs);
