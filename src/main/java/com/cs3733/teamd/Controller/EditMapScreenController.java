@@ -629,7 +629,6 @@ public class EditMapScreenController extends MapController{
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
                     addNodeToSelection(c);
-
                 }else{
                     addNodeToSelection(c);
                 }
