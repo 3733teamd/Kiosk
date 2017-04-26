@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -19,7 +26,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -71,7 +78,7 @@
                <children>
                   <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
                      <children>
-                        <JFXButton fx:id="LoginButton" mnemonicParsing="false" onAction="#onLogin" prefHeight="45.0" prefWidth="176.0" text="Login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
+                        <JFXButton fx:id="LoginButton" buttonType="RAISED" mnemonicParsing="false" onAction="#onLogin" prefHeight="45.0" prefWidth="176.0" style="-fx-background-color: DCDCDCDC;" text="Login" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -89,7 +96,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="7" GridPane.rowIndex="1">
                      <children>
-                        <JFXButton fx:id="SpanishButton" mnemonicParsing="false" onAction="#onSpanish" prefHeight="45.0" prefWidth="183.0" text="Spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
+                        <JFXButton fx:id="SpanishButton" buttonType="RAISED" mnemonicParsing="false" onAction="#onSpanish" prefHeight="45.0" prefWidth="183.0" style="-fx-background-color: DCDCDCDC;" text="Spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -107,7 +114,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <children>
-                        <JFXButton fx:id="SearchButton" mnemonicParsing="false" onAction="#onSearch" prefHeight="45.0" prefWidth="145.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2">
+                        <JFXButton fx:id="SearchButton" buttonType="RAISED" mnemonicParsing="false" onAction="#onSearch" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: DCDCDCDC;" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -116,7 +123,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
                      <children>
-                        <JFXComboBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5" />
+                        <JFXComboBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="187.0" style="-fx-background-color: DCDCDCDC;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -126,7 +133,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <children>
-                        <JFXButton fx:id="SetButton" mnemonicParsing="false" onAction="#onSet" prefHeight="45.0" prefWidth="171.0" text="Set Start" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="3">
+                        <JFXButton fx:id="SetButton" buttonType="RAISED" mnemonicParsing="false" onAction="#onSet" prefHeight="45.0" prefWidth="171.0" style="-fx-background-color: DCDCDCDC;" text="Set Start" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="3">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -171,22 +178,22 @@
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="4">
                            <children>
-                              <JFXButton fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="42.0" prefWidth="259.0" text="Show Starting Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="4" />
+                              <JFXButton fx:id="StartFloorButton" buttonType="RAISED" mnemonicParsing="false" onAction="#ShowStart" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: DCDCDCDC;" text="Show Starting Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="4" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="6">
                            <children>
-                              <JFXButton fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="42.0" prefWidth="259.0" text="Show Ending Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="6" />
+                              <JFXButton fx:id="EndFloorButton" buttonType="RAISED" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: DCDCDCDC;" text="Show Ending Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="6" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="5">
                            <children>
-                              <JFXButton fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="42.0" prefWidth="259.0" text="Show Intermediate Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="5" />
+                              <JFXButton fx:id="MiddleFloorButton" buttonType="RAISED" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: DCDCDCDC;" text="Show Intermediate Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="5" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="3">
                            <children>
-                              <JFXButton fx:id="reportButton" mnemonicParsing="false" onAction="#reportBug" prefHeight="42.0" prefWidth="259.0" text="%ReportBug" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="3" />
+                              <JFXButton fx:id="reportButton" buttonType="RAISED" mnemonicParsing="false" onAction="#reportBug" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: DCDCDCDC;" text="%ReportBug" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="3" />
                            </children>
                         </AnchorPane>
                      </children>
