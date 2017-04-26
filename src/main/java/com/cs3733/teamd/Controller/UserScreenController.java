@@ -274,7 +274,7 @@ public class UserScreenController extends MapController {
             if(i < (pathNodes.size() - 1)) {
                 if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
                     super.addCircle(pathNodes.get(i), 7.0);
-                    super.addCircle(pathNodes.get(i + 1), 7.0);
+                    //super.addCircle(pathNodes.get(i + 1), 7.0);
                 } else {
                     if(pathNodes.get(i).getFloor() == onFloor) {
                         super.connectNode(pathNodes.get(i), pathNodes.get(i+1));
@@ -286,7 +286,7 @@ public class UserScreenController extends MapController {
                 haveMidFloor = true;
             }
         }
-        super.addCircle(pathNodes.getLast(), 8.0);
+        //super.addCircle(pathNodes.getLast(), 8.0);
 
         super.drawNodes();
 
@@ -676,10 +676,13 @@ public class UserScreenController extends MapController {
     private void setupMap() {
         // Draw Tags
         if(starttag != null) {
-            super.clearCircleMap();
-            drawStartTagAndTags();
+            if(pathNodes == null) {
+                super.clearCircleMap();
+                drawStartTagAndTags();
+            }
         }
         if(pathNodes != null) {
+            System.out.println("setupMap()");
             findZoomWithPath();
             drawPath();
         }

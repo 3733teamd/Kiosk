@@ -147,7 +147,7 @@ public class MapController extends AbsController {
 
     protected void clearNodes() {
         if(this.nodes != null) {
-            this.nodes.clear();
+            //this.nodes.clear();
         }
     }
 
