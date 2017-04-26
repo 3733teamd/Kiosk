@@ -138,7 +138,7 @@ public class MapController extends AbsController {
     }
 
     protected void addCircle(Node n, Color c) {
-        addCircle(n,c,5.0);
+        addCircle(n,5.0);
     }
 
     protected void clearCircleMap() {
@@ -186,7 +186,7 @@ public class MapController extends AbsController {
         }
     }
 
-    protected void addCircle(Node n, Color c, double r) {
+    protected void addCircle(Node n, double r) {
         CircleNode circle = new CircleNode(getNodeX(n), getNodeY(n), r,n);
         circle.setCursor(Cursor.HAND);
         circle.setOnMouseEntered((event) -> {
@@ -226,8 +226,9 @@ public class MapController extends AbsController {
             CircleNode currentNode = circleNodeMap.get(n);
 
             // Draw it
-            if(n.getFloor() == floor) {
+            if(n.getFloor() == floor && currentNode != null) {
                 mapCanvas.getChildren().removeAll(currentNode);
+                //System.out.println( "+++++++++++++++++++++++++");
                 currentNode.setDefaultColor();
                 //System.out.println(currentNode.defaultColor.getRed());
                 mapCanvas.getChildren().add(currentNode);
