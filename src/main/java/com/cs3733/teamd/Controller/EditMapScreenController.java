@@ -4,6 +4,7 @@ import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -33,6 +34,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -116,7 +118,10 @@ public class EditMapScreenController extends MapController{
 
     double orgSceneX, orgSceneY;
 
+    List<Tag> filteredTag = new ArrayList<>();
 
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
 
     public int s;
@@ -230,6 +235,8 @@ public class EditMapScreenController extends MapController{
 
     @FXML
     public void initialize(){
+
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -271,6 +278,14 @@ public class EditMapScreenController extends MapController{
             }
         });
 
+        searchAllTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                displayResultAllTag(searchAllTags.getText() + event.getText());
+            }
+        });
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
@@ -288,7 +303,7 @@ public class EditMapScreenController extends MapController{
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
-        TextFields.bindAutoCompletion(searchAllTags,allTagNames);
+        //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
 
 
@@ -393,6 +408,18 @@ public class EditMapScreenController extends MapController{
         });
 
         timeoutField.setText(String.valueOf( MementoController.timeoutTime));
+    }
+
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagBox.setItems(searchResultsTag);
     }
 
     private void setFloorSliderListener(){
