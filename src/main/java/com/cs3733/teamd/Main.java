@@ -56,7 +56,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
 
-        System.out.println(HospitalLoader.getInstance().loadHospitals());
+        System.out.println(HospitalLoader.getInstance().loadHospitalFromId("faulkner"));
 
         DBHandler database;
         Directory dir = Directory.getInstance();
