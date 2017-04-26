@@ -191,7 +191,6 @@ public class TextDirectionGenerator {
         ArrayList<Direction> directions = new ArrayList<Direction>();
         System.out.println("Generating Directions..");
         Node currentPoint, previousPoint, nextPoint;
-
         for(int i = 0; i < points.size(); i++) {
             currentPoint = points.get(i);
             if(currentPoint.getFloor() != onFloor) {
