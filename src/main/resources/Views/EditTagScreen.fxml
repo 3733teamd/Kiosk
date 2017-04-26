@@ -100,7 +100,7 @@
                                           <ListView fx:id="allProffessionals" prefHeight="659.0" prefWidth="311.0" />
                                        </items>
                                     </SplitPane>
-                                    <SplitPane dividerPositions="0.7521994134897361, 0.8284457478005866, 0.8914956011730205, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0">
+                                    <SplitPane dividerPositions="0.02932551319648094, 0.7800586510263929, 0.8533724340175953, 0.9134897360703812, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0">
                                        <items>
                                           <Label text="%currentProf" />
                                           <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
@@ -118,15 +118,15 @@
                                           <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="31.0" prefWidth="261.0" text="%remProf" />
                                        </items>
                                     </SplitPane>
-                                    <SplitPane dividerPositions="0.02932551319648094, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="356.0">
+                                    <SplitPane dividerPositions="0.030791788856304986, 0.7609970674486803, 0.8343108504398827, 0.8797653958944281, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0">
                                       <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                                             <children>
-                                                <Label alignment="CENTER" layoutX="-1.0" prefHeight="17.0" prefWidth="336.0" text="Select Visiting Hours" />
-                                             </children>
-                                          </AnchorPane>
-                                          <ListView prefHeight="242.0" prefWidth="295.0" />
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                                          <Label text="Current Visiting Hours" />
+                                          <ListView fx:id="visitingHourList" prefHeight="411.0" prefWidth="321.0" />
+                                          <Label text="Opening Time" />
+                                          <TextField fx:id="openTimeBox" prefHeight="85.0" prefWidth="321.0" />
+                                          <Label text="Closing Time" />
+                                          <TextField fx:id="closingTimeBox" />
+                                          <Button fx:id="addVisitHours" mnemonicParsing="false" onAction="#addToVisitingHourList" text="Add" />
                                       </items>
                                     </SplitPane>
                                  </children>

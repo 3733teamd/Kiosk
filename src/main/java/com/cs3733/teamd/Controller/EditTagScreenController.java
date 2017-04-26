@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.Entities.VisitingBlock;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,10 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +29,10 @@ import java.util.stream.Collectors;
 public class EditTagScreenController extends AbsController {
     public CheckBox selectConnectable;
     public CheckBox restrictedButton;
+    public ListView visitingHourList;
+    public TextField openTimeBox;
+    public TextField closingTimeBox;
+    public Button addVisitHours;
     Directory dir = Directory.getInstance();
     @FXML
     public TextArea tagTextArea;
@@ -388,5 +390,17 @@ public class EditTagScreenController extends AbsController {
             searchTagBar.clear();
         }
         searchTagBar.setText("");
+    }
+
+    public void addToVisitingHourList(ActionEvent actionEvent) {
+        String openingString = openTimeBox.getText();
+        String closingString = closingTimeBox.getText();
+        try {
+            VisitingBlock b = new VisitingBlock(openingString, closingString);
+
+            System.out.println(b.getBlockRange());
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
