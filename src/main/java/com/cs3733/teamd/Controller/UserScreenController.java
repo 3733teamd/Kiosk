@@ -63,6 +63,7 @@ public class UserScreenController extends MapController {
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
+    boolean haveMidFloor = false;
     @FXML
     private Slider floorSlider;
     @FXML
@@ -155,10 +156,18 @@ public class UserScreenController extends MapController {
         Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
         tagAssociations = new HashMap<String, String>();
         for(Tag t: dir.getTags()) {
+            // Don't add restricted
+            if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                continue;
+            }
             professionalTagMerge.put(t.toString(), new ArrayList<String>());
         }
         for(Professional p: dir.getProfessionals()) {
             for(Tag t: p.getTags()) {
+                // Don't add restricted
+                if(t.isRestricted() && (dir.getCurrentUser() == null)) {
+                    continue;
+                }
                 professionalTagMerge.get(t.toString()).add(p.getName());
             }
         }
@@ -183,6 +192,7 @@ public class UserScreenController extends MapController {
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
+            //user views
             floors.addLast(1);
             floors.addLast(2);
             floors.addLast(3);
@@ -190,9 +200,11 @@ public class UserScreenController extends MapController {
             floors.addLast(5);
             floors.addLast(6);
             floors.addLast(7);
+            //belkin house view
             floors.addLast(102);
             floors.addLast(103);
             floors.addLast(104);
+            //add belkin professional views
         }
 
         floorDropDown.clear();
@@ -218,7 +230,7 @@ public class UserScreenController extends MapController {
         super.setFloor(onFloor);
         setupMap();
 
-        if(init=true){
+        if(init){
             //originator.setState("/Views/UserScreen.fxml");
             //careTaker.add(originator.saveStateToMemento());
             //added
@@ -227,32 +239,37 @@ public class UserScreenController extends MapController {
             MementoController.addCareTaker("/Views/UserScreen.fxml");
             init=false;
         }
-        
     }
+
+
 
     private void drawStartTagAndTags() {
         if(starttag.getNodes().size() > 0) {
             List<Node> startNodes = starttag.getNodes();
+            super.clearNodes();
             super.setNodes(startNodes);
             super.removeConnections();
+            boolean restrictedTagsAllowed = false;
+            restrictedTagsAllowed = (dir.getCurrentUser() != null);
             for(Tag t: dir.getTags()) {
+                // Don't add restricted tag if user can't see them
+                if(t.isRestricted() && !restrictedTagsAllowed) {
+                    continue;
+                }
                 if(t != starttag) {
                     for(Node n: t.getNodes()) {
-                        super.addCircle(n, Color.CORNFLOWERBLUE, 7.0);
+                        super.addCircle(n, 7.0);
                     }
                     super.appendNodes(t.getNodes());
                 }
             }
-            super.addCircle(startNodes.get(0), Color.GREEN, 10.0);
+            super.addCircle(startNodes.get(0), 10.0);
             super.drawNodes();
         }
     }
 
     private void drawPath() {
-        TextDirectionGenerator g = new TextDirectionGenerator(
-                pathNodes,
-                onFloor
-        );
+        TextDirectionGenerator g = new TextDirectionGenerator(pathNodes, onFloor);
         List<String> directionsArray = g.generateTextDirections();
         String output = "";
         for(String directionString: directionsArray) {
@@ -262,7 +279,7 @@ public class UserScreenController extends MapController {
 
         super.setNodes(pathNodes);
         super.removeConnections();
-        boolean haveMidFloor = false;
+
         if(startfloor == 0 || destfloor == 0 || midfloor == 0) {
             midfloor = 1;
             startfloor = pathNodes.getLast().getFloor();
@@ -273,12 +290,12 @@ public class UserScreenController extends MapController {
         for(int i = 0; i < pathNodes.size(); i++) {
             // Destination
             if(i == 0) {
-                super.addCircle(pathNodes.get(0), Color.RED, 7.0);
+                super.addCircle(pathNodes.get(0), 7.0);
             }
             if(i < (pathNodes.size() - 1)) {
                 if(pathNodes.get(i + 1).getFloor() != pathNodes.get(i).getFloor()) {
-                    super.addCircle(pathNodes.get(i), Color.GREEN, 7.0);
-                    super.addCircle(pathNodes.get(i + 1), Color.YELLOW, 7.0);
+                    super.addCircle(pathNodes.get(i), 7.0);
+                    //super.addCircle(pathNodes.get(i + 1), 7.0);
                 } else {
                     if(pathNodes.get(i).getFloor() == onFloor) {
                         super.connectNode(pathNodes.get(i), pathNodes.get(i+1));
@@ -290,15 +307,7 @@ public class UserScreenController extends MapController {
                 haveMidFloor = true;
             }
         }
-        super.addCircle(pathNodes.getLast(), Color.GREEN, 8.0);
-        /*
-        if(pathNodes.size() > 0) {
-            // Last Node
-            super.addCircle(pathNodes.getFirst(), Color.RED);
-        }
-        if(pathNodes.size() > 1) {
-            super.addCircle(pathNodes.getLast(), Color.GREEN);
-        }*/
+        //super.addCircle(pathNodes.getLast(), 8.0);
 
         super.drawNodes();
 
@@ -306,30 +315,31 @@ public class UserScreenController extends MapController {
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
 
-        StartFloorButton.setDisable(true);
-        MiddleFloorButton.setDisable(true);
-        EndFloorButton.setDisable(true);
+        disableAppropriateFloorButtons();
 
-        if((onFloor == startfloor)
-                &&(onFloor != destfloor)) {
+    }
+
+    private void disableAppropriateFloorButtons() {
+
+        if(onFloor == startfloor){
             StartFloorButton.setDisable(true);
+            MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(false);
-        } else if((onFloor != startfloor)
-                &&(onFloor == destfloor)) {
+        }else if(onFloor == midfloor){
             StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(true);
+            EndFloorButton.setDisable(false);
+        }else if(onFloor == destfloor){
+            StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
-        } else {
-            StartFloorButton.setDisable(false);
-            EndFloorButton.setDisable(false);
+        }else{
+            StartFloorButton.setDisable(true);
+            MiddleFloorButton.setDisable(true);
+            EndFloorButton.setDisable(true);
         }
-
-        if(haveMidFloor && (onFloor != midfloor)) {
-            MiddleFloorButton.setDisable(false);
-        } else if(haveMidFloor && (onFloor == midfloor)) {
-            StartFloorButton.setDisable(false);
-            EndFloorButton.setDisable(false);
-        } else if(haveMidFloor) {
-            MiddleFloorButton.setDisable(false);
+        if(!haveMidFloor){
+            MiddleFloorButton.setDisable(true);
         }
     }
 
@@ -482,7 +492,7 @@ public class UserScreenController extends MapController {
                                     +" Y: "+getImageYFromZoom(event.getY()));*/
 
                     //scales with scroll wheel
-                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
+                    setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
@@ -503,15 +513,26 @@ public class UserScreenController extends MapController {
     @FXML
     public void onLogin(ActionEvent actionEvent) throws IOException {
         pathNodes=null;
+        if(dir.getCurrentUser() != null) {
+            dir.logoutUser();
+            switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        } else {
+            switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+        }
 //        switchScreen(MMGpane, "/Views/UserScreen.fxml");
-        switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+
     }
 
     //Spanish translation
     public void setSpanishText(){
 //        SpanishButton.setText(Main.bundle.getString("spanish"));
         SearchButton.setText(Main.bundle.getString("search"));
-        LoginButton.setText(Main.bundle.getString("login"));
+        if(dir.getCurrentUser() != null) {
+            LoginButton.setText(Main.bundle.getString("Logout"));
+        } else {
+            LoginButton.setText(Main.bundle.getString("login"));
+        }
+
         directionLabel.setText(Main.bundle.getString("directions"));
         EnterDest.setText(Main.bundle.getString("enterDes"));
         floor.setText(Main.bundle.getString("floor"));
@@ -558,7 +579,6 @@ public class UserScreenController extends MapController {
 
 
             pathNodes = pf.shortestPath();
-
         }
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -568,6 +588,59 @@ public class UserScreenController extends MapController {
 
         setupMap();
 
+    }
+
+    private void findZoomWithPath() {
+        // No path
+        if(pathNodes.size() == 0) {
+            return;
+        }
+        double minX = super.IMAGE_WIDTH;
+        double maxX = 0;
+        double minY = super.IMAGE_HEIGHT;
+        double maxY = 0;
+
+        for(Node n: pathNodes) {
+            if(n.getFloor() == onFloor) {
+                if(n.getX() > maxX) {
+                    maxX = n.getX();
+                }
+                if(n.getX() < minX) {
+                    minX = n.getX();
+                }
+                if(n.getY() > maxY) {
+                    maxY = n.getY();
+                }
+                if(n.getY() < minY) {
+                    minY = n.getY();
+                }
+            }
+        }
+        // What zoom will we be at?
+        double requiredWidth = maxX - minX;
+        double requiredHeight = maxY - minY;
+
+        double percentWidth = requiredWidth/super.IMAGE_WIDTH;
+        double percentHeight = requiredHeight/super.IMAGE_HEIGHT;
+
+        double zoom = 1.0;
+
+        if(percentHeight > percentWidth) {
+            zoom = (1.0/percentHeight);
+        } else {
+            zoom = (1.0/percentWidth);
+        }
+
+        double xPercent = (minX + (requiredWidth/2.0))/super.IMAGE_WIDTH;
+        double yPercent = (minY + (requiredHeight/2.0))/super.IMAGE_HEIGHT;
+
+        double zoomPercentNew = (zoom * 100.0)/2.0;
+
+        if(zoomPercentNew < 100.0) {
+            zoomPercentNew = 100.0;
+        }
+
+        super.setZoomAndBars(zoomPercentNew, xPercent, yPercent);
     }
 
     //Function to allow the user to change the start to wherever they wish
@@ -603,6 +676,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -619,6 +694,8 @@ public class UserScreenController extends MapController {
             //System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -635,6 +712,8 @@ public class UserScreenController extends MapController {
             System.out.println(onFloor);
 
             setupMap();
+            disableAppropriateFloorButtons();
+
         }
     }
 
@@ -642,13 +721,17 @@ public class UserScreenController extends MapController {
      * Set's up the map
      */
     private void setupMap() {
-        if(pathNodes != null) {
-            drawPath();
-        } else {
-            // Draw Tags
-            if(starttag != null) {
+        // Draw Tags
+        if(starttag != null) {
+            if(pathNodes == null) {
+                super.clearCircleMap();
                 drawStartTagAndTags();
             }
+        }
+        if(pathNodes != null) {
+            System.out.println("setupMap()");
+            findZoomWithPath();
+            drawPath();
         }
     }
 }
