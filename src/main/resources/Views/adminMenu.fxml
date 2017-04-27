@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <items>
+            <Button mnemonicParsing="false" text="Logout" />
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.7608695652173914" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="toEditMap" layoutX="158.0" layoutY="107.0" mnemonicParsing="false" onAction="#goToEditMap" prefHeight="25.0" prefWidth="137.0" text="Edit Map" />
+                  <Button fx:id="toEditTag" layoutX="157.0" layoutY="132.0" mnemonicParsing="false" onAction="#goToEditTag" prefHeight="25.0" prefWidth="137.0" text="Edit Tag" />
+                  <Button fx:id="toEditProf" layoutX="157.0" layoutY="157.0" mnemonicParsing="false" onAction="#goToEditProf" prefHeight="25.0" prefWidth="137.0" text="Edit Proffesional" />
+                  <Button fx:id="toEnhancedMap" layoutX="157.0" layoutY="182.0" mnemonicParsing="false" onAction="#goToEnhancedMap" prefHeight="25.0" prefWidth="137.0" text="Enhanced Map" />
+                  <Button fx:id="toAddUser" layoutX="157.0" layoutY="207.0" mnemonicParsing="false" onAction="#goToAddUser" prefHeight="25.0" prefWidth="138.0" text="Add User" />
+                  <Button fx:id="toBugView" layoutX="157.0" layoutY="232.0" mnemonicParsing="false" onAction="#goToBugView" prefHeight="25.0" prefWidth="137.0" text="View Bug Report" />
+               </children>
+            </Pane>
+            <Pane prefHeight="358.0" prefWidth="175.0">
+               <children>
+                  <RadioButton layoutX="27.0" layoutY="23.0" mnemonicParsing="false" text="A-Star" />
+                  <RadioButton layoutX="27.0" layoutY="40.0" mnemonicParsing="false" text="DFS" />
+                  <RadioButton layoutX="27.0" layoutY="57.0" mnemonicParsing="false" text="BFS" />
+                  <TextField fx:id="timeOutTextBox" layoutX="-4.0" layoutY="140.0" />
+                  <Label alignment="CENTER" layoutX="-1.0" layoutY="123.0" prefHeight="17.0" prefWidth="141.0" text="Time Out" />
+               </children>
+            </Pane>
+         </items>
+      </SplitPane>
+   </center>
+</BorderPane>
