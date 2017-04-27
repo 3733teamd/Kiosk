@@ -131,7 +131,7 @@ public class EditMapScreenController extends MapController{
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor = 1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -197,7 +197,6 @@ public class EditMapScreenController extends MapController{
 
                     if (counter == MementoController.timeoutTime) {
                         running = false;
-                        running = false;
                         timer.cancel();
                         timerTask.cancel();
                         Platform.runLater(resetKiosk);
@@ -249,7 +248,7 @@ public class EditMapScreenController extends MapController{
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorSliderListener();
+        setFloorChoiceBox();
         overrideScrollWheel();
         panMethods();
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -319,21 +318,6 @@ public class EditMapScreenController extends MapController{
                     FloorMenu.setValue(floor);
                     System.out.println(floor);
 
-                    //if floor<100 its falkner, so display the prof verions
-
-                    floorMap.setImage(imgInt.display(floor + 1000));
-
-
-                }
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-
-                drawfloorNodes();
-
-            }
-        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -423,23 +407,31 @@ public class EditMapScreenController extends MapController{
         allTagBox.setItems(searchResultsTag);
     }
 
-    private void setFloorSliderListener(){
+    private void setFloorChoiceBox(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                if(new_val!=null) {
 
-                /*//TODO: heart of error
+                    if(floor != (int)new_val) {
+                        floor = new_val.intValue();
+                        FloorMenu.setValue(floor);
+                        System.out.println(floor);
+                        //if floor<100 its falkner, so display the prof verions
+                        if (floor < 100) {
+                            floorMap.setImage(imgInt.display(floor + 1000));
+                        } else {
+                            floorMap.setImage(imgInt.display(floor));
+                        }
+                    }
+
+                }
                 imagePane.getChildren().removeAll(floorCircs);
                 imagePane.getChildren().removeAll(floorLines);
                 floorCircs.clear();
                 floorLines.clear();
-*/
+
                 drawfloorNodes();
 
             }
