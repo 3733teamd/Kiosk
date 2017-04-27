@@ -11,6 +11,12 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -196,6 +202,7 @@
                               <JFXButton fx:id="reportButton" buttonType="RAISED" mnemonicParsing="false" onAction="#reportBug" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: DCDCDCDC;" text="%ReportBug" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="3" />
                            </children>
                         </AnchorPane>
+                        <ListView fx:id="directions" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0">
