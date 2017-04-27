@@ -84,6 +84,7 @@ public class RealImage implements ImageInterface {
                     System.err.println("Bad Floor Path");
                     return null;
                 }
+                System.out.println(floorPath);
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream(floorPath));
             } else {
                 System.err.println("Floor Not Found");
