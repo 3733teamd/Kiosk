@@ -516,7 +516,6 @@ public class EditMapScreenController extends MapController{
                             "Percent: "+zoomPercent+" X:" +
                             getImageXFromZoom(event.getX())
                             +" Y: "+getImageYFromZoom(event.getY()));
-
                     //scales with scroll wheel
                     setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
