@@ -174,7 +174,27 @@ public class Tag {
     }
 
     public void addBlock(VisitingBlock b){
-        
+        boolean has = false;
+        for (VisitingBlock bb: openHours){
+            if(bb.toString().equals(b.toString())){
+                has = true;
+                break;
+            }
+        }
+        if(!has){
+            openHours.add(b);
+        }
+
+    }
+
+    public void removeBlock(VisitingBlock b){
+        if(openHours.contains(b)) {
+            openHours.remove(b);
+        }
+    }
+
+    public LinkedList<VisitingBlock> getVisitingBlockObjs(){
+        return openHours;
     }
 
 }

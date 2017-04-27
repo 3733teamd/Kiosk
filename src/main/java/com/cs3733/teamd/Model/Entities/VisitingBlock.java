@@ -64,7 +64,7 @@ public class VisitingBlock {
         return open;
     }
 
-    public String getBlockRange(){
+    public String toString(){
 
         String range = stringTime(open) + " to " + stringTime(close);
 

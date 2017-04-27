@@ -118,7 +118,7 @@
                                           <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="31.0" prefWidth="261.0" text="%remProf" />
                                        </items>
                                     </SplitPane>
-                                    <SplitPane dividerPositions="0.030791788856304986, 0.7609970674486803, 0.8343108504398827, 0.8797653958944281, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0">
+                                    <SplitPane dividerPositions="0.030791788856304986, 0.7609970674486803, 0.8343108504398827, 0.8797653958944281, 0.5, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0">
                                       <items>
                                           <Label text="Current Visiting Hours" />
                                           <ListView fx:id="visitingHourList" prefHeight="411.0" prefWidth="321.0" />
@@ -127,6 +127,7 @@
                                           <Label text="Closing Time" />
                                           <TextField fx:id="closingTimeBox" />
                                           <Button fx:id="addVisitHours" mnemonicParsing="false" onAction="#addToVisitingHourList" text="Add" />
+                                          <Button fx:id="removeVisitBlockButton" mnemonicParsing="false" onAction="#removeVisitBlock" text="Remove" />
                                       </items>
                                     </SplitPane>
                                  </children>
