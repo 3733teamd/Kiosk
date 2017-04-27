@@ -49,6 +49,10 @@ public class SyncPopupController implements IOperationListener {
 
     @FXML
     public void initialize() {
+        synchronizeScreenToCurrentState();
+    }
+
+    private void synchronizeScreenToCurrentState() {
         h = ApplicationConfiguration.getInstance().getHospital();
         this.hospitalName.setText(h.getName());
         this.dbVersionText.setText(h.getDbVersion().toString());
@@ -64,12 +68,17 @@ public class SyncPopupController implements IOperationListener {
     }
 
     @FXML
-    void saveDatabaseToFile(ActionEvent event) {
+    void saveAsNewVersion(ActionEvent event) {
+        h.setDbVersion(h.getDbVersion() + 1);
+        saveCurrentVersion(event);
+    }
+
+    @FXML
+    void saveCurrentVersion(ActionEvent event) {
         DBHandler database = ApplicationConfiguration.getInstance().getDatabase();
         String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
         System.out.println(filename);
         File f2 = new File(filename);
-        h.setDbVersion(h.getDbVersion() + 1);
         database.dumpDatabaseToSqlStatements(
                 f2.getAbsolutePath()
                         .replaceFirst(
@@ -79,7 +88,10 @@ public class SyncPopupController implements IOperationListener {
 
         HospitalLoader.getInstance().saveHospital(h);
         System.out.println("Dumped");
+        synchronizeScreenToCurrentState();
     }
+
+
 
     @FXML
     void onLoadVersion(ActionEvent event) {
@@ -129,7 +141,7 @@ public class SyncPopupController implements IOperationListener {
     public void onOperationSuccess(Object o) {
         Platform.runLater(new Runnable() {
             @Override public void run() {
-                dbVersionText.setText(o.toString());
+                synchronizeScreenToCurrentState();
             }
         });
 
