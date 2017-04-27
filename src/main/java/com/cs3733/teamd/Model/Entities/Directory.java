@@ -127,6 +127,15 @@ public class Directory implements DirectoryInterface {
                 t.getId(),
                 t.isConnectable(),
                 t.isRestricted());
+        // Now update the visiting hours
+        List<VisitingBlock> vistingBlocks = t.getVisitingBlockObjs();
+        dbResult = dbHandler.removeVisitingHour(t.getID());
+        for(VisitingBlock block: vistingBlocks) {
+            dbResult = dbHandler.addVisitingHour(t.getID(),
+                    new java.sql.Timestamp(block.getOpen().getTimeInMillis()),
+                    new java.sql.Timestamp(block.getClose().getTimeInMillis())
+            );
+        }
         return dbResult;
     }
 
