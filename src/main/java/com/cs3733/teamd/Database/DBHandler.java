@@ -553,6 +553,7 @@ public class DBHandler {
             statement.setInt(2, nodeId2);
             statement.executeUpdate();
             statement.close();
+            System.out.println("just executed " + statement);
             return true;
         } catch(SQLException e) {
             e.printStackTrace();

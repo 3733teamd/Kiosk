@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.User;
+import com.cs3733.teamd.Model.Permissions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.application.Platform;
@@ -163,8 +164,13 @@ public class LoginScreenController extends AbsController {
         User u = dir.loginUser(user,pass);
 
         if (u != null){
-            System.out.println("Successful log in as admin.\n");
-            switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
+            if(u.hasPermission(Permissions.EDIT_MAP)) {
+                System.out.println("Successful log in as admin.\n");
+                switchScreen(MMGpane, "/Views/AdminSelectionScreen.fxml");
+            } else {
+                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            }
+
         } else{
             errorIndicator.setText(Main.bundle.getString("InvalidloginCredentials"));
             //
