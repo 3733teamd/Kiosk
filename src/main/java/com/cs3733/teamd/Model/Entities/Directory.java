@@ -2,6 +2,7 @@ package com.cs3733.teamd.Model.Entities;
 
 import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Database.DBHandler;
+import javafx.application.Platform;
 
 import javax.annotation.processing.SupportedSourceVersion;
 import java.io.IOException;
@@ -387,9 +388,14 @@ public class Directory implements DirectoryInterface {
             this.allProfs.clear();
             this.allProfs = this.dbHandler.professionals;
             System.out.println(allNodes);
-            for(IObservable observable: observables) {
-                observable.notifyUpdate();
-            }
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    for(IObservable observable: observables) {
+                        observable.notifyUpdate();
+                    }
+                }
+            });
+
             return true;
 
         } catch (SQLException e) {

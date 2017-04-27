@@ -6,6 +6,7 @@ import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Hospital;
 import com.cs3733.teamd.Model.HospitalLoader;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableIntegerArray;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by sdmichelini on 4/26/17.
  */
-public class SyncPopupController {
+public class SyncPopupController implements IOperationListener {
     @FXML
     public Button exitAbout;
 
@@ -81,16 +82,24 @@ public class SyncPopupController {
             this.dbVersionText.setText("Loading...");
             System.out.println(version);
             h.setDbVersion(version);
-            HospitalLoader.getInstance().saveHospital(h);
-            Directory dir = Directory.getInstance();
-            boolean result = dir.changeToNewFile(h.getDbPath());
-            if(result) {
-                System.out.println("Success");
-                this.dbVersionText.setText(version.toString());
-            } else {
-                System.err.println("Failure");
-                this.dbVersionText.setText("Directory Reload Error.");
-            }
+            IOperationListener listener = this;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    HospitalLoader.getInstance().saveHospital(h);
+                    Directory dir = Directory.getInstance();
+                    boolean result = dir.changeToNewFile(h.getDbPath());
+                    if(result) {
+                        System.out.println("Success");
+                        listener.onOperationSuccess(version);
+                    } else {
+                        System.err.println("Failure");
+                        listener.onOperationFailure(version);
+                    }
+                }
+            }).start();
+
+
         } catch(NumberFormatException e) {
             this.dbVersionText.setText("Load Version Error.");
             e.printStackTrace();
@@ -103,5 +112,24 @@ public class SyncPopupController {
         Stage closeStage= (Stage) exitAbout.getScene().getWindow();
         closeStage.close();
         //System.out.println("should be closing!!!");
+    }
+
+    @Override
+    public void onOperationSuccess(Object o) {
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                dbVersionText.setText(o.toString());
+            }
+        });
+
+    }
+
+    @Override
+    public void onOperationFailure(Object o) {
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                dbVersionText.setText("Directory Reload Error.");
+            }
+        });
     }
 }
