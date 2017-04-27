@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class LoginScreenController extends AbsController {
     public JFXPasswordField password;
     public JFXButton LoginButton;
     public JFXButton BackButton;
-    public AnchorPane MMGpane;
+    public Pane MMGpane;
     public Label errorIndicator;
     public Label userText;
     public Label pwText;
@@ -166,7 +167,7 @@ public class LoginScreenController extends AbsController {
         if (u != null){
             if(u.hasPermission(Permissions.EDIT_MAP)) {
                 System.out.println("Successful log in as admin.\n");
-                switchScreen(MMGpane, "/Views/AdminSelectionScreen.fxml");
+                switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
             } else {
                 switchScreen(MMGpane, "/Views/UserScreen.fxml");
             }

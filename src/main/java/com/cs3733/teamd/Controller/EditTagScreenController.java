@@ -142,7 +142,7 @@ public class EditTagScreenController extends AbsController {
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
+        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void initialize(){

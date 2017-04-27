@@ -167,7 +167,7 @@ public class CreateUserScreenController extends AbsController {
         
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
+        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
 
     }
     @FXML
