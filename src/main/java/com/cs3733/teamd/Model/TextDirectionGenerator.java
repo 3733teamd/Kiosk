@@ -33,32 +33,57 @@ public class TextDirectionGenerator {
         this.pointsOfInterestNames = new ArrayList<String>();
     }
 
-    private static Map<Direction, String[]> getTranslations() {
+    private static Map<Direction, String[]> getTranslations() { //Eng, Span, Fran, Port, Chine
         Map<Direction, String[]> translations = new HashMap<Direction, String[]>();
-        String[] proceedFrom = { "proceed from ", "precdeder desde " };
+        String[] proceedFrom = { "proceed from ",
+                "precdeder desde ",
+        "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
+        "Proceder de",
+        "\u7ee7\u7eed"};
         translations.put(Direction.PROCEED_FROM_TAG, proceedFrom);
 
-        String[] goStraight = { "proceed straight", "proceder recto"};
+        String[] goStraight = { "proceed straight", "proceder recto",
+                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 tout droit",
+                "Proceder de",
+                "\u76f4\u884c"};
         translations.put(Direction.GO_STRAIGHT, goStraight);
 
-        String[] turnLeft = {"turn left", "girar a la izquierda"};
+        String[] turnLeft = {"turn left", "girar a la izquierda",
+                "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0067\u0061\u0075\u0063\u0068\u0065",
+                "\u0076\u0069\u0072\u0065 \u00e0 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061",
+                "\u8f6c\u5de6"};
         translations.put(Direction.TURN_LEFT, turnLeft);
 
-        String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda"};
+        String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda",
+                "\u0046\u0061\u007a\u0065\u0072 \u0075\u006d\u0061 \u006c\u0069\u0067\u0065\u0069\u0072\u0061 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061",
+                "Fazer uma ligeira esquerda",
+                "\u7a0d\u5fae\u7559\u4e0b"};
         translations.put(Direction.SLIGHT_LEFT, slightLeft);
 
-        String[] turnRight = {"turn right", "dobla a la derecha"};
+        String[] turnRight = {"turn right", "dobla a la derecha",
+                "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0064\u0072\u006f\u0069\u0074\u0065",
+                "Proceder de",
+                "\u53f3\u8f6c"};
         translations.put(Direction.TURN_RIGHT, turnRight);
 
-        String[] slightRight = {"make a slight right", "hacer un ligero derecho"};
+        String[] slightRight = {"make a slight right", "hacer un ligero derecho",
+                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
+                "\u0076\u0069\u0072\u0065 \u00e0 \u0064\u0069\u0072\u0065\u0069\u0074\u0061",
+                "\u7ee7\u7eed"};
         translations.put(Direction.SLIGHT_RIGHT, slightRight);
 
-        String[] arrived = {"you have arrived at your destination", "has llegado a tu destino"};
+        String[] arrived = {"you have arrived at your destination", "has llegado a tu destino",
+                "\u0056\u006f\u0075\u0073 \u00ea\u0074\u0065\u0073 \u0061\u0072\u0072\u0069\u0076\u00e9 \u00e0 \u0076\u006f\u0074\u0072\u0065 \u0064\u0065\u0073\u0074\u0069\u006e\u0061\u0074\u0069\u006f\u006e",
+                "\u0056\u006f\u0063\u00ea \u0063\u0068\u0065\u0067\u006f\u0075 \u0061\u006f \u0073\u0065\u0075 \u0064\u0065\u0073\u0074\u0069\u006e\u006f",
+                "\u4f60\u5df2\u5230\u8fbe\u4f60\u7684\u76ee\u7684\u5730"};
         translations.put(Direction.ARRIVED, arrived);
 
         String[] proceedToElevator = {
                 "take the elevator to your destination floor",
-                "tomar el ascensor hasta el piso de destino"
+                "tomar el ascensor hasta el piso de destino",
+                "Prenez l'ascenseur \u00e0 votre \u00e9\u0074\u0061\u0067\u0065 de destination",
+                "Pegue o elevador \u0061\u0074\u00e9 o andar de destino",
+                "\u628a\u7535\u68af\u5e26\u5230\u4f60\u7684\u76ee\u7684\u5730\u697c\u5c42"
         };
         translations.put(Direction.PROCEED_TO_ELEVATOR, proceedToElevator);
         return translations;
@@ -82,8 +107,27 @@ public class TextDirectionGenerator {
     public static List<String> getDirectionsInLanguage(
             List<Direction> directions,
             List<String> pointsOfInterestNames) {
-        int textIndex = (ApplicationConfiguration.getInstance().getCurrentLanguage()
-                == ApplicationConfiguration.Language.ENGLISH) ? 0 : 1;
+        int textIndex=0;
+        if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.ENGLISH){
+            textIndex=0;
+        }
+        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.SPANISH){
+            textIndex=1;
+        }
+        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.FRENCH){
+            textIndex=2;
+        }
+        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.PORTUGUESE){
+            textIndex=3;
+        }
+        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.CHINESE){
+            textIndex=4;
+        }
+        else{
+            textIndex=0;
+        }
+         /*textIndex = (ApplicationConfiguration.getInstance().getCurrentLanguage()
+                == ApplicationConfiguration.Language.ENGLISH) ? 0 : 1;*/
         List<String> directionList = new ArrayList<String>();
         String tagName = (pointsOfInterestNames.size() > 0) ? pointsOfInterestNames.get(0) : "starting point.";
         boolean isFirstElement = true;
@@ -112,8 +156,17 @@ public class TextDirectionGenerator {
             } else {
                 if(textIndex == 0) {
                     addition = "and then "+addition;
-                } else {
+                } else if(textIndex==1) {
                     addition = "y "+addition;
+                }
+                else if(textIndex==2) {
+                    addition = "et alors "+addition;
+                }
+                else if(textIndex==3) {
+                    addition = "e depois "+addition;
+                }
+                else if(textIndex==4) {
+                    addition = "\u63a5\u7740 "+addition;
                 }
 
             }

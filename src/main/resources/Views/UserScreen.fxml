@@ -168,17 +168,17 @@
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="4">
                            <children>
-                              <Button fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="42.0" prefWidth="259.0" text="Show Starting Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="4" />
+                              <Button fx:id="StartFloorButton" mnemonicParsing="false" onAction="#ShowStart" prefHeight="42.0" prefWidth="259.0" text="%ShowStartingFloor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="4" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="6">
                            <children>
-                              <Button fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="42.0" prefWidth="259.0" text="Show Ending Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="6" />
+                              <Button fx:id="EndFloorButton" mnemonicParsing="false" onAction="#ShowEnd" prefHeight="42.0" prefWidth="259.0" text="%ShowEndingFloor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="6" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="5">
                            <children>
-                              <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="42.0" prefWidth="259.0" text="Show Intermediate Floor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="5" />
+                              <Button fx:id="MiddleFloorButton" mnemonicParsing="false" onAction="#ShowMiddle" prefHeight="42.0" prefWidth="259.0" text="%ShowIntermediateFloor" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.rowIndex="5" />
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="3">

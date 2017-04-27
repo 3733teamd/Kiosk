@@ -368,18 +368,6 @@ public class UserScreenController extends MapController {
     @FXML
     private void setLanguageListener() throws IOException {
 
-      /* LanguageButton.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-      @Override
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if (new_val != old_val) {languagechange=true;
-                    value=new_val.intValue();
-                }
-                else{languagechange=false;}
-                value=new_val.intValue();
-                System.out.println("val"+value);
-      }
-        });*/
         //value=(Integer.parseInt( LanguageButton.getValue()));
         System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
             //super.switchLanguage();
