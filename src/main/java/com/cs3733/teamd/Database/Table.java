@@ -60,10 +60,13 @@ public enum Table {
 
     UserRoles("UserRole","(\n" +
             " user_id INTEGER NOT NULL,\n" +
-            " role VARCHAR(10) NOT NULL)"),
+            " role VARCHAR(10) NOT NULL\n)"),
+
     BugReports("BugReport","(\n" +
             " tag VARCHAR(20) NOT NULL,\n" +
-            " comment VARCHAR(100) NOT NULL)");
+            " comment VARCHAR(100) NOT NULL,\n" +
+            " status VARCHAR(30) NOT NULL\n)");
+
 
     String name;
     String schema;

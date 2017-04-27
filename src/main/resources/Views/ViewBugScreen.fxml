@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="MMGpane" maxHeight="400.0" maxWidth="600.0" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.ViewBugController">
+<AnchorPane fx:id="MMGpane" maxHeight="400.0" maxWidth="600.0" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.ViewBugController">
    <children>
       <AnchorPane layoutX="114.0" layoutY="-8.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #4267b2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,6 +19,14 @@
          </children>
       </AnchorPane>
       <Button fx:id="exitBugs" layoutX="488.0" layoutY="332.0" mnemonicParsing="false" onAction="#leaveBugs" text="%Exit" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <ListView fx:id="listView" layoutX="39.0" layoutY="82.0" prefHeight="200.0" prefWidth="511.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0" />
+      <Button fx:id="bugDeleteBtn" layoutX="40.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteBug" text="%delBug" />
+      <TableView fx:id="table" layoutX="57.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0">
+        <columns>
+          <TableColumn fx:id="tagColumn" prefWidth="85.0" text="%Tag" />
+            <TableColumn fx:id="commentColumn" prefWidth="313.0" text="%Comment" />
+            <TableColumn fx:id="statusColumn" prefWidth="92.0" text="%Status" />
+        </columns>
+      </TableView>
+      <Button fx:id="closeReportBtn" layoutX="239.0" layoutY="340.0" mnemonicParsing="false" onAction="#closeReport" text="%CloseReport" />
    </children>
 </AnchorPane>

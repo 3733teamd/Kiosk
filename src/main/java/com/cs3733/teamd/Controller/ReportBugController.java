@@ -4,6 +4,7 @@ import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
+import com.cs3733.teamd.Model.Entities.Report;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -56,10 +57,9 @@ public class ReportBugController {
         String nodeName = destinationBugField.getText();
         String comment = commentField.getText();
 
-        boolean result = dir.addBugReport(nodeName, comment);
-        if(!result) {
-            System.err.println("Error Saving Bug Report");
-        }
+        Report newReport = new Report(nodeName,comment, "open", 1);
+
+        dir.addBugReport(newReport);
         closeReportBug();
     }
 
@@ -71,7 +71,7 @@ public class ReportBugController {
     private void closeReportBug(){
         Stage closeStage= (Stage) cancelBug.getScene().getWindow();
         closeStage.close();
-        System.out.println("should be closing!!!");
+//        System.out.println("should be closing!!!");
     }
 
 }
