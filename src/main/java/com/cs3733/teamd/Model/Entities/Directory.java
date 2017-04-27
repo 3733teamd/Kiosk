@@ -378,6 +378,7 @@ public class Directory implements DirectoryInterface {
             Connection c = this.dbHandler.getConnection();
             Statement s = c.createStatement();
             this.dbHandler.loadDbEntriesFromFileIntoDb(s, filename);
+            this.dbHandler.load();
             s.close();
             this.allNodes.clear();
             this.allNodes = this.dbHandler.nodes;
@@ -385,6 +386,7 @@ public class Directory implements DirectoryInterface {
             this.allTags = this.dbHandler.tags;
             this.allProfs.clear();
             this.allProfs = this.dbHandler.professionals;
+            System.out.println(allNodes);
             for(IObservable observable: observables) {
                 observable.notifyUpdate();
             }
@@ -403,7 +405,9 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public void addObserver(IObservable observable) {
-        observables.add(observable);
+        if(!observables.contains(observable)) {
+            observables.add(observable);
+        }
     }
     @Override
     public void removeObservers() {

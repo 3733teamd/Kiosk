@@ -2,10 +2,7 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.cs3733.teamd.Model.Entities.Directory;
-import com.cs3733.teamd.Model.Entities.Node;
-import com.cs3733.teamd.Model.Entities.Professional;
-import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.Entities.*;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -208,6 +205,7 @@ public class EditMapScreenController extends MapController implements IObservabl
             }
         }
     };
+    boolean notified = false;
     Thread timerThread = new Thread(runnable);
     Runnable resetKiosk = new Runnable() {
         @Override
@@ -238,8 +236,11 @@ public class EditMapScreenController extends MapController implements IObservabl
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
+        DirectoryInterface d = Directory.getInstance();
+        d.addObserver(this);
+
         this.zoomPercent = 100.0;
-        if(ApplicationConfiguration.getInstance().timeoutEnabled()) {
+        if(ApplicationConfiguration.getInstance().timeoutEnabled() && !notified) {
             timer.scheduleAtFixedRate(timerTask, 30, 1000);
             timerThread.start();
         }
@@ -247,8 +248,7 @@ public class EditMapScreenController extends MapController implements IObservabl
         setFloorChoiceBox();
         overrideScrollWheel();
         panMethods();
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
-        timerThread.start();
+
         setKeyListeners();
 
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -303,10 +303,6 @@ public class EditMapScreenController extends MapController implements IObservabl
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
-
-
-
-
 
 
         floors.clear();
@@ -368,7 +364,9 @@ public class EditMapScreenController extends MapController implements IObservabl
     }//initialize end
 
     public void notifyUpdate() {
+        notified = true;
         initialize();
+        notified = false;
     }
 
     private void setUpTimeoutField(){
@@ -956,7 +954,9 @@ public class EditMapScreenController extends MapController implements IObservabl
     private void displayTagHoverLabel(CircleNode circ){
         if(circ.referenceNode.getTags().size() > 0) {
             hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
-            mapCanvas.getChildren().add(hoverNodeLabel);
+            if(!mapCanvas.getChildren().contains(hoverNodeLabel)) {
+                mapCanvas.getChildren().add(hoverNodeLabel);
+            }
             hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
             hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
             hoverNodeLabel.setPadding(new Insets(10));
