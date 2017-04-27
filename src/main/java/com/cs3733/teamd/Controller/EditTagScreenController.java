@@ -179,6 +179,7 @@ public class EditTagScreenController extends AbsController {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    clearResponsiveFields();
                     selectedTag= null;
                     String text = searchTagBar.getText();
                     //TODO set chosen tag to tag from bar
@@ -217,7 +218,18 @@ public class EditTagScreenController extends AbsController {
                             addVisitHours.setDisable(false);
 
                         }else{
-
+                            addProf.setOpacity(.5);
+                            deleteProf.setOpacity(.5);
+                            newTagNameBtn.setOpacity(.5);
+                            addVisitHours.setOpacity(.5);
+                            //disable buttons
+                            selectConnectable.setDisable(true);
+                            restrictedButton.setDisable(true);
+                            addProf.setDisable(true);
+                            deleteProf.setDisable(true);
+                            newTagNameBtn.setDisable(true);
+                            addVisitHours.setDisable(true);
+                            clearResponsiveFields();
                         }
 
 
@@ -265,6 +277,8 @@ public class EditTagScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
                 //make some buttons opaque
+                //clearResponsiveFields();
+                selectedTag = null;
                 addProf.setOpacity(.5);
                 deleteProf.setOpacity(.5);
                 newTagNameBtn.setOpacity(.5);
@@ -442,8 +456,16 @@ public class EditTagScreenController extends AbsController {
     }
 
     public void clearResponsiveFields(){
+        //selectedTag=null;
         allProffessionals.setItems(FXCollections.observableArrayList());
+        allProffessionals.refresh();
         currentProfessionals.setItems(FXCollections.observableArrayList());
+        currentProfessionals.refresh();
         visitingHourList.setItems(FXCollections.observableArrayList());
+        visitingHourList.refresh();
+        openTimeBox.clear();
+        closingTimeBox.clear();
+        profSearchField.clear();
+        tagNameTxt.clear();
     }
 }
