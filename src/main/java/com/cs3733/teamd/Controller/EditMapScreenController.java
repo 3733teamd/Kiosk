@@ -5,6 +5,7 @@ import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
 import com.cs3733.teamd.Model.ImageInterface;
 import com.cs3733.teamd.Model.ProxyImage;
@@ -36,6 +37,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -119,7 +121,10 @@ public class EditMapScreenController extends MapController{
 
     double orgSceneX, orgSceneY;
 
+    List<Tag> filteredTag = new ArrayList<>();
 
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
 
     public int s;
@@ -192,6 +197,7 @@ public class EditMapScreenController extends MapController{
 
                     if (counter == MementoController.timeoutTime) {
                         running = false;
+                        running = false;
                         timer.cancel();
                         timerTask.cancel();
                         Platform.runLater(resetKiosk);
@@ -233,6 +239,8 @@ public class EditMapScreenController extends MapController{
 
     @FXML
     public void initialize(){
+
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -274,6 +282,14 @@ public class EditMapScreenController extends MapController{
             }
         });
 
+        searchAllTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                displayResultAllTag(searchAllTags.getText() + event.getText());
+            }
+        });
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
@@ -290,7 +306,7 @@ public class EditMapScreenController extends MapController{
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
-        TextFields.bindAutoCompletion(searchAllTags,allTagNames);
+        //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
 
 
@@ -393,6 +409,18 @@ public class EditMapScreenController extends MapController{
         });
 
         timeoutField.setText(String.valueOf( MementoController.timeoutTime));
+    }
+
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagBox.setItems(searchResultsTag);
     }
 
     private void setFloorSliderListener(){
@@ -629,7 +657,6 @@ public class EditMapScreenController extends MapController{
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
                     addNodeToSelection(c);
-
                 }else{
                     addNodeToSelection(c);
                 }
@@ -713,14 +740,22 @@ public class EditMapScreenController extends MapController{
         }
     }
     private void disconnectAllSelectedNodes(){
+        LinkedList<CircleNode> circleNodesToDisconnect = new LinkedList<CircleNode>();
         for(CircleNode cn: selectedCircles){
-            for(CircleNode other: selectedCircles){
-                try{
-                    disconnectCircleNodes(cn, other);
-                }catch(NullPointerException e){
-
+            for(Node neighbor: cn.referenceNode.getNodes()){
+                if(selectedCircles.contains(circleMap.get(neighbor))) {
+                    circleNodesToDisconnect.add(circleMap.get(neighbor));
                 }
             }
+            for(CircleNode neighborCircle : circleNodesToDisconnect) {
+                try {
+                    disconnectCircleNodes(cn, neighborCircle);
+                    System.out.println("disconnected " + cn + neighborCircle);
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+            }
+            circleNodesToDisconnect.clear();
         }
     }
 
@@ -839,12 +874,12 @@ public class EditMapScreenController extends MapController{
     }
 
     private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
-        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
-        if(response){
+
+        if(dir.deleteEdge(cn1.referenceNode,cn2.referenceNode)){
             errorBox.setText("");
             Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println(cn1.lineMap.size());
+            System.out.println("Deleted the edge" + cn1 + cn2);
             cn1.lineMap.remove(cn2);
             cn2.lineMap.remove(cn1);
             drawfloorNodes();

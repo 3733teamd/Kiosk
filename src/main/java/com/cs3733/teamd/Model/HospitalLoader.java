@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import java.util.*;
 public class HospitalLoader {
     private static HospitalLoader instance = null;
     private JSONParser parser;
-    private JSONObject object;
 
     private HospitalLoader() {
         parser = new JSONParser();
@@ -34,7 +34,8 @@ public class HospitalLoader {
         try {
             String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
             System.out.println(filename);
-            FileReader f = new FileReader(filename);
+            File f2 = new File(filename);
+            FileReader f = new FileReader(f2.getAbsolutePath());
             Object o = parser.parse(f);
             JSONObject jsonObject = (JSONObject) o;
             JSONArray hospitalsJson = (JSONArray) jsonObject.get("hospitals");
@@ -65,7 +66,6 @@ public class HospitalLoader {
 
     public Hospital loadHospitalFromId(String id) {
         JSONArray hospitalsJson = loadHospitalsObject();
-
 
         Iterator<Object> it = hospitalsJson.iterator();
 
