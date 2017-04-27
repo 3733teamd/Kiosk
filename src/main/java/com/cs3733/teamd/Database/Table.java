@@ -65,8 +65,8 @@ public enum Table {
             " tag VARCHAR(20) NOT NULL,\n" +
             " comment VARCHAR(100) NOT NULL)");
 
-    String name;
-    String schema;
+    public String name;
+    public String schema;
     Table(String name, String schema){
         this.name = name;
         this.schema = schema;

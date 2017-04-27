@@ -320,6 +320,26 @@ public class DBHandler {
         s.close();
     }
 
+    public void emptyExceptUsers() throws SQLException {
+        Statement s = connection.createStatement();
+        connection.setAutoCommit(false);
+
+        for (Table table: Table.values()){
+            switch(table) {
+                case UserRoles:
+                case Users:
+                    break;
+                default:
+                    executeStatement(s, table.emptyStatement());
+            }
+
+        }
+
+        connection.setAutoCommit(true);
+        s.close();
+    }
+
+
     /**
      * Drops all tables
      * @throws SQLException

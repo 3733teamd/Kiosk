@@ -43,7 +43,7 @@ import java.util.*;
 /**
  * Created by Anh Dao on 4/6/2017.
  */
-public class EditMapScreenController extends MapController{
+public class EditMapScreenController extends MapController implements IObservable{
 
 
     //color constants for convenience
@@ -377,6 +377,9 @@ public class EditMapScreenController extends MapController{
 
     }//initialize end
 
+    public void notifyUpdate() {
+        initialize();
+    }
 
     private void setUpTimeoutField(){
         timeoutField.setOnKeyPressed(new EventHandler<KeyEvent>() {

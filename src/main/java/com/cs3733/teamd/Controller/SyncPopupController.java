@@ -9,6 +9,7 @@ import com.cs3733.teamd.Model.HospitalLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -28,6 +29,9 @@ public class SyncPopupController {
 
     @FXML
     private Text dbVersionText;
+
+    @FXML
+    private TextField versionLoadTextField;
 
     @FXML
     private AnchorPane MMGpane;
@@ -59,6 +63,25 @@ public class SyncPopupController {
         System.out.println("Dumped");
     }
 
+    @FXML
+    void onLoadVersion(ActionEvent event) {
+        try {
+            Integer version = Integer.parseInt(this.versionLoadTextField.getText());
+            System.out.println(version);
+            h.setDbVersion(version);
+            HospitalLoader.getInstance().saveHospital(h);
+            Directory dir = Directory.getInstance();
+            boolean result = dir.changeToNewFile(h.getDbPath());
+            if(result) {
+                System.out.println("Success");
+            } else {
+                System.err.println("Failure");
+            }
+        } catch(NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @FXML
     public void leaveAbout(ActionEvent actionEvent) throws IOException {

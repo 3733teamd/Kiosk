@@ -1,8 +1,13 @@
 package com.cs3733.teamd.Model.Entities;
 
+import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Database.DBHandler;
 
+import javax.annotation.processing.SupportedSourceVersion;
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -364,6 +369,45 @@ public class Directory implements DirectoryInterface {
     @Override
     public List<String> getBugReports() {
         return dbHandler.getBugReports();
+    }
+
+    @Override
+    public boolean changeToNewFile(String filename) {
+        try {
+            this.dbHandler.emptyExceptUsers();
+            Connection c = this.dbHandler.getConnection();
+            Statement s = c.createStatement();
+            this.dbHandler.loadDbEntriesFromFileIntoDb(s, filename);
+            s.close();
+            this.allNodes.clear();
+            this.allNodes = this.dbHandler.nodes;
+            this.allTags.clear();
+            this.allTags = this.dbHandler.tags;
+            this.allProfs.clear();
+            this.allProfs = this.dbHandler.professionals;
+            for(IObservable observable: observables) {
+                observable.notifyUpdate();
+            }
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    List<IObservable> observables = new ArrayList<IObservable>();
+
+    @Override
+    public void addObserver(IObservable observable) {
+        observables.add(observable);
+    }
+    @Override
+    public void removeObservers() {
+        observables.clear();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Model.Entities;
 
+import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Model.Entities.*;
 
 import java.util.List;
@@ -187,4 +188,10 @@ public interface DirectoryInterface {
     boolean addBugReport(String tag, String comment);
 
     List<String> getBugReports();
+
+    boolean changeToNewFile(String filename);
+
+    void addObserver(IObservable observable);
+
+    void removeObservers();
 }

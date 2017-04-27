@@ -107,6 +107,7 @@ public class HospitalLoader {
         while(it.hasNext()) {
             JSONObject hospitalJson = (JSONObject)it.next();
             if(((String)hospitalJson.get("hospitalId")).compareTo(h.getHospitalId()) == 0) {
+                System.out.println(h.getDbVersion());
                 hospitalJson.put("dbVersion",(Long)h.getDbVersion().longValue());
                 System.out.println(root.toJSONString());
                 // try-with-resources statement based on post comment below :)
