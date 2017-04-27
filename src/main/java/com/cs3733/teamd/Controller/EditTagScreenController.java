@@ -227,6 +227,8 @@ public class EditTagScreenController extends AbsController {
                             deleteProf.setDisable(true);
                             newTagNameBtn.setDisable(true);
                             addVisitHours.setDisable(true);
+                            tagNameTxt.clear();
+                            tagNameTxt.setPromptText("");
                             clearResponsiveFields();
                         }
 
@@ -464,6 +466,5 @@ public class EditTagScreenController extends AbsController {
         openTimeBox.clear();
         closingTimeBox.clear();
         profSearchField.clear();
-        tagNameTxt.clear();
     }
 }
