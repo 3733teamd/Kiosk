@@ -81,7 +81,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="7">
                      <children>
-                        <JFXButton fx:id="BackButton" buttonType="RAISED" onAction="#onBack" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="\%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton fx:id="BackButton" buttonType="RAISED" onAction="#onBack" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1">
@@ -112,7 +112,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="8">
                      <children>
-                        <JFXButton fx:id="bugReports" buttonType="RAISED" onAction="#viewBugReports" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="\%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton fx:id="bugReports" buttonType="RAISED" onAction="#viewBugReports" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="2">
