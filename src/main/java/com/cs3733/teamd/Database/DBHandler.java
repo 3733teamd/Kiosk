@@ -546,14 +546,15 @@ public class DBHandler {
     }
 
     public boolean removeEdge(int nodeId1, int nodeId2) {
-        String sqlDelete = "DELETE FROM AdjacentNode WHERE n1=? OR n1=?";
+        String sqlDelete = "DELETE FROM AdjacentNode WHERE (n1=? AND n2=?) OR (n2=? AND n1=?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlDelete);
             statement.setInt(1, nodeId1);
             statement.setInt(2, nodeId2);
+            statement.setInt(3, nodeId1);
+            statement.setInt(4, nodeId2);
             statement.executeUpdate();
             statement.close();
-            System.out.println("just executed " + statement);
             return true;
         } catch(SQLException e) {
             e.printStackTrace();
