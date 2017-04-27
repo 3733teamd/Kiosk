@@ -35,18 +35,24 @@
                 <AnchorPane prefHeight="443.0" prefWidth="800.0">
                <children>
                   <Text layoutX="52.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Hospital: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-                  <Text layoutX="50.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Database Version: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
+                  <Text layoutX="50.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Database Version: " AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
                   <Text fx:id="hospitalName" layoutX="159.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="50.0" />
-                  <Text fx:id="dbVersionText" layoutX="216.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="70.0" />
+                  <Text fx:id="dbVersionText" layoutX="216.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="110.0" />
                   <Button layoutX="50.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveDatabaseToFile" text="Save" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="350.0" />
-                  <Button layoutX="230.0" layoutY="90.0" mnemonicParsing="false" onAction="#onLoadVersion" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="Load Version" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="90.0">
+                  <Button layoutX="230.0" layoutY="90.0" mnemonicParsing="false" onAction="#onLoadVersion" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="Load Version" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="130.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
                   <Button layoutX="216.0" layoutY="350.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-pref-width: 200;" text="Sync to Remote" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="350.0" />
                   <Button layoutX="426.0" layoutY="350.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-pref-width: 250;" text="Load Latest From Remote" AnchorPane.leftAnchor="426.0" AnchorPane.topAnchor="350.0" />
-                  <ComboBox fx:id="dbVersionBox" layoutX="50.0" layoutY="91.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="90.0" />
+                  <ComboBox fx:id="dbVersionBox" layoutX="50.0" layoutY="91.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="130.0" />
+                  <ComboBox fx:id="hospitalVersionBox" layoutX="50.0" layoutY="67.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
+                  <Button layoutX="230.0" layoutY="73.0" mnemonicParsing="false" onAction="#onLoadHospital" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="Load Hospital" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="70.0">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
                 <AnchorPane prefHeight="300.0" prefWidth="800.0">
                     <children>

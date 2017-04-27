@@ -42,6 +42,9 @@ public class SyncPopupController implements IOperationListener {
     @FXML
     private AnchorPane MMGpane;
 
+    @FXML
+    private ComboBox<String> hospitalVersionBox;
+
     private Hospital h;
 
     @FXML
@@ -104,6 +107,11 @@ public class SyncPopupController implements IOperationListener {
             this.dbVersionText.setText("Load Version Error.");
             e.printStackTrace();
         }
+
+    }
+
+    @FXML
+    void onLoadHospital(ActionEvent event) {
 
     }
 
