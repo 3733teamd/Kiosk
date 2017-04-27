@@ -1,7 +1,5 @@
 package com.cs3733.teamd.Controller.KioskGame.src.game;
 
-import com.cs3733.teamd.Model.Entities.Node;
-import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -18,17 +16,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-
 
 public class GameMain extends Application {
 
     public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("game.fxml"));
-        /*primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();*/
 
         primaryStage.setTitle( "Walkthrough Hospital" );
 
@@ -40,18 +31,6 @@ public class GameMain extends Application {
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        HashMap<Integer, String> floormap = new HashMap<Integer, String>();
-        floormap.put(1, "A");
-        floormap.put(2, "B");
-        floormap.put(3, "C");
-        floormap.put(4, "D");
-        floormap.put(5, "E");
-        floormap.put(6, "F");
-        floormap.put(7, "G");
-        floormap.put(102, "H");
-        floormap.put(103, "I");
-        floormap.put(104, "J");
 
         String imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser1.png";
         Image flkuser1 = new Image(imagePath);
