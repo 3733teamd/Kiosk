@@ -76,6 +76,15 @@ public class AdminMenuController extends AbsController{
         }
     }
 
+    @FXML
+    void onSyncPopup(ActionEvent event) {
+        try {
+            super.popupScreen(MMGpane, "/Views/SyncPopupScreen.fxml", "Sync");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void logout(ActionEvent actionEvent) {
         try {
             super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
