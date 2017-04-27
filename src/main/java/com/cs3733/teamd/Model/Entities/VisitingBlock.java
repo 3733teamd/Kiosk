@@ -23,6 +23,11 @@ public class VisitingBlock {
 
     }
 
+    public VisitingBlock() {
+        open = new Calendar.Builder().build();
+        close = new Calendar.Builder().build();
+    }
+
     public boolean validateString(String s){
         System.out.println(s);
 
@@ -51,6 +56,14 @@ public class VisitingBlock {
         open.set(Calendar.MINUTE, minutes);
     }
 
+    public void setOpenTimeInMillis(long millis) {
+        open.setTimeInMillis(millis);
+    }
+
+    public void setCloseTimeInMillis(long millis) {
+        close.setTimeInMillis(millis);
+    }
+
     public void setClosed(String s){
         int colonI = s.indexOf(":");
         int hours = Integer.parseInt(s.substring(0,colonI));
@@ -63,6 +76,7 @@ public class VisitingBlock {
     public Calendar getOpen(){
         return open;
     }
+    public Calendar getClose() { return close; }
 
     public String toString(){
 

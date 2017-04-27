@@ -435,11 +435,14 @@ public class EditTagScreenController extends AbsController {
         try {
             VisitingBlock b = new VisitingBlock(openingString, closingString);
             selectedTag.addBlock(b);
-            visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
-            visitingHourList.refresh();
+            if(dir.updateTag(selectedTag)) {
+                visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
+                visitingHourList.refresh();
 
-            openTimeBox.clear();
-            closingTimeBox.clear();
+                openTimeBox.clear();
+                closingTimeBox.clear();
+            }
+
 
 
             System.out.println(b.toString());
