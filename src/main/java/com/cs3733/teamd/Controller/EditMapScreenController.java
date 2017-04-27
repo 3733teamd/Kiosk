@@ -1,8 +1,12 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.*;
+
+import com.cs3733.teamd.Model.ApplicationConfiguration;
+import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.*;
+import com.cs3733.teamd.Model.ImageInterface;
+import com.cs3733.teamd.Model.ProxyImage;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,6 +31,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.*;
@@ -233,7 +238,6 @@ public class EditMapScreenController extends MapController implements IObservabl
     @FXML
     public void initialize(){
 
-
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         DirectoryInterface d = Directory.getInstance();
@@ -294,11 +298,10 @@ public class EditMapScreenController extends MapController implements IObservabl
         allTagBox.setItems(FXCollections.observableList(allTheTags));
         System.out.println(floor);
         //if floor<100 its falkner, so display the prof verions
-        if(floor<100) {
-            floorMap.setImage(imgInt.display(floor + 1000));
-        }else{
-            floorMap.setImage(imgInt.display(floor));
-        }
+
+        floorMap.setImage(imgInt.display(floor + 1000));
+
+
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
@@ -409,12 +412,8 @@ public class EditMapScreenController extends MapController implements IObservabl
                         floor = new_val.intValue();
                         FloorMenu.setValue(floor);
                         System.out.println(floor);
-                        //if floor<100 its falkner, so display the prof verions
-                        if (floor < 100) {
-                            floorMap.setImage(imgInt.display(floor + 1000));
-                        } else {
-                            floorMap.setImage(imgInt.display(floor));
-                        }
+                        floorMap.setImage(imgInt.display(floor + 1000));
+
                     }
 
                 }
@@ -640,7 +639,6 @@ public class EditMapScreenController extends MapController implements IObservabl
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
                     addNodeToSelection(c);
-
                 }else{
                     addNodeToSelection(c);
                 }
@@ -724,14 +722,22 @@ public class EditMapScreenController extends MapController implements IObservabl
         }
     }
     private void disconnectAllSelectedNodes(){
+        LinkedList<CircleNode> circleNodesToDisconnect = new LinkedList<CircleNode>();
         for(CircleNode cn: selectedCircles){
-            for(CircleNode other: selectedCircles){
-                try{
-                    disconnectCircleNodes(cn, other);
-                }catch(NullPointerException e){
-
+            for(Node neighbor: cn.referenceNode.getNodes()){
+                if(selectedCircles.contains(circleMap.get(neighbor))) {
+                    circleNodesToDisconnect.add(circleMap.get(neighbor));
                 }
             }
+            for(CircleNode neighborCircle : circleNodesToDisconnect) {
+                try {
+                    disconnectCircleNodes(cn, neighborCircle);
+                    System.out.println("disconnected " + cn + neighborCircle);
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+            }
+            circleNodesToDisconnect.clear();
         }
     }
 
@@ -850,12 +856,12 @@ public class EditMapScreenController extends MapController implements IObservabl
     }
 
     private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
-        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
-        if(response){
+
+        if(dir.deleteEdge(cn1.referenceNode,cn2.referenceNode)){
             errorBox.setText("");
             Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println(cn1.lineMap.size());
+            System.out.println("Deleted the edge" + cn1 + cn2);
             cn1.lineMap.remove(cn2);
             cn2.lineMap.remove(cn1);
             drawfloorNodes();
@@ -982,3 +988,4 @@ public class EditMapScreenController extends MapController implements IObservabl
     }
 
 }
+
