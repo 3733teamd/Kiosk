@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -32,7 +33,7 @@ public abstract class AbsController {
     protected Boolean init=true;
 
 
-    public void switchScreen(AnchorPane gp, String ViewPath) throws IOException{
+    public void switchScreen(Pane gp, String ViewPath) throws IOException{
         //for memento
         MementoController.addCareTaker(ViewPath);
         Directory.getInstance().removeObservers();
@@ -46,7 +47,7 @@ public abstract class AbsController {
     }
 
 
-    public void popupScreen(AnchorPane popupGP, String popupViewPath, String title) throws IOException{
+    public void popupScreen(Pane popupGP, String popupViewPath, String title) throws IOException{
 
         Stage popupStage= new Stage();
 

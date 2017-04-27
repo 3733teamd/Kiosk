@@ -517,7 +517,6 @@ public class EditMapScreenController extends MapController implements IObservabl
                             "Percent: "+zoomPercent+" X:" +
                             getImageXFromZoom(event.getX())
                             +" Y: "+getImageYFromZoom(event.getY()));
-
                     //scales with scroll wheel
                     setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
@@ -544,8 +543,9 @@ public class EditMapScreenController extends MapController implements IObservabl
         timer.purge();
         running = false;
         timerThread.interrupt();
-        //dir.logoutUser();
-        popupScreen(MMGpane, "/Views/SyncPopupScreen.fxml", "Sync Status");
+
+        dir.logoutUser();
+        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
