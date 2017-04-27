@@ -71,9 +71,9 @@ public class HospitalLoader {
     public Hospital loadHospitalFromId(String id) {
         JSONArray hospitalsJson = loadHospitalsObject();
         if(hospitalsJson == null) {
+            System.err.println("Your path probably has spaces.");
             return null;
         }
-
         Iterator<Object> it = hospitalsJson.iterator();
 
         while(it.hasNext()) {

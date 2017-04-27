@@ -4,6 +4,7 @@ import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -29,10 +30,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -116,14 +117,17 @@ public class EditMapScreenController extends MapController implements IObservabl
 
     double orgSceneX, orgSceneY;
 
+    List<Tag> filteredTag = new ArrayList<>();
 
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
 
     public int s;
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor = 1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -230,6 +234,8 @@ public class EditMapScreenController extends MapController implements IObservabl
 
     @FXML
     public void initialize(){
+
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -238,7 +244,7 @@ public class EditMapScreenController extends MapController implements IObservabl
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorSliderListener();
+        setFloorChoiceBox();
         overrideScrollWheel();
         panMethods();
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -271,6 +277,14 @@ public class EditMapScreenController extends MapController implements IObservabl
             }
         });
 
+        searchAllTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                displayResultAllTag(searchAllTags.getText() + event.getText());
+            }
+        });
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
@@ -288,36 +302,12 @@ public class EditMapScreenController extends MapController implements IObservabl
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
-        TextFields.bindAutoCompletion(searchAllTags,allTagNames);
+        //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
 
 
 
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if(new_val!=null) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    System.out.println(floor);
 
-                    //if floor<100 its falkner, so display the prof verions
-                    if (floor < 100) {
-                        floorMap.setImage(imgInt.display(floor + 1000));
-                    } else {
-                        floorMap.setImage(imgInt.display(floor));
-                    }
-
-                }
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-
-                drawfloorNodes();
-
-            }
-        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -398,23 +388,43 @@ public class EditMapScreenController extends MapController implements IObservabl
         timeoutField.setText(String.valueOf( MementoController.timeoutTime));
     }
 
-    private void setFloorSliderListener(){
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagBox.setItems(searchResultsTag);
+    }
+
+    private void setFloorChoiceBox(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                if(new_val!=null) {
 
-                /*//TODO: heart of error
+                    if(floor != (int)new_val) {
+                        floor = new_val.intValue();
+                        FloorMenu.setValue(floor);
+                        System.out.println(floor);
+                        //if floor<100 its falkner, so display the prof verions
+                        if (floor < 100) {
+                            floorMap.setImage(imgInt.display(floor + 1000));
+                        } else {
+                            floorMap.setImage(imgInt.display(floor));
+                        }
+                    }
+
+                }
                 imagePane.getChildren().removeAll(floorCircs);
                 imagePane.getChildren().removeAll(floorLines);
                 floorCircs.clear();
                 floorLines.clear();
-*/
+
                 drawfloorNodes();
 
             }
