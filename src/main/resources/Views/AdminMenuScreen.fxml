@@ -14,7 +14,7 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <items>
-            <Button mnemonicParsing="false" text="Logout" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
          </items>
       </ToolBar>
    </top>

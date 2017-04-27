@@ -75,4 +75,12 @@ public class AdminMenuController extends AbsController{
             e.printStackTrace();
         }
     }
+
+    public void logout(ActionEvent actionEvent) {
+        try {
+            super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
