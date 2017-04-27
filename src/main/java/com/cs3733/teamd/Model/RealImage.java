@@ -40,16 +40,16 @@ public class RealImage implements ImageInterface {
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk4.png"));
                 break;
             case 1001:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/1stFloorUserViewFinal.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
                 break;
             case 1002:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/2ndFloorProfViewFinal.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf2.png"));
                 break;
             case 1003:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3.png"));
                 break;
             case 1004:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/4thFloorProfViewFinal.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf4.png"));
                 break;
             case 1005:
                 flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf5.png"));
@@ -62,17 +62,17 @@ public class RealImage implements ImageInterface {
                 break;
             //Professional Belking Views
             case 1102:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf2"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf2.png"));
                 break;
             case 1103:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf3"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf3.png"));
                 break;
             case 1104:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf4"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf4.png"));
                 break;
             //default to user-view lv 4
             default:
-                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/4thFloorUserViewFinal.png"));
+                flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser4.png"));
                 break;
         }
         return flr_img;
