@@ -209,7 +209,6 @@ public class UserScreenController extends MapController {
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
         EndFloorButton.setVisible(false);
-        WalkPathButton.setVisible(false);
         findStartTag();
         //super.addZoomRestriction(3, new ZoomRestriction(1176.0/3000.0,10.0/3000.0,0.63,1.0));
         super.setFloor(onFloor);
@@ -299,7 +298,6 @@ public class UserScreenController extends MapController {
         StartFloorButton.setVisible(true);
         MiddleFloorButton.setVisible(true);
         EndFloorButton.setVisible(true);
-        WalkPathButton.setVisible(true);
 
         disableAppropriateFloorButtons();
 
@@ -343,7 +341,6 @@ public class UserScreenController extends MapController {
                 setFloor(onFloor);
                 output = "";
                 directions.setText(output);
-                //System.out.println(onFloor);
 
                 setupMap();
             }

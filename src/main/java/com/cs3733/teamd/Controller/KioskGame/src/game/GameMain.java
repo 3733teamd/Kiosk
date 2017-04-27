@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Controller.KioskGame.src.game;
 
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,18 +18,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 
 public class GameMain extends Application {
 
-    @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getResource("game.fxml"));
         /*primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();*/
 
-        primaryStage.setTitle( "Walkthrough Path" );
+        primaryStage.setTitle( "Walkthrough Hospital" );
 
         Group root = new Group();
         Scene theScene = new Scene( root );
@@ -38,10 +41,38 @@ public class GameMain extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+        HashMap<Integer, String> floormap = new HashMap<Integer, String>();
+        floormap.put(1, "A");
+        floormap.put(2, "B");
+        floormap.put(3, "C");
+        floormap.put(4, "D");
+        floormap.put(5, "E");
+        floormap.put(6, "F");
+        floormap.put(7, "G");
+        floormap.put(102, "H");
+        floormap.put(103, "I");
+        floormap.put(104, "J");
+
         String imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser1.png";
         Image flkuser1 = new Image(imagePath);
         imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser2.png";
         Image flkuser2 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser3.png";
+        Image flkuser3 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser4.png";
+        Image flkuser4 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser5.png";
+        Image flkuser5 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser6.png";
+        Image flkuser6 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser7.png";
+        Image flkuser7 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk2.png";
+        Image blk2 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk3.png";
+        Image blk3 = new Image(imagePath);
+        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk4.png";
+        Image blk4 = new Image(imagePath);
 
         final long startNanoTime = System.nanoTime();
 
@@ -53,7 +84,6 @@ public class GameMain extends Application {
                     public void handle(KeyEvent e)
                     {
                         String code = e.getCode().toString();
-
                         // only add once... prevent duplicates
                         if ( !input.contains(code) )
                             input.add( code );
@@ -76,6 +106,7 @@ public class GameMain extends Application {
             String changer = "A";
             double curx = 620;
             double cury = 250;
+            int timer = 0;
             public void handle(long currentNanoTime)
             {
                 gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -84,6 +115,22 @@ public class GameMain extends Application {
                     gc.drawImage(flkuser1, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 2){
                     gc.drawImage(flkuser2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 3){
+                    gc.drawImage(flkuser3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 4){
+                    gc.drawImage(flkuser4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 5){
+                    gc.drawImage(flkuser5, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 6) {
+                    gc.drawImage(flkuser6, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 7){
+                    gc.drawImage(flkuser7, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 102){
+                    gc.drawImage(blk2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 103){
+                    gc.drawImage(blk3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                }else if(floorNum == 104){
+                    gc.drawImage(blk4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }
 
                 if(curx < 0){
@@ -122,20 +169,79 @@ public class GameMain extends Application {
                 } else {
                     y = y;
                 }
-                if (input.contains("ENTER")) {
-                    if (floorNum == 1) {
+                if (input.contains("ENTER") && timer == 0) {
+                    timer = 50;
+                    if (floorNum == 1 && cury > 250 && curx > 300) {
                         changer = "B";
+                    }else if (floorNum == 1 && cury < 210 && curx < 300) {
+                        changer = "H";
+                    }else if (floorNum == 2) {
+                        changer = "C";
+                    }else if (floorNum == 3) {
+                        changer = "D";
+                    }else if (floorNum == 4) {
+                        changer = "E";
+                    }else if (floorNum == 5) {
+                        changer = "F";
+                    }else if (floorNum == 6) {
+                        changer = "G";
+                    }else if (floorNum == 7) {
+                        //changer = "A";
+                    }else if (floorNum == 102) {
+                        changer = "I";
+                    }else if (floorNum == 103) {
+                        changer = "J";
+                    }else if (floorNum == 104) {
+                        //changer = "A";
                     }
-                    if (floorNum == 2) {
+                }
+                if (input.contains("BACK_SPACE") && timer == 0) {
+                    timer = 50;
+                    if (floorNum == 1 && cury > 200) {
+                        //changer = "B";
+                    }else if (floorNum == 1 && cury < 200) {
+                        //changer = "H";
+                    }else if (floorNum == 2) {
                         changer = "A";
+                    }else if (floorNum == 3) {
+                        changer = "B";
+                    }else if (floorNum == 4) {
+                        changer = "C";
+                    }else if (floorNum == 5) {
+                        changer = "D";
+                    }else if (floorNum == 6) {
+                        changer = "E";
+                    }else if (floorNum == 7) {
+                        changer = "F";
+                    }else if (floorNum == 102) {
+                        changer = "A";
+                    }else if (floorNum == 103) {
+                        changer = "H";
+                    }else if (floorNum == 104) {
+                        changer = "I";
                     }
                 }
                 //System.out.println(floorNum);
                 if(changer == "A") {
                     floorNum = 1;
-                }
-                if(changer == "B") {
+                }else if(changer == "B") {
                     floorNum = 2;
+                }else if(changer == "C") {
+                    floorNum = 3;
+                }else if(changer == "D") {
+                    floorNum = 4;
+                }else if(changer == "E") {
+                    floorNum = 5;
+                }else if(changer == "F") {
+                    floorNum = 6;
+                }else if(changer == "G") {
+                    floorNum = 7;
+                }else if(changer == "H") {
+                    floorNum = 102;
+                }else if(changer == "I") {
+                    floorNum = 103;
+                }else if(changer == "J") {
+                    floorNum = 104;
                 }
 
                 curx = x;
@@ -144,8 +250,12 @@ public class GameMain extends Application {
                 //gc.strokeText( "o", x, y);
                 gc.fillText( "Use arrow keys to move", 10, canvas.getHeight() - 5);
                 //gc.strokeText( "Use arrow keys to move", 10, canvas.getHeight() - 5);
-                gc.fillText( "Use enter to change floors", 300, canvas.getHeight() - 5);
-
+                gc.fillText( "Use enter to go up floors", 300, canvas.getHeight() - 5);
+                gc.fillText( "Use backspace to go down floors", 600, canvas.getHeight() - 5);
+                if(timer > 0){
+                    timer -= 1;
+                    //System.out.println(timer);
+                }
             }
         }.start();
 
