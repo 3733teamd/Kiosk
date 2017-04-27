@@ -239,7 +239,6 @@ public class EditMapScreenController extends MapController{
     @FXML
     public void initialize(){
 
-
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -306,17 +305,6 @@ public class EditMapScreenController extends MapController{
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
-
-
-
-
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if(new_val!=null) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    System.out.println(floor);
 
 
         floors.clear();
@@ -900,7 +888,7 @@ public class EditMapScreenController extends MapController{
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguage();
+        super.switchLanguages();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
 
@@ -996,3 +984,4 @@ public class EditMapScreenController extends MapController{
     }
 
 }
+
