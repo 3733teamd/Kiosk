@@ -406,12 +406,8 @@ public class EditMapScreenController extends MapController{
                         floor = new_val.intValue();
                         FloorMenu.setValue(floor);
                         System.out.println(floor);
-                        //if floor<100 its falkner, so display the prof verions
-                        if (floor < 100) {
-                            floorMap.setImage(imgInt.display(floor + 1000));
-                        } else {
-                            floorMap.setImage(imgInt.display(floor));
-                        }
+                        floorMap.setImage(imgInt.display(floor + 1000));
+
                     }
 
                 }
@@ -888,7 +884,7 @@ public class EditMapScreenController extends MapController{
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguages();
+        super.switchLanguage();
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
 
