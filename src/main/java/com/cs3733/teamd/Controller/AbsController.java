@@ -84,7 +84,7 @@ public abstract class AbsController {
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.FRENCH);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getFrenchLocale());
         }
-        else if(lan.equalsIgnoreCase("Chinese")){
+        else if(lan.equalsIgnoreCase("\u4e2d\u6587")){
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.CHINESE);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getChineseLocale());
         }

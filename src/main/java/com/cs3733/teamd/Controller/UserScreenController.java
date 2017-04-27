@@ -110,7 +110,7 @@ public class UserScreenController extends MapController {
     private Map<String, String> tagAssociations;
 
     //LinkedList<String> languages = new LinkedList<>();
-    final String[] languages = new String[] { "English", "Español", "Français", "Chinese", "Portuguese" };
+    final String[] languages = new String[] { "English", "Español", "Français", "\u4e2d\u6587", "Português" };
 
     public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
 
