@@ -538,7 +538,7 @@ public class EditMapScreenController extends MapController{
         running = false;
         timerThread.interrupt();
         dir.logoutUser();
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{

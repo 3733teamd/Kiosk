@@ -70,7 +70,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToBugView(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/ReportBugScreen.fxml");
+            super.switchScreen(MMGpane, "/Views/ViewBugScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
