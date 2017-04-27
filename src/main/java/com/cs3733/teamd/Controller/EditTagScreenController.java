@@ -60,8 +60,6 @@ public class EditTagScreenController extends AbsController {
     ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
 
-    private Tag chosenTag = null;
-
     @FXML
     private Button addNewTagBtn;
 
@@ -183,7 +181,7 @@ public class EditTagScreenController extends AbsController {
                     selectedTag= null;
                     String text = searchTagBar.getText();
                     //TODO set chosen tag to tag from bar
-                    System.out.println(chosenTag);
+
                     tagNameTxt.setText(searchTagBar.getText());
 
                     //System.out.println(text);
