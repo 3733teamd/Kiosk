@@ -1,10 +1,14 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
-import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.ApplicationConfiguration;
+import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.ImageInterface;
+import com.cs3733.teamd.Model.ProxyImage;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,7 +22,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -34,6 +37,7 @@ import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 //TODO deleate connections
 //TODO update/ add
 //TODO tags
@@ -48,11 +52,9 @@ public class EditMapScreenController extends MapController{
 
 
     //color constants for convenience
-    private static Color CUR_SELECTED_COLOR = Color.GREEN;
-    private static Color OTHER_SELECTED_COLOR = Color.BLUE;
-    private static Color DEFAULT_COLOR = Color.RED;
-    private static Color ELEVATOR_COLOR = Color.YELLOW;
-    private static Color CLICKED_ON_COLOR = Color.BLACK;
+
+
+    //test
 
     public String errorString = Main.bundle.getString("InvalidAction");
 
@@ -119,14 +121,17 @@ public class EditMapScreenController extends MapController{
 
     double orgSceneX, orgSceneY;
 
+    List<Tag> filteredTag = new ArrayList<>();
 
+    ObservableList<Professional> searchResults = FXCollections.observableArrayList();
+    ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
 
     public int s;
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor = 1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -233,6 +238,7 @@ public class EditMapScreenController extends MapController{
 
     @FXML
     public void initialize(){
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -241,7 +247,7 @@ public class EditMapScreenController extends MapController{
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorSliderListener();
+        setFloorChoiceBox();
         overrideScrollWheel();
         panMethods();
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -274,6 +280,14 @@ public class EditMapScreenController extends MapController{
             }
         });
 
+        searchAllTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                displayResultAllTag(searchAllTags.getText() + event.getText());
+            }
+        });
+
         errorBox.setText("");
         xLoc.setText("");
         yLoc.setText("");
@@ -283,44 +297,15 @@ public class EditMapScreenController extends MapController{
         allTagBox.setItems(FXCollections.observableList(allTheTags));
         System.out.println(floor);
         //if floor<100 its falkner, so display the prof verions
-        if(floor<100) {
-            floorMap.setImage(imgInt.display(floor + 1000));
-        }else{
-            floorMap.setImage(imgInt.display(floor));
-        }
+
+        floorMap.setImage(imgInt.display(floor + 1000));
+
+
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
-        TextFields.bindAutoCompletion(searchAllTags,allTagNames);
+        //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
-
-
-
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if(new_val!=null) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    System.out.println(floor);
-
-                    //if floor<100 its falkner, so display the prof verions
-                    if (floor < 100) {
-                        floorMap.setImage(imgInt.display(floor + 1000));
-                    } else {
-                        floorMap.setImage(imgInt.display(floor));
-                    }
-
-                }
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-
-                drawfloorNodes();
-
-            }
-        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -398,23 +383,39 @@ public class EditMapScreenController extends MapController{
         timeoutField.setText(String.valueOf( MementoController.timeoutTime));
     }
 
-    private void setFloorSliderListener(){
+    @FXML
+    public void displayResultAllTag(String value){
+
+        for (Tag d: dir.getTags()){
+            filteredTag = dir.getTags().stream().filter((p) -> p.getTagName().toLowerCase().contains(value.toLowerCase())).collect(Collectors.toList());
+        }
+
+        searchResultsTag.setAll(filteredTag);
+
+        allTagBox.setItems(searchResultsTag);
+    }
+
+    private void setFloorChoiceBox(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                if(new_val!=null) {
 
-                /*//TODO: heart of error
+                    if(floor != (int)new_val) {
+                        floor = new_val.intValue();
+                        FloorMenu.setValue(floor);
+                        System.out.println(floor);
+                        floorMap.setImage(imgInt.display(floor + 1000));
+
+                    }
+
+                }
                 imagePane.getChildren().removeAll(floorCircs);
                 imagePane.getChildren().removeAll(floorLines);
                 floorCircs.clear();
                 floorLines.clear();
-*/
+
                 drawfloorNodes();
 
             }
@@ -485,9 +486,9 @@ public class EditMapScreenController extends MapController{
     }
 
     private void deselectMostRecentNode() {
-        selectedCircles.getLast().setFill(selectedCircles.getLast().defaultColor);
+        selectedCircles.getLast().setDefaultColor();
         selectedCircles.removeLast();
-        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        selectedCircles.getLast().setSelected();
         currentTagBox.setItems(FXCollections.observableList(selectedCircles.getLast().referenceNode.getTags()));
         currentTagBox.refresh();
     }
@@ -511,7 +512,7 @@ public class EditMapScreenController extends MapController{
                             +" Y: "+getImageYFromZoom(event.getY()));
 
                     //scales with scroll wheel
-                    setZoomAndScale(xPercent, yPercent, (event.getDeltaY() > 1.0));
+                    setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
                     event.consume();
                 }
@@ -571,7 +572,7 @@ public class EditMapScreenController extends MapController{
 
     }
     private void addNode(int x, int y){
-        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5, DEFAULT_COLOR);
+        CircleNode circ = createCircle(dir.saveNode(x,y,floor), 5);
         floorCircs.add(circ);
         mapCanvas.getChildren().add(circ);
     }
@@ -608,9 +609,9 @@ public class EditMapScreenController extends MapController{
         }
     }
 
-    private CircleNode createCircle(Node n, double r, Color color) {
+    private CircleNode createCircle(Node n, double r) {
         System.out.println("Node ID:"+n.getID()+" x: "+n.getX()+" y: "+n.getY());
-        CircleNode circle = new CircleNode(n.getX(), n.getY(), r, color,n);
+        CircleNode circle = new CircleNode(n.getX(), n.getY(), r,n);
 
         circleMap.put(n, circle);
 
@@ -632,7 +633,6 @@ public class EditMapScreenController extends MapController{
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
                     addNodeToSelection(c);
-
                 }else{
                     addNodeToSelection(c);
                 }
@@ -667,9 +667,22 @@ public class EditMapScreenController extends MapController{
             circle.beingDragged = false;
             scrollPane.setPannable(true);
             displayTagHoverLabel(circle);
+            updatePosition(t);
 
         });
         return circle;
+    }
+    private void updatePosition(MouseEvent m){
+        selectedCircles.getLast().referenceNode.setCoord((int)selectedCircles.getLast().getCenterX(),(int)selectedCircles.getLast().getCenterY());
+
+        boolean response = dir.updateNode(selectedCircles.getLast().referenceNode);
+
+        if(response){
+            errorBox.setText("");
+        }else{
+            errorBox.setText(errorString);
+        }
+
     }
 
     private void addNodeToSelection(CircleNode c) {
@@ -683,16 +696,16 @@ public class EditMapScreenController extends MapController{
         currentTagBox.refresh();
 
         if(!selectedCircles.isEmpty()) {
-            selectedCircles.getLast().setFill(OTHER_SELECTED_COLOR);
+            selectedCircles.getLast().setOtherSelected();
         }
         selectedCircles.addLast(c);
-        selectedCircles.getLast().setFill(CUR_SELECTED_COLOR);
+        selectedCircles.getLast().setSelected();
 
     }
 
     private void deselectAllNodes() {
         for(CircleNode cn : selectedCircles){
-            cn.setFill(cn.defaultColor);
+            cn.setDefaultColor();
         }
         selectedCircles.clear();
     }
@@ -703,14 +716,22 @@ public class EditMapScreenController extends MapController{
         }
     }
     private void disconnectAllSelectedNodes(){
+        LinkedList<CircleNode> circleNodesToDisconnect = new LinkedList<CircleNode>();
         for(CircleNode cn: selectedCircles){
-            for(CircleNode other: selectedCircles){
-                try{
-                    disconnectCircleNodes(cn, other);
-                }catch(NullPointerException e){
-
+            for(Node neighbor: cn.referenceNode.getNodes()){
+                if(selectedCircles.contains(circleMap.get(neighbor))) {
+                    circleNodesToDisconnect.add(circleMap.get(neighbor));
                 }
             }
+            for(CircleNode neighborCircle : circleNodesToDisconnect) {
+                try {
+                    disconnectCircleNodes(cn, neighborCircle);
+                    System.out.println("disconnected " + cn + neighborCircle);
+                } catch (NullPointerException e) {
+                    System.out.println(e);
+                }
+            }
+            circleNodesToDisconnect.clear();
         }
     }
 
@@ -742,10 +763,10 @@ public class EditMapScreenController extends MapController{
     private void initializeCircleMap(){
         for(Node n : dir.getNodes()){
             if(n.hasElevator()) {
-                CircleNode circ = createCircle(n, 5, ELEVATOR_COLOR);
+                CircleNode circ = createCircle(n, 5);
                 setHoverProperties(circ);
             }else{
-                CircleNode circ = createCircle(n, 5, DEFAULT_COLOR);
+                CircleNode circ = createCircle(n, 5);
                 setHoverProperties(circ);
             }
 
@@ -755,6 +776,22 @@ public class EditMapScreenController extends MapController{
 
     private void drawfloorNodes(){
         mapCanvas.getChildren().clear();
+
+        for(int i=0; i<circleMap.size(); i++){
+            CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
+            Node n = circ.referenceNode;
+            if(n.getFloor()==floor){
+                for (Node n2 : circ.referenceNode.getNodes()){
+
+                    CircleNode circ2 = circleMap.get(n2);
+                    loading = true;
+                    connectNode(circ,circ2);
+                    loading = false;
+
+                }
+            }
+        }
+
         for(Node n: dir.getNodes()){
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
@@ -767,35 +804,15 @@ public class EditMapScreenController extends MapController{
                 }
             }
         }
-
-
-
-
-
-        for(int i=0; i<circleMap.size(); i++){
-            CircleNode circ = circleMap.get(circleMap.keySet().toArray()[i]);
-            Node n = circ.referenceNode;
-
-
-            if(n.getFloor()==floor){
-                for (Node n2 : circ.referenceNode.getNodes()){
-
-                    CircleNode circ2 = circleMap.get(n2);
-                    loading = true;
-                    connectNode(circ,circ2);
-                    loading = false;
-
-                }
-            }
-
-        }
-
     }
 
     @FXML
     public void addTagToCurrentNode(ActionEvent actionEvent) {
         if(selectedCircles.getLast() != null){
             boolean response = dir.addNodeTag(selectedCircles.getLast().referenceNode,selectedTag);
+            selectedCircles.getLast().setDefaultColor();
+            selectedCircles.getLast().setSelected();
+
             if(response){
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
@@ -814,6 +831,8 @@ public class EditMapScreenController extends MapController{
         if(selectedCurrentTag != null){
 
             if(dir.removeNodeTag(selectedCircles.getLast().referenceNode,selectedCurrentTag)){
+                selectedCircles.getLast().setDefaultColor();
+                selectedCircles.getLast().setSelected();
                 errorBox.setText("");
                 currentTagBox.setItems(FXCollections.observableArrayList(selectedCircles.getLast().referenceNode.getTags()));
             }else{
@@ -831,12 +850,12 @@ public class EditMapScreenController extends MapController{
     }
 
     private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
-        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
-        if(response){
+
+        if(dir.deleteEdge(cn1.referenceNode,cn2.referenceNode)){
             errorBox.setText("");
             Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println(cn1.lineMap.size());
+            System.out.println("Deleted the edge" + cn1 + cn2);
             cn1.lineMap.remove(cn2);
             cn2.lineMap.remove(cn1);
             drawfloorNodes();
@@ -961,3 +980,4 @@ public class EditMapScreenController extends MapController{
     }
 
 }
+

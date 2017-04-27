@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 public class EditTagScreenController extends AbsController {
     public CheckBox selectConnectable;
+    public CheckBox restrictedButton;
     Directory dir = Directory.getInstance();
     @FXML
     public TextArea tagTextArea;
@@ -151,6 +152,7 @@ public class EditTagScreenController extends AbsController {
         newTagNameBtn.setOpacity(.5);
         //disable buttons
         selectConnectable.setDisable(true);
+        restrictedButton.setDisable(true);
         addProf.setDisable(true);
         deleteProf.setDisable(true);
         newTagNameBtn.setDisable(true);
@@ -197,6 +199,8 @@ public class EditTagScreenController extends AbsController {
                         newTagNameBtn.setOpacity(1.0);
                         selectConnectable.setSelected(selectedTag.isConnectable());
                         selectConnectable.setDisable(false);
+                        restrictedButton.setSelected(selectedTag.isRestricted());
+                        restrictedButton.setDisable(false);
                         addProf.setDisable(false);
                         deleteProf.setDisable(false);
                         newTagNameBtn.setDisable(false);
@@ -305,6 +309,12 @@ public class EditTagScreenController extends AbsController {
         }
         if(selectConnectable.isSelected() != selectedTag.isConnectable()) {
             selectedTag.setConnectable(selectConnectable.isSelected());
+            dir.updateTag(selectedTag);
+            tagList.refresh();
+        }
+
+        if(restrictedButton.isSelected() != selectedTag.isRestricted()){
+            selectedTag.setRestricted(restrictedButton.isSelected());
             dir.updateTag(selectedTag);
             tagList.refresh();
         }

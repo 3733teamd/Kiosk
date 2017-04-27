@@ -3,6 +3,7 @@ package com.cs3733.teamd;
 import com.cs3733.teamd.Database.DBHandler;
 
 import com.cs3733.teamd.Model.Entities.*;
+import com.cs3733.teamd.Model.HospitalLoader;
 import com.cs3733.teamd.Model.Originator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -55,7 +56,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
 
-
+        System.out.println(HospitalLoader.getInstance().loadHospitalFromId("faulkner"));
 
         DBHandler database;
         Directory dir = Directory.getInstance();

@@ -138,4 +138,14 @@ public class Node {
         }
         return false;
     }
+
+    public boolean hasRestricted(){
+        for (int i=0; i<tags.size(); i++){
+            Tag t = tags.get(i);
+            if (t.isRestricted()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
