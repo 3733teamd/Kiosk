@@ -593,7 +593,7 @@ public class UserScreenController extends MapController {
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
-        directions.setText(output);
+      //  directions.setText(output);
         //System.out.println(onFloor);
         dirList = FXCollections.observableArrayList(output);
 //        directions.setText(output);
@@ -692,7 +692,7 @@ public class UserScreenController extends MapController {
             directions.setItems(dirList);
 
             System.out.println(onFloor);
-            directions.setText(output);
+        //    directions.setText(output);
             //System.out.println(onFloor);
 
             setupMap();
@@ -710,7 +710,7 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+        //    directions.setText(output);
             //System.out.println(onFloor);
             dirList = FXCollections.observableArrayList(output);
 //            directions.setText(output);
