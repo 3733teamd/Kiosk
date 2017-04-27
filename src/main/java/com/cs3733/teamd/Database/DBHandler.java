@@ -971,26 +971,26 @@ public class DBHandler {
         }
     }
 
-    public boolean setBugClosed(String tag, String comment, String status) {
-        String sqlUpdate = "UPDATE BugReport SET status=? WHERE tag=? AND comment=?";
-        try {
-
-            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
-            statement.setString(1, tag);
-            System.out.println(tag);
-            statement.setString(2, comment);
-            System.out.println(comment);
-            statement.setString(3, status);
-            System.out.println(status);
-            statement.executeUpdate();
-            System.out.println("executing update");
-            statement.close();
-            return true;
-        } catch(SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean setBugClosed(String tag, String comment, String status) {
+//        String sqlUpdate = "UPDATE BugReport SET status=? WHERE tag=? AND comment=?";
+//        try {
+//
+//            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+//            statement.setString(1, tag);
+//            System.out.println(tag);
+//            statement.setString(2, comment);
+//            System.out.println(comment);
+//            statement.setString(3, status);
+//            System.out.println(status);
+//            statement.executeUpdate();
+//            System.out.println("executing update");
+//            statement.close();
+//            return true;
+//        } catch(SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
 
 }

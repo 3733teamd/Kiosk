@@ -42,7 +42,7 @@ public class ViewBugController {
         //numberColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("ID"));
         tagColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("tagText"));
         commentColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("commentText"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("status"));
+        //statusColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("status"));
         updateBugReportTable();
     }
 
@@ -66,13 +66,16 @@ public class ViewBugController {
     }
 
     public void closeReport(ActionEvent actionEvent) {
-        Report selectedReport;
-        selectedReport = (Report)table.getSelectionModel().getSelectedItem();
-        System.out.println(selectedReport.tagText);
-        System.out.println(selectedReport.commentText);
-        System.out.println(selectedReport.status);
-        boolean result = dir.setBugClosed(selectedReport);
-        System.out.println("setBug Closed finished");
-        updateBugReportTable();
     }
+
+//    public void closeReport(ActionEvent actionEvent) {
+//        Report selectedReport;
+//        selectedReport = (Report)table.getSelectionModel().getSelectedItem();
+//        System.out.println(selectedReport.tagText);
+//        System.out.println(selectedReport.commentText);
+//        System.out.println(selectedReport.status);
+//        boolean result = dir.setBugClosed(selectedReport);
+//        System.out.println("setBug Closed finished");
+//        updateBugReportTable();
+//    }
 }

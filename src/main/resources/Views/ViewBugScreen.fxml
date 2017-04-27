@@ -20,13 +20,13 @@
       </AnchorPane>
       <Button fx:id="exitBugs" layoutX="488.0" layoutY="332.0" mnemonicParsing="false" onAction="#leaveBugs" text="%Exit" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="bugDeleteBtn" layoutX="40.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteBug" text="%delBug" />
-      <TableView fx:id="table" layoutX="57.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0">
+      <TableView fx:id="table" layoutX="12.0" layoutY="100.0" prefHeight="200.0" prefWidth="577.0">
         <columns>
           <TableColumn fx:id="tagColumn" prefWidth="85.0" text="%Tag" />
-            <TableColumn fx:id="commentColumn" prefWidth="313.0" text="%Comment" />
-            <TableColumn fx:id="statusColumn" prefWidth="92.0" text="%Status" />
+            <TableColumn fx:id="commentColumn" prefWidth="491.0" text="%Comment" />
+            <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="0.0" text="%Status" visible="false" />
         </columns>
       </TableView>
-      <Button fx:id="closeReportBtn" layoutX="239.0" layoutY="340.0" mnemonicParsing="false" onAction="#closeReport" text="%CloseReport" />
+      <Button fx:id="closeReportBtn" layoutX="239.0" layoutY="340.0" mnemonicParsing="false" onAction="#closeReport" text="%CloseReport" visible="false" />
    </children>
 </AnchorPane>

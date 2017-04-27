@@ -190,5 +190,5 @@ public interface DirectoryInterface {
 
     List<Report> getBugReports();
 
-    boolean setBugClosed(Report report);
+    //boolean setBugClosed(Report report);
 }

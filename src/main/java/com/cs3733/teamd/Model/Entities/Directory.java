@@ -381,15 +381,15 @@ public class Directory implements DirectoryInterface {
         return result;
     }
 
-    @Override
-    public boolean setBugClosed (Report report){
-        boolean result = dbHandler.setBugClosed(report.tagText, report.commentText, "closed");
-        if(!result){
-            System.out.println("Error changing Status");
-            return result;
-        }
-        return result;
-    }
+//      @Override
+//    public boolean setBugClosed (Report report){
+//        boolean result = dbHandler.setBugClosed(report.tagText, report.commentText, "closed");
+//        if(!result){
+//            System.out.println("Error changing Status");
+//            return result;
+//        }
+//        return result;
+//    }
 
 
 }
