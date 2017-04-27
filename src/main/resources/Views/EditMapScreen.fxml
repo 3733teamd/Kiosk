@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -21,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -74,25 +81,17 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="7">
                      <children>
-                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="45.0" prefWidth="115.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <JFXButton fx:id="BackButton" buttonType="RAISED" onAction="#onBack" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="EditTag" buttonType="RAISED" onAction="#toEditTag" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane>
                      <children>
-                        <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <JFXButton fx:id="EditProf" buttonType="RAISED" onAction="#toEditProf" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="9">
@@ -113,12 +112,12 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="8">
                      <children>
-                        <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="45.0" prefWidth="103.0" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="8" />
+                        <JFXButton fx:id="bugReports" buttonType="RAISED" onAction="#viewBugReports" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="2">
                      <children>
-                        <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="192.0" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2" />
+                        <JFXButton fx:id="CreateUserButton" buttonType="RAISED" onAction="#onCreateUser" prefHeight="58.0" prefWidth="192.0" style="-fx-background-color: DCDCDCDC;" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0" GridPane.columnIndex="3">
@@ -128,20 +127,12 @@
                   </Text>
                   <AnchorPane GridPane.columnIndex="6">
                      <children>
-                        <Button fx:id="SpanishButton" mnemonicParsing="false" onAction="#toSpanish" prefHeight="45.0" prefWidth="150.0" text="%spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="6">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <JFXButton fx:id="SpanishButton" buttonType="RAISED" onAction="#toSpanish" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="5">
                      <children>
-                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="45.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <JFXButton fx:id="LoginButton" buttonType="RAISED" onAction="#Logout" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%Logout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>

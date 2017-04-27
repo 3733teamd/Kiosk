@@ -7,6 +7,7 @@ import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.jfoenix.controls.JFXButton;
 import com.cs3733.teamd.Model.ImageInterface;
 import com.cs3733.teamd.Model.ProxyImage;
 import javafx.application.Platform;
@@ -73,18 +74,18 @@ public class EditMapScreenController extends MapController{
     public RadioButton chooseAStarButton;
     public ToggleGroup algSelectGorup;
 
-    public Button bugReports;
+    public JFXButton bugReports;
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
     ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
-    public Button EditProf;
-    public Button EditTag;
-    public Button LoginButton;
-    public Button CreateUserButton;
-    public Button SpanishButton;
-    public Button BackButton;
+    public JFXButton EditProf;
+    public JFXButton EditTag;
+    public JFXButton LoginButton;
+    public JFXButton CreateUserButton;
+    public JFXButton SpanishButton;
+    public JFXButton BackButton;
     public Button addNode;
     public Button connectNode;
     public Label xLoc;
@@ -131,7 +132,7 @@ public class EditMapScreenController extends MapController{
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor = 1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -197,7 +198,6 @@ public class EditMapScreenController extends MapController{
 
                     if (counter == MementoController.timeoutTime) {
                         running = false;
-                        running = false;
                         timer.cancel();
                         timerTask.cancel();
                         Platform.runLater(resetKiosk);
@@ -240,7 +240,6 @@ public class EditMapScreenController extends MapController{
     @FXML
     public void initialize(){
 
-
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         this.zoomPercent = 100.0;
@@ -249,7 +248,7 @@ public class EditMapScreenController extends MapController{
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorSliderListener();
+        setFloorChoiceBox();
         overrideScrollWheel();
         panMethods();
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
@@ -308,32 +307,6 @@ public class EditMapScreenController extends MapController{
         }
         //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
-
-
-
-        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                if(new_val!=null) {
-                    floor = new_val.intValue();
-                    FloorMenu.setValue(floor);
-                    System.out.println(floor);
-
-                    //if floor<100 its falkner, so display the prof verions
-
-                    floorMap.setImage(imgInt.display(floor + 1000));
-
-
-                }
-                imagePane.getChildren().removeAll(floorCircs);
-                imagePane.getChildren().removeAll(floorLines);
-                floorCircs.clear();
-                floorLines.clear();
-
-                drawfloorNodes();
-
-            }
-        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -423,23 +396,27 @@ public class EditMapScreenController extends MapController{
         allTagBox.setItems(searchResultsTag);
     }
 
-    private void setFloorSliderListener(){
+    private void setFloorChoiceBox(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                if(new_val!=null) {
 
-                /*//TODO: heart of error
+                    if(floor != (int)new_val) {
+                        floor = new_val.intValue();
+                        FloorMenu.setValue(floor);
+                        System.out.println(floor);
+                        floorMap.setImage(imgInt.display(floor + 1000));
+
+                    }
+
+                }
                 imagePane.getChildren().removeAll(floorCircs);
                 imagePane.getChildren().removeAll(floorLines);
                 floorCircs.clear();
                 floorLines.clear();
-*/
+
                 drawfloorNodes();
 
             }
@@ -534,7 +511,6 @@ public class EditMapScreenController extends MapController{
                             "Percent: "+zoomPercent+" X:" +
                             getImageXFromZoom(event.getX())
                             +" Y: "+getImageYFromZoom(event.getY()));
-
                     //scales with scroll wheel
                     setBarPositions(xPercent, yPercent, (event.getDeltaY() > 1.0));
                 } else {
@@ -562,7 +538,7 @@ public class EditMapScreenController extends MapController{
         running = false;
         timerThread.interrupt();
         dir.logoutUser();
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
@@ -1004,3 +980,4 @@ public class EditMapScreenController extends MapController{
     }
 
 }
+

@@ -392,7 +392,7 @@ public class EditProfScreenController extends AbsController {
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(pane, "/Views/EditMapScreen.fxml");
+        switchScreen(pane, "/Views/AdminMenuScreen.fxml");
     }
 
     @FXML
@@ -464,16 +464,11 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void modifyName(ActionEvent event) {
-        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
-        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
-            searchProfessionalBar.setText("");
-        }
-        else{
+        if(!profName.getText().trim().isEmpty()) {
             selectedProf.name = (profName.getText());
-            profName.clear();
             dir.updateProfessional(selectedProf);
+            profName.clear();
             allProfList.refresh();
-            //setAllProfList();
             profName.clear();
         }
     }

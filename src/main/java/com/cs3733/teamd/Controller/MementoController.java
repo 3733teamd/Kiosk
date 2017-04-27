@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.CareTaker;
 import com.cs3733.teamd.Model.Originator;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class MementoController extends AbsController{
         originator.setState(ViewPath);
         careTaker.add(originator.saveStateToMemento());
     }
-    protected static void toOriginalScreen(AnchorPane pane) throws IOException {
+    protected static void toOriginalScreen(Pane pane) throws IOException {
         System.out.println(careTaker.mementoList.size()+ "sizeee");
         //originator.getStateFromMemento(careTaker.get(0));
         System.out.println("screen "+ careTaker.mementoList.get(0));
