@@ -7,6 +7,7 @@ import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.jfoenix.controls.JFXButton;
 import com.cs3733.teamd.Model.ImageInterface;
 import com.cs3733.teamd.Model.ProxyImage;
 import javafx.application.Platform;
@@ -73,18 +74,18 @@ public class EditMapScreenController extends MapController{
     public RadioButton chooseAStarButton;
     public ToggleGroup algSelectGorup;
 
-    public Button bugReports;
+    public JFXButton bugReports;
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
     ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
-    public Button EditProf;
-    public Button EditTag;
-    public Button LoginButton;
-    public Button CreateUserButton;
-    public Button SpanishButton;
-    public Button BackButton;
+    public JFXButton EditProf;
+    public JFXButton EditTag;
+    public JFXButton LoginButton;
+    public JFXButton CreateUserButton;
+    public JFXButton SpanishButton;
+    public JFXButton BackButton;
     public Button addNode;
     public Button connectNode;
     public Label xLoc;
