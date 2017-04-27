@@ -68,6 +68,26 @@ public class HospitalLoader {
         return ret;
     }
 
+    private void findDbVersions(Hospital h) {
+        File f = new File(ApplicationConfiguration.getInstance()
+                .getFullFilePath("hospitals/"+h.getHospitalId()));
+        File[] dirFiles = f.listFiles();
+        Set<Integer> versions = new HashSet<Integer>();
+        for(File file: dirFiles) {
+            String name = file.getName();
+            name = name.replace("dump.", "").replace(".sql","");
+            try {
+                Integer version = Integer.parseInt(name);
+                versions.add(version);
+            }catch(NumberFormatException e) {
+
+            }
+
+        }
+        h.setDbVersions(versions);
+
+    }
+
     public Hospital loadHospitalFromId(String id) {
         JSONArray hospitalsJson = loadHospitalsObject();
         if(hospitalsJson == null) {
@@ -90,7 +110,9 @@ public class HospitalLoader {
                     JSONObject floorsJson = (JSONObject)it2.next();
                     floorFiles.put(((Long)floorsJson.get("number")).intValue(), (String)floorsJson.get("file"));
                 }
-                return new Hospital(name, hospitalId, dbVersion, floorFiles);
+                Hospital h = new Hospital(name, hospitalId, dbVersion, floorFiles);
+                findDbVersions(h);
+                return h;
             }
         }
         return null;

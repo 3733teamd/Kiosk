@@ -17,6 +17,16 @@ public class Hospital {
     /// Files for the floor
     private Map<Integer, String> floorFiles;
 
+    public Set<Integer> getDbVersions() {
+        return dbVersions;
+    }
+
+    public void setDbVersions(Set<Integer> dbVersions) {
+        this.dbVersions = dbVersions;
+    }
+
+    private Set<Integer> dbVersions;
+
     Hospital(String name, String hospitalId, Integer dbVersion, Map<Integer, String> floorFiles) {
         this.name = name;
         this.hospitalId = hospitalId;

@@ -6,9 +6,12 @@ import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Hospital;
 import com.cs3733.teamd.Model.HospitalLoader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableIntegerArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -16,6 +19,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sdmichelini on 4/26/17.
@@ -31,7 +36,7 @@ public class SyncPopupController {
     private Text dbVersionText;
 
     @FXML
-    private TextField versionLoadTextField;
+    private ComboBox<Integer> dbVersionBox;
 
     @FXML
     private AnchorPane MMGpane;
@@ -43,6 +48,12 @@ public class SyncPopupController {
         h = ApplicationConfiguration.getInstance().getHospital();
         this.hospitalName.setText(h.getName());
         this.dbVersionText.setText(h.getDbVersion().toString());
+        List<Integer> list = new ArrayList<Integer>();
+        for(Integer version: h.getDbVersions()) {
+            list.add(version);
+        }
+        this.dbVersionBox.setItems(FXCollections.observableList(list));
+        this.dbVersionBox.setValue(h.getDbVersion());
     }
 
     @FXML
@@ -66,7 +77,8 @@ public class SyncPopupController {
     @FXML
     void onLoadVersion(ActionEvent event) {
         try {
-            Integer version = Integer.parseInt(this.versionLoadTextField.getText());
+            Integer version = this.dbVersionBox.getValue();
+            this.dbVersionText.setText("Loading...");
             System.out.println(version);
             h.setDbVersion(version);
             HospitalLoader.getInstance().saveHospital(h);
@@ -74,10 +86,13 @@ public class SyncPopupController {
             boolean result = dir.changeToNewFile(h.getDbPath());
             if(result) {
                 System.out.println("Success");
+                this.dbVersionText.setText(version.toString());
             } else {
                 System.err.println("Failure");
+                this.dbVersionText.setText("Directory Reload Error.");
             }
         } catch(NumberFormatException e) {
+            this.dbVersionText.setText("Load Version Error.");
             e.printStackTrace();
         }
 

@@ -39,14 +39,14 @@
                   <Text fx:id="hospitalName" layoutX="159.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.leftAnchor="159.0" AnchorPane.topAnchor="50.0" />
                   <Text fx:id="dbVersionText" layoutX="216.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="70.0" />
                   <Button layoutX="50.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveDatabaseToFile" text="Save" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="350.0" />
-                  <TextField layoutX="49.0" layoutY="107.0" promptText="Version to Load" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="90.0" />
-                  <Button layoutX="230.0" layoutY="90.0" mnemonicParsing="false" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="Load Version" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="90.0">
+                  <Button layoutX="230.0" layoutY="90.0" mnemonicParsing="false" onAction="#onLoadVersion" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="Load Version" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="90.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
                   <Button layoutX="216.0" layoutY="350.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-pref-width: 200;" text="Sync to Remote" AnchorPane.leftAnchor="216.0" AnchorPane.topAnchor="350.0" />
                   <Button layoutX="426.0" layoutY="350.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-pref-width: 250;" text="Load Latest From Remote" AnchorPane.leftAnchor="426.0" AnchorPane.topAnchor="350.0" />
+                  <ComboBox fx:id="dbVersionBox" layoutX="50.0" layoutY="91.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="90.0" />
                </children></AnchorPane>
                 <AnchorPane prefHeight="300.0" prefWidth="800.0">
                     <children>

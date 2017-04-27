@@ -61,6 +61,8 @@ public class Main extends Application {
         Hospital h = HospitalLoader.getInstance().loadHospitalFromId("faulkner");
         if(h == null) {
             System.err.println("HOSPITAL CAN NOT BE LOADED");
+        } else {
+            System.out.println(h.getDbVersions());
         }
         ApplicationConfiguration.getInstance().setHospital(h);
 
