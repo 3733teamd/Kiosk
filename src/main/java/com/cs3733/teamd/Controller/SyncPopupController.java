@@ -58,6 +58,9 @@ public class SyncPopupController implements IOperationListener {
         }
         this.dbVersionBox.setItems(FXCollections.observableList(list));
         this.dbVersionBox.setValue(h.getDbVersion());
+
+        this.hospitalVersionBox.setItems(FXCollections.observableList(HospitalLoader.getInstance().loadHospitals()));
+        this.hospitalVersionBox.setValue(h.getHospitalId());
     }
 
     @FXML
