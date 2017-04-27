@@ -110,7 +110,7 @@ public class UserScreenController extends MapController {
     private Map<String, String> tagAssociations;
 
     //LinkedList<String> languages = new LinkedList<>();
-    final String[] languages = new String[] { "English", "Español", "Français", "\u4e2d\u6587", "Português" };
+    final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
 
     public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
 
@@ -214,7 +214,7 @@ public class UserScreenController extends MapController {
             languageDropDown.addAll(languages);
         }
             LanguageButton.setItems(languageDropDown);
-            LanguageButton.getSelectionModel().select("Language");
+            LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
 
         FloorMenu.setItems(floorDropDown);
 
@@ -526,16 +526,16 @@ public class UserScreenController extends MapController {
     //Spanish translation
     public void setSpanishText(){
 //        SpanishButton.setText(Main.bundle.getString("spanish"));
-        SearchButton.setText(Main.bundle.getString("search"));
-        if(dir.getCurrentUser() != null) {
+       // SearchButton.setText(Main.bundle.getString("search"));
+        /*if(dir.getCurrentUser() != null) {
             LoginButton.setText(Main.bundle.getString("Logout"));
         } else {
             LoginButton.setText(Main.bundle.getString("login"));
         }
-
-        directionLabel.setText(Main.bundle.getString("directions"));
-        EnterDest.setText(Main.bundle.getString("enterDes"));
-        floor.setText(Main.bundle.getString("floor"));
+*/
+        //directionLabel.setText(Main.bundle.getString("directions"));
+        //EnterDest.setText(Main.bundle.getString("enterDes"));
+        //floor.setText(Main.bundle.getString("floor"));
 
         if(ApplicationConfiguration.getInstance().getCurrentLanguage()
                 == ApplicationConfiguration.Language.SPANISH){

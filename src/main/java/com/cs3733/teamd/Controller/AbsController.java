@@ -74,13 +74,13 @@ public abstract class AbsController {
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getEnglishLocale());
 
         }
-        else if(lan.equals("Español")){
+        else if(lan.equals("Español") ||lan.equals("\u0045\u0073\u0070\u0061\u00f1\u006f\u006c")){
 
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.SPANISH);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getSpanishLocale());
 
         }
-        else if(lan.equalsIgnoreCase("Français")){
+        else if(lan.equalsIgnoreCase("Français")||lan.equalsIgnoreCase("\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073")){
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.FRENCH);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getFrenchLocale());
         }
@@ -88,7 +88,7 @@ public abstract class AbsController {
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.CHINESE);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getChineseLocale());
         }
-        else if(lan.equalsIgnoreCase("Portuguese")){
+        else if(lan.equalsIgnoreCase("Português")||lan.equals("\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073")){
             appConfig.setCurrentLangauge(ApplicationConfiguration.Language.PORTUGUESE);
             Main.bundle = ResourceBundle.getBundle("MyLabels", appConfig.getProtugeseLocale());
         }

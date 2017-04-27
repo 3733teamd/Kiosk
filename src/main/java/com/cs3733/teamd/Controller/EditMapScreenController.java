@@ -99,6 +99,9 @@ public class EditMapScreenController extends MapController{
 
     //HashMap<List<CircleNode>,Line> circleLines;
 
+    @FXML
+    private ComboBox<String> LanguageButton;
+
     public ScrollPane scrollPane;
 
     @FXML
@@ -122,6 +125,9 @@ public class EditMapScreenController extends MapController{
 
     ObservableList<Professional> searchResults = FXCollections.observableArrayList();
     ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
+
+    final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
+    public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
 
 
     public int s;
@@ -353,6 +359,13 @@ public class EditMapScreenController extends MapController{
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
 
+        if(languageDropDown.size()==0){
+            languageDropDown.addAll(languages);
+        }
+        LanguageButton.setItems(languageDropDown);
+        LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
+
+
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
             public void changed(ObservableValue<? extends Tag> observable,
@@ -444,6 +457,34 @@ public class EditMapScreenController extends MapController{
             }
         });
     }
+
+    @FXML
+    private void setLanguageListener() throws IOException {
+
+      /* LanguageButton.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+      @Override
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if (new_val != old_val) {languagechange=true;
+                    value=new_val.intValue();
+                }
+                else{languagechange=false;}
+                value=new_val.intValue();
+                System.out.println("val"+value);
+      }
+        });*/
+        //value=(Integer.parseInt( LanguageButton.getValue()));
+        System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
+        //super.switchLanguage();
+        super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
+
+        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+
+
+        //setSpanishText();
+
+    }
+
     private void panMethods(){
 
         //zoom functions
