@@ -31,7 +31,7 @@ public class TimeoutManager {
     }
 
     public void notifyController(){
-        currentController.update();
+        currentController.timeout();
     }
 
 

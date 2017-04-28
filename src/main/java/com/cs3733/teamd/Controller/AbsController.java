@@ -81,7 +81,7 @@ public abstract class AbsController {
         }
     }
 
-    public void update(){
+    public void timeout(){
         try {
             switchScreen("/Views/UserScreen.fxml");
         }catch (Exception e){
