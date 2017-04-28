@@ -223,7 +223,12 @@ public class UserScreenController extends MapController {
                 //add belkin professional views
             }
         } else {
-            floors.addAll(ApplicationConfiguration.getInstance().getHospital().getFloorSet());
+            for(Integer floor: ApplicationConfiguration.getInstance().getHospital().getFloorSet()) {
+                if(floor < 1000) {
+                    floors.add(floor);
+                }
+            }
+
         }
 
 
@@ -400,9 +405,9 @@ public class UserScreenController extends MapController {
             MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
         }else{
-            StartFloorButton.setDisable(true);
-            MiddleFloorButton.setDisable(true);
-            EndFloorButton.setDisable(true);
+            StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(false);
+            EndFloorButton.setDisable(false);
         }
         if(!haveMidFloor){
             MiddleFloorButton.setDisable(true);

@@ -954,7 +954,7 @@ public class DBHandler {
                 int tagId = getNormalizedId(rs.getInt(1), maxTagId);
                 Timestamp open = rs.getTimestamp(2);
                 Timestamp close = rs.getTimestamp(3);
-                bw.write("INSERT INTO VisitingHour VALUES("+tagId+","+open.toString()+","+close.toString()+")\n");
+                bw.write("INSERT INTO VisitingHour VALUES("+tagId+",'"+open.toString()+"','"+close.toString()+"')\n");
             }
             rs.close();
 
