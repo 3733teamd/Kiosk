@@ -7,6 +7,7 @@ import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Controller.KioskGame.src.game.GameMain;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -33,7 +35,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
+import java.lang.Object;
+import javafx.application.Platform;
 
 
 import java.io.IOException;
@@ -56,31 +61,41 @@ public class UserScreenController extends MapController {
     public Button SearchButton;
     public Button SetButton;
     public TextField TypeDestination;
-    //public Text EnterDest;
+    public Text EnterDest;
     public Text floor;
     public Label directionLabel;
-    public ComboBox FloorMenu;
+    public ChoiceBox FloorMenu;
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
+    public Button WalkHospitalButton;
     boolean haveMidFloor = false;
     @FXML
     private Slider floorSlider;
     @FXML
     public Button aboutButton;
     @FXML
-    public Button reportButton;
+    public Button reportButton1;
 
     public ImageView floorMap;
     public AnchorPane imagePane;
     @FXML
     public Pane mapCanvas;
     public AnchorPane MMGpane;
+
+    //text directions
     @FXML
-    private TextArea directions;
+    //private TextArea directions;
+    private ListView<String> directions ;
+    private ObservableList<String> dirList;
 
     @FXML
     private ImageView aboutImage;
+
+    public ImageView reportButton;
+
+    @FXML
+    private ComboBox<String> LanguageButton;
 
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
@@ -90,6 +105,7 @@ public class UserScreenController extends MapController {
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
     String output = "";
+
     Tag starttag = null;
     private int startfloor = 0;
     private int midfloor = 0;
@@ -102,8 +118,17 @@ public class UserScreenController extends MapController {
 
 
     LinkedList<Integer> floors = new LinkedList<Integer>();
+
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
     private Map<String, String> tagAssociations;
+
+    //LinkedList<String> languages = new LinkedList<>();
+    final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
+
+    public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
+
+    public Boolean languagechange=false;
+    int value;
 
     private class Offset {
         public Offset(int x, int y) {
@@ -175,9 +200,9 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
-        directions.setText(output);
+//        directions.setText(output); //dir change type
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
@@ -199,8 +224,17 @@ public class UserScreenController extends MapController {
         floorDropDown.clear();
         floorDropDown.addAll(floors);
 
+        if(languageDropDown.size()==0){
+            languageDropDown.addAll(languages);
+        }
+            LanguageButton.setItems(languageDropDown);
+            LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
+
         FloorMenu.setItems(floorDropDown);
-        FloorMenu.setValue(floorDropDown.get(0));
+
+
+        /*setLanguageListener();*/
+
         setFloorMenuListener();
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
@@ -219,6 +253,7 @@ public class UserScreenController extends MapController {
             MementoController.addCareTaker("/Views/UserScreen.fxml");
             init=false;
         }
+
     }
 
 
@@ -255,7 +290,52 @@ public class UserScreenController extends MapController {
         for(String directionString: directionsArray) {
             output += directionString + "\n";
         }
-        directions.setText(output);
+        dirList = FXCollections.observableArrayList(directionsArray);
+        directions.setItems(dirList);
+        directions.setCellFactory(dir -> new ListCell<String>() {
+            ImageView iconView = new ImageView();
+
+            int i=0;
+            @Override
+            protected void updateItem(String dir, boolean empty) {
+                super.updateItem(dir,empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+ //                   for (TextDirectionGenerator.Direction d : dirText) {
+                        if (dir.contains("proceed from") || dir.contains("Proceed from")) {
+                            System.out.println(".PROCEED_FROM_TAG");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
+                        }
+                        else if (dir.contains("straight")) {
+                            System.out.println(".go straight");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/straight.png")));
+                        } else if (dir.contains("turn left")) {
+                            System.out.println(".turn left");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                        } else if (dir.contains("slight left")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
+                        }else if (dir.contains("turn right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
+                        } else if (dir.contains("slight right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
+                        }else if (dir.contains("arrive")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
+                        }else if (dir.contains("elevator")) {
+                            System.out.println(".proccede to elevator");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
+                        }
+                        setGraphic(iconView);
+                        iconView.setFitHeight(50);
+                        iconView.setFitWidth(50);
+                        setText(dir);
+                }
+//                i=i+1;
+            }
+        });
+
+//        directions.setText(output);
 
         super.setNodes(pathNodes);
         super.removeConnections();
@@ -336,7 +416,12 @@ public class UserScreenController extends MapController {
                 // Notify super class
                 setFloor(onFloor);
                 output = "";
-                directions.setText(output);
+                dirList = FXCollections.observableArrayList(output);
+//                directions.setText(output);
+                directions.setItems(dirList);
+
+                System.out.println(onFloor);
+               // directions.setText(output);
                 //System.out.println(onFloor);
 
                 setupMap();
@@ -345,6 +430,20 @@ public class UserScreenController extends MapController {
 
     }
 
+    @FXML
+    private void setLanguageListener() throws IOException {
+
+        //value=(Integer.parseInt( LanguageButton.getValue()));
+        System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
+            //super.switchLanguage();
+        super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
+
+        super.switchScreen(MMGpane,"/Views/UserScreen.fxml");
+
+
+        setSpanishText();
+
+    }
 
     private void panMethods() {
 
@@ -399,7 +498,7 @@ public class UserScreenController extends MapController {
 
     //report Bug button pressed
     @FXML
-    public void reportBug(ActionEvent event) throws IOException {
+    public void reportBug( ) throws IOException {
         popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
     }
 
@@ -458,7 +557,7 @@ public class UserScreenController extends MapController {
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguage();
+        //super.switchLanguage();
         //pathNodes = null;
         switchScreen("/Views/UserScreen.fxml");
         setSpanishText();
@@ -479,17 +578,17 @@ public class UserScreenController extends MapController {
 
     //Spanish translation
     public void setSpanishText(){
-        SpanishButton.setText(Main.bundle.getString("spanish"));
-        SearchButton.setText(Main.bundle.getString("search"));
-        if(dir.getCurrentUser() != null) {
+//        SpanishButton.setText(Main.bundle.getString("spanish"));
+       // SearchButton.setText(Main.bundle.getString("search"));
+        /*if(dir.getCurrentUser() != null) {
             LoginButton.setText(Main.bundle.getString("Logout"));
         } else {
             LoginButton.setText(Main.bundle.getString("login"));
         }
-
-        directionLabel.setText(Main.bundle.getString("directions"));
+*/
+        //directionLabel.setText(Main.bundle.getString("directions"));
         //EnterDest.setText(Main.bundle.getString("enterDes"));
-        floor.setText(Main.bundle.getString("floor"));
+        //floor.setText(Main.bundle.getString("floor"));
 
         if(ApplicationConfiguration.getInstance().getCurrentLanguage()
                 == ApplicationConfiguration.Language.SPANISH){
@@ -537,8 +636,13 @@ public class UserScreenController extends MapController {
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
-        directions.setText(output);
+      //  directions.setText(output);
         //System.out.println(onFloor);
+        dirList = FXCollections.observableArrayList(output);
+//        directions.setText(output);
+        directions.setItems(dirList);
+
+        System.out.println(onFloor);
 
         setupMap();
 
@@ -626,7 +730,12 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
+
+            System.out.println(onFloor);
+        //    directions.setText(output);
             //System.out.println(onFloor);
 
             setupMap();
@@ -644,8 +753,13 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+        //    directions.setText(output);
             //System.out.println(onFloor);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
+
+            System.out.println(onFloor);
 
             setupMap();
             disableAppropriateFloorButtons();
@@ -662,7 +776,9 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+            dirList = FXCollections.observableArrayList(output);
+            directions.setItems(dirList);
+//            directions.setText(output);
             System.out.println(onFloor);
 
             setupMap();
@@ -687,5 +803,20 @@ public class UserScreenController extends MapController {
             findZoomWithPath();
             drawPath();
         }
+    }
+
+    @FXML
+    //Function to allow the user to walk through a path
+    public  void PlayPath(ActionEvent actionEvent) throws IOException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new GameMain().start(new Stage());
+                }catch(Exception e){
+                    System.out.println("Failed to run game");
+                }
+            }
+        });
     }
 }

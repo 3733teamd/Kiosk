@@ -63,11 +63,7 @@ public enum Table {
             " role VARCHAR(10) NOT NULL)"),
     BugReports("BugReport","(\n" +
             " tag VARCHAR(20) NOT NULL,\n" +
-            " comment VARCHAR(100) NOT NULL)"),
-    VistingHours("VisitingHour", "(\n" +
-            " tagId INTEGER NOT NULL,\n" +
-            " openTime TIMESTAMP NOT NULL,\n" +
-            " closeTime TIMESTAMP NOT NULL)");
+            " comment VARCHAR(100) NOT NULL)");
 
     String name;
     String schema;
