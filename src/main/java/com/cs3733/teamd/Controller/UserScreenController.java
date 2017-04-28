@@ -242,6 +242,7 @@ public class UserScreenController extends MapController {
             LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
 
         FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue((Integer)Main.currentFloor);
 
 
         /*setLanguageListener();*/
