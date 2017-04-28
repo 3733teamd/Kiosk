@@ -53,31 +53,35 @@
                 </AnchorPane>
             <SplitPane dividerPositions="0.21658986175115208" prefHeight="735.0" prefWidth="568.0" VBox.vgrow="ALWAYS">
                <items>
-                        <VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="325.0">
-                            <children>
-                        <Label text="%allProfs" />
-                        <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" VBox.vgrow="ALWAYS" />
-                        <TextField fx:id="searchProfessionalBar" promptText="%newProfName" />
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="40.0" prefWidth="275.0" text="%addNProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="40.0" prefWidth="275.0" text="%dProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                            </children>
-                        </VBox>
+                  <AnchorPane maxWidth="-Infinity" prefWidth="300.0">
+                     <children>
+                              <VBox alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="732.0" prefWidth="325.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <children>
+                              <Label text="%allProfs" />
+                              <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" VBox.vgrow="ALWAYS" />
+                              <TextField fx:id="searchProfessionalBar" promptText="%newProfName" />
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="40.0" prefWidth="275.0" text="%addNProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="40.0" prefWidth="275.0" text="%dProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                                  </children>
+                              </VBox>
+                     </children>
+                  </AnchorPane>
                   <SplitPane dividerPositions="0.0942622950819672" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                     <items>
                         <HBox prefHeight="100.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
