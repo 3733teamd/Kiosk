@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by Allyk on 4/22/2017.
  */
 public class MementoController extends AbsController{
-    public static int timeoutTime=20;
+    public static int timeoutTime=60;
 
     protected static Originator originator = new Originator();
     protected static CareTaker careTaker = new CareTaker();

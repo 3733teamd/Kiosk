@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
@@ -28,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditMapScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -63,9 +57,9 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="11.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="8.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
@@ -76,22 +70,30 @@
                <children>
                   <AnchorPane GridPane.columnIndex="4">
                      <children>
-                        <ChoiceBox fx:id="FloorMenu" prefHeight="46.0" prefWidth="192.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4" />
+                        <ChoiceBox fx:id="FloorMenu" prefHeight="58.0" prefWidth="162.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="7">
                      <children>
-                        <JFXButton fx:id="BackButton" buttonType="RAISED" onAction="#onBack" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="45.0" prefWidth="115.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <JFXButton fx:id="EditTag" buttonType="RAISED" onAction="#toEditTag" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
                      </children>
                   </AnchorPane>
                   <AnchorPane>
                      <children>
-                        <JFXButton fx:id="EditProf" buttonType="RAISED" onAction="#toEditProf" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="9">
@@ -112,12 +114,12 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="8">
                      <children>
-                        <JFXButton fx:id="bugReports" buttonType="RAISED" onAction="#viewBugReports" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="45.0" prefWidth="103.0" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="8" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="2">
                      <children>
-                        <JFXButton fx:id="CreateUserButton" buttonType="RAISED" onAction="#onCreateUser" prefHeight="58.0" prefWidth="192.0" style="-fx-background-color: DCDCDCDC;" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="192.0" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2" />
                      </children>
                   </AnchorPane>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0" GridPane.columnIndex="3">
@@ -125,16 +127,16 @@
                         <Font size="33.0" />
                      </font>
                   </Text>
-                  <AnchorPane GridPane.columnIndex="6">
-                     <children>
-                        <JFXButton fx:id="SpanishButton" buttonType="RAISED" onAction="#toSpanish" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%spanish" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
                   <AnchorPane GridPane.columnIndex="5">
                      <children>
-                        <JFXButton fx:id="LoginButton" buttonType="RAISED" onAction="#Logout" prefHeight="58.0" prefWidth="103.0" style="-fx-background-color: DCDCDCDC;" text="%Logout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="45.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
+                  <ComboBox fx:id="LanguageButton" onAction="#setLanguageListener" prefHeight="58.0" prefWidth="149.0" promptText="Language" GridPane.columnIndex="6" />
                </children>
             </GridPane>
             <GridPane prefHeight="637.0" prefWidth="1291.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
