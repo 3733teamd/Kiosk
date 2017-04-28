@@ -1,5 +1,7 @@
 package com.cs3733.teamd.Controller.KioskGame.src.game;
 
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class GameMain extends Application {
 
     public void start(Stage primaryStage) throws Exception{
+        DirectoryInterface dir = Directory.getInstance();
 
         primaryStage.setTitle( "Walkthrough Hospital" );
 
@@ -31,27 +34,54 @@ public class GameMain extends Application {
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        Image flkuser1 = null;
+        Image flkuser2 = null;
+        Image flkuser3 = null;
+        Image flkuser4 = null;
+        Image flkuser5 = null;
+        Image flkuser6 = null;
+        Image flkuser7 = null;
+        Image blk2 = null;
+        Image blk3 = null;
+        Image blk4 = null;
 
-        String imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser1.png";
-        Image flkuser1 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser2.png";
-        Image flkuser2 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser3.png";
-        Image flkuser3 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser4.png";
-        Image flkuser4 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser5.png";
-        Image flkuser5 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser6.png";
-        Image flkuser6 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser7.png";
-        Image flkuser7 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk2.png";
-        Image blk2 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk3.png";
-        Image blk3 = new Image(imagePath);
-        imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\blk4.png";
-        Image blk4 = new Image(imagePath);
+        if(dir.getCurrentUser() == null) {
+            //String imagePath = "file:floor_imgs/flkUser1.png";
+            flkuser1 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser1.png"));
+            //imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser2.png";
+            flkuser2 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser2.png"));
+            flkuser3 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser3.png"));
+            flkuser4 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser4.png"));
+            flkuser5 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser5.png"));
+            flkuser6 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser6.png"));
+            flkuser7 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser7.png"));
+            blk2 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk2.png"));
+            blk3 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk3.png"));
+            blk4 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk4.png"));
+        }else{
+            //String imagePath = "file:floor_imgs/flkUser1.png";
+            flkuser1 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
+            //imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser2.png";
+            flkuser2 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf2.png"));
+            flkuser3 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf3.png"));
+            flkuser4 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf4.png"));
+            flkuser5 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf5.png"));
+            flkuser6 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf6.png"));
+            flkuser7 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf7.png"));
+            blk2 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf2.png"));
+            blk3 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf3.png"));
+            blk4 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blknProf4.png"));
+        }
+        final Image faulkuser1 = flkuser1;
+        final Image faulkuser2 = flkuser2;
+        final Image faulkuser3 = flkuser3;
+        final Image faulkuser4 = flkuser4;
+        final Image faulkuser5 = flkuser5;
+        final Image faulkuser6 = flkuser6;
+        final Image faulkuser7 = flkuser7;
+        final Image beluser2 = blk2;
+        final Image beluser3 = blk3;
+        final Image beluser4 = blk4;
 
         final long startNanoTime = System.nanoTime();
 
@@ -91,25 +121,25 @@ public class GameMain extends Application {
                 gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
                 if(floorNum == 1) {
-                    gc.drawImage(flkuser1, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser1, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 2){
-                    gc.drawImage(flkuser2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 3){
-                    gc.drawImage(flkuser3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 4){
-                    gc.drawImage(flkuser4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 5){
-                    gc.drawImage(flkuser5, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser5, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 6) {
-                    gc.drawImage(flkuser6, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser6, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 7){
-                    gc.drawImage(flkuser7, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(faulkuser7, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 102){
-                    gc.drawImage(blk2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(beluser2, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 103){
-                    gc.drawImage(blk3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(beluser3, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }else if(floorNum == 104){
-                    gc.drawImage(blk4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
+                    gc.drawImage(beluser4, 0, 0, canvas.getWidth(), canvas.getHeight() - 30);
                 }
 
                 if(curx < 0){
