@@ -61,10 +61,10 @@ public class UserScreenController extends MapController {
     public Button SearchButton;
     public Button SetButton;
     public TextField TypeDestination;
-    //public Text EnterDest;
+    public Text EnterDest;
     public Text floor;
     public Label directionLabel;
-    public ComboBox FloorMenu;
+    public ChoiceBox FloorMenu;
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
@@ -75,7 +75,7 @@ public class UserScreenController extends MapController {
     @FXML
     public Button aboutButton;
     @FXML
-    public Button reportButton;
+    public Button reportButton1;
 
     public ImageView floorMap;
     public AnchorPane imagePane;
@@ -91,6 +91,11 @@ public class UserScreenController extends MapController {
 
     @FXML
     private ImageView aboutImage;
+
+    public ImageView reportButton;
+
+    @FXML
+    private ComboBox<String> LanguageButton;
 
     //proxy pattern for maps
     ImageInterface imgInt = new ProxyImage();
@@ -113,8 +118,17 @@ public class UserScreenController extends MapController {
 
 
     LinkedList<Integer> floors = new LinkedList<Integer>();
+
     public static ObservableList<Integer> floorDropDown = FXCollections.observableArrayList();
     private Map<String, String> tagAssociations;
+
+    //LinkedList<String> languages = new LinkedList<>();
+    final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
+
+    public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
+
+    public Boolean languagechange=false;
+    int value;
 
     private class Offset {
         public Offset(int x, int y) {
@@ -209,8 +223,17 @@ public class UserScreenController extends MapController {
         floorDropDown.clear();
         floorDropDown.addAll(floors);
 
+        if(languageDropDown.size()==0){
+            languageDropDown.addAll(languages);
+        }
+            LanguageButton.setItems(languageDropDown);
+            LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
+
         FloorMenu.setItems(floorDropDown);
-        FloorMenu.setValue(floorDropDown.get(0));
+
+
+        /*setLanguageListener();*/
+
         setFloorMenuListener();
         StartFloorButton.setVisible(false);
         MiddleFloorButton.setVisible(false);
@@ -406,6 +429,20 @@ public class UserScreenController extends MapController {
 
     }
 
+    @FXML
+    private void setLanguageListener() throws IOException {
+
+        //value=(Integer.parseInt( LanguageButton.getValue()));
+        System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
+            //super.switchLanguage();
+        super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
+
+        super.switchScreen(MMGpane,"/Views/UserScreen.fxml");
+
+
+        setSpanishText();
+
+    }
 
     private void panMethods() {
 
@@ -460,7 +497,7 @@ public class UserScreenController extends MapController {
 
     //report Bug button pressed
     @FXML
-    public void reportBug(ActionEvent event) throws IOException {
+    public void reportBug( ) throws IOException {
         popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
     }
 
@@ -519,7 +556,7 @@ public class UserScreenController extends MapController {
     //Spanish button to change language to Spanish
     @FXML
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguage();
+        //super.switchLanguage();
         //pathNodes = null;
         switchScreen(MMGpane,"/Views/UserScreen.fxml");
         setSpanishText();
@@ -540,17 +577,17 @@ public class UserScreenController extends MapController {
 
     //Spanish translation
     public void setSpanishText(){
-        SpanishButton.setText(Main.bundle.getString("spanish"));
-        SearchButton.setText(Main.bundle.getString("search"));
-        if(dir.getCurrentUser() != null) {
+//        SpanishButton.setText(Main.bundle.getString("spanish"));
+       // SearchButton.setText(Main.bundle.getString("search"));
+        /*if(dir.getCurrentUser() != null) {
             LoginButton.setText(Main.bundle.getString("Logout"));
         } else {
             LoginButton.setText(Main.bundle.getString("login"));
         }
-
-        directionLabel.setText(Main.bundle.getString("directions"));
+*/
+        //directionLabel.setText(Main.bundle.getString("directions"));
         //EnterDest.setText(Main.bundle.getString("enterDes"));
-        floor.setText(Main.bundle.getString("floor"));
+        //floor.setText(Main.bundle.getString("floor"));
 
         if(ApplicationConfiguration.getInstance().getCurrentLanguage()
                 == ApplicationConfiguration.Language.SPANISH){

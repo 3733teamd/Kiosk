@@ -220,7 +220,7 @@ public class EditProfScreenController extends AbsController {
             @Override
             public void handle(MouseEvent event) {
                 counter = 0;
-                System.out.println("counter resets");
+                //System.out.println("counter resets");
             }
         });
         pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -464,11 +464,16 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     void modifyName(ActionEvent event) {
-        if(!profName.getText().trim().isEmpty()) {
+        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
+        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
+            searchProfessionalBar.setText("");
+        }
+        else{
             selectedProf.name = (profName.getText());
-            dir.updateProfessional(selectedProf);
             profName.clear();
+            dir.updateProfessional(selectedProf);
             allProfList.refresh();
+            //setAllProfList();
             profName.clear();
         }
     }

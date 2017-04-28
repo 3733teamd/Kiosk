@@ -3,7 +3,6 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
-import com.cs3733.teamd.Model.Entities.VisitingBlock;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 /**
@@ -29,11 +31,6 @@ import java.util.stream.Collectors;
 public class EditTagScreenController extends AbsController {
     public CheckBox selectConnectable;
     public CheckBox restrictedButton;
-    public ListView visitingHourList;
-    public TextField openTimeBox;
-    public TextField closingTimeBox;
-    public Button addVisitHours;
-    public Button removeVisitBlockButton;
     Directory dir = Directory.getInstance();
     @FXML
     public TextArea tagTextArea;
@@ -55,10 +52,11 @@ public class EditTagScreenController extends AbsController {
     List<Professional> filtered = new ArrayList<Professional>();
     List<Tag> filteredTag = new ArrayList<>();
 
-    ObservableList<VisitingBlock> visitingResults = FXCollections.observableArrayList();
     ObservableList<Professional> searchResults = FXCollections.observableArrayList();
     ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
+
+    private Tag chosenTag = null;
 
     @FXML
     private Button addNewTagBtn;
@@ -66,7 +64,6 @@ public class EditTagScreenController extends AbsController {
     @FXML
     private Button deleteTagBtn;
 
-    VisitingBlock selectedVB;
     Tag selectedTag;
     Professional selectedCurProf;
     Professional selectedProf;
@@ -153,14 +150,12 @@ public class EditTagScreenController extends AbsController {
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
-        addVisitHours.setOpacity(.5);
         //disable buttons
         selectConnectable.setDisable(true);
         restrictedButton.setDisable(true);
         addProf.setDisable(true);
         deleteProf.setDisable(true);
         newTagNameBtn.setDisable(true);
-        addVisitHours.setDisable(true);
         //Get all tag names and list them in searchTagBar
         List<String> allTagNames = new ArrayList<String>();
         for (Tag t : dir.getTags()) {
@@ -169,19 +164,17 @@ public class EditTagScreenController extends AbsController {
         /// TextFields.bindAutoCompletion(searchTagBar, allTagNames);//Not being used due to list view
         //List all tags in tagList
         tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
-        //ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
-        //System.out.println(names);
-        //allProffessionals.setItems(names);
+        ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
+        System.out.println(names);
+        allProffessionals.setItems(names);
 
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    clearResponsiveFields();
-                    selectedTag= null;
                     String text = searchTagBar.getText();
                     //TODO set chosen tag to tag from bar
-
+                    System.out.println(chosenTag);
                     tagNameTxt.setText(searchTagBar.getText());
 
                     //System.out.println(text);
@@ -199,39 +192,18 @@ public class EditTagScreenController extends AbsController {
 
                             tagNameTxt.clear();
                             tagNameTxt.setPromptText(selectedTag.toString());
-                            visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
-                            visitingHourList.refresh();
-                            allProffessionals.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
-                            addVisitHours.setOpacity(1.0);
-                            addProf.setOpacity(1.0);
-                            deleteProf.setOpacity(1.0);
-                            newTagNameBtn.setOpacity(1.0);
-                            selectConnectable.setSelected(selectedTag.isConnectable());
-                            selectConnectable.setDisable(false);
-                            restrictedButton.setSelected(selectedTag.isRestricted());
-                            restrictedButton.setDisable(false);
-                            addProf.setDisable(false);
-                            deleteProf.setDisable(false);
-                            newTagNameBtn.setDisable(false);
-                            addVisitHours.setDisable(false);
 
-                        }else{
-                            addProf.setOpacity(.5);
-                            deleteProf.setOpacity(.5);
-                            newTagNameBtn.setOpacity(.5);
-                            addVisitHours.setOpacity(.5);
-                            //disable buttons
-                            selectConnectable.setDisable(true);
-                            restrictedButton.setDisable(true);
-                            addProf.setDisable(true);
-                            deleteProf.setDisable(true);
-                            newTagNameBtn.setDisable(true);
-                            addVisitHours.setDisable(true);
-                            tagNameTxt.clear();
-                            tagNameTxt.setPromptText("");
-                            clearResponsiveFields();
                         }
-
+                        addProf.setOpacity(1.0);
+                        deleteProf.setOpacity(1.0);
+                        newTagNameBtn.setOpacity(1.0);
+                        selectConnectable.setSelected(selectedTag.isConnectable());
+                        selectConnectable.setDisable(false);
+                        restrictedButton.setSelected(selectedTag.isRestricted());
+                        restrictedButton.setDisable(false);
+                        addProf.setDisable(false);
+                        deleteProf.setDisable(false);
+                        newTagNameBtn.setDisable(false);
 
                     }
 
@@ -255,15 +227,6 @@ public class EditTagScreenController extends AbsController {
                     }
                 });
 
-        visitingHourList.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<VisitingBlock>() {
-                    public void changed(ObservableValue<? extends VisitingBlock> ov,
-                                        VisitingBlock old_val, VisitingBlock new_val) {
-                        selectedVB = new_val;
-
-                    }
-                });
-
         profSearchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -277,8 +240,6 @@ public class EditTagScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
                 //make some buttons opaque
-                //clearResponsiveFields();
-                selectedTag = null;
                 addProf.setOpacity(.5);
                 deleteProf.setOpacity(.5);
                 newTagNameBtn.setOpacity(.5);
@@ -427,47 +388,5 @@ public class EditTagScreenController extends AbsController {
             searchTagBar.clear();
         }
         searchTagBar.setText("");
-    }
-
-    public void addToVisitingHourList(ActionEvent actionEvent) {
-        String openingString = openTimeBox.getText();
-        String closingString = closingTimeBox.getText();
-        try {
-            VisitingBlock b = new VisitingBlock(openingString, closingString);
-            selectedTag.addBlock(b);
-            if(dir.updateTag(selectedTag)) {
-                visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
-                visitingHourList.refresh();
-
-                openTimeBox.clear();
-                closingTimeBox.clear();
-            }
-
-
-
-            System.out.println(b.toString());
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
-    }
-
-    public void removeVisitBlock(ActionEvent actionEvent) {
-        selectedTag.removeBlock(selectedVB);
-        visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
-        visitingHourList.refresh();
-    }
-
-    public void clearResponsiveFields(){
-        //selectedTag=null;
-        allProffessionals.setItems(FXCollections.observableArrayList());
-        allProffessionals.refresh();
-        currentProfessionals.setItems(FXCollections.observableArrayList());
-        currentProfessionals.refresh();
-        visitingHourList.setItems(FXCollections.observableArrayList());
-        visitingHourList.refresh();
-        openTimeBox.clear();
-        closingTimeBox.clear();
-        profSearchField.clear();
     }
 }
