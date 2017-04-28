@@ -17,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
@@ -32,6 +33,9 @@ import java.util.stream.Collectors;
 public class EditTagScreenController extends AbsController {
     public CheckBox selectConnectable;
     public CheckBox restrictedButton;
+    public SplitPane tagPropertyPane;
+    public StackPane bottomTagPropertys;
+    public StackPane topTagProperties;
     Directory dir = Directory.getInstance();
     @FXML
     public TextArea tagTextArea;
@@ -147,11 +151,18 @@ public class EditTagScreenController extends AbsController {
     }
     @FXML
     public void initialize(){
+        System.out.println("++++++++++++++++++++++++++++ w:" + tagPropertyPane.getWidth() + " H:" + tagPropertyPane.getHeight());
+        topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
+        topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
         //make some buttons opaque
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
-        //disable buttons
+        addVisitHours.setOpacity(.5);
+        removeVisitBlockButton.setOpacity(.5);
+        //disable
+        removeVisitBlockButton.setDisable(true);
+        addVisitHours.setDisable(true);
         selectConnectable.setDisable(true);
         restrictedButton.setDisable(true);
         addProf.setDisable(true);
@@ -202,6 +213,10 @@ public class EditTagScreenController extends AbsController {
                             addProf.setOpacity(1.0);
                             deleteProf.setOpacity(1.0);
                             newTagNameBtn.setOpacity(1.0);
+                            addVisitHours.setOpacity(1);
+                            removeVisitBlockButton.setOpacity(1);
+                            removeVisitBlockButton.setDisable(false);
+                            addVisitHours.setDisable(false);
                             selectConnectable.setSelected(selectedTag.isConnectable());
                             selectConnectable.setDisable(false);
                             restrictedButton.setSelected(selectedTag.isRestricted());
@@ -216,6 +231,7 @@ public class EditTagScreenController extends AbsController {
                             deleteProf.setOpacity(.5);
                             newTagNameBtn.setOpacity(.5);
                             addVisitHours.setOpacity(.5);
+                            removeVisitBlockButton.setOpacity(.5);
                             //disable buttons
                             selectConnectable.setDisable(true);
                             restrictedButton.setDisable(true);
@@ -223,6 +239,7 @@ public class EditTagScreenController extends AbsController {
                             deleteProf.setDisable(true);
                             newTagNameBtn.setDisable(true);
                             addVisitHours.setDisable(true);
+                            removeVisitBlockButton.setDisable(true);
                             tagNameTxt.clear();
                             tagNameTxt.setPromptText("");
                             clearResponsiveFields();

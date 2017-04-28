@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -17,11 +11,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -57,114 +52,95 @@
             </AnchorPane>
             <SplitPane dividerPositions="0.21705426356589147" prefHeight="754.0" prefWidth="1292.0" VBox.vgrow="ALWAYS">
                <items>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
+                  <SplitPane dividerPositions="0.5, 0.5, 0.5, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <items>
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="288.0" text="%allTag" />
-                        <ListView fx:id="tagList" editable="true" prefHeight="587.0" prefWidth="273.0" VBox.vgrow="ALWAYS" />
-                        <TextField fx:id="searchTagBar" prefHeight="19.0" prefWidth="277.0" promptText="%selTag">
+                        <ListView fx:id="tagList" editable="true" prefHeight="587.0" prefWidth="273.0" />
+                        <TextField fx:id="searchTagBar" maxHeight="30.0" minHeight="30.0" prefHeight="19.0" prefWidth="277.0" promptText="%selTag">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </TextField>
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="addNewTagBtn" mnemonicParsing="false" onAction="#addTag" prefHeight="64.0" prefWidth="276.0" text="%addNTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="deleteTagBtn" mnemonicParsing="false" onAction="#deleteTag" prefHeight="59.0" prefWidth="276.0" text="%delTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
+                        <Button fx:id="addNewTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addTag" prefHeight="58.0" prefWidth="361.0" text="%addNTag">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="deleteTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="60.0" prefWidth="330.0" text="%delTag">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                    </items>
+                  </SplitPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <SplitPane dividerPositions="0.07764390896921017" layoutX="289.0" layoutY="204.0" orientation="VERTICAL" prefHeight="749.0" prefWidth="1007.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane fx:id="tagPropertyPane" dividerPositions="0.07764390896921017" layoutX="289.0" layoutY="204.0" orientation="VERTICAL" prefHeight="749.0" prefWidth="1007.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <StackPane fx:id="topTagProperties" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="tagNameTxt" prefHeight="55.0" prefWidth="338.0" HBox.hgrow="ALWAYS" />
-                                    <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#modifyTag" prefHeight="54.0" prefWidth="170.0" text="%confTagName">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Button>
-                                    <AnchorPane prefHeight="55.0" prefWidth="166.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <CheckBox fx:id="selectConnectable" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
-                                       </children></AnchorPane>
-                                    <CheckBox fx:id="restrictedButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <SplitPane fx:id="allProfessionals" dividerPositions="0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="360.0" HBox.hgrow="ALWAYS">
-                                       <items>
-                                          <Label text="%allProfs" />
-                                          <ListView fx:id="allProffessionals" prefHeight="659.0" prefWidth="311.0" />
-                                       </items>
-                                    </SplitPane>
-                                    <SplitPane dividerPositions="0.02932551319648094, 0.7800586510263929, 0.8533724340175953, 0.9134897360703812, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0" HBox.hgrow="ALWAYS">
-                                       <items>
-                                          <Label text="%currentProf" />
-                                          <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
-                                          <TextField fx:id="profSearchField" prefHeight="15.0" prefWidth="353.0" promptText="%serProf">
+                                          <TextField fx:id="tagNameTxt" prefHeight="55.0" prefWidth="338.0" HBox.hgrow="ALWAYS" />
+                                          <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#modifyTag" prefHeight="54.0" prefWidth="170.0" text="%confTagName">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
-                                          </TextField>
-                                          <Label text="%choseProf">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
-                                          <AnchorPane>
+                                          </Button>
+                                          <AnchorPane prefHeight="55.0" prefWidth="166.0">
                                              <children>
-                                                <Button fx:id="addProf" mnemonicParsing="false" onAction="#addProf" prefHeight="31.0" prefWidth="333.0" text="%addProfes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <CheckBox fx:id="selectConnectable" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane>
-                                             <children>
-                                                <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="31.0" prefWidth="333.0" text="%remProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                       </items>
-                                    </SplitPane>
-                                    <SplitPane dividerPositions="0.030791788856304986, 0.7609970674486803, 0.8343108504398827, 0.8797653958944281, 0.5, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
-                                      <items>
-                                          <Label text="Current Visiting Hours" />
-                                          <ListView fx:id="visitingHourList" fixedCellSize="90.0" prefHeight="430.0" prefWidth="320.0" />
-                                          <Label text="Opening Time" />
-                                          <TextField fx:id="openTimeBox" prefHeight="85.0" prefWidth="321.0" />
-                                          <AnchorPane>
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="21.0" prefWidth="320.0" text="Closing Time" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                          <TextField fx:id="closingTimeBox" />
-                                          <AnchorPane prefHeight="67.0" prefWidth="320.0">
-                                             <children>
-                                                <Button fx:id="addVisitHours" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="320.0" text="Add" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane prefHeight="4.0" prefWidth="320.0">
-                                             <children>
-                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" mnemonicParsing="false" onAction="#removeVisitBlock" text="Remove" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                      </items>
-                                    </SplitPane>
+                                          <CheckBox fx:id="restrictedButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                              </StackPane>
+                              <StackPane fx:id="bottomTagPropertys" prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <SplitPane fx:id="allProfessionals" dividerPositions="0.5, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="360.0" HBox.hgrow="ALWAYS">
+                                             <items>
+                                                <Label text="%allProfs" />
+                                                <ListView fx:id="allProffessionals" prefHeight="659.0" prefWidth="311.0" />
+                                                <Label maxHeight="60.0" minHeight="60.0" text="%choseProf">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="profSearchField" maxHeight="60.0" minHeight="60.0" prefHeight="15.0" prefWidth="353.0" promptText="%serProf">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </TextField>
+                                             </items>
+                                          </SplitPane>
+                                          <SplitPane dividerPositions="0.02932551319648094, 0.7800586510263929, 0.8533724340175953" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0" HBox.hgrow="ALWAYS">
+                                             <items>
+                                                <Label text="%currentProf" />
+                                                <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
+                                                <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="333.0" text="%addProfes" />
+                                                <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="333.0" text="%remProf" />
+                                             </items>
+                                          </SplitPane>
+                                          <SplitPane dividerPositions="0.02932551319648094, 0.6524926686217009, 0.6862170087976539, 0.8196480938416423, 0.8592375366568915, 0.9046920821114369, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
+                                            <items>
+                                                <Label text="Current Visiting Hours" />
+                                                <ListView fx:id="visitingHourList" fixedCellSize="90.0" prefHeight="430.0" prefWidth="320.0" />
+                                                <Label maxHeight="30.0" minHeight="30.0" text="Opening Time" />
+                                                <TextField fx:id="openTimeBox" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="321.0" />
+                                                <Label alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="320.0" text="Closing Time" />
+                                                <TextField fx:id="closingTimeBox" maxHeight="30.0" minHeight="30.0" />
+                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="320.0" text="Add" />
+                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="415.0" text="Remove" />
+                                            </items>
+                                          </SplitPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
                            </items>
                         </SplitPane>
                      </children>
