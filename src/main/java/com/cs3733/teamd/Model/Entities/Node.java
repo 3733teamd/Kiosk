@@ -28,6 +28,7 @@ public class Node {
     public LinkedList<Tag> getTags(){
         return tags;
     }
+
     public Node(int x, int y, int floor){
         this.floor = floor;
         coord.setLocation(x,y);

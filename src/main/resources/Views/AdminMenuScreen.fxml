@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -12,39 +15,106 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-
-<BorderPane fx:id="MMGpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
-   <top>
-      <ToolBar prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <items>
-            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logout" text="Logout" />
-         </items>
-      </ToolBar>
-   </top>
-   <center>
-      <SplitPane dividerPositions="0.7525083612040134" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <items>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+<AnchorPane fx:id="MMGpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
+   <children>
+      <GridPane layoutX="-4.0" prefHeight="586.0" prefWidth="1302.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="7.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <GridPane GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Button fx:id="toEditMap" mnemonicParsing="false" onAction="#goToEditMap" prefHeight="25.0" prefWidth="137.0" text="Edit Map" />
-                  <Button fx:id="toEditTag" mnemonicParsing="false" onAction="#goToEditTag" prefHeight="25.0" prefWidth="137.0" text="Edit Tag" />
-                  <Button fx:id="toEditProf" mnemonicParsing="false" onAction="#goToEditProf" prefHeight="25.0" prefWidth="137.0" text="Edit Proffesional" />
-                  <Button fx:id="toEnhancedMap" mnemonicParsing="false" onAction="#goToEnhancedMap" prefHeight="25.0" prefWidth="137.0" text="Enhanced Map" />
-                  <Button fx:id="toAddUser" mnemonicParsing="false" onAction="#goToAddUser" prefHeight="25.0" prefWidth="138.0" text="Add User" />
-                  <Button fx:id="toBugView" mnemonicParsing="false" onAction="#goToBugView" prefHeight="25.0" prefWidth="137.0" text="View Bug Report" />
-                  <Button mnemonicParsing="false" onAction="#onSyncPopup" prefHeight="27.0" prefWidth="138.0" text="Sync" />
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" percentHeight="20.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <JFXButton fx:id="toEditMap" layoutX="1.0" layoutY="1.0" onAction="#goToEditMap" prefHeight="92.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="Edit Map" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="1">
+                           <children>
+                              <JFXButton fx:id="toEditTag" layoutX="1.0" layoutY="1.0" onAction="#goToEditTag" prefHeight="82.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="Edit Tag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="2">
+                           <children>
+                              <JFXButton fx:id="toEditProf" layoutX="1.0" layoutY="1.0" onAction="#goToEditProf" prefHeight="73.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="Edit Professional" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="2" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="3">
+                           <children>
+                              <JFXButton fx:id="toEnhancedMap" layoutX="1.0" layoutY="1.0" onAction="#goToEnhancedMap" prefHeight="64.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="Enhance Map" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="3" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="4">
+                           <children>
+                              <JFXButton fx:id="toAddUser" layoutX="1.0" layoutY="1.0" onAction="#goToAddUser" prefHeight="58.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="Add User" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="4" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane GridPane.rowIndex="5">
+                           <children>
+                              <JFXButton fx:id="toBugView" layoutX="1.0" layoutY="1.0" onAction="#goToBugView" prefHeight="113.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="View Bug Report" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="5" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
+                  <Pane prefHeight="358.0" prefWidth="175.0" GridPane.columnIndex="1">
+                     <children>
+                        <RadioButton layoutX="27.0" layoutY="23.0" mnemonicParsing="false" text="A-Star" />
+                        <RadioButton layoutX="27.0" layoutY="40.0" mnemonicParsing="false" text="DFS" />
+                        <RadioButton layoutX="27.0" layoutY="57.0" mnemonicParsing="false" text="BFS" />
+                        <TextField fx:id="timeOutTextBox" layoutX="-4.0" layoutY="140.0" />
+                        <Label alignment="CENTER" layoutX="-1.0" layoutY="123.0" prefHeight="17.0" prefWidth="141.0" text="Time Out" />
+                     </children>
+                  </Pane>
                </children>
-            </VBox>
-            <Pane prefHeight="358.0" prefWidth="175.0">
+            </GridPane>
+            <AnchorPane prefHeight="67.0" prefWidth="1292.0" style="-fx-background-color: #4267b2;">
                <children>
-                  <RadioButton layoutX="27.0" layoutY="23.0" mnemonicParsing="false" text="A-Star" />
-                  <RadioButton layoutX="27.0" layoutY="40.0" mnemonicParsing="false" text="DFS" />
-                  <RadioButton layoutX="27.0" layoutY="57.0" mnemonicParsing="false" text="BFS" />
-                  <TextField fx:id="timeOutTextBox" layoutX="-4.0" layoutY="140.0" />
-                  <Label alignment="CENTER" layoutX="-1.0" layoutY="123.0" prefHeight="17.0" prefWidth="141.0" text="Time Out" />
+                  <HBox prefHeight="42.0" prefWidth="1302.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="35.0" fitWidth="30.0" layoutX="8.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="3.0">
+                                 <image>
+                                    <Image url="@/floor_imgs/fkthumb.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="%welTitle" wrappingWidth="1245.99998742342">
+                           <font>
+                              <Font name="Tahoma" size="31.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logout" text="Logout" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" />
                </children>
-            </Pane>
-         </items>
-      </SplitPane>
-   </center>
-</BorderPane>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

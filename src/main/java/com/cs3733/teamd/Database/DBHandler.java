@@ -940,12 +940,15 @@ public class DBHandler {
         }
     }
 
-    public boolean addBugReport(String tag, String comment) {
-        String sqlSelect = "INSERT INTO BugReport VALUES (?,?)";
+    public boolean addBugReport(String tag, String comment, String status) {
+        String sqlSelect = "INSERT INTO BugReport (tag, comment, status) VALUES (?,?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlSelect);
             statement.setString(1, tag);
             statement.setString(2, comment);
+            statement.setString(3, status);
+            //statement.setInt(4, ID);
+
             statement.executeUpdate();
             statement.close();
             return true;
@@ -955,18 +958,35 @@ public class DBHandler {
         }
     }
 
-    public List<String> getBugReports() {
+    public boolean deleteBugReport(String tag, String comment, String status) {
+        String sqlDelete = "DELETE FROM BugReport WHERE tag=? AND comment=? AND status=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setString(1, tag);
+            statement.setString(2, comment);
+            statement.setString(3, status);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public List<Report> getBugReports() {
         String sqlSelect = "SELECT * FROM BugReport";
         try {
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelect);
 
-            List<String> reports = new ArrayList<String>();
+            List<Report> reports = new ArrayList<Report>();
             while(rs.next()) {
-                String addition = "";
-                addition = rs.getString(1);
-                addition += " - ";
-                addition += rs.getString(2);
+                Report addition = new Report();
+                addition.tagText = rs.getString(1);
+                addition.commentText = rs.getString(2);
+                addition.status = rs.getString(3);
                 reports.add(addition);
             }
 
@@ -975,7 +995,30 @@ public class DBHandler {
             return reports;
         } catch(SQLException e) {
             e.printStackTrace();
-            return new ArrayList<String>();
+            return new ArrayList<Report>();
         }
     }
+
+//    public boolean setBugClosed(String tag, String comment, String status) {
+//        String sqlUpdate = "UPDATE BugReport SET status=? WHERE tag=? AND comment=?";
+//        try {
+//
+//            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+//            statement.setString(1, tag);
+//            System.out.println(tag);
+//            statement.setString(2, comment);
+//            System.out.println(comment);
+//            statement.setString(3, status);
+//            System.out.println(status);
+//            statement.executeUpdate();
+//            System.out.println("executing update");
+//            statement.close();
+//            return true;
+//        } catch(SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
+
 }

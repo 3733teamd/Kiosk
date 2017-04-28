@@ -3,6 +3,7 @@ package com.cs3733.teamd.Controller;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Professional;
 import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.Entities.VisitingBlock;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -388,5 +389,44 @@ public class EditTagScreenController extends AbsController {
             searchTagBar.clear();
         }
         searchTagBar.setText("");
+    }
+
+    public TextField openTimeBox;
+    public TextField closingTimeBox;
+    public Button addVisitHours;
+    public Button removeVisitBlockButton;
+
+    ObservableList<VisitingBlock> visitingResults = FXCollections.observableArrayList();
+    VisitingBlock selectedVB;
+    public ListView visitingHourList;
+
+    @FXML
+    public void addToVisitingHourList(ActionEvent actionEvent) {
+        String openingString = openTimeBox.getText();
+        String closingString = closingTimeBox.getText();
+        try {
+            VisitingBlock b = new VisitingBlock(openingString, closingString);
+            selectedTag.addBlock(b);
+            if(dir.updateTag(selectedTag)) {
+                visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
+                visitingHourList.refresh();
+
+                openTimeBox.clear();
+                closingTimeBox.clear();
+            }
+
+
+
+            System.out.println(b.toString());
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+    }
+    @FXML
+    public void removeVisitBlock(ActionEvent actionEvent) {
+        selectedTag.removeBlock(selectedVB);
+        visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
+        visitingHourList.refresh();
     }
 }
