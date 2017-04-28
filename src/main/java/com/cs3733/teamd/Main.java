@@ -58,7 +58,7 @@ public class Main extends Application {
     public static void main(String[] args) {
 
 
-        Hospital h = HospitalLoader.getInstance().loadHospitalFromId("faulkner");
+        Hospital h = HospitalLoader.getInstance().loadDefaultHospital();
         if(h == null) {
             System.err.println("HOSPITAL CAN NOT BE LOADED");
         } else {

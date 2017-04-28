@@ -22,14 +22,19 @@
         {"number":1005, "file":"flkProf5.png"},
         {"number":1006, "file":"flkProf6.png"},
         {"number":1007, "file":"flkProf7.png"}
-      ]
+      ],
+      "multipleLanguages":true
     },
     {
-      "name":"New Hospital",
-      "hospitalId":"new_hospital",
+      "name":"Apartment",
+      "hospitalId":"apartment",
       "dbVersion":1,
       "floors": [
-      ]
+        {"number": 1, "file":"apartment1.png"},
+        {"number": 1001, "file":"apartment1.png"}
+      ],
+      "multipleLanguages":false
     }
-  ]
+  ],
+  "currentHospital":"apartment"
 }

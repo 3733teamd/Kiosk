@@ -88,17 +88,14 @@ public class SyncPopupController implements IOperationListener {
 
         HospitalLoader.getInstance().saveHospital(h);
         System.out.println("Dumped");
-        synchronizeScreenToCurrentState();
+        //synchronizeScreenToCurrentState();
     }
 
-
-
-    @FXML
-    void onLoadVersion(ActionEvent event) {
+    void loadVersion(Integer version) {
         try {
-            Integer version = this.dbVersionBox.getValue();
             this.dbVersionText.setText("Loading...");
             System.out.println(version);
+            h = ApplicationConfiguration.getInstance().getHospital();
             h.setDbVersion(version);
             IOperationListener listener = this;
             new Thread(new Runnable() {
@@ -106,6 +103,7 @@ public class SyncPopupController implements IOperationListener {
                 public void run() {
                     HospitalLoader.getInstance().saveHospital(h);
                     Directory dir = Directory.getInstance();
+                    System.out.println(h.getDbPath());
                     boolean result = dir.changeToNewFile(h.getDbPath());
                     if(result) {
                         System.out.println("Success");
@@ -122,11 +120,30 @@ public class SyncPopupController implements IOperationListener {
             this.dbVersionText.setText("Load Version Error.");
             e.printStackTrace();
         }
+    }
 
+    @FXML
+    void onLoadVersion(ActionEvent event) {
+        loadVersion(this.dbVersionBox.getValue());
     }
 
     @FXML
     void onLoadHospital(ActionEvent event) {
+        // Check hospital id
+
+        String newVersion  = this.hospitalVersionBox.getValue();
+        if(this.hospitalVersionBox.getValue() == h.getHospitalId()) {
+            return;
+        }
+        // Save the current hospital
+        saveCurrentVersion(event);
+
+        Hospital hNew = HospitalLoader.getInstance().loadHospitalFromId(newVersion);
+        System.out.println(newVersion);
+
+        ApplicationConfiguration.getInstance().setHospital(hNew);
+
+        loadVersion(ApplicationConfiguration.getInstance().getHospital().getDbVersion());
 
     }
 

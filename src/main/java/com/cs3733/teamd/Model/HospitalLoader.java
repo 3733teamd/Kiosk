@@ -88,6 +88,30 @@ public class HospitalLoader {
 
     }
 
+    public Hospital loadDefaultHospital() {
+        try {
+            String filename = ApplicationConfiguration.getInstance()
+                    .getFullFilePath("hospitals/hospitals.json");
+            if(filename == null) {
+                return null;
+            }
+            FileReader f = new FileReader(filename);
+            Object o = parser.parse(f);
+            root = (JSONObject) o;
+            String currentHospital = (String) root.get("currentHospital");
+            return loadHospitalFromId(currentHospital);
+        } catch(ParseException pe) {
+            pe.printStackTrace();
+            return null;
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+            return null;
+        } catch (IOException ie) {
+            ie.printStackTrace();
+            return null;
+        }
+    }
+
     public Hospital loadHospitalFromId(String id) {
         JSONArray hospitalsJson = loadHospitalsObject();
         if(hospitalsJson == null) {

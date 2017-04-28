@@ -803,9 +803,10 @@ public class EditMapScreenController extends MapController implements IObservabl
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
                 try {
-                    mapCanvas.getChildren().add(circleMap.get(n));
-                    floorCircs.add(circleMap.get(n));
-
+                    if(mapCanvas.getChildren() != null) {
+                        mapCanvas.getChildren().add(circleMap.get(n));
+                        floorCircs.add(circleMap.get(n));
+                    }
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
