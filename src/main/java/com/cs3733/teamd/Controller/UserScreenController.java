@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -81,8 +82,12 @@ public class UserScreenController extends MapController {
     @FXML
     public Pane mapCanvas;
     public AnchorPane MMGpane;
+
+    //text directions
     @FXML
-    private TextArea directions;
+    //private TextArea directions;
+    private ListView<String> directions ;
+    private ObservableList<String> dirList;
 
     @FXML
     private ImageView aboutImage;
@@ -95,6 +100,7 @@ public class UserScreenController extends MapController {
     int onFloor = Main.currentFloor;
     int indexOfElevator = 0;
     String output = "";
+
     Tag starttag = null;
     private int startfloor = 0;
     private int midfloor = 0;
@@ -179,9 +185,9 @@ public class UserScreenController extends MapController {
         TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
-       // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
+        // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
-        directions.setText(output);
+//        directions.setText(output); //dir change type
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
         if(floors.size() == 0){
@@ -223,6 +229,7 @@ public class UserScreenController extends MapController {
             MementoController.addCareTaker("/Views/UserScreen.fxml");
             init=false;
         }
+
     }
 
 
@@ -259,7 +266,52 @@ public class UserScreenController extends MapController {
         for(String directionString: directionsArray) {
             output += directionString + "\n";
         }
-        directions.setText(output);
+        dirList = FXCollections.observableArrayList(directionsArray);
+        directions.setItems(dirList);
+        directions.setCellFactory(dir -> new ListCell<String>() {
+            ImageView iconView = new ImageView();
+
+            int i=0;
+            @Override
+            protected void updateItem(String dir, boolean empty) {
+                super.updateItem(dir,empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+ //                   for (TextDirectionGenerator.Direction d : dirText) {
+                        if (dir.contains("proceed from") || dir.contains("Proceed from")) {
+                            System.out.println(".PROCEED_FROM_TAG");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
+                        }
+                        else if (dir.contains("straight")) {
+                            System.out.println(".go straight");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/straight.png")));
+                        } else if (dir.contains("turn left")) {
+                            System.out.println(".turn left");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+                        } else if (dir.contains("slight left")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
+                        }else if (dir.contains("turn right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
+                        } else if (dir.contains("slight right")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
+                        }else if (dir.contains("arrive")) {
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
+                        }else if (dir.contains("elevator")) {
+                            System.out.println(".proccede to elevator");
+                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
+                        }
+                        setGraphic(iconView);
+                        iconView.setFitHeight(50);
+                        iconView.setFitWidth(50);
+                        setText(dir);
+                }
+//                i=i+1;
+            }
+        });
+
+//        directions.setText(output);
 
         super.setNodes(pathNodes);
         super.removeConnections();
@@ -340,7 +392,13 @@ public class UserScreenController extends MapController {
                 // Notify super class
                 setFloor(onFloor);
                 output = "";
-                directions.setText(output);
+                dirList = FXCollections.observableArrayList(output);
+//                directions.setText(output);
+                directions.setItems(dirList);
+
+                System.out.println(onFloor);
+               // directions.setText(output);
+                //System.out.println(onFloor);
 
                 setupMap();
             }
@@ -540,8 +598,13 @@ public class UserScreenController extends MapController {
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
         output = "";
-        directions.setText(output);
+      //  directions.setText(output);
         //System.out.println(onFloor);
+        dirList = FXCollections.observableArrayList(output);
+//        directions.setText(output);
+        directions.setItems(dirList);
+
+        System.out.println(onFloor);
 
         setupMap();
 
@@ -629,7 +692,12 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
+
+            System.out.println(onFloor);
+        //    directions.setText(output);
             //System.out.println(onFloor);
 
             setupMap();
@@ -647,8 +715,13 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+        //    directions.setText(output);
             //System.out.println(onFloor);
+            dirList = FXCollections.observableArrayList(output);
+//            directions.setText(output);
+            directions.setItems(dirList);
+
+            System.out.println(onFloor);
 
             setupMap();
             disableAppropriateFloorButtons();
@@ -665,7 +738,9 @@ public class UserScreenController extends MapController {
             floorMap.setImage(imgInt.display(onFloor));
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
-            directions.setText(output);
+            dirList = FXCollections.observableArrayList(output);
+            directions.setItems(dirList);
+//            directions.setText(output);
             System.out.println(onFloor);
 
             setupMap();
