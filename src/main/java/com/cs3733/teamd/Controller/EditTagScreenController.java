@@ -173,9 +173,11 @@ public class EditTagScreenController extends AbsController {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    clearResponsiveFields();
+                    selectedTag= null;
                     String text = searchTagBar.getText();
                     //TODO set chosen tag to tag from bar
-                    System.out.println(chosenTag);
+
                     tagNameTxt.setText(searchTagBar.getText());
 
                     //System.out.println(text);
@@ -193,18 +195,39 @@ public class EditTagScreenController extends AbsController {
 
                             tagNameTxt.clear();
                             tagNameTxt.setPromptText(selectedTag.toString());
+                            visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
+                            visitingHourList.refresh();
+                            allProffessionals.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+                            addVisitHours.setOpacity(1.0);
+                            addProf.setOpacity(1.0);
+                            deleteProf.setOpacity(1.0);
+                            newTagNameBtn.setOpacity(1.0);
+                            selectConnectable.setSelected(selectedTag.isConnectable());
+                            selectConnectable.setDisable(false);
+                            restrictedButton.setSelected(selectedTag.isRestricted());
+                            restrictedButton.setDisable(false);
+                            addProf.setDisable(false);
+                            deleteProf.setDisable(false);
+                            newTagNameBtn.setDisable(false);
+                            addVisitHours.setDisable(false);
 
+                        }else{
+                            addProf.setOpacity(.5);
+                            deleteProf.setOpacity(.5);
+                            newTagNameBtn.setOpacity(.5);
+                            addVisitHours.setOpacity(.5);
+                            //disable buttons
+                            selectConnectable.setDisable(true);
+                            restrictedButton.setDisable(true);
+                            addProf.setDisable(true);
+                            deleteProf.setDisable(true);
+                            newTagNameBtn.setDisable(true);
+                            addVisitHours.setDisable(true);
+                            tagNameTxt.clear();
+                            tagNameTxt.setPromptText("");
+                            clearResponsiveFields();
                         }
-                        addProf.setOpacity(1.0);
-                        deleteProf.setOpacity(1.0);
-                        newTagNameBtn.setOpacity(1.0);
-                        selectConnectable.setSelected(selectedTag.isConnectable());
-                        selectConnectable.setDisable(false);
-                        restrictedButton.setSelected(selectedTag.isRestricted());
-                        restrictedButton.setDisable(false);
-                        addProf.setDisable(false);
-                        deleteProf.setDisable(false);
-                        newTagNameBtn.setDisable(false);
+
 
                     }
 
@@ -228,6 +251,15 @@ public class EditTagScreenController extends AbsController {
                     }
                 });
 
+        visitingHourList.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<VisitingBlock>() {
+                    public void changed(ObservableValue<? extends VisitingBlock> ov,
+                                        VisitingBlock old_val, VisitingBlock new_val) {
+                        selectedVB = new_val;
+
+                    }
+                });
+
         profSearchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -241,6 +273,8 @@ public class EditTagScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
                 //make some buttons opaque
+                //clearResponsiveFields();
+                selectedTag = null;
                 addProf.setOpacity(.5);
                 deleteProf.setOpacity(.5);
                 newTagNameBtn.setOpacity(.5);
@@ -428,5 +462,18 @@ public class EditTagScreenController extends AbsController {
         selectedTag.removeBlock(selectedVB);
         visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));
         visitingHourList.refresh();
+    }
+
+    public void clearResponsiveFields(){
+        //selectedTag=null;
+        allProffessionals.setItems(FXCollections.observableArrayList());
+        allProffessionals.refresh();
+        currentProfessionals.setItems(FXCollections.observableArrayList());
+        currentProfessionals.refresh();
+        visitingHourList.setItems(FXCollections.observableArrayList());
+        visitingHourList.refresh();
+        openTimeBox.clear();
+        closingTimeBox.clear();
+        profSearchField.clear();
     }
 }

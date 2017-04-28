@@ -198,6 +198,24 @@ public class DBHandler {
         }
         HCPTitleTupleRslt.close();
 
+        // Load visiting hours
+        ResultSet VisitingHourRslt = s.executeQuery(Table.VistingHours.selectAllStatement());
+        while(VisitingHourRslt.next()) {
+            Tag t = tagMap.get(VisitingHourRslt.getInt("tagId"));
+            long millisOpen = VisitingHourRslt.getTimestamp("openTime").getTime();
+
+            long millisClose = VisitingHourRslt.getTimestamp("closeTime").getTime();
+
+            System.out.println(millisOpen);
+            System.out.println(millisClose);
+            VisitingBlock vb = new VisitingBlock();
+            vb.setOpenTimeInMillis(millisOpen);
+            vb.setCloseTimeInMillis(millisClose);
+            t.addBlock(vb);
+
+        }
+        VisitingHourRslt.close();
+
         nodes = new ArrayList<>(nodeMap.values());
         tags = new ArrayList<>(tagMap.values());
         professionals = new ArrayList<>(professionalMap.values());
@@ -929,12 +947,53 @@ public class DBHandler {
             }
             rs.close();
 
+            // Visiting hour
+            String sqlSelectVisitingHour = "SELECT * FROM VisitingHour";
+            rs = s.executeQuery(sqlSelectVisitingHour);
+            while(rs.next()) {
+                int tagId = getNormalizedId(rs.getInt(1), maxTagId);
+                Timestamp open = rs.getTimestamp(2);
+                Timestamp close = rs.getTimestamp(3);
+                bw.write("INSERT INTO VisitingHour VALUES("+tagId+","+open.toString()+","+close.toString()+")\n");
+            }
+            rs.close();
+
             s.close();
             return true;
         } catch(IOException e) {
             e.printStackTrace();
             return false;
         } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addVisitingHour(int tagId, Timestamp open, Timestamp close) {
+        String sqlInsert = "INSERT INTO VisitingHour VALUES (?,?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, tagId);
+            statement.setTimestamp(2, open);
+            statement.setTimestamp(3, close);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeVisitingHour(int tagId) {
+        String sqlDelete = "DELETE FROM VisitingHour WHERE tagId=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, tagId);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
             e.printStackTrace();
             return false;
         }
