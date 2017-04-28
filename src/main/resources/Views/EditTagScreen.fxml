@@ -87,9 +87,9 @@
                                     </Button>
                                     <AnchorPane prefHeight="55.0" prefWidth="163.0">
                                        <children>
-                                          <CheckBox fx:id="selectConnectable" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
+                                          <CheckBox fx:id="selectConnectable" layoutY="19.0" mnemonicParsing="false" text="%FloorConnector" />
                                        </children></AnchorPane>
-                                    <CheckBox fx:id="restrictedButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
+                                    <CheckBox fx:id="restrictedButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="%Restricted" textAlignment="CENTER" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0">

@@ -97,7 +97,7 @@
                      <children>
                         <Text fx:id="floor" strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4">
                            <font>
-                              <Font size="29.0" />
+                              <Font size="27.0" />
                            </font>
                         </Text>
                      </children>

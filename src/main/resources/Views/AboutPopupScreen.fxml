@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -35,13 +36,13 @@
             </HBox>
             <AnchorPane prefHeight="443.0" prefWidth="800.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="190.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
-                  <Text layoutX="39.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project Manager- Ryan Wittenberg&#10;Lead Software Engineer- Stephen Michelini&#10;Assistant Software Engineer- Thomas Koker &#10;Assistant Software Engineer- Andrew Nemeth &#10;Product Owner- William Kelley &#10;Test Engineer- Derrek Rueger &#10;Documentation Analyst- Alexandra Wheeler &#10;Software Engineer- Benjamin Shaffer &#10;Software Engineer- Anh Dao &#10;Software Engineer- Ryan Vereque &#10;&#10;WPI CS Department, CS 3733 " textAlignment="CENTER" wrappingWidth="718.23583984375">
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="190.0" stroke="BLACK" strokeType="INSIDE" width="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Text layoutX="103.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%roles" textAlignment="CENTER" wrappingWidth="593.6708908081055">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Text>
-                  <Text layoutX="47.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Our application could not have been made without the help and guidance of Professor Wilson Wong, the support of our team coach Dominik Smreczak, and the collaboration of Andrew Shinn on behalf of Brigham and Women's Faulkner Hospital.&#10;" textAlignment="CENTER" wrappingWidth="706.0">
+                  <Text layoutX="45.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%aboutTexts" textAlignment="CENTER" wrappingWidth="706.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font size="26.0" />
                      </font>
@@ -50,25 +51,36 @@
             </AnchorPane>
             <AnchorPane prefHeight="300.0" prefWidth="800.0">
                <children>
-                  <ImageView fitHeight="268.0" fitWidth="222.0" layoutX="559.0" layoutY="-32.0" opacity="0.31" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="268.0" fitWidth="222.0" layoutX="559.0" layoutY="-39.0" opacity="0.31" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="559.0">
                      <image>
                         <Image url="@/floor_imgs/ceberus.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="177.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank You!" textAlignment="CENTER" wrappingWidth="445.6708984375">
+                  <Text layoutX="166.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%ThankYou!" textAlignment="CENTER" wrappingWidth="468.6708984375" AnchorPane.bottomAnchor="237.1962890625" AnchorPane.topAnchor="46.6494140625">
                      <font>
                         <Font size="55.0" />
                      </font>
                   </Text>
-                  <Button fx:id="exitAbout" layoutX="14.0" layoutY="195.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#leaveAbout" prefHeight="59.0" prefWidth="165.0" text="%Exit">
+                  <Button fx:id="exitAbout1" layoutX="599.0" layoutY="263.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="165.0" text="%Exit">
                      <font>
                         <Font size="42.0" />
                      </font></Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="338.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="337.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="337.0" AnchorPane.topAnchor="134.0">
                      <image>
                         <Image url="@/floor_imgs/fkthumb.png" />
                      </image>
                   </ImageView>
+                  <Text layoutX="249.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%wpidept" textAlignment="CENTER" wrappingWidth="297.78369140625" AnchorPane.bottomAnchor="313.2314453125" AnchorPane.topAnchor="18.4970703125">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="268.0" fitWidth="222.0" layoutX="22.0" opacity="0.31" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="22.0">
+                     <image>
+                        <Image url="@/floor_imgs/ceberus.png" />
+                     </image>
+                  </ImageView>
+                  <JFXButton fx:id="exitAbout" buttonType="RAISED" layoutX="44.0" layoutY="278.0" onAction="#leaveAbout" style="-fx-background-color: DCDCDC;" text="%Exit" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="44.0" />
                </children></AnchorPane>
          </children>
       </VBox>

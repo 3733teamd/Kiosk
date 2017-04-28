@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -12,9 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXButton?>
 <AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" stylesheets="@KioskCSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.LoginScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,7 +30,7 @@
                                     <Image url="@/floor_imgs/fkthumb.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="66.0" layoutY="-2.0" text="%adminLogin" AnchorPane.bottomAnchor="-1.0" AnchorPane.rightAnchor="-20.0" />
+                              <Label layoutX="77.0" layoutY="8.0" prefHeight="27.0" prefWidth="157.0" text="%adminLogin" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="-34.0" />
                            </children>
                         </AnchorPane>
                      </children>
