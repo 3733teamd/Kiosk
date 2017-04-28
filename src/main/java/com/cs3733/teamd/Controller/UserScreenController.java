@@ -223,7 +223,12 @@ public class UserScreenController extends MapController {
                 //add belkin professional views
             }
         } else {
-            floors.addAll(ApplicationConfiguration.getInstance().getHospital().getFloorSet());
+            for(Integer floor: ApplicationConfiguration.getInstance().getHospital().getFloorSet()) {
+                if(floor < 1000) {
+                    floors.add(floor);
+                }
+            }
+
         }
 
 
