@@ -357,13 +357,39 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addBugReport(String tag, String comment) {
-        return dbHandler.addBugReport(tag, comment);
+    public boolean addBugReport(Report report) {
+        boolean result = dbHandler.addBugReport(report.tagText, report.commentText, report.status);
+        if(!result) {
+            System.err.println("Error Adding Bug Report");
+            return result;
+        }
+        return result;
     }
 
     @Override
-    public List<String> getBugReports() {
+    public List<Report> getBugReports() {
         return dbHandler.getBugReports();
     }
+
+    @Override
+    public boolean deleteBugReport(Report report){
+        boolean result = dbHandler.deleteBugReport(report.tagText, report.commentText, report.status);
+        if(!result) {
+            System.err.println("Error Deleting Bug Report");
+            return result;
+        }
+        return result;
+    }
+
+//      @Override
+//    public boolean setBugClosed (Report report){
+//        boolean result = dbHandler.setBugClosed(report.tagText, report.commentText, "closed");
+//        if(!result){
+//            System.out.println("Error changing Status");
+//            return result;
+//        }
+//        return result;
+//    }
+
 
 }
