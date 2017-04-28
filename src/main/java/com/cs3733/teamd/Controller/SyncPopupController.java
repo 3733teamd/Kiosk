@@ -70,6 +70,8 @@ public class SyncPopupController implements IOperationListener {
     @FXML
     void saveAsNewVersion(ActionEvent event) {
         h.setDbVersion(h.getDbVersion() + 1);
+
+        h.getDbVersions().add(h.getDbVersion() + 1);
         saveCurrentVersion(event);
     }
 
@@ -144,6 +146,8 @@ public class SyncPopupController implements IOperationListener {
         ApplicationConfiguration.getInstance().setHospital(hNew);
 
         loadVersion(ApplicationConfiguration.getInstance().getHospital().getDbVersion());
+
+        HospitalLoader.getInstance().saveCurrentHospital(newVersion);
 
     }
 

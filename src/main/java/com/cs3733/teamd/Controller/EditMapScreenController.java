@@ -8,6 +8,11 @@ import com.cs3733.teamd.Model.Entities.*;
 import com.jfoenix.controls.JFXButton;
 import com.cs3733.teamd.Model.ImageInterface;
 import com.cs3733.teamd.Model.ProxyImage;
+import com.cs3733.teamd.Model.*;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Professional;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -72,18 +77,18 @@ public class EditMapScreenController extends MapController implements IObservabl
     public RadioButton chooseAStarButton;
     public ToggleGroup algSelectGorup;
 
-    public JFXButton bugReports;
+    public Button bugReports;
 
     //public Label errorBox;
     Directory dir = Directory.getInstance();
     ApplicationConfiguration config = ApplicationConfiguration.getInstance();
 
-    public JFXButton EditProf;
-    public JFXButton EditTag;
-    public JFXButton LoginButton;
-    public JFXButton CreateUserButton;
-    public JFXButton SpanishButton;
-    public JFXButton BackButton;
+    public Button EditProf;
+    public Button EditTag;
+    public Button LoginButton;
+    public Button CreateUserButton;
+    public Button SpanishButton;
+    public Button BackButton;
     public Button addNode;
     public Button connectNode;
     public Label xLoc;
@@ -100,6 +105,9 @@ public class EditMapScreenController extends MapController implements IObservabl
     private TextField timeoutField;
 
     //HashMap<List<CircleNode>,Line> circleLines;
+
+    @FXML
+    private ComboBox<String> LanguageButton;
 
     public ScrollPane scrollPane;
 
@@ -125,12 +133,15 @@ public class EditMapScreenController extends MapController implements IObservabl
     ObservableList<Professional> searchResults = FXCollections.observableArrayList();
     ObservableList<Tag> searchResultsTag = FXCollections.observableArrayList();
 
+    final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
+    public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
+
 
     public int s;
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor = 1;
+    public int floor =4;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
@@ -239,6 +250,7 @@ public class EditMapScreenController extends MapController implements IObservabl
     @FXML
     public void initialize(){
 
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         DirectoryInterface d = Directory.getInstance();
@@ -250,7 +262,7 @@ public class EditMapScreenController extends MapController implements IObservabl
             timerThread.start();
         }
         setAlgGroupListener();
-        setFloorChoiceBox();
+        setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
 
@@ -299,15 +311,44 @@ public class EditMapScreenController extends MapController implements IObservabl
         allTagBox.setItems(FXCollections.observableList(allTheTags));
         System.out.println(floor);
         //if floor<100 its falkner, so display the prof verions
-
-        floorMap.setImage(imgInt.display(floor + 1000));
-
-
+        if(floor<100) {
+            floorMap.setImage(imgInt.display(floor + 1000));
+        }else{
+            floorMap.setImage(imgInt.display(floor));
+        }
         for (int i = 0 ; i<allTheTags.size(); i++) {
             allTagNames.add(allTheTags.get(i).getTagName());
         }
         //TextFields.bindAutoCompletion(searchAllTags,allTagNames);
 
+
+
+
+        FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if(new_val!=null) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    System.out.println(floor);
+
+                    //if floor<100 its falkner, so display the prof verions
+                    if (floor < 100) {
+                        floorMap.setImage(imgInt.display(floor + 1000));
+                    } else {
+                        floorMap.setImage(imgInt.display(floor));
+                    }
+
+                }
+                imagePane.getChildren().removeAll(floorCircs);
+                imagePane.getChildren().removeAll(floorLines);
+                floorCircs.clear();
+                floorLines.clear();
+
+                drawfloorNodes();
+
+            }
+        });
 
         floors.clear();
         if(floors.size() == 0){
@@ -327,6 +368,13 @@ public class EditMapScreenController extends MapController implements IObservabl
         floorDropDown.addAll(floors);
         FloorMenu.setItems(floorDropDown);
         FloorMenu.setValue(floorDropDown.get(0));
+
+        if(languageDropDown.size()==0){
+            languageDropDown.addAll(languages);
+        }
+        LanguageButton.setItems(languageDropDown);
+        LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
+
 
         allTagBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tag>() {
             @Override
@@ -402,32 +450,56 @@ public class EditMapScreenController extends MapController implements IObservabl
         allTagBox.setItems(searchResultsTag);
     }
 
-    private void setFloorChoiceBox(){
+    private void setFloorSliderListener(){
 
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null) {
+                if(new_val!=null && old_val!=null)
+                floor = new_val.intValue();
+                FloorMenu.setValue(floor);
+                //floorMap.setImage(imageHashMap.get(floor));
+                floorMap.setImage(imgInt.display(floor));
 
-                    if(floor != (int)new_val) {
-                        floor = new_val.intValue();
-                        FloorMenu.setValue(floor);
-                        System.out.println(floor);
-                        floorMap.setImage(imgInt.display(floor + 1000));
-
-                    }
-
-                }
+                /*//TODO: heart of error
                 imagePane.getChildren().removeAll(floorCircs);
                 imagePane.getChildren().removeAll(floorLines);
                 floorCircs.clear();
                 floorLines.clear();
-
+*/
                 drawfloorNodes();
 
             }
         });
     }
+
+    @FXML
+    private void setLanguageListener() throws IOException {
+
+      /* LanguageButton.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+      @Override
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                if (new_val != old_val) {languagechange=true;
+                    value=new_val.intValue();
+                }
+                else{languagechange=false;}
+                value=new_val.intValue();
+                System.out.println("val"+value);
+      }
+        });*/
+        //value=(Integer.parseInt( LanguageButton.getValue()));
+        System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
+        //super.switchLanguage();
+        super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
+
+        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+
+
+        //setSpanishText();
+
+    }
+
     private void panMethods(){
 
         //zoom functions
@@ -640,6 +712,7 @@ public class EditMapScreenController extends MapController implements IObservabl
                 if(!mouse.isShiftDown()){
                     deselectAllNodes();
                     addNodeToSelection(c);
+
                 }else{
                     addNodeToSelection(c);
                 }
@@ -723,22 +796,14 @@ public class EditMapScreenController extends MapController implements IObservabl
         }
     }
     private void disconnectAllSelectedNodes(){
-        LinkedList<CircleNode> circleNodesToDisconnect = new LinkedList<CircleNode>();
         for(CircleNode cn: selectedCircles){
-            for(Node neighbor: cn.referenceNode.getNodes()){
-                if(selectedCircles.contains(circleMap.get(neighbor))) {
-                    circleNodesToDisconnect.add(circleMap.get(neighbor));
+            for(CircleNode other: selectedCircles){
+                try{
+                    disconnectCircleNodes(cn, other);
+                }catch(NullPointerException e){
+
                 }
             }
-            for(CircleNode neighborCircle : circleNodesToDisconnect) {
-                try {
-                    disconnectCircleNodes(cn, neighborCircle);
-                    System.out.println("disconnected " + cn + neighborCircle);
-                } catch (NullPointerException e) {
-                    System.out.println(e);
-                }
-            }
-            circleNodesToDisconnect.clear();
         }
     }
 
@@ -858,12 +923,12 @@ public class EditMapScreenController extends MapController implements IObservabl
     }
 
     private void disconnectCircleNodes(CircleNode cn1, CircleNode cn2){
-
-        if(dir.deleteEdge(cn1.referenceNode,cn2.referenceNode)){
+        boolean response = dir.deleteEdge(cn1.referenceNode,cn2.referenceNode);
+        if(response){
             errorBox.setText("");
             Line l = cn1.lineMap.get(cn2);
             mapCanvas.getChildren().remove(l);
-            System.out.println("Deleted the edge" + cn1 + cn2);
+            System.out.println(cn1.lineMap.size());
             cn1.lineMap.remove(cn2);
             cn2.lineMap.remove(cn1);
             drawfloorNodes();
@@ -892,7 +957,8 @@ public class EditMapScreenController extends MapController implements IObservabl
     //Spanish button to change language to Spanish
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
-        super.switchLanguage();
+        String lan ="a";
+        super.switchLanguage(lan);
         switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
     }
 
@@ -990,4 +1056,3 @@ public class EditMapScreenController extends MapController implements IObservabl
     }
 
 }
-

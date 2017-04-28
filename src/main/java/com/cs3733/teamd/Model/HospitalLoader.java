@@ -142,6 +142,32 @@ public class HospitalLoader {
         return null;
     }
 
+    public boolean saveCurrentHospital(String newHospital) {
+        if(root == null) {
+            System.err.println("Error with Current Hospital");
+            return false;
+        }
+
+        root.put("currentHospital", newHospital);
+
+        String filename = ApplicationConfiguration.getInstance()
+                .getFullFilePath("hospitals/hospitals.json");
+        if(filename == null) {
+
+            return false;
+        }
+        try (FileWriter file = new FileWriter(filename)) {
+            file.write(root.toJSONString());
+            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("\nJSON Object: " + root);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     public boolean saveHospital(Hospital h) {
         JSONArray hospitalsJson = loadHospitalsObject();
         if(hospitalsJson == null) {

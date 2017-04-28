@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.IterationOne.MapDirectionsController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bc1f1f" height="809.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
+      <AnchorPane fx:id="pane2" onMouseMoved="#draw" prefHeight="800.0" prefWidth="1290.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e7fa55c8" height="564.0" layoutY="119.0" stroke="BLACK" strokeType="INSIDE" width="1300.0" />
+            <Button fx:id="largerTextButton" layoutX="1114.0" layoutY="137.0" mnemonicParsing="false" opacity="0.0" prefHeight="18.0" prefWidth="162.0" text="Larger Text">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Circle fill="#007bedd6" layoutX="1240.0" layoutY="739.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="MenuButton" layoutX="1180.0" layoutY="679.0" mnemonicParsing="false" onAction="#onMenu" prefHeight="121.0" prefWidth="120.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Menu">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Circle fill="#007bedd6" layoutX="60.0" layoutY="739.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="LoginButton" layoutX="-18.0" layoutY="679.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="121.0" prefWidth="158.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Login" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Circle fill="#007bedd6" layoutX="1240.0" layoutY="59.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#007bedd6" layoutX="58.0" layoutY="59.0" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="SearchButton" layoutX="-21.0" layoutY="-10.0" mnemonicParsing="false" onAction="#onSearch" prefHeight="143.0" prefWidth="162.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Search">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Button fx:id="BackButton" layoutX="1166.0" layoutY="-6.0" mnemonicParsing="false" onAction="#onBack" prefHeight="136.0" prefWidth="132.0" style="-fx-background-radius: 100; -fx-background-color: transparent;" text="Back">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="mapImage" fitHeight="500.0" fitWidth="1000.0" layoutX="195.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../floor_imgs/Fk4x-Model.png" />
+               </image>
+            </ImageView>
+            <TextArea fx:id="textDirectionsDisplay" editable="false" layoutX="663.0" layoutY="188.0" opacity="0.0" prefHeight="426.0" prefWidth="476.0" text="Text Directions are Here">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </TextArea>
+            <Text fx:id="menu" layoutX="339.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Map Directions" textAlignment="CENTER">
+               <font>
+                  <Font size="91.0" />
+               </font>
+            </Text>
+            <Canvas id="MapCanvas" fx:id="MapCanvas" height="500.0" layoutX="193.0" layoutY="137.0" width="900.0" />
+            <Label layoutX="210.0" layoutY="308.0" text="Red = Starting Location" textFill="#f50000">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="417.0" text="Green = Destination" textFill="#0c8623">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="365.0" text="Blue =  Path" textFill="#3c00f5">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

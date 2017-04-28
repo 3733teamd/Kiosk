@@ -186,11 +186,11 @@ public class LoginScreenController extends AbsController {
     //Spanish translation
     @FXML
     public void setText() {
-       // SearchButton.setText(Main.bundle.getString("search"));
+       // SearchButton.setText(GameMain.bundle.getString("search"));
         LoginButton.setText(Main.bundle.getString("login"));
-     //   MenuButton.setText(Main.bundle.getString("menu"));
+     //   MenuButton.setText(GameMain.bundle.getString("menu"));
         BackButton.setText(Main.bundle.getString("back"));
-       // menu.setText(Main.bundle.getString("login"));
+       // menu.setText(GameMain.bundle.getString("login"));
         userText.setText(Main.bundle.getString("username"));
         pwText.setText(Main.bundle.getString("password"));
 

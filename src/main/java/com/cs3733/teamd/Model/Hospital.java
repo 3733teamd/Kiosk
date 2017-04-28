@@ -17,6 +17,16 @@ public class Hospital {
     /// Files for the floor
     private Map<Integer, String> floorFiles;
 
+    public boolean hasMultipleLanguages() {
+        return multipleLanguages;
+    }
+
+    public void setMultipleLanguages(boolean multipleLanguages) {
+        this.multipleLanguages = multipleLanguages;
+    }
+
+    private boolean multipleLanguages = true;
+
     public Set<Integer> getDbVersions() {
         return dbVersions;
     }
