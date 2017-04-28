@@ -438,7 +438,7 @@ public class UserScreenController extends MapController {
             //super.switchLanguage();
         super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
 
-        super.switchScreen(MMGpane,"/Views/UserScreen.fxml");
+        super.switchScreen("/Views/UserScreen.fxml");
 
 
         setSpanishText();
