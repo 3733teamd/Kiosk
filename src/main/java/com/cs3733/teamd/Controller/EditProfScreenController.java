@@ -392,7 +392,7 @@ public class EditProfScreenController extends AbsController {
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(pane, "/Views/EditMapScreen.fxml");
+        switchScreen(pane, "/Views/AdminMenuScreen.fxml");
     }
 
     @FXML

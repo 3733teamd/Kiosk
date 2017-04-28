@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by benjamin on 4/18/2017.
  */
-public class ViewBugController {
+public class ViewBugController extends AbsController {
     @FXML
     public Button exitBugs;
     @FXML
@@ -48,8 +48,13 @@ public class ViewBugController {
 
     @FXML
     public void leaveBugs(ActionEvent actionEvent) {
-        Stage closeStage= (Stage) exitBugs.getScene().getWindow();
-        closeStage.close();
+        /*Stage closeStage= (Stage) exitBugs.getScene().getWindow();
+        closeStage.close();*/
+        try {
+            switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
 
