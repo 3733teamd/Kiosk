@@ -134,7 +134,7 @@ public class EditTagScreenController extends AbsController {
                 switchScreen(MMGpane, originator.getState());*/
                 MementoController.toOriginalScreen(MMGpane);
                 MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
-                switchScreen(MMGpane, MementoController.originator.getState());
+                switchScreen(MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,10 +145,11 @@ public class EditTagScreenController extends AbsController {
     //Back button
     @FXML
     public void onBack(ActionEvent actionEvent) throws IOException {
-        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+        switchScreen("/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void initialize(){
+        currentPane=MMGpane;
         //make some buttons opaque
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);

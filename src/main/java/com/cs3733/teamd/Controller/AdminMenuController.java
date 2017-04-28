@@ -25,12 +25,13 @@ public class AdminMenuController extends AbsController{
 
     @FXML
     public void initialize() {
+        currentPane = MMGpane;
 
     }
 
     public void goToEditMap(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
+            super.switchScreen("/Views/EditMapScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +39,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToEditTag(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
+            super.switchScreen("/Views/EditTagScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +47,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToEditProf(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
+            super.switchScreen("/Views/EditProfScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +55,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToEnhancedMap(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            super.switchScreen("/Views/UserScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +63,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToAddUser(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
+            super.switchScreen("/Views/CreateUserScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class AdminMenuController extends AbsController{
 
     public void goToBugView(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/ViewBugScreen.fxml");
+            super.switchScreen("/Views/ViewBugScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,7 +79,7 @@ public class AdminMenuController extends AbsController{
 
     public void logout(ActionEvent actionEvent) {
         try {
-            super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            super.switchScreen("/Views/UserScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

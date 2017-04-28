@@ -229,7 +229,7 @@ public class EditMapScreenController extends MapController{
                 switchScreen(MMGpane, originator.getState());*/
                 MementoController.toOriginalScreen(MMGpane);
                 MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
-                switchScreen(MMGpane, MementoController.originator.getState());
+                switchScreen(MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -241,6 +241,7 @@ public class EditMapScreenController extends MapController{
     public void initialize(){
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
+        currentPane = MMGpane;
 
         this.zoomPercent = 100.0;
         if(ApplicationConfiguration.getInstance().timeoutEnabled()) {
@@ -527,7 +528,7 @@ public class EditMapScreenController extends MapController{
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/CreateUserScreen.fxml");
+        switchScreen("/Views/CreateUserScreen.fxml");
     }
 
     //Back button
@@ -538,7 +539,7 @@ public class EditMapScreenController extends MapController{
         running = false;
         timerThread.interrupt();
         dir.logoutUser();
-        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+        switchScreen("/Views/AdminMenuScreen.fxml");
     }
     @FXML
     public void Logout() throws IOException{
@@ -547,7 +548,7 @@ public class EditMapScreenController extends MapController{
         running = false;
         timerThread.interrupt();
         dir.logoutUser();
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        switchScreen("/Views/UserScreen.fxml");
     }
 
     @FXML
@@ -556,7 +557,7 @@ public class EditMapScreenController extends MapController{
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/EditProfScreen.fxml");
+        switchScreen("/Views/EditProfScreen.fxml");
     }
     @FXML
     public void toEditTag() throws  IOException{
@@ -564,7 +565,7 @@ public class EditMapScreenController extends MapController{
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/EditTagScreen.fxml");
+        switchScreen("/Views/EditTagScreen.fxml");
     }
     @FXML
     public void addNodeButtonPressed(){
@@ -885,7 +886,7 @@ public class EditMapScreenController extends MapController{
     @FXML
     public void toSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
-        switchScreen(MMGpane,"/Views/EditMapScreen.fxml");
+        switchScreen("/Views/EditMapScreen.fxml");
     }
 
     public void setConnectingTags(){

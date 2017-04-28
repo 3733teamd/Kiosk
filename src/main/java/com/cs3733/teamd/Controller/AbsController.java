@@ -28,15 +28,16 @@ import java.util.ResourceBundle;
 public abstract class AbsController {
 
 
+    protected Pane currentPane;
     protected Boolean init=true;
 
 
-    public void switchScreen(Pane gp, String ViewPath) throws IOException{
+    public void switchScreen(String ViewPath) throws IOException{
         //for memento
         MementoController.addCareTaker(ViewPath);
 
         //
-        Stage stage = (Stage) gp.getScene().getWindow();
+        Stage stage = (Stage) currentPane.getScene().getWindow();
         Parent pane;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPath), Main.bundle);
         pane = loader.load();
@@ -79,5 +80,13 @@ public abstract class AbsController {
             System.out.println("ERROR: Undetected Langauge");
         }
     }
+
+    public void update(){
+        try {
+            switchScreen("/Views/UserScreen.fxml");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    };
 
 }

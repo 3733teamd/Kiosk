@@ -91,7 +91,7 @@ public class LoginScreenController extends AbsController {
             try {
                MementoController.toOriginalScreen(MMGpane);
                MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
-                switchScreen(MMGpane, MementoController.originator.getState());
+                switchScreen(MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,6 +100,7 @@ public class LoginScreenController extends AbsController {
     };
     @FXML
     public void initialize(){
+        currentPane = MMGpane;
         setText();
 
 
@@ -147,7 +148,7 @@ public class LoginScreenController extends AbsController {
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/UserScreen.fxml");
+        switchScreen("/Views/UserScreen.fxml");
     }
     //Login button
     @FXML
@@ -167,9 +168,9 @@ public class LoginScreenController extends AbsController {
         if (u != null){
             if(u.hasPermission(Permissions.EDIT_MAP)) {
                 System.out.println("Successful log in as admin.\n");
-                switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+                switchScreen("/Views/AdminMenuScreen.fxml");
             } else {
-                switchScreen(MMGpane, "/Views/UserScreen.fxml");
+                switchScreen("/Views/UserScreen.fxml");
             }
 
         } else{

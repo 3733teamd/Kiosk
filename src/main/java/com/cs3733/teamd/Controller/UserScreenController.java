@@ -134,6 +134,7 @@ public class UserScreenController extends MapController {
     @FXML
     private void initialize()
     {
+        currentPane=MMGpane;
         setOffsets();
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
         /*
@@ -459,7 +460,7 @@ public class UserScreenController extends MapController {
     public void onSpanish(ActionEvent actionEvent) throws  IOException{
         super.switchLanguage();
         //pathNodes = null;
-        switchScreen(MMGpane,"/Views/UserScreen.fxml");
+        switchScreen("/Views/UserScreen.fxml");
         setSpanishText();
     }
 
@@ -468,9 +469,9 @@ public class UserScreenController extends MapController {
         pathNodes=null;
         if(dir.getCurrentUser() != null) {
             dir.logoutUser();
-            switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            switchScreen("/Views/UserScreen.fxml");
         } else {
-            switchScreen(MMGpane, "/Views/LoginScreen.fxml");
+            switchScreen("/Views/LoginScreen.fxml");
         }
 //        switchScreen(MMGpane, "/Views/UserScreen.fxml");
 

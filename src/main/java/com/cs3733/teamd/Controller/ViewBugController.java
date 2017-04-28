@@ -27,6 +27,7 @@ public class ViewBugController extends AbsController {
 
     @FXML
     public void initialize() {
+        currentPane = MMGpane;
         dir = Directory.getInstance();
         List<String> bugReports = dir.getBugReports();
         System.out.println(bugReports);
@@ -38,7 +39,7 @@ public class ViewBugController extends AbsController {
         /*Stage closeStage= (Stage) exitBugs.getScene().getWindow();
         closeStage.close();*/
         try {
-            switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+            switchScreen("/Views/AdminMenuScreen.fxml");
         }catch (Exception e){
             System.out.println(e);
         }

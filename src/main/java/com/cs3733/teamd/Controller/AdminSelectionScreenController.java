@@ -22,7 +22,7 @@ public class AdminSelectionScreenController extends AbsController {
     @FXML
     void onEditMap(ActionEvent event) {
         try {
-            super.switchScreen(MMGpane, "/Views/EditMapScreen.fxml");
+            super.switchScreen("/Views/EditMapScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class AdminSelectionScreenController extends AbsController {
     @FXML
     void onEnhancedMap(ActionEvent event) {
         try {
-            super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
+            super.switchScreen("/Views/UserScreen.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

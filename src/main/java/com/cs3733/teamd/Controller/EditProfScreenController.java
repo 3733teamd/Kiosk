@@ -162,7 +162,7 @@ public class EditProfScreenController extends AbsController {
             try {
                 MementoController.toOriginalScreen(pane);
                 MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
-                switchScreen(pane, MementoController.originator.getState());
+                switchScreen(MementoController.originator.getState());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -173,6 +173,8 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
+
+        currentPane = pane;
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
 
@@ -392,7 +394,7 @@ public class EditProfScreenController extends AbsController {
         timer.purge();
         running = false;
         timerThread.interrupt();
-        switchScreen(pane, "/Views/AdminMenuScreen.fxml");
+        switchScreen("/Views/AdminMenuScreen.fxml");
     }
 
     @FXML

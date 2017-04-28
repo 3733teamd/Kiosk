@@ -112,7 +112,7 @@ public class CreateUserScreenController extends AbsController {
                 switchScreen(MMGpane, originator.getState());*/
                 MementoController.toOriginalScreen(MMGpane);
                 MementoController.originator.getStateFromMemento(MementoController.careTaker.get(0));
-                switchScreen(MMGpane, MementoController.originator.getState());
+                switchScreen(MementoController.originator.getState());
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -123,6 +123,7 @@ public class CreateUserScreenController extends AbsController {
 
     @FXML
     public void initialize() {
+        currentPane = MMGpane;
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
         roleSelection.setItems(rolesList);
@@ -167,7 +168,7 @@ public class CreateUserScreenController extends AbsController {
         
         running = false;
         timerThread.interrupt();
-        switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+        switchScreen("/Views/AdminMenuScreen.fxml");
 
     }
     @FXML
