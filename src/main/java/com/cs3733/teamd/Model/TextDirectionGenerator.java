@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Model;
 
 import com.cs3733.teamd.Model.Entities.Node;
+import javafx.scene.image.Image;
 
 import java.util.*;
 
@@ -103,7 +104,55 @@ public class TextDirectionGenerator {
         Collections.reverse(this.points);
         return getDirectionsInLanguage(directions, pointsOfInterestNames);
     }
+    public List<Image> generateIcons() {
+        Collections.reverse(this.points);
+        List<Image> icons = new ArrayList<Image>();
+        List<Direction> directions = reduceDirections(
+                generateDirections()
+        );
+        for (Direction d: directions) {
+            System.out.println("iconblue: "+d);
 
+            if (d.equals(Direction.PROCEED_FROM_TAG)) {
+                System.out.println(".PROCEED_FROM_TAG");
+                //   case PROCEED_FROM_TAG:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
+            }
+            if (d.equals(Direction.GO_STRAIGHT)) {
+                System.out.println(".go straight");
+//                case GO_STRAIGHT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
+            if (d.equals(Direction.TURN_LEFT)) {
+                System.out.println(".turn left");
+                //   case TURN_LEFT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
+            }
+            if (d.equals(Direction.SLIGHT_LEFT)) {
+                //case SLIGHT_LEFT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
+            }
+            if (d.equals(Direction.TURN_RIGHT)) {
+                //              case TURN_RIGHT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
+            }
+            if (d.equals(Direction.SLIGHT_RIGHT)) {
+                //case SLIGHT_RIGHT:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
+            }
+            if (d.equals(Direction.ARRIVED)) {
+
+                //case ARRIVED:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
+            }
+            if (d.equals(Direction.PROCEED_TO_ELEVATOR)) {
+                //case PROCEED_TO_ELEVATOR:
+                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
+            }
+        }
+        Collections.reverse(this.points);
+        return icons;
+    }
     public static List<String> getDirectionsInLanguage(
             List<Direction> directions,
             List<String> pointsOfInterestNames) {
@@ -180,7 +229,7 @@ public class TextDirectionGenerator {
      * @param directions - directions that need to be reduced
      * @return - Reduced Direction Set
      */
-    private List<Direction> reduceDirections(List<Direction> directions) {
+    public List<Direction> reduceDirections(List<Direction> directions) {
         List<Direction> reducedDirections = new ArrayList<Direction>();
         boolean lastGoStraight = false;
         for(Direction d: directions) {
@@ -240,7 +289,7 @@ public class TextDirectionGenerator {
 
     }
 
-    private List<Direction> generateDirections() {
+    public List<Direction> generateDirections() {
         ArrayList<Direction> directions = new ArrayList<Direction>();
         System.out.println("Generating Directions..");
         Node currentPoint, previousPoint, nextPoint;
@@ -271,7 +320,7 @@ public class TextDirectionGenerator {
             }
             if(
                     (previousPoint == null) ||
-                    (previousPoint.getFloor() != currentPoint.getFloor())
+                            (previousPoint.getFloor() != currentPoint.getFloor())
                     ) {
                 directions.add(Direction.PROCEED_FROM_TAG);
                 if(currentPoint.getTags().size() > 0) {
