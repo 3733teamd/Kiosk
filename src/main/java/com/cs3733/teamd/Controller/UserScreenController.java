@@ -303,27 +303,61 @@ public class UserScreenController extends MapController {
                     setGraphic(null);
                 } else {
  //                   for (TextDirectionGenerator.Direction d : dirText) {
-                        if (dir.contains("proceed from") || dir.contains("Proceed from")) {
+                        if (dir.contains("proceed from") || dir.contains("Proceed from")|| dir.contains("precdeder desde")||
+                                dir.contains("Precdeder desde")||
+                                dir.contains("Procéder")||
+                                dir.contains("Proceder de")||
+                                dir.contains("\u7ee7\u7eed")) {
                             System.out.println(".PROCEED_FROM_TAG");
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
                         }
-                        else if (dir.contains("straight")) {
-                            System.out.println(".go straight");
+                        else if (dir.contains("straight")||
+                                dir.contains("proceder recto.")||
+                                dir.contains("Procéder tout droit.")||
+                                dir.contains("Proceder de.")||
+                                dir.contains("\u76f4\u884c.")) {
+                            System.out.println(".go straight.");
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/straight.png")));
-                        } else if (dir.contains("turn left")) {
+                        } else if (dir.contains("turn left")||
+                                dir.contains("girar a la izquierda")||
+                                dir.contains(  "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0067\u0061\u0075\u0063\u0068\u0065" )||
+                                dir.contains("\u0076\u0069\u0072\u0065 \u00e0 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061" )||
+                                dir.contains("\u8f6c\u5de6")) {
                             System.out.println(".turn left");
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-                        } else if (dir.contains("slight left")) {
+                        } else if (dir.contains("slight left")||
+                                dir.contains("girar a la izquierda")||
+                                dir.contains(  "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0067\u0061\u0075\u0063\u0068\u0065" )||
+                                dir.contains("\u0076\u0069\u0072\u0065 \u00e0 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061" )||
+                                dir.contains("\u8f6c\u5de6")) {
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
-                        }else if (dir.contains("turn right")) {
+                        }else if (dir.contains("turn right") || dir.contains("dobla a la derecha")
+                                ||
+                               // dir.contains("girar a la izquierda")||
+                                dir.contains(  "Tournez à droite" )||
+                                dir.contains("Vire à direita" )||
+                                dir.contains("\u53f3\u8f6c")) {
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
                         } else if (dir.contains("slight right")) {
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
-                        }else if (dir.contains("arrive")) {
+                        }else if (dir.contains("arrive")|| dir.contains("Vous êtes arrivé à votre destination")
+                                ||
+                                // dir.contains("girar a la izquierda")||
+                                dir.contains(  "Has llegado a tu destino" )||
+                                dir.contains("Você chegou ao seu destino" )||
+                                dir.contains("\u4f60\u5df2\u5230\u8fbe\u4f60\u7684\u76ee\u7684\u5730")) {
+
                             iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
-                        }else if (dir.contains("elevator")) {
+                        }else if (dir.contains("elevator")
+                                || dir.contains("tomar el ascensor hasta el piso de destino")
+                                || dir.contains("Prenez l'ascenseur")||
+                                // dir.contains("girar a la izquierda")||
+                                dir.contains("Prenez l'ascenseur \u00e0 votre \u00e9\u0074\u0061\u0067\u0065 de destination ")||
+                                    dir.contains("Pegue o elevador \u0061\u0074\u00e9 o andar de destino")||
+                                dir.contains("\u628a\u7535\u68af\u5e26\u5230\u4f60\u7684\u76ee\u7684\u5730\u697c\u5c42")) {
                             System.out.println(".proccede to elevator");
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
+
+                                        iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
                         }
                         setGraphic(iconView);
                         iconView.setFitHeight(50);

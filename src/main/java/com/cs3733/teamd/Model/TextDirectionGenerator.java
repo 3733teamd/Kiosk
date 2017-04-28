@@ -38,15 +38,15 @@ public class TextDirectionGenerator {
         Map<Direction, String[]> translations = new HashMap<Direction, String[]>();
         String[] proceedFrom = { "proceed from ",
                 "precdeder desde ",
-        "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
+        "Procéder \u0064\u0065",
         "Proceder de",
         "\u7ee7\u7eed"};
         translations.put(Direction.PROCEED_FROM_TAG, proceedFrom);
 
-        String[] goStraight = { "proceed straight", "proceder recto",
-                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 tout droit",
-                "Proceder de",
-                "\u76f4\u884c"};
+        String[] goStraight = { "proceed straight", "proceder recto.",
+                "Procéder tout droit.",
+                "Proceder de.",
+                "\u76f4\u884c."};
         translations.put(Direction.GO_STRAIGHT, goStraight);
 
         String[] turnLeft = {"turn left", "girar a la izquierda",
@@ -55,27 +55,27 @@ public class TextDirectionGenerator {
                 "\u8f6c\u5de6"};
         translations.put(Direction.TURN_LEFT, turnLeft);
 
-        String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda",
+        String[] slightLeft = {"slight left", "hacer un poco a la izquierda",
                 "\u0046\u0061\u007a\u0065\u0072 \u0075\u006d\u0061 \u006c\u0069\u0067\u0065\u0069\u0072\u0061 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061",
                 "Fazer uma ligeira esquerda",
                 "\u7a0d\u5fae\u7559\u4e0b"};
         translations.put(Direction.SLIGHT_LEFT, slightLeft);
 
         String[] turnRight = {"turn right", "dobla a la derecha",
-                "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0064\u0072\u006f\u0069\u0074\u0065",
-                "Proceder de",
+                "Tournez à droite",
+                "Vire à direita",
                 "\u53f3\u8f6c"};
         translations.put(Direction.TURN_RIGHT, turnRight);
 
-        String[] slightRight = {"make a slight right", "hacer un ligero derecho",
-                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
-                "\u0076\u0069\u0072\u0065 \u00e0 \u0064\u0069\u0072\u0065\u0069\u0074\u0061",
-                "\u7ee7\u7eed"};
+        String[] slightRight = {"make a slight right", "Has llegado a tu destino",
+                "Vous êtes arrivé à votre destination",
+                "Você chegou ao seu destino",
+                "\u4f60\u5df2\u5230\u8fbe\u4f60\u7684\u76ee\u7684\u5730"};
         translations.put(Direction.SLIGHT_RIGHT, slightRight);
 
-        String[] arrived = {"you have arrived at your destination", "has llegado a tu destino",
-                "\u0056\u006f\u0075\u0073 \u00ea\u0074\u0065\u0073 \u0061\u0072\u0072\u0069\u0076\u00e9 \u00e0 \u0076\u006f\u0074\u0072\u0065 \u0064\u0065\u0073\u0074\u0069\u006e\u0061\u0074\u0069\u006f\u006e",
-                "\u0056\u006f\u0063\u00ea \u0063\u0068\u0065\u0067\u006f\u0075 \u0061\u006f \u0073\u0065\u0075 \u0064\u0065\u0073\u0074\u0069\u006e\u006f",
+        String[] arrived = {"you have arrived at your destination", "Has llegado a tu destino",
+                "Vous êtes arrivé à votre destination",
+                "Você chegou ao seu destino",
                 "\u4f60\u5df2\u5230\u8fbe\u4f60\u7684\u76ee\u7684\u5730"};
         translations.put(Direction.ARRIVED, arrived);
 
