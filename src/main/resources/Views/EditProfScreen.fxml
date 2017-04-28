@@ -37,7 +37,7 @@
                            </children></AnchorPane>
                         <AnchorPane>
                            <children>
-                              <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="66.0" prefWidth="150.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Button fx:id="BackButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBack" prefHeight="66.0" prefWidth="150.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -53,96 +53,124 @@
                 </AnchorPane>
             <SplitPane dividerPositions="0.21658986175115208" prefHeight="735.0" prefWidth="568.0" VBox.vgrow="ALWAYS">
                <items>
-                        <VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="325.0">
-                            <children>
-                        <Label text="%allProfs" />
-                        <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" VBox.vgrow="ALWAYS" />
-                        <TextField fx:id="searchProfessionalBar" promptText="%newProfName" />
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="40.0" prefWidth="275.0" text="%addNProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane>
-                           <children>
-                              <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="40.0" prefWidth="275.0" text="%dProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font size="24.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                            </children>
-                        </VBox>
-                  <SplitPane dividerPositions="0.0942622950819672" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-                    <items>
-                        <HBox prefHeight="100.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
-                           <children>
-                              <TextField fx:id="profName" prefHeight="55.0" prefWidth="705.0" promptText="%edProfTitle" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </TextField>
-                              <AnchorPane prefHeight="65.0" prefWidth="249.0">
+                  <AnchorPane maxWidth="-Infinity" prefWidth="300.0">
+                     <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="325.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <children>
+                              <Label text="%allProfs" />
+                              <ListView fx:id="allProfList" prefHeight="629.0" prefWidth="279.0" VBox.vgrow="ALWAYS" />
+                              <TextField fx:id="searchProfessionalBar" promptText="%newProfName" />
+                              <AnchorPane>
                                  <children>
-                                    <Button fx:id="modifyName" layoutX="-86.0" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="249.0" text="%modName" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button fx:id="addNewProf" mnemonicParsing="false" onAction="#addNewProf" prefHeight="40.0" prefWidth="275.0" text="%addNProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </AnchorPane>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="deleteProf" mnemonicParsing="false" onAction="#deleteProf" prefHeight="40.0" prefWidth="275.0" text="%dProf" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                                  </children>
+                              </VBox>
+                     </children>
+                  </AnchorPane>
+                  <SplitPane dividerPositions="0.0942622950819672" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <items>
+                        <AnchorPane SplitPane.resizableWithParent="false">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="1007.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <TextField fx:id="profName" prefHeight="55.0" prefWidth="705.0" promptText="%edProfTitle" HBox.hgrow="ALWAYS">
+                                       <font>
+                                          <Font size="30.0" />
+                                       </font>
+                                    </TextField>
+                                    <AnchorPane prefHeight="65.0" prefWidth="249.0">
+                                       <children>
+                                          <Button fx:id="modifyName" layoutX="-86.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#modifyName" prefHeight="65.0" prefWidth="249.0" text="%modName" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                        <SplitPane dividerPositions="0.2271, 0.4592, 0.7257">
-                           <items>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="%allTitle" />
-                                    <ListView fx:id="allTitleList" prefHeight="655.0" prefWidth="228.0" VBox.vgrow="ALWAYS" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
-                                 <children>
-                                    <Label text="%currTitle" />
-                                    <ListView fx:id="curTitleList" prefHeight="538.0" prefWidth="225.0" VBox.vgrow="ALWAYS" />
-                                    <AnchorPane>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <SplitPane dividerPositions="0.2271, 0.4592, 0.7257" prefHeight="684.0" prefWidth="1072.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <items>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="40.0" prefWidth="225.0" text="%addTitle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label text="%allTitle" />
+                                          <AnchorPane VBox.vgrow="ALWAYS">
+                                             <children>
+                                                <ListView fx:id="allTitleList" prefHeight="655.0" prefWidth="228.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                        <children>
-                                          <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="40.0" prefWidth="225.0" text="%remTitle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label text="%currTitle" />
+                                          <AnchorPane VBox.vgrow="ALWAYS">
+                                             <children>
+                                                <ListView fx:id="curTitleList" prefHeight="553.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <Button fx:id="addTitle" mnemonicParsing="false" onAction="#addTitle" prefHeight="40.0" prefWidth="225.0" text="%addTitle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <Button fx:id="deleteTitle" mnemonicParsing="false" onAction="#deleteTitle" prefHeight="40.0" prefWidth="225.0" text="%remTitle" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
-                                    </AnchorPane>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="%allTag" />
-                                    <ListView fx:id="allTagsList" prefHeight="757.0" prefWidth="228.0" VBox.vgrow="ALWAYS" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
-                                 <children>
-                                    <Label text="%currTag" />
-                                    <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="272.0" VBox.vgrow="ALWAYS" />
-                                    <TextField fx:id="searchTagList" promptText="%selTag" />
-                                    <AnchorPane>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="40.0" prefWidth="272.0" text="%addTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label text="%allTag" />
+                                          <AnchorPane VBox.vgrow="ALWAYS">
+                                             <children>
+                                                <ListView fx:id="allTagsList" prefHeight="757.0" prefWidth="263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="426.0">
                                        <children>
-                                          <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="40.0" prefWidth="272.0" text="%remTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label text="%currTag" />
+                                          <AnchorPane VBox.vgrow="ALWAYS">
+                                             <children>
+                                                <ListView fx:id="curTagsList" prefHeight="545.0" prefWidth="273.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <TextField fx:id="searchTagList" promptText="%selTag" />
+                                          <AnchorPane>
+                                             <children>
+                                                <Button fx:id="addTag" mnemonicParsing="false" onAction="#addTag" prefHeight="40.0" prefWidth="272.0" text="%addTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane>
+                                             <children>
+                                                <Button fx:id="deleteTag" mnemonicParsing="false" onAction="#deleteTag" prefHeight="40.0" prefWidth="272.0" text="%remTag" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
-                                    </AnchorPane>
-                                 </children>
-                              </VBox>
-                           </items>
-                        </SplitPane>
+                                    </VBox>
+                                 </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
                     </items>
                   </SplitPane>
                </items>

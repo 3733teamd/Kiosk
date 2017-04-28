@@ -2,13 +2,17 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.DirectoryInterface;
+import com.cs3733.teamd.Model.Entities.Report;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.util.List;
 
@@ -20,6 +24,13 @@ public class ViewBugController extends AbsController {
     public Button exitBugs;
     @FXML
     public AnchorPane MMGpane;
+    public Button bugDeleteBtn;
+    public TableView table;
+    public TableColumn numberColumn;
+    public TableColumn tagColumn;
+    public TableColumn commentColumn;
+    public TableColumn statusColumn;
+    public Button closeReportBtn;
     @FXML
     private ListView<String> listView;
 
@@ -29,9 +40,11 @@ public class ViewBugController extends AbsController {
     public void initialize() {
         currentPane = MMGpane;
         dir = Directory.getInstance();
-        List<String> bugReports = dir.getBugReports();
-        System.out.println(bugReports);
-        listView.setItems(FXCollections.observableList(bugReports));
+        //numberColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("ID"));
+        tagColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("tagText"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("commentText"));
+        //statusColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("status"));
+        updateBugReportTable();
     }
 
     @FXML
@@ -44,4 +57,31 @@ public class ViewBugController extends AbsController {
             System.out.println(e);
         }
     }
+
+
+    public void deleteBug(ActionEvent actionEvent) {
+        Report selectedList;
+        selectedList=(Report)table.getSelectionModel().getSelectedItem();
+        dir.deleteBugReport(selectedList);
+        updateBugReportTable();
+    }
+
+    public void updateBugReportTable(){
+        ObservableList<Report> data = FXCollections.observableArrayList(dir.getBugReports());
+        table.setItems(data);
+    }
+
+    public void closeReport(ActionEvent actionEvent) {
+    }
+
+//    public void closeReport(ActionEvent actionEvent) {
+//        Report selectedReport;
+//        selectedReport = (Report)table.getSelectionModel().getSelectedItem();
+//        System.out.println(selectedReport.tagText);
+//        System.out.println(selectedReport.commentText);
+//        System.out.println(selectedReport.status);
+//        boolean result = dir.setBugClosed(selectedReport);
+//        System.out.println("setBug Closed finished");
+//        updateBugReportTable();
+//    }
 }

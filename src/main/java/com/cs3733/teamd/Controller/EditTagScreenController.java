@@ -390,4 +390,13 @@ public class EditTagScreenController extends AbsController {
         }
         searchTagBar.setText("");
     }
+
+    @FXML
+    void addToVisitingHourList() {
+
+    }
+    @FXML
+    void removeVisitBlock() {
+
+    }
 }
