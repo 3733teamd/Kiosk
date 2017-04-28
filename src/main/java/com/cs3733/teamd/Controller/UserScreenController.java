@@ -400,9 +400,9 @@ public class UserScreenController extends MapController {
             MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
         }else{
-            StartFloorButton.setDisable(true);
-            MiddleFloorButton.setDisable(true);
-            EndFloorButton.setDisable(true);
+            StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(false);
+            EndFloorButton.setDisable(false);
         }
         if(!haveMidFloor){
             MiddleFloorButton.setDisable(true);
