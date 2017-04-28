@@ -632,7 +632,7 @@ public class UserScreenController extends MapController {
                     currentTag = tag;
                 }
             }
-
+            System.out.println(starttag.getNodes().getFirst());
 
 
             Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
