@@ -68,7 +68,7 @@ public class UserScreenController extends MapController {
     public Button StartFloorButton;
     public Button MiddleFloorButton;
     public Button EndFloorButton;
-    public Button WalkHospitalButton;
+    public Button WalkthroughHospitalButton;
     boolean haveMidFloor = false;
     @FXML
     private Slider floorSlider;
