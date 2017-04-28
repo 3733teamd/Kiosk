@@ -69,7 +69,7 @@ public class UserScreenController extends MapController {
     @FXML
     public Button aboutButton;
     @FXML
-    public Button reportButton;
+    public Button reportButton1;
 
     public ImageView floorMap;
     public AnchorPane imagePane;
@@ -81,6 +81,8 @@ public class UserScreenController extends MapController {
 
     @FXML
     private ImageView aboutImage;
+
+    public ImageView reportButton;
 
     @FXML
     private ComboBox<String> LanguageButton;
@@ -433,7 +435,7 @@ public class UserScreenController extends MapController {
 
     //report Bug button pressed
     @FXML
-    public void reportBug(ActionEvent event) throws IOException {
+    public void reportBug( ) throws IOException {
         popupScreen(MMGpane, "/Views/ReportBugScreen.fxml", "Report Bug");
     }
 
