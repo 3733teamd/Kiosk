@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +42,11 @@ public class AdminMenuController extends AbsController{
         }
         LanguageButton.setItems(languageDropDown);
         LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
+        if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
+            LanguageButton.setDisable(true);
+        } else {
+            LanguageButton.setDisable(false);
+        }
 
     }
 
