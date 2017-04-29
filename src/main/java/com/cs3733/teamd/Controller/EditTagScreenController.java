@@ -151,7 +151,6 @@ public class EditTagScreenController extends AbsController {
     }
     @FXML
     public void initialize(){
-        System.out.println("++++++++++++++++++++++++++++ w:" + tagPropertyPane.getWidth() + " H:" + tagPropertyPane.getHeight());
         topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
         topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
         //make some buttons opaque
@@ -176,9 +175,9 @@ public class EditTagScreenController extends AbsController {
         /// TextFields.bindAutoCompletion(searchTagBar, allTagNames);//Not being used due to list view
         //List all tags in tagList
         tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
-        ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
-        System.out.println(names);
-        allProffessionals.setItems(names);
+        //ObservableList<String> names = FXCollections.observableArrayList((List)dir.getProfessionals());
+        //System.out.println(names);
+        //allProffessionals.setItems(names);
 
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -187,7 +186,6 @@ public class EditTagScreenController extends AbsController {
                     clearResponsiveFields();
                     selectedTag= null;
                     String text = searchTagBar.getText();
-                    //TODO set chosen tag to tag from bar
 
                     tagNameTxt.setText(searchTagBar.getText());
 
@@ -204,6 +202,7 @@ public class EditTagScreenController extends AbsController {
                             currentProfessionals.setItems(FXCollections.observableArrayList(selectedTag.getProfs()));
                             currentProfessionals.refresh();
 
+                            allProffessionals.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
                             tagNameTxt.clear();
                             tagNameTxt.setPromptText(selectedTag.toString());
                             visitingHourList.setItems(FXCollections.observableArrayList(selectedTag.getVisitingBlockObjs()));

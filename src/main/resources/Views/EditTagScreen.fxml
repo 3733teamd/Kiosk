@@ -58,15 +58,15 @@
                         <ListView fx:id="tagList" editable="true" prefHeight="587.0" prefWidth="273.0" />
                         <TextField fx:id="searchTagBar" maxHeight="30.0" minHeight="30.0" prefHeight="19.0" prefWidth="277.0" promptText="%selTag">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="14.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="addNewTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addTag" prefHeight="58.0" prefWidth="361.0" text="%addNTag">
+                        <Button fx:id="addNewTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addTag" prefHeight="60.0" prefWidth="500.0" text="%addNTag">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button fx:id="deleteTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="60.0" prefWidth="330.0" text="%delTag">
+                        <Button fx:id="deleteTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="60.0" prefWidth="500.0" text="%delTag">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -87,12 +87,12 @@
                                                 <Font size="20.0" />
                                              </font>
                                           </Button>
-                                          <AnchorPane prefHeight="55.0" prefWidth="166.0">
+                                          <AnchorPane minWidth="400.0" prefHeight="55.0" prefWidth="166.0">
                                              <children>
-                                                <CheckBox fx:id="selectConnectable" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
+                                                <CheckBox fx:id="selectConnectable" layoutX="52.0" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
+                                                <CheckBox fx:id="restrictedButton" layoutX="210.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
                                              </children>
                                           </AnchorPane>
-                                          <CheckBox fx:id="restrictedButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -110,7 +110,7 @@
                                                       <Font size="24.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="profSearchField" maxHeight="60.0" minHeight="60.0" prefHeight="15.0" prefWidth="353.0" promptText="%serProf">
+                                                <TextField fx:id="profSearchField" maxHeight="60.0" minHeight="60.0" prefHeight="15.0" prefWidth="500.0" promptText="%serProf">
                                                    <font>
                                                       <Font size="20.0" />
                                                    </font>
@@ -121,8 +121,8 @@
                                              <items>
                                                 <Label text="%currentProf" />
                                                 <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
-                                                <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="333.0" text="%addProfes" />
-                                                <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="333.0" text="%remProf" />
+                                                <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="500.0" text="%addProfes" />
+                                                <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="500.0" text="%remProf" />
                                              </items>
                                           </SplitPane>
                                           <SplitPane dividerPositions="0.02932551319648094, 0.6524926686217009, 0.6862170087976539, 0.8196480938416423, 0.8592375366568915, 0.9046920821114369, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
@@ -133,8 +133,8 @@
                                                 <TextField fx:id="openTimeBox" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="321.0" />
                                                 <Label alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="320.0" text="Closing Time" />
                                                 <TextField fx:id="closingTimeBox" maxHeight="30.0" minHeight="30.0" />
-                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="320.0" text="Add" />
-                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="415.0" text="Remove" />
+                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="500.0" text="Add" />
+                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="500.0" text="Remove" />
                                             </items>
                                           </SplitPane>
                                        </children>
