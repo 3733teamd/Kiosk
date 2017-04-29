@@ -69,9 +69,15 @@ public class SyncPopupController implements IOperationListener {
 
     @FXML
     void saveAsNewVersion(ActionEvent event) {
-        h.setDbVersion(h.getDbVersion() + 1);
+        Integer maxVersion = 0;
+        for(Integer version: h.getDbVersions()) {
+            if(version > maxVersion) {
+                maxVersion = version;
+            }
+        }
+        h.setDbVersion(maxVersion + 1);
 
-        h.getDbVersions().add(h.getDbVersion() + 1);
+        h.getDbVersions().add(maxVersion  + 1);
         saveCurrentVersion(event);
     }
 

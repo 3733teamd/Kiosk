@@ -253,6 +253,12 @@ public class EditMapScreenController extends MapController implements IObservabl
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
+        if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
+            LanguageButton.setDisable(true);
+        } else {
+            LanguageButton.setDisable(false);
+        }
+
         DirectoryInterface d = Directory.getInstance();
         d.addObserver(this);
 
@@ -941,13 +947,16 @@ public class EditMapScreenController extends MapController implements IObservabl
         deleteAllSelectedNodes();
     }
 
-    private void removeCircleNode(CircleNode cn){
-        if(dir.deleteNode(cn.referenceNode)){
+    private boolean removeCircleNode(CircleNode cn){
+
+        boolean response = dir.deleteNode(cn.referenceNode);
+        if(response){
             errorBox.setText("");
             mapCanvas.getChildren().remove(cn);
         }else{
             errorBox.setText(errorString);
         }
+        return(response);
     }
 
     public void doneDrag(DragEvent dragEvent) {
@@ -1004,8 +1013,14 @@ public class EditMapScreenController extends MapController implements IObservabl
     }
 
     private void deleteAllSelectedNodes() {
+        LinkedList<CircleNode> deletedNodes = new LinkedList<CircleNode>();
         for(CircleNode cn : selectedCircles){
-            removeCircleNode(cn);
+            if(removeCircleNode(cn)){
+                deletedNodes.add(cn);
+            }
+        }
+        for(CircleNode cn: deletedNodes){
+            selectedCircles.remove(cn);
         }
     }
 

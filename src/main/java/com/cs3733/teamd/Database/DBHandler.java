@@ -825,45 +825,50 @@ public class DBHandler {
         }
     }
 
-    private static final int GENERATE_ID_START = 1000;
 
-    private int getNormalizedId(int curId, int maxId) {
-        if(curId < GENERATE_ID_START) {
-            return curId;
-        } else {
-            return curId - (GENERATE_ID_START - maxId) + 1;
-        }
-
-    }
 
     public boolean dumpDatabaseToSqlStatements(String filename) {
 
+        Map<Integer, Integer> nodeIdMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> tagIdMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> hcpIdMap = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> proTitleIdMap = new HashMap<Integer, Integer>();
+
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(filename), "utf-8"))) {
+            Integer nextNode = 1;
+            Integer nextTag = 1;
+            Integer nextHcp = 1;
+            Integer nextProTitle = 1;
+
             String sqlSelectNodes = "SELECT * FROM Node ORDER BY id ASC";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelectNodes);
             int maxNodeId = 0;
             while(rs.next()) {
                 int id = rs.getInt(1);
-                if(id < GENERATE_ID_START) {
-                    maxNodeId = id;
-                } else {
-                    id = id - (GENERATE_ID_START - maxNodeId) + 1;
-                }
+                nodeIdMap.put(id, nextNode);
+
                 int x = rs.getInt(2);
                 int y = rs.getInt(3);
                 int floor = rs.getInt(4);
-                bw.write("INSERT INTO Node VALUES("+id+","+x+","+y+","+floor+")\n");
+                bw.write("INSERT INTO Node VALUES("+nextNode+","+x+","+y+","+floor+")\n");
+                nextNode++;
             }
             rs.close();
             // Adjacent Nodes
             String sqlSelectAdjacentNodes = "SELECT * FROM AdjacentNode";
             rs = s.executeQuery(sqlSelectAdjacentNodes);
             while(rs.next()) {
-                int id1 = getNormalizedId(rs.getInt(1), maxNodeId);
-                int id2 = getNormalizedId(rs.getInt(2), maxNodeId);
-                bw.write("INSERT INTO AdjacentNode VALUES("+id1+","+id2+")\n");
+                Integer id1 = nodeIdMap.get(rs.getInt(1));
+                Integer id2 = nodeIdMap.get(rs.getInt(2));
+                if(id1 == null || id2 == null) {
+                    System.err.println("DB Error: Node 1 ID: "+rs.getInt(1)+" Node 2 ID: "+rs.getInt(2) +
+                            " recovering");
+
+                } else {
+                    bw.write("INSERT INTO AdjacentNode VALUES("+id1+","+id2+")\n");
+                }
             }
             rs.close();
             // Tags
@@ -872,24 +877,28 @@ public class DBHandler {
             rs = s.executeQuery(sqlSelectAllTags);
             while(rs.next()) {
                 int id = rs.getInt(1);
-                if(id < GENERATE_ID_START) {
-                    maxTagId = id;
-                } else {
-                    id = id - (GENERATE_ID_START - maxTagId) + 1;
-                }
+                tagIdMap.put(id, nextTag);
                 String name = rs.getString(2);
                 boolean connectable = rs.getBoolean(3);
                 boolean restricted = rs.getBoolean(4);
-                bw.write("INSERT INTO Tag VALUES("+id+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+","+((restricted)?"TRUE":"FALSE")+")\n");
+                bw.write("INSERT INTO Tag VALUES("+nextTag+",'"+name+"',"+((connectable)?"TRUE":"FALSE")+","+((restricted)?"TRUE":"FALSE")+")\n");
+                nextTag++;
             }
             rs.close();
             // Node Tag
             String sqlSelectNodeTags = "SELECT * FROM NodeTag";
             rs = s.executeQuery(sqlSelectNodeTags);
             while(rs.next()) {
-                int nodeId = getNormalizedId(rs.getInt(1), maxNodeId);
-                int tagId = getNormalizedId(rs.getInt(2), maxTagId);
-                bw.write("INSERT INTO NodeTag VALUES("+nodeId+","+tagId+")\n");
+                Integer nodeId = nodeIdMap.get(rs.getInt(1));
+                Integer tagId = tagIdMap.get(rs.getInt(2));
+                if(nodeId == null || tagId == null) {
+                    System.err.println("DB Error: Node ID: "+rs.getInt(1)+" Tag ID: "+rs.getInt(2) +
+                    " recovering");
+
+                } else {
+                    bw.write("INSERT INTO NodeTag VALUES("+nodeId+","+tagId+")\n");
+                }
+
             }
             rs.close();
             // HCP
@@ -899,13 +908,10 @@ public class DBHandler {
             rs = s.executeQuery(sqlSelectHcp);
             while(rs.next()) {
                 int id = rs.getInt(1);
-                if(id < GENERATE_ID_START) {
-                    maxHcpId = id;
-                } else {
-                    id = id - (GENERATE_ID_START - maxHcpId) + 1;
-                }
+                hcpIdMap.put(id, nextHcp);
                 String lastName = rs.getString(2);
-                bw.write("INSERT INTO HCP VALUES("+id+",'"+lastName+"')\n");
+                bw.write("INSERT INTO HCP VALUES("+nextHcp+",'"+lastName+"')\n");
+                nextHcp++;
             }
             rs.close();
 
@@ -913,9 +919,16 @@ public class DBHandler {
             String sqlSelectHcpTag = "SELECT * FROM HCPTag";
             rs = s.executeQuery(sqlSelectHcpTag);
             while(rs.next()) {
-                int tagId = getNormalizedId(rs.getInt(1),maxTagId);
-                int hcpId = getNormalizedId(rs.getInt(2), maxHcpId);
-                bw.write("INSERT INTO HCPTag VALUES("+tagId+","+hcpId+")\n");
+                Integer tagId = tagIdMap.get(rs.getInt(1));
+                Integer hcpId = hcpIdMap.get(rs.getInt(2));
+                if(hcpId == null || tagId == null) {
+                    System.err.println("DB Error: Tag ID: "+rs.getInt(1)+" HCP ID: "+rs.getInt(2) +
+                            " recovering");
+
+                } else {
+                    bw.write("INSERT INTO HCPTag VALUES("+tagId+","+hcpId+")\n");
+                }
+
             }
             rs.close();
 
@@ -926,14 +939,11 @@ public class DBHandler {
             rs = s.executeQuery(sqlSelectProTitle);
             while(rs.next()) {
                 int id = rs.getInt(1);
-                if(id < GENERATE_ID_START) {
-                    maxTitleId = id;
-                } else {
-                    id = id - (GENERATE_ID_START - maxTitleId + 1);
-                }
+                proTitleIdMap.put(id, nextProTitle);
                 String acronym = rs.getString(2);
                 String fullTitle = rs.getString(3);
-                bw.write("INSERT INTO ProTitle VALUES("+id+",'"+acronym+"','"+fullTitle+"')\n");
+                bw.write("INSERT INTO ProTitle VALUES("+nextProTitle+",'"+acronym+"','"+fullTitle+"')\n");
+                nextProTitle++;
             }
             rs.close();
 
@@ -941,9 +951,16 @@ public class DBHandler {
             String sqlSelectHcpTitle = "SELECT * FROM HCPTitle";
             rs = s.executeQuery(sqlSelectHcpTitle);
             while(rs.next()) {
-                int hcpId = getNormalizedId(rs.getInt(1),maxHcpId);
-                int titleId = getNormalizedId(rs.getInt(2), maxTitleId);
-                bw.write("INSERT INTO HCPTitle VALUES("+hcpId+","+titleId+")\n");
+                Integer hcpId = hcpIdMap.get(rs.getInt(1));
+                Integer titleId = proTitleIdMap.get(rs.getInt(2));
+                if(hcpId == null || titleId == null) {
+                    System.err.println("DB Error: HCP ID: "+rs.getInt(1)+" Title ID: "+rs.getInt(2) +
+                            " recovering");
+
+                } else {
+                    bw.write("INSERT INTO HCPTitle VALUES("+hcpId+","+titleId+")\n");
+                }
+
             }
             rs.close();
 
@@ -951,10 +968,15 @@ public class DBHandler {
             String sqlSelectVisitingHour = "SELECT * FROM VisitingHour";
             rs = s.executeQuery(sqlSelectVisitingHour);
             while(rs.next()) {
-                int tagId = getNormalizedId(rs.getInt(1), maxTagId);
+                Integer tagId = tagIdMap.get(rs.getInt(1));
                 Timestamp open = rs.getTimestamp(2);
                 Timestamp close = rs.getTimestamp(3);
-                bw.write("INSERT INTO VisitingHour VALUES("+tagId+",'"+open.toString()+"','"+close.toString()+"')\n");
+                if(tagId == null) {
+                    System.err.println("DB Error: Tag ID: "+rs.getInt(1));
+                } else {
+                    bw.write("INSERT INTO VisitingHour VALUES("+tagId+",'"+open.toString()+"','"+close.toString()+"')\n");
+                }
+
             }
             rs.close();
 

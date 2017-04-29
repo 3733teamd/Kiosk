@@ -238,6 +238,12 @@ public class UserScreenController extends MapController {
         if(languageDropDown.size()==0){
             languageDropDown.addAll(languages);
         }
+
+        if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
+            LanguageButton.setDisable(true);
+        } else {
+            LanguageButton.setDisable(false);
+        }
             LanguageButton.setItems(languageDropDown);
             LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
 
