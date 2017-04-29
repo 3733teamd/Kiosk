@@ -253,6 +253,12 @@ public class EditMapScreenController extends MapController implements IObservabl
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
+        if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
+            LanguageButton.setDisable(true);
+        } else {
+            LanguageButton.setDisable(false);
+        }
+
         DirectoryInterface d = Directory.getInstance();
         d.addObserver(this);
 
