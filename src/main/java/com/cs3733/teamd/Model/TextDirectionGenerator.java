@@ -204,15 +204,15 @@ public class TextDirectionGenerator {
                 isFirstElement = false;
             } else {
                 if(textIndex == 0) {
-                    addition = "and then "+addition;
+                    addition = "And then "+addition;
                 } else if(textIndex==1) {
-                    addition = "y "+addition;
+                    addition = "Y "+addition;
                 }
                 else if(textIndex==2) {
-                    addition = "et alors "+addition;
+                    addition = "Et alors "+addition;
                 }
                 else if(textIndex==3) {
-                    addition = "e depois "+addition;
+                    addition = "E depois "+addition;
                 }
                 else if(textIndex==4) {
                     addition = "\u63a5\u7740 "+addition;

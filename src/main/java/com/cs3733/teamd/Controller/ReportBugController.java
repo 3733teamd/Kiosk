@@ -57,7 +57,7 @@ public class ReportBugController {
         String nodeName = destinationBugField.getText();
         String comment = commentField.getText();
 
-        Report newReport = new Report(nodeName,comment, "open", 1);
+        Report newReport = new Report(nodeName,comment);//, "open", 1);
 
         dir.addBugReport(newReport);
         closeReportBug();
