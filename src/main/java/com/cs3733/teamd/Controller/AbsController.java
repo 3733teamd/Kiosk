@@ -5,6 +5,8 @@ import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.cs3733.teamd.Controller.MementoController;
 
 import com.cs3733.teamd.Model.CareTaker;
+import com.cs3733.teamd.Model.Entities.Directory;
+import com.cs3733.teamd.Model.Entities.DirectoryInterface;
 import com.cs3733.teamd.Model.Originator;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,7 +36,7 @@ public abstract class AbsController {
     public void switchScreen(Pane gp, String ViewPath) throws IOException{
         //for memento
         MementoController.addCareTaker(ViewPath);
-
+        Directory.getInstance().removeObservers();
         //
         Stage stage = (Stage) gp.getScene().getWindow();
         Parent pane;

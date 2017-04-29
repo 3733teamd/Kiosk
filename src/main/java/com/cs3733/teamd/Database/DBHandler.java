@@ -198,6 +198,24 @@ public class DBHandler {
         }
         HCPTitleTupleRslt.close();
 
+        // Load visiting hours
+        ResultSet VisitingHourRslt = s.executeQuery(Table.VistingHours.selectAllStatement());
+        while(VisitingHourRslt.next()) {
+            Tag t = tagMap.get(VisitingHourRslt.getInt("tagId"));
+            long millisOpen = VisitingHourRslt.getTimestamp("openTime").getTime();
+
+            long millisClose = VisitingHourRslt.getTimestamp("closeTime").getTime();
+
+            System.out.println(millisOpen);
+            System.out.println(millisClose);
+            VisitingBlock vb = new VisitingBlock();
+            vb.setOpenTimeInMillis(millisOpen);
+            vb.setCloseTimeInMillis(millisClose);
+            t.addBlock(vb);
+
+        }
+        VisitingHourRslt.close();
+
         nodes = new ArrayList<>(nodeMap.values());
         tags = new ArrayList<>(tagMap.values());
         professionals = new ArrayList<>(professionalMap.values());
@@ -207,6 +225,10 @@ public class DBHandler {
      * Setup all tables and connectionstraints
      */
     public void setup() throws SQLException, IOException {
+        setupWithFileName("/DatabaseImports/dump.sql.import");
+    }
+
+    public void setupWithFileName(String filename) throws SQLException, IOException {
         // DOES THE TABLE EXIST???
         boolean empty = tablesExists(connection);
         //if no tables
@@ -228,7 +250,7 @@ public class DBHandler {
             connection.setAutoCommit(false);
 
             //Mass insert from file for initial data
-            loadDbEntriesFromFileIntoDb(s, "/DatabaseImports/dump.sql.import");
+            loadDbEntriesFromFileIntoDb(s, filename);
 
             //Inserts done, enable connectionstraints (will check them aswell)
             connection.setAutoCommit(true);
@@ -289,8 +311,9 @@ public class DBHandler {
     public void loadDbEntriesFromFileIntoDb(Statement s, String filename) throws IOException, SQLException {
         BufferedReader br =
                 new BufferedReader(
-                        new InputStreamReader(getClass().getResourceAsStream(filename)));
+                        new InputStreamReader(getClass().getResourceAsStream("/"+filename)));
             String line;
+            System.out.println(filename);
             while ((line = br.readLine()) != null) {
                 if(line.length() > 0) {
                     executeStatement(s, line);
@@ -314,6 +337,26 @@ public class DBHandler {
         connection.setAutoCommit(true);
         s.close();
     }
+
+    public void emptyExceptUsers() throws SQLException {
+        Statement s = connection.createStatement();
+        connection.setAutoCommit(false);
+
+        for (Table table: Table.values()){
+            switch(table) {
+                case UserRoles:
+                case Users:
+                    break;
+                default:
+                    executeStatement(s, table.emptyStatement());
+            }
+
+        }
+
+        connection.setAutoCommit(true);
+        s.close();
+    }
+
 
     /**
      * Drops all tables
@@ -795,7 +838,8 @@ public class DBHandler {
 
     public boolean dumpDatabaseToSqlStatements(String filename) {
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(filename), "utf-8"))) {
             String sqlSelectNodes = "SELECT * FROM Node ORDER BY id ASC";
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelectNodes);
@@ -903,6 +947,17 @@ public class DBHandler {
             }
             rs.close();
 
+            // Visiting hour
+            String sqlSelectVisitingHour = "SELECT * FROM VisitingHour";
+            rs = s.executeQuery(sqlSelectVisitingHour);
+            while(rs.next()) {
+                int tagId = getNormalizedId(rs.getInt(1), maxTagId);
+                Timestamp open = rs.getTimestamp(2);
+                Timestamp close = rs.getTimestamp(3);
+                bw.write("INSERT INTO VisitingHour VALUES("+tagId+",'"+open.toString()+"','"+close.toString()+"')\n");
+            }
+            rs.close();
+
             s.close();
             return true;
         } catch(IOException e) {
@@ -914,12 +969,13 @@ public class DBHandler {
         }
     }
 
-    public boolean addBugReport(String tag, String comment) {
-        String sqlSelect = "INSERT INTO BugReport VALUES (?,?)";
+    public boolean addVisitingHour(int tagId, Timestamp open, Timestamp close) {
+        String sqlInsert = "INSERT INTO VisitingHour VALUES (?,?,?)";
         try {
-            PreparedStatement statement = connection.prepareStatement(sqlSelect);
-            statement.setString(1, tag);
-            statement.setString(2, comment);
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setInt(1, tagId);
+            statement.setTimestamp(2, open);
+            statement.setTimestamp(3, close);
             statement.executeUpdate();
             statement.close();
             return true;
@@ -929,18 +985,67 @@ public class DBHandler {
         }
     }
 
-    public List<String> getBugReports() {
+    public boolean removeVisitingHour(int tagId) {
+        String sqlDelete = "DELETE FROM VisitingHour WHERE tagId=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setInt(1, tagId);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addBugReport(String tag, String comment, String status) {
+        String sqlSelect = "INSERT INTO BugReport (tag, comment, status) VALUES (?,?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlSelect);
+            statement.setString(1, tag);
+            statement.setString(2, comment);
+            statement.setString(3, status);
+            //statement.setInt(4, ID);
+
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteBugReport(String tag, String comment, String status) {
+        String sqlDelete = "DELETE FROM BugReport WHERE tag=? AND comment=? AND status=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setString(1, tag);
+            statement.setString(2, comment);
+            statement.setString(3, status);
+            statement.executeUpdate();
+            statement.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public List<Report> getBugReports() {
         String sqlSelect = "SELECT * FROM BugReport";
         try {
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(sqlSelect);
 
-            List<String> reports = new ArrayList<String>();
+            List<Report> reports = new ArrayList<Report>();
             while(rs.next()) {
-                String addition = "";
-                addition = rs.getString(1);
-                addition += " - ";
-                addition += rs.getString(2);
+                Report addition = new Report();
+                addition.tagText = rs.getString(1);
+                addition.commentText = rs.getString(2);
+                addition.status = rs.getString(3);
                 reports.add(addition);
             }
 
@@ -949,7 +1054,30 @@ public class DBHandler {
             return reports;
         } catch(SQLException e) {
             e.printStackTrace();
-            return new ArrayList<String>();
+            return new ArrayList<Report>();
         }
     }
+
+//    public boolean setBugClosed(String tag, String comment, String status) {
+//        String sqlUpdate = "UPDATE BugReport SET status=? WHERE tag=? AND comment=?";
+//        try {
+//
+//            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+//            statement.setString(1, tag);
+//            System.out.println(tag);
+//            statement.setString(2, comment);
+//            System.out.println(comment);
+//            statement.setString(3, status);
+//            System.out.println(status);
+//            statement.executeUpdate();
+//            System.out.println("executing update");
+//            statement.close();
+//            return true;
+//        } catch(SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+
+
 }

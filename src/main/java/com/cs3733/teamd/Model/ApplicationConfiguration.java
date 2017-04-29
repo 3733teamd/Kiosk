@@ -1,5 +1,9 @@
 package com.cs3733.teamd.Model;
 
+import com.cs3733.teamd.Database.DBHandler;
+
+import java.io.File;
+import java.net.URLDecoder;
 import java.util.Locale;
 
 /**
@@ -12,6 +16,10 @@ public class ApplicationConfiguration {
     private Language currentLangauge;
 
     private SearchAlgorithm currentSearchAlgorithm;
+
+    private Hospital hospital;
+
+    private DBHandler database;
 
     private ApplicationConfiguration(){
         currentSearchAlgorithm = SearchAlgorithm.A_STAR;
@@ -79,7 +87,34 @@ public class ApplicationConfiguration {
         this.currentSearchAlgorithm = currentSearchAlgorithm;
     }
 
+    public void setHospital(Hospital h) {
+        this.hospital = h;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public DBHandler getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(DBHandler database) {
+        this.database = database;
+    }
+
     public boolean timeoutEnabled() {
         return false;
+    }
+
+    public String getFullFilePath(String relativePath) {
+        try {
+            String localFileName = getClass().getClassLoader().getResource(relativePath).getFile();
+            localFileName = URLDecoder.decode(localFileName, "UTF-8");
+            return new File(localFileName).getAbsolutePath();
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }

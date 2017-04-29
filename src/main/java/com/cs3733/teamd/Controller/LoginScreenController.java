@@ -173,7 +173,11 @@ public class LoginScreenController extends AbsController {
             }
 
         } else{
-            errorIndicator.setText(Main.bundle.getString("InvalidloginCredentials"));
+            String text = Main.bundle.getString("InvalidloginCredentials");
+            if(text == null) {
+                text = "Invalid Login: FIX BUNDLE";
+            }
+            errorIndicator.setText(text);
             //
         }
 

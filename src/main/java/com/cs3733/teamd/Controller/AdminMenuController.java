@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,13 +15,13 @@ import java.io.IOException;
  */
 public class AdminMenuController extends AbsController{
 
-    public Button toEditMap;
-    public Button toEditTag;
-    public Button toEditProf;
-    public Button toEnhancedMap;
-    public Button toAddUser;
-    public Button toBugView;
-    public Pane MMGpane;
+    public JFXButton toEditMap;
+    public JFXButton toEditTag;
+    public JFXButton toEditProf;
+    public JFXButton toEnhancedMap;
+    public JFXButton toAddUser;
+    public JFXButton toBugView;
+    public AnchorPane MMGpane;
 
 
     @FXML
@@ -71,6 +72,15 @@ public class AdminMenuController extends AbsController{
     public void goToBugView(ActionEvent actionEvent) {
         try {
             super.switchScreen(MMGpane, "/Views/ViewBugScreen.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onSyncPopup(ActionEvent event) {
+        try {
+            super.popupScreen(MMGpane, "/Views/SyncPopupScreen.fxml", "Sync");
         } catch (IOException e) {
             e.printStackTrace();
         }

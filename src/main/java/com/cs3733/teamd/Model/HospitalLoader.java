@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -17,6 +14,8 @@ import java.util.*;
 public class HospitalLoader {
     private static HospitalLoader instance = null;
     private JSONParser parser;
+
+    private JSONObject root;
 
     private HospitalLoader() {
         parser = new JSONParser();
@@ -32,13 +31,15 @@ public class HospitalLoader {
 
     private JSONArray loadHospitalsObject() {
         try {
-            String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
-            System.out.println(filename);
-            File f2 = new File(filename);
-            FileReader f = new FileReader(f2.getAbsolutePath());
+            String filename = ApplicationConfiguration.getInstance()
+                    .getFullFilePath("hospitals/hospitals.json");
+            if(filename == null) {
+                return null;
+            }
+            FileReader f = new FileReader(filename);
             Object o = parser.parse(f);
-            JSONObject jsonObject = (JSONObject) o;
-            JSONArray hospitalsJson = (JSONArray) jsonObject.get("hospitals");
+            root = (JSONObject) o;
+            JSONArray hospitalsJson = (JSONArray) root.get("hospitals");
             return hospitalsJson;
         } catch(ParseException pe) {
             pe.printStackTrace();
@@ -55,6 +56,9 @@ public class HospitalLoader {
     public List<String> loadHospitals() {
 
         JSONArray hospitalsJson = loadHospitalsObject();
+        if(hospitalsJson == null) {
+            return null;
+        }
         Iterator<Object> it = hospitalsJson.iterator();
         List<String> ret = new ArrayList<String>();
         while(it.hasNext()) {
@@ -62,6 +66,50 @@ public class HospitalLoader {
             ret.add((String)hospitalJson.get("hospitalId"));
         }
         return ret;
+    }
+
+    private void findDbVersions(Hospital h) {
+        File f = new File(ApplicationConfiguration.getInstance()
+                .getFullFilePath("hospitals/"+h.getHospitalId()));
+        File[] dirFiles = f.listFiles();
+        Set<Integer> versions = new HashSet<Integer>();
+        for(File file: dirFiles) {
+            String name = file.getName();
+            name = name.replace("dump.", "").replace(".sql","");
+            try {
+                Integer version = Integer.parseInt(name);
+                versions.add(version);
+            }catch(NumberFormatException e) {
+
+            }
+
+        }
+        h.setDbVersions(versions);
+
+    }
+
+    public Hospital loadDefaultHospital() {
+        try {
+            String filename = ApplicationConfiguration.getInstance()
+                    .getFullFilePath("hospitals/hospitals.json");
+            if(filename == null) {
+                return null;
+            }
+            FileReader f = new FileReader(filename);
+            Object o = parser.parse(f);
+            root = (JSONObject) o;
+            String currentHospital = (String) root.get("currentHospital");
+            return loadHospitalFromId(currentHospital);
+        } catch(ParseException pe) {
+            pe.printStackTrace();
+            return null;
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+            return null;
+        } catch (IOException ie) {
+            ie.printStackTrace();
+            return null;
+        }
     }
 
     public Hospital loadHospitalFromId(String id) {
@@ -86,9 +134,71 @@ public class HospitalLoader {
                     JSONObject floorsJson = (JSONObject)it2.next();
                     floorFiles.put(((Long)floorsJson.get("number")).intValue(), (String)floorsJson.get("file"));
                 }
-                return new Hospital(name, hospitalId, dbVersion, floorFiles);
+                Hospital h = new Hospital(name, hospitalId, dbVersion, floorFiles);
+                findDbVersions(h);
+                return h;
             }
         }
         return null;
+    }
+
+    public boolean saveCurrentHospital(String newHospital) {
+        if(root == null) {
+            System.err.println("Error with Current Hospital");
+            return false;
+        }
+
+        root.put("currentHospital", newHospital);
+
+        String filename = ApplicationConfiguration.getInstance()
+                .getFullFilePath("hospitals/hospitals.json");
+        if(filename == null) {
+
+            return false;
+        }
+        try (FileWriter file = new FileWriter(filename)) {
+            file.write(root.toJSONString());
+            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("\nJSON Object: " + root);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public boolean saveHospital(Hospital h) {
+        JSONArray hospitalsJson = loadHospitalsObject();
+        if(hospitalsJson == null) {
+            return false;
+        }
+
+        Iterator<Object> it = hospitalsJson.iterator();
+
+        while(it.hasNext()) {
+            JSONObject hospitalJson = (JSONObject)it.next();
+            if(((String)hospitalJson.get("hospitalId")).compareTo(h.getHospitalId()) == 0) {
+                System.out.println(h.getDbVersion());
+                hospitalJson.put("dbVersion",(Long)h.getDbVersion().longValue());
+                System.out.println(root.toJSONString());
+                // try-with-resources statement based on post comment below :)
+                String filename = ApplicationConfiguration.getInstance()
+                        .getFullFilePath("hospitals/hospitals.json");
+                if(filename == null) {
+                    return false;
+                }
+                try (FileWriter file = new FileWriter(filename)) {
+                    file.write(root.toJSONString());
+                    System.out.println("Successfully Copied JSON Object to File...");
+                    System.out.println("\nJSON Object: " + root);
+                    return true;
+                } catch (IOException e) {
+                    return false;
+                }
+
+            }
+        }
+        return false;
     }
 }

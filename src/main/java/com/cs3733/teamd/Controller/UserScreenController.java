@@ -161,6 +161,8 @@ public class UserScreenController extends MapController {
     {
         setOffsets();
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
+
+        System.out.println(dir.getNodes());
         /*
             This code will find all of the tags and then all of the professionals and then merge the two.
             The final result is a list of all the tags and professionals intertwined so that
@@ -204,21 +206,31 @@ public class UserScreenController extends MapController {
 //        directions.setText(output); //dir change type
         floorMap.setImage(imgInt.display(floorNum));
         floors.clear();
-        if(floors.size() == 0){
-            //user views
-            floors.addLast(1);
-            floors.addLast(2);
-            floors.addLast(3);
-            floors.addLast(4);
-            floors.addLast(5);
-            floors.addLast(6);
-            floors.addLast(7);
-            //belkin house view
-            floors.addLast(102);
-            floors.addLast(103);
-            floors.addLast(104);
-            //add belkin professional views
+        if(ApplicationConfiguration.getInstance().getHospital() == null) {
+            if(floors.size() == 0){
+                //user views
+                floors.addLast(1);
+                floors.addLast(2);
+                floors.addLast(3);
+                floors.addLast(4);
+                floors.addLast(5);
+                floors.addLast(6);
+                floors.addLast(7);
+                //belkin house view
+                floors.addLast(102);
+                floors.addLast(103);
+                floors.addLast(104);
+                //add belkin professional views
+            }
+        } else {
+            for(Integer floor: ApplicationConfiguration.getInstance().getHospital().getFloorSet()) {
+                if(floor < 1000) {
+                    floors.add(floor);
+                }
+            }
+
         }
+
 
         floorDropDown.clear();
         floorDropDown.addAll(floors);
@@ -230,6 +242,7 @@ public class UserScreenController extends MapController {
             LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
 
         FloorMenu.setItems(floorDropDown);
+        FloorMenu.setValue((Integer)Main.currentFloor);
 
 
         /*setLanguageListener();*/
@@ -427,9 +440,9 @@ public class UserScreenController extends MapController {
             MiddleFloorButton.setDisable(false);
             EndFloorButton.setDisable(true);
         }else{
-            StartFloorButton.setDisable(true);
-            MiddleFloorButton.setDisable(true);
-            EndFloorButton.setDisable(true);
+            StartFloorButton.setDisable(false);
+            MiddleFloorButton.setDisable(false);
+            EndFloorButton.setDisable(false);
         }
         if(!haveMidFloor){
             MiddleFloorButton.setDisable(true);
@@ -571,6 +584,7 @@ public class UserScreenController extends MapController {
                     zoomPercent = (zoomPercent + (event.getDeltaY()/2.5));
 
                     double xPercent = event.getX()/IMAGE_WIDTH;
+                    System.out.println(event.getX());
                     double yPercent = event.getY()/IMAGE_HEIGHT;
                     /*System.out.println(
                             "Percent: "+zoomPercent+" X:" +
@@ -658,7 +672,7 @@ public class UserScreenController extends MapController {
                     currentTag = tag;
                 }
             }
-
+            System.out.println(starttag.getNodes().getFirst());
 
 
             Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());

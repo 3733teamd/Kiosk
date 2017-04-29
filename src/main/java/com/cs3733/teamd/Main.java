@@ -2,7 +2,9 @@ package com.cs3733.teamd;
 
 import com.cs3733.teamd.Database.DBHandler;
 
+import com.cs3733.teamd.Model.ApplicationConfiguration;
 import com.cs3733.teamd.Model.Entities.*;
+import com.cs3733.teamd.Model.Hospital;
 import com.cs3733.teamd.Model.HospitalLoader;
 import com.cs3733.teamd.Model.Originator;
 import javafx.application.Application;
@@ -56,7 +58,13 @@ public class Main extends Application {
     public static void main(String[] args) {
 
 
-        System.out.println(HospitalLoader.getInstance().loadHospitalFromId("faulkner"));
+        Hospital h = HospitalLoader.getInstance().loadDefaultHospital();
+        if(h == null) {
+            System.err.println("HOSPITAL CAN NOT BE LOADED");
+        } else {
+            System.out.println(h.getDbVersions());
+        }
+        ApplicationConfiguration.getInstance().setHospital(h);
 
         DBHandler database;
         Directory dir = Directory.getInstance();
@@ -69,7 +77,13 @@ public class Main extends Application {
         }
 
         try {
-            database.setup();
+            if(h != null) {
+                database.setupWithFileName(h.getDbPath());
+            } else {
+                System.err.println("Loading from default import");
+                database.setup();
+            }
+
         } catch (SQLException e) {
              if(e.getSQLState().equals("X0Y32")){ // Error code for TABLE EXISTS
                 System.out.println("Skipping setup as tables are already made");
@@ -109,6 +123,7 @@ public class Main extends Application {
 
         //set up DIRECTORY
         dir.initialize(nodes,tags,professionals,titles,database);
+        ApplicationConfiguration.getInstance().setDatabase(database);
 
         //Populate Search Menus
         /*try {

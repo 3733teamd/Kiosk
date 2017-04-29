@@ -1,8 +1,14 @@
 package com.cs3733.teamd.Model.Entities;
 
+import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Database.DBHandler;
+import javafx.application.Platform;
 
+import javax.annotation.processing.SupportedSourceVersion;
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,6 +133,15 @@ public class Directory implements DirectoryInterface {
                 t.getId(),
                 t.isConnectable(),
                 t.isRestricted());
+        // Now update the visiting hours
+        List<VisitingBlock> vistingBlocks = t.getVisitingBlockObjs();
+        dbResult = dbHandler.removeVisitingHour(t.getID());
+        for(VisitingBlock block: vistingBlocks) {
+            dbResult = dbHandler.addVisitingHour(t.getID(),
+                    new java.sql.Timestamp(block.getOpen().getTimeInMillis()),
+                    new java.sql.Timestamp(block.getClose().getTimeInMillis())
+            );
+        }
         return dbResult;
     }
 
@@ -357,13 +372,74 @@ public class Directory implements DirectoryInterface {
     }
 
     @Override
-    public boolean addBugReport(String tag, String comment) {
-        return dbHandler.addBugReport(tag, comment);
+    public boolean addBugReport(Report report) {
+        boolean result = dbHandler.addBugReport(report.tagText, report.commentText, report.status);
+        if(!result) {
+            System.err.println("Error Adding Bug Report");
+            return result;
+        }
+        return result;
     }
 
     @Override
-    public List<String> getBugReports() {
+    public List<Report> getBugReports() {
         return dbHandler.getBugReports();
     }
 
+    @Override
+    public boolean changeToNewFile(String filename) {
+        try {
+            this.dbHandler.emptyExceptUsers();
+            Connection c = this.dbHandler.getConnection();
+            Statement s = c.createStatement();
+            this.dbHandler.loadDbEntriesFromFileIntoDb(s, filename);
+            this.dbHandler.load();
+            s.close();
+            this.allNodes.clear();
+            this.allNodes = this.dbHandler.nodes;
+            this.allTags.clear();
+            this.allTags = this.dbHandler.tags;
+            this.allProfs.clear();
+            this.allProfs = this.dbHandler.professionals;
+            System.out.println(allNodes);
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    for(IObservable observable: observables) {
+                        observable.notifyUpdate();
+                    }
+                }
+            });
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    List<IObservable> observables = new ArrayList<IObservable>();
+
+    @Override
+    public void addObserver(IObservable observable) {
+        if(!observables.contains(observable)) {
+            observables.add(observable);
+        }
+    }
+    @Override
+    public void removeObservers() {
+        observables.clear();
+    }
+
+    public boolean deleteBugReport(Report report){
+        boolean result = dbHandler.deleteBugReport(report.tagText, report.commentText, report.status);
+        if(!result) {
+            System.err.println("Error Deleting Bug Report");
+            return result;
+        }
+        return result;
+    }
 }

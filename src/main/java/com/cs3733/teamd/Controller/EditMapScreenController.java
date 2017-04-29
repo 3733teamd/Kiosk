@@ -1,6 +1,13 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
+
+import com.cs3733.teamd.Model.ApplicationConfiguration;
+import com.cs3733.teamd.Model.CircleNode;
+import com.cs3733.teamd.Model.Entities.*;
+import com.jfoenix.controls.JFXButton;
+import com.cs3733.teamd.Model.ImageInterface;
+import com.cs3733.teamd.Model.ProxyImage;
 import com.cs3733.teamd.Model.*;
 import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
@@ -45,7 +52,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Anh Dao on 4/6/2017.
  */
-public class EditMapScreenController extends MapController{
+public class EditMapScreenController extends MapController implements IObservable{
 
 
     //color constants for convenience
@@ -215,6 +222,7 @@ public class EditMapScreenController extends MapController{
             }
         }
     };
+    boolean notified = false;
     Thread timerThread = new Thread(runnable);
     Runnable resetKiosk = new Runnable() {
         @Override
@@ -245,8 +253,11 @@ public class EditMapScreenController extends MapController{
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
+        DirectoryInterface d = Directory.getInstance();
+        d.addObserver(this);
+
         this.zoomPercent = 100.0;
-        if(ApplicationConfiguration.getInstance().timeoutEnabled()) {
+        if(ApplicationConfiguration.getInstance().timeoutEnabled() && !notified) {
             timer.scheduleAtFixedRate(timerTask, 30, 1000);
             timerThread.start();
         }
@@ -254,8 +265,7 @@ public class EditMapScreenController extends MapController{
         setFloorSliderListener();
         overrideScrollWheel();
         panMethods();
-        timer.scheduleAtFixedRate(timerTask, 30, 1000);
-        timerThread.start();
+
         setKeyListeners();
 
         MMGpane.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -405,6 +415,11 @@ public class EditMapScreenController extends MapController{
 
     }//initialize end
 
+    public void notifyUpdate() {
+        notified = true;
+        initialize();
+        notified = false;
+    }
 
     private void setUpTimeoutField(){
         timeoutField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -600,6 +615,7 @@ public class EditMapScreenController extends MapController{
         timer.purge();
         running = false;
         timerThread.interrupt();
+
         dir.logoutUser();
         switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
     }
@@ -852,9 +868,10 @@ public class EditMapScreenController extends MapController{
             if(n.getFloor()==floor){
                 //CircleNode circ = createCircle(n, 5, Color.RED);
                 try {
-                    mapCanvas.getChildren().add(circleMap.get(n));
-                    floorCircs.add(circleMap.get(n));
-
+                    if(mapCanvas.getChildren() != null) {
+                        mapCanvas.getChildren().add(circleMap.get(n));
+                        floorCircs.add(circleMap.get(n));
+                    }
                 }catch (IllegalArgumentException e){
                     System.out.println(e);
                 }
@@ -1011,7 +1028,9 @@ public class EditMapScreenController extends MapController{
     private void displayTagHoverLabel(CircleNode circ){
         if(circ.referenceNode.getTags().size() > 0) {
             hoverNodeLabel.setText(getHoverTextFromNode(circ.referenceNode));
-            mapCanvas.getChildren().add(hoverNodeLabel);
+            if(!mapCanvas.getChildren().contains(hoverNodeLabel)) {
+                mapCanvas.getChildren().add(hoverNodeLabel);
+            }
             hoverNodeLabel.setLayoutX(circ.getCenterX() - 35.0);
             hoverNodeLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
             hoverNodeLabel.setPadding(new Insets(10));
