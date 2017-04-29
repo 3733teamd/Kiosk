@@ -177,11 +177,11 @@ public class EditProfScreenController extends AbsController {
         timerThread.start();
 
         //fill in alltags
-        setAllTagsList();
+        //setAllTagsList();
         //fill in allProfs
         setAllProfList();
         //fil in allTitles
-        setAllTitleList();
+        //setAllTitleList();
         //allProfs listens for selection
         createAllProfListListener();
         //allTags listesns for selection
@@ -198,6 +198,8 @@ public class EditProfScreenController extends AbsController {
         addTitle.setOpacity(.5);
         addTag.setOpacity(.5);
         deleteProf.setOpacity(.5);
+        modifyName.setOpacity(.5);
+        modifyName.setDisable(true);
         deleteTitle.setDisable(true);
         deleteTag.setDisable(true);
         addTitle.setDisable(true);
@@ -253,6 +255,8 @@ public class EditProfScreenController extends AbsController {
         searchProfessionalBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                selectedProf = null;
+                clearAllFields();
                 //String text = searchTagBar.getText();
 
                 displayResult(searchProfessionalBar.getText() + event.getText());
@@ -316,18 +320,24 @@ public class EditProfScreenController extends AbsController {
             public void changed(ObservableValue<? extends Professional> observable,
                                 Professional oldValue, Professional newValue) {
 
+
                 updateCurrentProfList(newValue);
+                setAllTagsList();
+                setAllTitleList();
                 //change opacity
                 deleteTitle.setOpacity(1.0);
                 deleteTag.setOpacity(1.0);
                 addTitle.setOpacity(1.0);
                 addTag.setOpacity(1.0);
                 deleteProf.setOpacity(1.0);
+                modifyName.setOpacity(1);
+                modifyName.setDisable(false);
                 deleteTitle.setDisable(false);
                 deleteTag.setDisable(false);
                 addTitle.setDisable(false);
                 addTag.setDisable(false);
                 deleteProf.setDisable(false);
+
             }
 
         });
@@ -518,6 +528,14 @@ public class EditProfScreenController extends AbsController {
             addNewProf.setFont(Font.font("System",20));
             deleteProf.setFont(Font.font("System",20));
         }
+    }
+
+    private void clearAllFields(){
+        allTagsList.setItems(FXCollections.observableArrayList());
+        allTagsList.refresh();
+        allTitleList.setItems((FXCollections.observableArrayList()));
+        allTitleList.refresh();
+        profName.setPromptText("");
     }
 
 
