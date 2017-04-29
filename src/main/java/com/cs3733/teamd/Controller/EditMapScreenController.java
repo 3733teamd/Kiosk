@@ -141,7 +141,7 @@ public class EditMapScreenController extends MapController implements IObservabl
     public int sa;
     public CircleNode scirc;
     public Boolean switchS =true;
-    public int floor =4;
+    public int floor =1;
     final double SCALE_DELTA = 1.1;
     int onFloor = Main.currentFloor;
 
