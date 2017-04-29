@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -18,8 +18,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="submitBug" layoutX="488.0" layoutY="332.0" mnemonicParsing="false" onAction="#submitBugPress" text="%submit" />
-      <Button fx:id="cancelBug" layoutY="332.0" mnemonicParsing="false" onAction="#cancelBugPress" text="%Cancel" />
       <TextField fx:id="destinationBugField" layoutX="16.0" layoutY="102.0" prefHeight="53.0" prefWidth="298.0" promptText="%NavigatingTo">
          <font>
             <Font size="24.0" />
@@ -30,5 +28,7 @@
             <Font size="18.0" />
          </font>
       </TextArea>
+      <JFXButton fx:id="cancelBug" buttonType="RAISED" layoutX="54.0" layoutY="332.0" onAction="#cancelBugPress" style="-fx-background-color: DCDCDC;" text="%Cancel" />
+      <JFXButton fx:id="submitBug" buttonType="RAISED" layoutX="440.0" layoutY="332.0" onAction="#submitBugPress" style="-fx-background-color: DCDCDC;" text="%submit" />
    </children>
 </AnchorPane>

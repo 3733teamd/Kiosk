@@ -165,7 +165,7 @@
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <JFXButton fx:id="logOutButton" buttonType="RAISED" layoutX="1215.0" layoutY="9.0" onAction="#logout" style="-fx-background-color: DCDCDCDC;" text="%Logout" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="10.0" />
+                  <JFXButton fx:id="logOutButton" buttonType="RAISED" layoutX="1215.0" layoutY="9.0" onAction="#logout" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: DCDCDCDC;" text="%Logout" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>
