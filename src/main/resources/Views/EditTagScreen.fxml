@@ -89,8 +89,8 @@
                                           </Button>
                                           <AnchorPane minWidth="400.0" prefHeight="55.0" prefWidth="166.0">
                                              <children>
-                                                <CheckBox fx:id="selectConnectable" layoutX="52.0" layoutY="19.0" mnemonicParsing="false" text="Floor Connector" />
-                                                <CheckBox fx:id="restrictedButton" layoutX="210.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="Restricted" textAlignment="CENTER" />
+                                                <CheckBox fx:id="selectConnectable" layoutX="35.0" layoutY="19.0" mnemonicParsing="false" text="%FloorConnector" />
+                                                <CheckBox fx:id="restrictedButton" layoutX="234.0" layoutY="1.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="152.0" text="%Restricted" textAlignment="CENTER" AnchorPane.rightAnchor="14.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -127,14 +127,14 @@
                                           </SplitPane>
                                           <SplitPane dividerPositions="0.02932551319648094, 0.6524926686217009, 0.6862170087976539, 0.8196480938416423, 0.8592375366568915, 0.9046920821114369, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
                                             <items>
-                                                <Label text="Current Visiting Hours" />
+                                                <Label text="%CurrVisitHours" />
                                                 <ListView fx:id="visitingHourList" fixedCellSize="90.0" prefHeight="430.0" prefWidth="320.0" />
-                                                <Label maxHeight="30.0" minHeight="30.0" text="Opening Time" />
+                                                <Label maxHeight="30.0" minHeight="30.0" text="%openingTime" />
                                                 <TextField fx:id="openTimeBox" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="321.0" />
-                                                <Label alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="320.0" text="Closing Time" />
+                                                <Label alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="320.0" text="%closingTime" />
                                                 <TextField fx:id="closingTimeBox" maxHeight="30.0" minHeight="30.0" />
-                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="500.0" text="Add" />
-                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="500.0" text="Remove" />
+                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="500.0" text="%addTime" />
+                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="500.0" text="%remTime" />
                                             </items>
                                           </SplitPane>
                                        </children>
