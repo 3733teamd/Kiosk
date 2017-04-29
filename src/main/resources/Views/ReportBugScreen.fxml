@@ -29,6 +29,6 @@
          </font>
       </TextArea>
       <JFXButton fx:id="cancelBug" buttonType="RAISED" layoutX="54.0" layoutY="332.0" onAction="#cancelBugPress" style="-fx-background-color: DCDCDC;" text="%Cancel" />
-      <JFXButton fx:id="submitBug" buttonType="RAISED" layoutX="440.0" layoutY="332.0" onAction="#submitBugPress" style="-fx-background-color: DCDCDC;" text="%submit" />
+      <JFXButton fx:id="submitBug" buttonType="RAISED" layoutX="428.0" layoutY="332.0" onAction="#submitBugPress" style="-fx-background-color: DCDCDC;" text="%submit" />
    </children>
 </AnchorPane>
