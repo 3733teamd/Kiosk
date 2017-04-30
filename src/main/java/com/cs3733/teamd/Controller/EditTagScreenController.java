@@ -45,7 +45,6 @@ public class EditTagScreenController extends AbsController {
     public Button BackButton;
     public AnchorPane MMGpane;
     @FXML
-    public Button addNewTag;
     public TextField tagNameTxt;
     @FXML
     private Button addProf;
@@ -156,12 +155,16 @@ public class EditTagScreenController extends AbsController {
         topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
 
         //make some buttons opaque
+        addNewTagBtn.setOpacity(.5);
+        deleteTagBtn.setOpacity(.5);
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
         addVisitHours.setOpacity(.5);
         removeVisitBlockButton.setOpacity(.5);
         //disable
+        addNewTagBtn.setDisable(true);
+        deleteTagBtn.setDisable(true);
         removeVisitBlockButton.setDisable(true);
         addVisitHours.setDisable(true);
         selectConnectable.setDisable(true);
@@ -181,20 +184,7 @@ public class EditTagScreenController extends AbsController {
         //System.out.println(names);
         //allProffessionals.setItems(names);
 
-        searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    clearResponsiveFields();
-                    selectedTag= null;
-                    String text = searchTagBar.getText();
 
-                    tagNameTxt.setText(searchTagBar.getText());
-
-                    //System.out.println(text);
-                }
-            }
-        });
         tagList.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tag>() {
                     public void changed(ObservableValue<? extends Tag> ov,
@@ -213,7 +203,8 @@ public class EditTagScreenController extends AbsController {
                             addVisitHours.setOpacity(1.0);
                             addProf.setOpacity(1.0);
                             deleteProf.setOpacity(1.0);
-                            newTagNameBtn.setOpacity(1.0);
+                            deleteTagBtn.setOpacity(1);
+                            //newTagNameBtn.setOpacity(1.0);
                             addVisitHours.setOpacity(1);
                             removeVisitBlockButton.setOpacity(1);
                             removeVisitBlockButton.setDisable(false);
@@ -224,8 +215,9 @@ public class EditTagScreenController extends AbsController {
                             restrictedButton.setDisable(false);
                             addProf.setDisable(false);
                             deleteProf.setDisable(false);
-                            newTagNameBtn.setDisable(false);
+                            //newTagNameBtn.setDisable(false);
                             addVisitHours.setDisable(false);
+                            deleteTagBtn.setDisable(false);
                             setTagPropertyButtons();
 
                         }else{
@@ -296,12 +288,15 @@ public class EditTagScreenController extends AbsController {
                 selectedTag = null;
                 addProf.setOpacity(.5);
                 deleteProf.setOpacity(.5);
-                newTagNameBtn.setOpacity(.5);
+
                 //disable buttons
                 selectConnectable.setDisable(true);
                 addProf.setDisable(true);
                 deleteProf.setDisable(true);
-                newTagNameBtn.setDisable(true);
+
+
+                addNewTagBtn.setDisable(false);
+                addNewTagBtn.setOpacity(1);
                 displayResultAllTag(searchTagBar.getText() + event.getText());
             }
         });
@@ -372,7 +367,7 @@ public class EditTagScreenController extends AbsController {
     void modifyTag(ActionEvent event) {
         String noSpace = tagNameTxt.getText().replaceAll("\\s","");
         if (noSpace == null ||noSpace==""|| noSpace.length()<1) {
-            searchTagBar.setText("");
+            //searchTagBar.setText("");
         }
         else {
             selectedTag.setTagName(tagNameTxt.getText());
@@ -392,6 +387,7 @@ public class EditTagScreenController extends AbsController {
             dir.updateTag(selectedTag);
             tagList.refresh();
         }
+        setTagPropertyButtons();
 
     }
 
@@ -438,7 +434,6 @@ public class EditTagScreenController extends AbsController {
         tagList.setItems(searchResultsTag);
     }
 
-    //TODO: is deleted from database wrongly, causes fatal error
     @FXML
     void deleteTag(ActionEvent event) {
         if(selectedTag != null){
