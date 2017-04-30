@@ -148,4 +148,26 @@ public class Node {
         }
         return false;
     }
+
+    public String mostSpecificTagName() {
+        int leastOccurances = 0;
+        String ret = "";
+        for(Tag t: tags) {
+            if(leastOccurances == 0) {
+                leastOccurances = t.getNodes().size();
+                System.out.println(t.getNodes().size()+" - "+t.getTagName());
+                ret = t.getTagName();
+            } else {
+                System.out.println(t.getNodes().size()+" - "+t.getTagName());
+                if(t.getNodes().size() < leastOccurances) {
+                    leastOccurances = t.getNodes().size();
+
+                    ret = t.getTagName();
+                } else if(t.getNodes().size() == leastOccurances) {
+                    ret = (t.getTagName().length() > ret.length()) ? t.getTagName() : ret;
+                }
+            }
+        }
+        return ret;
+    }
 }

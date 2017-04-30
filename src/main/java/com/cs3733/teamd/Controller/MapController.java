@@ -191,7 +191,7 @@ public class MapController extends AbsController {
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
                 System.out.println("Hover");
-                label.setText(n.getTags().getFirst().getTagName());
+                label.setText(n.mostSpecificTagName());
                 mapCanvas.getChildren().add(label);
                 label.setLayoutX(getNodeX(n) - 35.0);
                 label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
