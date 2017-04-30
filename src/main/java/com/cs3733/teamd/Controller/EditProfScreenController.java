@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -35,6 +36,9 @@ public class EditProfScreenController extends AbsController {
 
 
     public static ObservableList<Professional> drop = FXCollections.observableArrayList();
+    public StackPane stackTop;
+    public StackPane stackBottom;
+    public SplitPane propertySplit;
 
     @FXML
     private AnchorPane pane;
@@ -173,6 +177,7 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
+        stackTop.maxHeightProperty().bind(propertySplit.heightProperty().multiply(0));
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
 

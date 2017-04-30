@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.textfield.TextFields;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +154,7 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void initialize(){
         topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
-        topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
+
         //make some buttons opaque
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
@@ -224,6 +226,7 @@ public class EditTagScreenController extends AbsController {
                             deleteProf.setDisable(false);
                             newTagNameBtn.setDisable(false);
                             addVisitHours.setDisable(false);
+                            setTagPropertyButtons();
 
                         }else{
                             addProf.setOpacity(.5);
@@ -343,19 +346,39 @@ public class EditTagScreenController extends AbsController {
                 counter = 0;
             }
         });
+        tagNameTxt.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+        selectConnectable.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+        restrictedButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+
 
     }
 
     @FXML
     void modifyTag(ActionEvent event) {
         String noSpace = tagNameTxt.getText().replaceAll("\\s","");
-        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
+        if (noSpace == null ||noSpace==""|| noSpace.length()<1) {
             searchTagBar.setText("");
         }
         else {
             selectedTag.setTagName(tagNameTxt.getText());
             dir.updateTag(selectedTag);
             tagList.refresh();
+            tagNameTxt.setPromptText(tagNameTxt.getText());
             tagNameTxt.clear();
         }
         if(selectConnectable.isSelected() != selectedTag.isConnectable()) {
@@ -429,16 +452,14 @@ public class EditTagScreenController extends AbsController {
     @FXML
     void addTag(ActionEvent event) {
         String noSpace = searchTagBar.getText().replaceAll("\\s","");
-        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
+        if (noSpace == null ||noSpace==""|| noSpace.length()<1) {
 
         }
         else {
-            dir.saveTag(searchTagBar.getText());
-            tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+            Tag t = dir.saveTag(searchTagBar.getText());
+            tagList.setItems(FXCollections.observableArrayList(t));
             tagList.refresh();
-            searchTagBar.clear();
         }
-        searchTagBar.setText("");
     }
 
     public TextField openTimeBox;
@@ -491,5 +512,17 @@ public class EditTagScreenController extends AbsController {
         openTimeBox.clear();
         closingTimeBox.clear();
         profSearchField.clear();
+    }
+
+    public void setTagPropertyButtons(){
+        if(selectedTag.isConnectable() == selectConnectable.isSelected() &&
+                selectedTag.isRestricted() == restrictedButton.isSelected() &&
+                tagNameTxt.getText().equals("")){
+            newTagNameBtn.setDisable(true);
+            newTagNameBtn.setOpacity(.5);
+        }else{
+            newTagNameBtn.setDisable(false);
+            newTagNameBtn.setOpacity(1);
+        }
     }
 }
