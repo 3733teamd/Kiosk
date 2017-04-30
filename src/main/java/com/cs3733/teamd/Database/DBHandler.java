@@ -311,7 +311,7 @@ public class DBHandler {
     public void loadDbEntriesFromFileIntoDb(Statement s, String filename) throws IOException, SQLException {
         BufferedReader br =
                 new BufferedReader(
-                        new InputStreamReader(getClass().getResourceAsStream("/"+filename)));
+                        new InputStreamReader(new FileInputStream("/"+filename)));
             String line;
             System.out.println(filename);
             while ((line = br.readLine()) != null) {

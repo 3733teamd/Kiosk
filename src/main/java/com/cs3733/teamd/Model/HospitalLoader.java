@@ -33,6 +33,7 @@ public class HospitalLoader {
         try {
             String filename = ApplicationConfiguration.getInstance()
                     .getFullFilePath("hospitals/hospitals.json");
+
             if(filename == null) {
                 return null;
             }
@@ -71,9 +72,12 @@ public class HospitalLoader {
     private void findDbVersions(Hospital h) {
         File f = new File(ApplicationConfiguration.getInstance()
                 .getFullFilePath("hospitals/"+h.getHospitalId()));
+
         File[] dirFiles = f.listFiles();
+
         Set<Integer> versions = new HashSet<Integer>();
         for(File file: dirFiles) {
+            System.out.println(file);
             String name = file.getName();
             name = name.replace("dump.", "").replace(".sql","");
             try {
