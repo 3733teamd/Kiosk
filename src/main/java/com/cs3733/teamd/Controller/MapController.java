@@ -96,7 +96,6 @@ public class MapController extends AbsController {
 
     protected void setZoomAndBars(double zoomPercent, double xBarPosition, double yBarPosition) {
         this.zoomPercent = zoomPercent;
-        System.out.println(zoomPercent);
         setBarPositions(xBarPosition, yBarPosition, true);
     }
 
@@ -212,7 +211,6 @@ public class MapController extends AbsController {
                 mapCanvas.getChildren().removeAll(label);
             }
         });
-        System.out.println(n);
         circleNodeMap.put(n, circle);
     }
 
