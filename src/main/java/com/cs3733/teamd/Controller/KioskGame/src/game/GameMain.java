@@ -184,7 +184,7 @@ public class GameMain extends Application {
                     y = y;
                 }
                 if (input.contains("ENTER") && timer == 0) {
-                    System.out.println("current x:" + curx + " current y:" + cury);
+                    //System.out.println("current x:" + curx + " current y:" + cury);
                     timer = 50;
                     if (floorNum == 1 && cury > 240) {
                         if(cury < 285){
