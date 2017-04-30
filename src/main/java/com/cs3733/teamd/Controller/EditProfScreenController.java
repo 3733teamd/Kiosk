@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -35,6 +36,9 @@ public class EditProfScreenController extends AbsController {
 
 
     public static ObservableList<Professional> drop = FXCollections.observableArrayList();
+    public StackPane stackTop;
+    public StackPane stackBottom;
+    public SplitPane propertySplit;
 
     @FXML
     private AnchorPane pane;
@@ -173,36 +177,25 @@ public class EditProfScreenController extends AbsController {
 
     @FXML
     public void initialize(){
+        stackTop.maxHeightProperty().bind(propertySplit.heightProperty().multiply(0));
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
 
         //fill in alltags
-        setAllTagsList();
+        //setAllTagsList();
         //fill in allProfs
         setAllProfList();
         //fil in allTitles
-        setAllTitleList();
+        //setAllTitleList();
         //allProfs listens for selection
         createAllProfListListener();
         //allTags listesns for selection
         createAllTagListListener();
-        //you know the drill
         createCurTagListListener();
 
         createAllTitleListListener();
         createCurTitleListListener();
-
-        //disable buttons
-        deleteTitle.setOpacity(.5);
-        deleteTag.setOpacity(.5);
-        addTitle.setOpacity(.5);
-        addTag.setOpacity(.5);
-        deleteProf.setOpacity(.5);
-        deleteTitle.setDisable(true);
-        deleteTag.setDisable(true);
-        addTitle.setDisable(true);
-        addTag.setDisable(true);
-        deleteProf.setDisable(true);
+        killButtons();
 
 
         ObservableList list = FXCollections.observableList(drop);
@@ -253,9 +246,17 @@ public class EditProfScreenController extends AbsController {
         searchProfessionalBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
+                selectedProf = null;
+
                 //String text = searchTagBar.getText();
 
                 displayResult(searchProfessionalBar.getText() + event.getText());
+                clearAllFields();
+                killButtons();
+
+                addNewProf.setOpacity(1);
+                addNewProf.setDisable(false);
+
             }
         });
         searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -263,7 +264,21 @@ public class EditProfScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
 
-                displayResultAllTag(searchTagList.getText() + event.getText());
+                if(selectedProf != null) {
+                    displayResultAllTag(searchTagList.getText() + event.getText());
+                }
+            }
+        });
+        profName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(selectedProf!=null){
+                    modifyName.setDisable(false);
+                    modifyName.setOpacity(1);
+                }else{
+                    modifyName.setDisable(true);
+                    modifyName.setOpacity(.5);
+                }
             }
         });
     }
@@ -316,18 +331,14 @@ public class EditProfScreenController extends AbsController {
             public void changed(ObservableValue<? extends Professional> observable,
                                 Professional oldValue, Professional newValue) {
 
+
+                modifyName.setDisable(true);
+                modifyName.setOpacity(.5);
                 updateCurrentProfList(newValue);
-                //change opacity
-                deleteTitle.setOpacity(1.0);
-                deleteTag.setOpacity(1.0);
-                addTitle.setOpacity(1.0);
-                addTag.setOpacity(1.0);
-                deleteProf.setOpacity(1.0);
-                deleteTitle.setDisable(false);
-                deleteTag.setDisable(false);
-                addTitle.setDisable(false);
-                addTag.setDisable(false);
-                deleteProf.setDisable(false);
+                setAllTagsList();
+                setAllTitleList();
+                activateButtons();
+
             }
 
         });
@@ -427,19 +438,20 @@ public class EditProfScreenController extends AbsController {
     @FXML
     void addNewProf(ActionEvent event) {
         String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
-        if(noSpace==null ||noSpace==""||noSpace.length()<=1){
+        if(noSpace==null ||noSpace==""||noSpace.length()<1){
 
         }
         else {
             System.out.println("print" + searchProfessionalBar.getText() + "print");
-            dir.saveProfessional(searchProfessionalBar.getText());
-            searchProfessionalBar.clear();
-            allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+            Professional p = dir.saveProfessional(searchProfessionalBar.getText());
+            selectedProf = p;
+            allProfList.setItems(FXCollections.observableArrayList(selectedProf));
             allProfList.refresh();
-            searchProfessionalBar.clear();
 
+            addNewProf.setDisable(true);
+            addNewProf.setOpacity(.5);
         }
-        searchProfessionalBar.setText("");
+
     }
 
     @FXML
@@ -449,6 +461,7 @@ public class EditProfScreenController extends AbsController {
             dir.removeTagFromProfessional(selectedProf,selectedCurTag);
             dir.updateProfessional(selectedProf);
             curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+
         }
     }
 
@@ -459,19 +472,28 @@ public class EditProfScreenController extends AbsController {
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
+            selectedProf = null;
+            clearAllFields();
+            killButtons();
+            searchProfessionalBar.clear();
         }
     }
 
     @FXML
     void modifyName(ActionEvent event) {
-        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
-        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
-            searchProfessionalBar.setText("");
+
+
+        String noSpace = profName.getText().replaceAll("\\s","");
+        System.out.println(noSpace);
+        if(noSpace == null||noSpace==""||noSpace.length()<1) {
+            searchProfessionalBar.clear();
         }
         else{
+            System.out.println("HEeeereE");
             selectedProf.name = (profName.getText());
             profName.clear();
             dir.updateProfessional(selectedProf);
+            setAllProfList();
             allProfList.refresh();
             //setAllProfList();
             profName.clear();
@@ -518,6 +540,52 @@ public class EditProfScreenController extends AbsController {
             addNewProf.setFont(Font.font("System",20));
             deleteProf.setFont(Font.font("System",20));
         }
+    }
+
+    private void clearAllFields(){
+        allTagsList.setItems(FXCollections.observableArrayList());
+        allTagsList.refresh();
+        allTitleList.setItems((FXCollections.observableArrayList()));
+        allTitleList.refresh();
+        curTagsList.setItems(FXCollections.observableArrayList());
+        curTagsList.refresh();
+        curTitleList.setItems(FXCollections.observableArrayList());
+        curTitleList.refresh();
+        profName.setText("");
+        profName.setPromptText("");
+    }
+
+    private void killButtons(){
+        deleteTitle.setOpacity(.5);
+        deleteTag.setOpacity(.5);
+        addTitle.setOpacity(.5);
+        addTag.setOpacity(.5);
+        deleteProf.setOpacity(.5);
+        modifyName.setOpacity(.5);
+        addNewProf.setOpacity(.5);
+        modifyName.setDisable(true);
+        deleteTitle.setDisable(true);
+        deleteTag.setDisable(true);
+        addTitle.setDisable(true);
+        addTag.setDisable(true);
+        deleteProf.setDisable(true);
+        addNewProf.setDisable(true);
+
+    }
+
+    private void activateButtons(){
+        deleteTitle.setOpacity(1.0);
+        deleteTag.setOpacity(1.0);
+        addTitle.setOpacity(1.0);
+        addTag.setOpacity(1.0);
+        deleteProf.setOpacity(1.0);
+
+        deleteTitle.setDisable(false);
+        deleteTag.setDisable(false);
+        addTitle.setDisable(false);
+        addTag.setDisable(false);
+        deleteProf.setDisable(false);
+
     }
 
 
