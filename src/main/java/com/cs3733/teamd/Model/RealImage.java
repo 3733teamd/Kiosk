@@ -9,10 +9,10 @@ public class RealImage implements ImageInterface {
     public RealImage() {
     }
     @Override
-    public Image display(int floor) {
+    public Image display(int floorNum) {
         Image flr_img ;
         if(ApplicationConfiguration.getInstance().getHospital() == null) {
-            switch (floor) {
+            switch (floorNum) {
                 case 1:
                     flr_img = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser1.png"));
                     break;
@@ -78,8 +78,8 @@ public class RealImage implements ImageInterface {
             }
         } else {
             Hospital h = ApplicationConfiguration.getInstance().getHospital();
-            if(h.getFloorSet().contains(floor)) {
-                String floorPath = h.getImagePath(floor);
+            if(h.getFloorSet().contains(floorNum)) {
+                String floorPath = h.getImagePath(floorNum);
                 if(floorPath == null) {
                     System.err.println("Bad Floor Path");
                     return null;

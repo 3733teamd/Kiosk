@@ -4,12 +4,13 @@ import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Database.DBHandler;
 import javafx.application.Platform;
 
-import javax.annotation.processing.SupportedSourceVersion;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class Directory implements DirectoryInterface {
     private List<Professional> allProfs = new ArrayList<Professional>();
     private List<ProTitle> titles = new ArrayList<ProTitle>();
     private DBHandler dbHandler;
+    public HashMap<String,Integer> floorNums;
+    public HashMap<Integer,String> floorNames;
 
     private Directory( ){}
 
@@ -50,6 +53,35 @@ public class Directory implements DirectoryInterface {
         this.nextNodeID = nextNodeID;
         this.nextProfID = nextProfID;
         this.titles = titles;
+        floorNums = new HashMap<>();
+        floorNames = new HashMap<>();
+        List<String> tempFloorNames = new LinkedList<>();
+        List<Integer> tempFloorNums = new LinkedList<>();
+        tempFloorNames.add("Flk 1");
+        tempFloorNames.add("Flk 2");
+        tempFloorNames.add("Flk 3");
+
+        tempFloorNums.add(new Integer(1));
+        tempFloorNums.add(new Integer(2));
+        tempFloorNums.add(new Integer(3));
+
+        for(int i = 0; i<tempFloorNames.size();i++){
+            floorNames.put(tempFloorNums.get(i),tempFloorNames.get(i));
+            floorNums.put(tempFloorNames.get(i),tempFloorNums.get(i));
+        }
+
+
+
+
+    }
+
+    @Override
+    public HashMap<Integer, String> getFloorNames() {
+        return floorNames;
+    }
+
+    public HashMap<String, Integer> getFloorNums() {
+        return floorNums;
     }
 
     @Override

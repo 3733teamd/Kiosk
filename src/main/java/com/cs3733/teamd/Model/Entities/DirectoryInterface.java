@@ -3,6 +3,7 @@ package com.cs3733.teamd.Model.Entities;
 import com.cs3733.teamd.Controller.IObservable;
 import com.cs3733.teamd.Model.Entities.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -195,5 +196,8 @@ public interface DirectoryInterface {
     void removeObservers();
 
     boolean deleteBugReport(Report report);
+
+    HashMap<String,Integer> getFloorNums();
+    HashMap<Integer,String> getFloorNames();
 
 }

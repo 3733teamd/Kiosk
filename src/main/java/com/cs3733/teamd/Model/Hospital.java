@@ -16,6 +16,7 @@ public class Hospital {
     private Integer dbVersion;
     /// Files for the floor
     private Map<Integer, String> floorFiles;
+    private Map<String, Integer> floorNums;
 
     public boolean hasMultipleLanguages() {
         return multipleLanguages;
@@ -37,11 +38,16 @@ public class Hospital {
 
     private Set<Integer> dbVersions;
 
-    Hospital(String name, String hospitalId, Integer dbVersion, Map<Integer, String> floorFiles) {
+    public Map<String, Integer> getFloorNums() {
+        return floorNums;
+    }
+
+    Hospital(String name, String hospitalId, Integer dbVersion, Map<Integer, String> floorFiles, Map<String, Integer> floorNums) {
         this.name = name;
         this.hospitalId = hospitalId;
         this.dbVersion = dbVersion;
         this.floorFiles = floorFiles;
+        this.floorNums = floorNums;
     }
 
     public void setDbVersion(Integer dbVersion) {
