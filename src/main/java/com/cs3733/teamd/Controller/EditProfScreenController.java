@@ -186,25 +186,11 @@ public class EditProfScreenController extends AbsController {
         createAllProfListListener();
         //allTags listesns for selection
         createAllTagListListener();
-        //you know the drill
         createCurTagListListener();
 
         createAllTitleListListener();
         createCurTitleListListener();
-
-        //disable buttons
-        deleteTitle.setOpacity(.5);
-        deleteTag.setOpacity(.5);
-        addTitle.setOpacity(.5);
-        addTag.setOpacity(.5);
-        deleteProf.setOpacity(.5);
-        modifyName.setOpacity(.5);
-        modifyName.setDisable(true);
-        deleteTitle.setDisable(true);
-        deleteTag.setDisable(true);
-        addTitle.setDisable(true);
-        addTag.setDisable(true);
-        deleteProf.setDisable(true);
+        killButtons();
 
 
         ObservableList list = FXCollections.observableList(drop);
@@ -256,10 +242,12 @@ public class EditProfScreenController extends AbsController {
             @Override
             public void handle(KeyEvent event) {
                 selectedProf = null;
-                clearAllFields();
+
                 //String text = searchTagBar.getText();
 
                 displayResult(searchProfessionalBar.getText() + event.getText());
+                clearAllFields();
+                killButtons();
             }
         });
         searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -324,19 +312,7 @@ public class EditProfScreenController extends AbsController {
                 updateCurrentProfList(newValue);
                 setAllTagsList();
                 setAllTitleList();
-                //change opacity
-                deleteTitle.setOpacity(1.0);
-                deleteTag.setOpacity(1.0);
-                addTitle.setOpacity(1.0);
-                addTag.setOpacity(1.0);
-                deleteProf.setOpacity(1.0);
-                modifyName.setOpacity(1);
-                modifyName.setDisable(false);
-                deleteTitle.setDisable(false);
-                deleteTag.setDisable(false);
-                addTitle.setDisable(false);
-                addTag.setDisable(false);
-                deleteProf.setDisable(false);
+                activateButtons();
 
             }
 
@@ -437,19 +413,18 @@ public class EditProfScreenController extends AbsController {
     @FXML
     void addNewProf(ActionEvent event) {
         String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
-        if(noSpace==null ||noSpace==""||noSpace.length()<=1){
+        if(noSpace==null ||noSpace==""||noSpace.length()<1){
 
         }
         else {
             System.out.println("print" + searchProfessionalBar.getText() + "print");
-            dir.saveProfessional(searchProfessionalBar.getText());
-            searchProfessionalBar.clear();
-            allProfList.setItems(FXCollections.observableArrayList(dir.getProfessionals()));
+            Professional p = dir.saveProfessional(searchProfessionalBar.getText());
+            selectedProf = p;
+            allProfList.setItems(FXCollections.observableArrayList(selectedProf));
             allProfList.refresh();
-            searchProfessionalBar.clear();
 
         }
-        searchProfessionalBar.setText("");
+
     }
 
     @FXML
@@ -459,6 +434,7 @@ public class EditProfScreenController extends AbsController {
             dir.removeTagFromProfessional(selectedProf,selectedCurTag);
             dir.updateProfessional(selectedProf);
             curTagsList.setItems(FXCollections.observableArrayList(selectedProf.getTags()));
+
         }
     }
 
@@ -469,19 +445,28 @@ public class EditProfScreenController extends AbsController {
             System.out.println(dir.removeProfessional(selectedProf));
             setAllProfList();
             allProfList.refresh();
+            selectedProf = null;
+            clearAllFields();
+            killButtons();
+            searchProfessionalBar.clear();
         }
     }
 
     @FXML
     void modifyName(ActionEvent event) {
-        String noSpace = searchProfessionalBar.getText().replaceAll("\\s","");
-        if(noSpace == null||noSpace==""||noSpace.length()<=1) {
-            searchProfessionalBar.setText("");
+
+
+        String noSpace = profName.getText().replaceAll("\\s","");
+        System.out.println(noSpace);
+        if(noSpace == null||noSpace==""||noSpace.length()<1) {
+            searchProfessionalBar.clear();
         }
         else{
+            System.out.println("HEeeereE");
             selectedProf.name = (profName.getText());
             profName.clear();
             dir.updateProfessional(selectedProf);
+            setAllProfList();
             allProfList.refresh();
             //setAllProfList();
             profName.clear();
@@ -535,7 +520,44 @@ public class EditProfScreenController extends AbsController {
         allTagsList.refresh();
         allTitleList.setItems((FXCollections.observableArrayList()));
         allTitleList.refresh();
+        curTagsList.setItems(FXCollections.observableArrayList());
+        curTagsList.refresh();
+        curTitleList.setItems(FXCollections.observableArrayList());
+        curTitleList.refresh();
+        profName.setText("");
         profName.setPromptText("");
+    }
+
+    private void killButtons(){
+        deleteTitle.setOpacity(.5);
+        deleteTag.setOpacity(.5);
+        addTitle.setOpacity(.5);
+        addTag.setOpacity(.5);
+        deleteProf.setOpacity(.5);
+        modifyName.setOpacity(.5);
+        modifyName.setDisable(true);
+        deleteTitle.setDisable(true);
+        deleteTag.setDisable(true);
+        addTitle.setDisable(true);
+        addTag.setDisable(true);
+        deleteProf.setDisable(true);
+
+    }
+
+    private void activateButtons(){
+        deleteTitle.setOpacity(1.0);
+        deleteTag.setOpacity(1.0);
+        addTitle.setOpacity(1.0);
+        addTag.setOpacity(1.0);
+        deleteProf.setOpacity(1.0);
+        modifyName.setOpacity(1);
+        modifyName.setDisable(false);
+        deleteTitle.setDisable(false);
+        deleteTag.setDisable(false);
+        addTitle.setDisable(false);
+        addTag.setDisable(false);
+        deleteProf.setDisable(false);
+
     }
 
 
