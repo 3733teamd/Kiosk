@@ -232,6 +232,7 @@ public class UserScreenController extends MapController {
     }
 
     private void setupImageAndTags() {
+        System.out.println("setupImagesAndTags()");
         boolean loggedIn = (dir.getCurrentUser() != null);
 
         if(floorNum < 1000) {
@@ -496,6 +497,7 @@ public class UserScreenController extends MapController {
     private void setLanguageListener() throws IOException {
 
         //value=(Integer.parseInt( LanguageButton.getValue()));
+
         System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
             //super.switchLanguage();
         super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
@@ -504,6 +506,7 @@ public class UserScreenController extends MapController {
 
 
         setSpanishText();
+
 
     }
 
@@ -528,34 +531,6 @@ public class UserScreenController extends MapController {
         scrollPane.setPrefViewportWidth(256);
         scrollPane.setPrefViewportHeight(256);
 
-
-        // Panning via drag....
-        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
-            }
-        });
-
-        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.SECONDARY) {
-                    double deltaX = event.getX() - lastMouseCoordinates.get().getX();
-                    double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollPane.getViewportBounds().getWidth();
-                    double deltaH = deltaX * (scrollPane.getHmax() - scrollPane.getHmin()) / extraWidth;
-                    double desiredH = scrollPane.getHvalue() - deltaH;
-                    scrollPane.setHvalue(Math.max(0, Math.min(scrollPane.getHmax(), desiredH)));
-
-                    double deltaY = event.getY() - lastMouseCoordinates.get().getY();
-                    double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollPane.getViewportBounds().getHeight();
-                    double deltaV = deltaY * (scrollPane.getHmax() - scrollPane.getHmin()) / extraHeight;
-                    double desiredV = scrollPane.getVvalue() - deltaV;
-                    scrollPane.setVvalue(Math.max(0, Math.min(scrollPane.getVmax(), desiredV)));
-                }
-            }
-        });
     }
 
     //report Bug button pressed
