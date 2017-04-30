@@ -249,8 +249,6 @@ public class EditMapScreenController extends MapController implements IObservabl
 
     @FXML
     public void initialize(){
-
-
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
