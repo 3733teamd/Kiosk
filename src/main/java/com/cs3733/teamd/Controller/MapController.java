@@ -96,7 +96,6 @@ public class MapController extends AbsController {
 
     protected void setZoomAndBars(double zoomPercent, double xBarPosition, double yBarPosition) {
         this.zoomPercent = zoomPercent;
-        System.out.println(zoomPercent);
         setBarPositions(xBarPosition, yBarPosition, true);
     }
 
@@ -192,7 +191,7 @@ public class MapController extends AbsController {
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
                 System.out.println("Hover");
-                label.setText(n.getTags().getFirst().getTagName());
+                label.setText(n.mostSpecificTagName());
                 mapCanvas.getChildren().add(label);
                 label.setLayoutX(getNodeX(n) - 35.0);
                 label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -212,7 +211,6 @@ public class MapController extends AbsController {
                 mapCanvas.getChildren().removeAll(label);
             }
         });
-        System.out.println(n);
         circleNodeMap.put(n, circle);
     }
 

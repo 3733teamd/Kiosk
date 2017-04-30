@@ -93,7 +93,7 @@ public class VisitingBlock {
         if(minutes.length()<2){
             minutes = "0" + minutes;
         }
-        
+
         return (hours + ":" + minutes);
 
     }

@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.textfield.TextFields;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,6 @@ public class EditTagScreenController extends AbsController {
     public Button BackButton;
     public AnchorPane MMGpane;
     @FXML
-    public Button addNewTag;
     public TextField tagNameTxt;
     @FXML
     private Button addProf;
@@ -152,14 +153,18 @@ public class EditTagScreenController extends AbsController {
     @FXML
     public void initialize(){
         topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
-        topTagProperties.maxHeightProperty().bind(tagPropertyPane.heightProperty().multiply(0));
+
         //make some buttons opaque
+        addNewTagBtn.setOpacity(.5);
+        deleteTagBtn.setOpacity(.5);
         addProf.setOpacity(.5);
         deleteProf.setOpacity(.5);
         newTagNameBtn.setOpacity(.5);
         addVisitHours.setOpacity(.5);
         removeVisitBlockButton.setOpacity(.5);
         //disable
+        addNewTagBtn.setDisable(true);
+        deleteTagBtn.setDisable(true);
         removeVisitBlockButton.setDisable(true);
         addVisitHours.setDisable(true);
         selectConnectable.setDisable(true);
@@ -179,20 +184,7 @@ public class EditTagScreenController extends AbsController {
         //System.out.println(names);
         //allProffessionals.setItems(names);
 
-        searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    clearResponsiveFields();
-                    selectedTag= null;
-                    String text = searchTagBar.getText();
 
-                    tagNameTxt.setText(searchTagBar.getText());
-
-                    //System.out.println(text);
-                }
-            }
-        });
         tagList.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tag>() {
                     public void changed(ObservableValue<? extends Tag> ov,
@@ -211,7 +203,8 @@ public class EditTagScreenController extends AbsController {
                             addVisitHours.setOpacity(1.0);
                             addProf.setOpacity(1.0);
                             deleteProf.setOpacity(1.0);
-                            newTagNameBtn.setOpacity(1.0);
+                            deleteTagBtn.setOpacity(1);
+                            //newTagNameBtn.setOpacity(1.0);
                             addVisitHours.setOpacity(1);
                             removeVisitBlockButton.setOpacity(1);
                             removeVisitBlockButton.setDisable(false);
@@ -222,8 +215,10 @@ public class EditTagScreenController extends AbsController {
                             restrictedButton.setDisable(false);
                             addProf.setDisable(false);
                             deleteProf.setDisable(false);
-                            newTagNameBtn.setDisable(false);
+                            //newTagNameBtn.setDisable(false);
                             addVisitHours.setDisable(false);
+                            deleteTagBtn.setDisable(false);
+                            setTagPropertyButtons();
 
                         }else{
                             addProf.setOpacity(.5);
@@ -281,7 +276,9 @@ public class EditTagScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
 
-                displayResult(profSearchField.getText() + event.getText());
+                if(selectedTag!=null) {
+                    displayResult(profSearchField.getText() + event.getText());
+                }
             }
         });
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -293,12 +290,15 @@ public class EditTagScreenController extends AbsController {
                 selectedTag = null;
                 addProf.setOpacity(.5);
                 deleteProf.setOpacity(.5);
-                newTagNameBtn.setOpacity(.5);
+
                 //disable buttons
                 selectConnectable.setDisable(true);
                 addProf.setDisable(true);
                 deleteProf.setDisable(true);
-                newTagNameBtn.setDisable(true);
+
+
+                addNewTagBtn.setDisable(false);
+                addNewTagBtn.setOpacity(1);
                 displayResultAllTag(searchTagBar.getText() + event.getText());
             }
         });
@@ -343,19 +343,39 @@ public class EditTagScreenController extends AbsController {
                 counter = 0;
             }
         });
+        tagNameTxt.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+        selectConnectable.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+        restrictedButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTagPropertyButtons();
+            }
+        });
+
 
     }
 
     @FXML
     void modifyTag(ActionEvent event) {
         String noSpace = tagNameTxt.getText().replaceAll("\\s","");
-        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
-            searchTagBar.setText("");
+        if (noSpace == null ||noSpace==""|| noSpace.length()<1) {
+            //searchTagBar.setText("");
         }
         else {
             selectedTag.setTagName(tagNameTxt.getText());
             dir.updateTag(selectedTag);
             tagList.refresh();
+            tagNameTxt.setPromptText(tagNameTxt.getText());
             tagNameTxt.clear();
         }
         if(selectConnectable.isSelected() != selectedTag.isConnectable()) {
@@ -369,6 +389,7 @@ public class EditTagScreenController extends AbsController {
             dir.updateTag(selectedTag);
             tagList.refresh();
         }
+        setTagPropertyButtons();
 
     }
 
@@ -415,7 +436,6 @@ public class EditTagScreenController extends AbsController {
         tagList.setItems(searchResultsTag);
     }
 
-    //TODO: is deleted from database wrongly, causes fatal error
     @FXML
     void deleteTag(ActionEvent event) {
         if(selectedTag != null){
@@ -429,16 +449,14 @@ public class EditTagScreenController extends AbsController {
     @FXML
     void addTag(ActionEvent event) {
         String noSpace = searchTagBar.getText().replaceAll("\\s","");
-        if (noSpace == null ||noSpace==""|| noSpace.length()<=1) {
+        if (noSpace == null ||noSpace==""|| noSpace.length()<1) {
 
         }
         else {
-            dir.saveTag(searchTagBar.getText());
-            tagList.setItems(FXCollections.observableArrayList(dir.getTags()));
+            Tag t = dir.saveTag(searchTagBar.getText());
+            tagList.setItems(FXCollections.observableArrayList(t));
             tagList.refresh();
-            searchTagBar.clear();
         }
-        searchTagBar.setText("");
     }
 
     public TextField openTimeBox;
@@ -491,5 +509,17 @@ public class EditTagScreenController extends AbsController {
         openTimeBox.clear();
         closingTimeBox.clear();
         profSearchField.clear();
+    }
+
+    public void setTagPropertyButtons(){
+        if(selectedTag.isConnectable() == selectConnectable.isSelected() &&
+                selectedTag.isRestricted() == restrictedButton.isSelected() &&
+                tagNameTxt.getText().equals("")){
+            newTagNameBtn.setDisable(true);
+            newTagNameBtn.setOpacity(.5);
+        }else{
+            newTagNameBtn.setDisable(false);
+            newTagNameBtn.setOpacity(1);
+        }
     }
 }

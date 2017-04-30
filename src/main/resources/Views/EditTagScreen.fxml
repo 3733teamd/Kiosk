@@ -101,26 +101,21 @@
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <SplitPane fx:id="allProfessionals" dividerPositions="0.5, 0.5, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="360.0" HBox.hgrow="ALWAYS">
+                                          <SplitPane fx:id="allProfessionals" dividerPositions="0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="360.0" HBox.hgrow="ALWAYS">
                                              <items>
                                                 <Label text="%allProfs" />
                                                 <ListView fx:id="allProffessionals" prefHeight="659.0" prefWidth="311.0" />
-                                                <Label maxHeight="60.0" minHeight="60.0" text="%choseProf">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                                <TextField fx:id="profSearchField" maxHeight="60.0" minHeight="60.0" prefHeight="15.0" prefWidth="500.0" promptText="%serProf">
+                                             </items>
+                                          </SplitPane>
+                                          <SplitPane dividerPositions="0.02932551319648094, 0.7800586510263929, 0.8533724340175953, 0.5" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0" HBox.hgrow="ALWAYS">
+                                             <items>
+                                                <Label text="%currentProf" />
+                                                <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
+                                                <TextField fx:id="profSearchField" maxHeight="30.0" minHeight="30.0" prefHeight="15.0" prefWidth="500.0" promptText="%serProf">
                                                    <font>
                                                       <Font size="20.0" />
                                                    </font>
                                                 </TextField>
-                                             </items>
-                                          </SplitPane>
-                                          <SplitPane dividerPositions="0.02932551319648094, 0.7800586510263929, 0.8533724340175953" orientation="VERTICAL" prefHeight="684.0" prefWidth="349.0" HBox.hgrow="ALWAYS">
-                                             <items>
-                                                <Label text="%currentProf" />
-                                                <ListView fx:id="currentProfessionals" prefHeight="506.0" prefWidth="195.0" />
                                                 <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="500.0" text="%addProfes" />
                                                 <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="500.0" text="%remProf" />
                                              </items>

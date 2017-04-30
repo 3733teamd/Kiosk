@@ -373,7 +373,7 @@ public class Directory implements DirectoryInterface {
 
     @Override
     public boolean addBugReport(Report report) {
-        boolean result = dbHandler.addBugReport(report.tagText, report.commentText, report.status);
+        boolean result = dbHandler.addBugReport(report.tagText, report.commentText);
         if(!result) {
             System.err.println("Error Adding Bug Report");
             return result;
@@ -435,7 +435,7 @@ public class Directory implements DirectoryInterface {
     }
 
     public boolean deleteBugReport(Report report){
-        boolean result = dbHandler.deleteBugReport(report.tagText, report.commentText, report.status);
+        boolean result = dbHandler.deleteBugReport(report.tagText, report.commentText);
         if(!result) {
             System.err.println("Error Deleting Bug Report");
             return result;
