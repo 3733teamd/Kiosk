@@ -28,9 +28,9 @@ public class TextDirectionGenerator {
         Map<DirectionType, String[]> translationsTemp = new HashMap<DirectionType, String[]>();
         String[] proceedFrom = {"proceed from ",
                 "precdeder desde ",
-                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
-                "Proceder de",
-                "\u7ee7\u7eed"};
+                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065 ",
+                "Proceder de ",
+                "\u7ee7\u7eed "};
         translationsTemp.put(PROCEED_FROM_TAG, proceedFrom);
 
         String[] goStraight = {"proceed straight", "proceder recto",
@@ -85,6 +85,7 @@ public class TextDirectionGenerator {
     static {
         Map<DirectionType, String> tempIcons = new HashMap<DirectionType, String>();
         tempIcons.put(PROCEED_FROM_TAG,"dir_icons/procceed.png");
+        tempIcons.put(GO_STRAIGHT,"dir_icons/procceed.png");
         tempIcons.put(TURN_LEFT,"dir_icons/left.png");
         tempIcons.put(TURN_RIGHT,"dir_icons/right.png");
         tempIcons.put(SLIGHT_LEFT,"dir_icons/slight left.png");
@@ -98,7 +99,6 @@ public class TextDirectionGenerator {
 
     public List<Image> finalImages;
     public List<String> finalDirectionTexts;
-    public List<String> finalLandmarkTexts;
 
     int langIndex;
 
@@ -111,6 +111,9 @@ public class TextDirectionGenerator {
     public TextDirectionGenerator(List<Node> pathPoints, int onFloor) {
         this.pathPoints = pathPoints;
         this.onFloor = onFloor;
+        this.finalImages = new ArrayList<>();
+        this.finalDirectionTexts = new ArrayList<>();
+
         switch (ApplicationConfiguration.getInstance().getCurrentLanguage()) {
             case ENGLISH:
                 this.langIndex = 0;
@@ -226,16 +229,15 @@ public class TextDirectionGenerator {
         List<Direction> reducedDirections = new ArrayList<Direction>();
         Direction lastDirection = null;
         for (Direction currentDirection : directions) {
-            if(lastDirection == null) {
-                lastDirection = currentDirection;
-                continue;
+            if(lastDirection != null) {
+                if (!(lastDirection.directionType == GO_STRAIGHT && currentDirection.directionType == GO_STRAIGHT &&
+                        lastDirection.nearbyTag == currentDirection.nearbyTag)) {
+                    reducedDirections.add(currentDirection);
+                }
             }
-            if (lastDirection.directionType == GO_STRAIGHT && currentDirection.directionType == GO_STRAIGHT &&
-                    lastDirection.nearbyTag == currentDirection.nearbyTag) {
-                lastDirection = currentDirection;
-                continue;
+            else {
+                reducedDirections.add(currentDirection);
             }
-            reducedDirections.add(currentDirection);
             lastDirection = currentDirection;
         }
         return reducedDirections;
@@ -243,54 +245,76 @@ public class TextDirectionGenerator {
 
     private void populateDirections(List<Direction> directions) {
         //Clear saved directions
-        finalDirectionTexts = new ArrayList<>();
-        finalLandmarkTexts = new ArrayList<>();
-        finalImages = new ArrayList<>();
+        finalDirectionTexts.clear();
+        finalImages.clear();
 
 
         boolean isFirstElement = true;
         for (Direction d : directions) {
             String directionStepText = getTranslation(d, langIndex);
 
+            String andText = "";
+            String nearbyLocText = "";
+            switch (langIndex) {
+                case 0:
+                    andText = "and then";
+                    nearbyLocText = "Nearby location";
+                    break;
+                case 1:
+                    andText = "y";
+                    nearbyLocText = "Ubicaci\u00F3n cercana";
+                    break;
+                case 2:
+                    andText = "et alors";
+                    nearbyLocText = "Emplacement proche";
+                    break;
+                case 3:
+                    andText = "e depois";
+                    nearbyLocText = "Localiza\u00E7\u00E3o pr\u00F3xima";
+                    break;
+                case 4:
+                    andText = "\u63a5\u7740";
+                    nearbyLocText = "\u5173\u95ED\u4F4D\u7F6E";
+                    break;
+                default:
+                    System.err.println("UNKNOWN LANGINDEX");
+            }
+
             if (isFirstElement && (directionStepText != null)) {
-//                directionStepText = directionStepText.replaceFirst(directionStepText.substring(0,1),directionStepText.substring(0,1).toUpperCase());
-                directionStepText = directionStepText.substring(0, 1).toUpperCase() + directionStepText.substring(1);
                 isFirstElement = false;
-            } else {
-                switch (langIndex) {
-                    case 0:
-                        directionStepText = "and then " + directionStepText;
-                        break;
-                    case 1:
-                        directionStepText = "y " + directionStepText;
-                        break;
-                    case 2:
-                        directionStepText = "et alors " + directionStepText;
-                        break;
-                    case 3:
-                        directionStepText = "e depois " + directionStepText;
-                        break;
-                    case 4:
-                        directionStepText = "\u63a5\u7740 " + directionStepText;
-                        break;
+            }
+            else {
+                directionStepText = andText +" " + directionStepText;
+            }
+            directionStepText = directionStepText.substring(0, 1).toUpperCase() + directionStepText.substring(1);
+            if (d.directionType != PROCEED_FROM_TAG) {
+                directionStepText+=".";
+            }
+
+            if (d.nearbyTag != null) {
+                if (d.directionType == PROCEED_FROM_TAG) {
+                    directionStepText += d.nearbyTag.getTagName() + ".";
+                }
+                else {
+                    directionStepText += " " + nearbyLocText + ": " + d.nearbyTag.getTagName() + ".";
                 }
             }
 
             finalDirectionTexts.add(directionStepText);
-            finalLandmarkTexts.add(d.nearbyTag.toString());
             finalImages.add(new Image(getClass().getClassLoader().getResourceAsStream(iconFilePaths.get(d.directionType))));
         }
     }
 
     // This method will generate text directions from the pathPoints
-    public void generateTextDirections() {
+    public List<String> generateTextDirections() {
         Collections.reverse(this.pathPoints);
         List<Direction> directions = reduceDirections(generateDirections());
         for(Direction d: directions) {
-            System.out.println("DirectionType:"+d.directionType+"NearbyTag:"+d.nearbyTag);
+            System.out.println("DirectionType:"+d.directionType+" NearbyTag:"+d.nearbyTag);
         }
         Collections.reverse(this.pathPoints);
         populateDirections(directions);
+        return this.finalDirectionTexts;
     }
 
 }

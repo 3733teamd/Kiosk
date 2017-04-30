@@ -59,7 +59,7 @@ public class Direction {
             return GO_STRAIGHT;
         }
         else if(Math.abs(angle) < FULL_THRESHOLD) {
-            return (angle < 0 ? SLIGHT_RIGHT : SLIGHT_LEFT);
+            return (angle > 0 ? SLIGHT_RIGHT : SLIGHT_LEFT);
         }
 //        else if (Math.abs(angle) < SHARP_THRESHOLD) {
 //            return (angle < 0 ? TURN_RIGHT : TURN_LEFT);
@@ -68,7 +68,7 @@ public class Direction {
 //            return (angle < 0 ? SHARP_RIGHT : SHARP_LEFT);
 //        }
         else {
-            return (angle < 0 ? TURN_RIGHT : TURN_LEFT);
+            return (angle > 0 ? TURN_RIGHT : TURN_LEFT);
         }
     }
 

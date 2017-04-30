@@ -1,13 +1,10 @@
 package com.cs3733.teamd.Controller;
 
+import com.cs3733.teamd.Controller.KioskGame.src.game.GameMain;
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.cs3733.teamd.Model.Entities.Directory;
-import com.cs3733.teamd.Model.Entities.DirectoryInterface;
-import com.cs3733.teamd.Model.Entities.Node;
-import com.cs3733.teamd.Model.Entities.Professional;
-import com.cs3733.teamd.Model.Entities.Tag;
-import com.cs3733.teamd.Controller.KioskGame.src.game.GameMain;
+import com.cs3733.teamd.Model.Entities.*;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -20,26 +17,17 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.textfield.TextFields;
-import java.lang.Object;
-import javafx.application.Platform;
-
 
 import java.io.IOException;
 import java.util.*;
@@ -302,8 +290,7 @@ public class UserScreenController extends MapController {
 //        for(String directionString: directionsArray) {
 //            output += directionString + "\n";
 //        }
-        dirList = FXCollections.observableArrayList(directionsArray);
-        directions.setItems(dirList);
+        directions.setItems(FXCollections.observableArrayList(g.generateTextDirections()));
         directions.setCellFactory(dir -> new ListCell<String>() {
             ImageView iconView = new ImageView();
 
@@ -311,39 +298,16 @@ public class UserScreenController extends MapController {
             @Override
             protected void updateItem(String dir, boolean empty) {
                 super.updateItem(dir,empty);
-                if(empty) {
+                if(empty || dir == "") {
                     setText(null);
                     setGraphic(null);
                 } else {
- //                   for (TextDirectionGenerator.Direction d : dirText) {
-                        if (dir.contains("proceed from") || dir.contains("Proceed from")) {
-                            System.out.println(".PROCEED_FROM_TAG");
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
-                        }
-                        else if (dir.contains("straight")) {
-                            System.out.println(".go straight");
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/straight.png")));
-                        } else if (dir.contains("turn left")) {
-                            System.out.println(".turn left");
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-                        } else if (dir.contains("slight left")) {
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
-                        }else if (dir.contains("turn right")) {
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
-                        } else if (dir.contains("slight right")) {
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
-                        }else if (dir.contains("arrive")) {
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
-                        }else if (dir.contains("elevator")) {
-                            System.out.println(".proccede to elevator");
-                            iconView.setImage(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
-                        }
-                        setGraphic(iconView);
-                        iconView.setFitHeight(50);
-                        iconView.setFitWidth(50);
-                        setText(dir);
+                    iconView.setImage(g.finalImages.get(g.finalDirectionTexts.indexOf(dir)));
+                    setGraphic(iconView);
+                    iconView.setFitHeight(50);
+                    iconView.setFitWidth(50);
+                    setText(dir);
                 }
-//                i=i+1;
             }
         });
 
