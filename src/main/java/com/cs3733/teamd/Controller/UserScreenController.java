@@ -297,11 +297,11 @@ public class UserScreenController extends MapController {
 
     private void drawPath() {
         TextDirectionGenerator g = new TextDirectionGenerator(pathNodes, onFloor);
-        List<String> directionsArray = g.generateTextDirections();
-        String output = "";
-        for(String directionString: directionsArray) {
-            output += directionString + "\n";
-        }
+        g.generateTextDirections();
+//        String output = "";
+//        for(String directionString: directionsArray) {
+//            output += directionString + "\n";
+//        }
         dirList = FXCollections.observableArrayList(directionsArray);
         directions.setItems(dirList);
         directions.setCellFactory(dir -> new ListCell<String>() {

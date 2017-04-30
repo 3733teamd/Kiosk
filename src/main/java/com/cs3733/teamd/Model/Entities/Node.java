@@ -1,7 +1,6 @@
 package com.cs3733.teamd.Model.Entities;
 
 import java.awt.*;
-import java.util.List;
 import java.util.LinkedList;
 
 /**
@@ -147,5 +146,18 @@ public class Node {
             }
         }
         return false;
+    }
+
+    public Tag getMostSpecificTag() {
+        int minNodesInTag = -1;
+        Tag mostSpecificTag = null;
+        for (Tag t : tags) {
+            int countNodesInTag = t.getNodes().size();
+            if (countNodesInTag < minNodesInTag || minNodesInTag == -1) {
+                minNodesInTag = countNodesInTag;
+                mostSpecificTag = t;
+            }
+        }
+        return mostSpecificTag;
     }
 }

@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 
 import java.util.*;
 
+import static com.cs3733.teamd.Model.DirectionType.*;
+
 /**
  * Created by Stephen on 4/13/2017.
  *
@@ -12,72 +14,60 @@ import java.util.*;
  */
 public class TextDirectionGenerator {
 
-
-    private static double SLIGHT_THRESHOLD = 20.0;
-    private static double FULL_THRESHOLD = 45.0;
-
     private boolean endAtElevator;
 
-    private List<Node> points;
+    private List<Node> pathPoints;
 
     private int onFloor;
 
-    private List<String> pointsOfInterestNames;
-
-    /**
-     * Creates a Text Direction Generator
-     * @param points - Points to Create Text Directions from
-     */
-    public TextDirectionGenerator(List<Node> points, int onFloor) {
-        this.points = points;
-        this.onFloor = onFloor;
-        this.pointsOfInterestNames = new ArrayList<String>();
-    }
-
-    private static Map<Direction, String[]> getTranslations() { //Eng, Span, Fran, Port, Chine
-        Map<Direction, String[]> translations = new HashMap<Direction, String[]>();
-        String[] proceedFrom = { "proceed from ",
+    private static final Map<DirectionType, String[]> translations;  //Eng, Span, Fran, Port, Chine
+    static {
+        /**
+         *
+         */
+        Map<DirectionType, String[]> translationsTemp = new HashMap<DirectionType, String[]>();
+        String[] proceedFrom = {"proceed from ",
                 "precdeder desde ",
-        "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
-        "Proceder de",
-        "\u7ee7\u7eed"};
-        translations.put(Direction.PROCEED_FROM_TAG, proceedFrom);
+                "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
+                "Proceder de",
+                "\u7ee7\u7eed"};
+        translationsTemp.put(PROCEED_FROM_TAG, proceedFrom);
 
-        String[] goStraight = { "proceed straight", "proceder recto",
+        String[] goStraight = {"proceed straight", "proceder recto",
                 "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 tout droit",
                 "Proceder de",
                 "\u76f4\u884c"};
-        translations.put(Direction.GO_STRAIGHT, goStraight);
+        translationsTemp.put(GO_STRAIGHT, goStraight);
 
         String[] turnLeft = {"turn left", "girar a la izquierda",
                 "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0067\u0061\u0075\u0063\u0068\u0065",
                 "\u0076\u0069\u0072\u0065 \u00e0 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061",
                 "\u8f6c\u5de6"};
-        translations.put(Direction.TURN_LEFT, turnLeft);
+        translationsTemp.put(TURN_LEFT, turnLeft);
 
         String[] slightLeft = {"make a slight left", "hacer un poco a la izquierda",
                 "\u0046\u0061\u007a\u0065\u0072 \u0075\u006d\u0061 \u006c\u0069\u0067\u0065\u0069\u0072\u0061 \u0065\u0073\u0071\u0075\u0065\u0072\u0064\u0061",
                 "Fazer uma ligeira esquerda",
                 "\u7a0d\u5fae\u7559\u4e0b"};
-        translations.put(Direction.SLIGHT_LEFT, slightLeft);
+        translationsTemp.put(SLIGHT_LEFT, slightLeft);
 
         String[] turnRight = {"turn right", "dobla a la derecha",
                 "\u0074\u006f\u0075\u0072\u006e\u0065\u007a \u00e0 \u0064\u0072\u006f\u0069\u0074\u0065",
                 "Proceder de",
                 "\u53f3\u8f6c"};
-        translations.put(Direction.TURN_RIGHT, turnRight);
+        translationsTemp.put(TURN_RIGHT, turnRight);
 
         String[] slightRight = {"make a slight right", "hacer un ligero derecho",
                 "\u0050\u0072\u006f\u0063\u00e8\u0064\u0065 \u0064\u0065",
                 "\u0076\u0069\u0072\u0065 \u00e0 \u0064\u0069\u0072\u0065\u0069\u0074\u0061",
                 "\u7ee7\u7eed"};
-        translations.put(Direction.SLIGHT_RIGHT, slightRight);
+        translationsTemp.put(SLIGHT_RIGHT, slightRight);
 
         String[] arrived = {"you have arrived at your destination", "has llegado a tu destino",
                 "\u0056\u006f\u0075\u0073 \u00ea\u0074\u0065\u0073 \u0061\u0072\u0072\u0069\u0076\u00e9 \u00e0 \u0076\u006f\u0074\u0072\u0065 \u0064\u0065\u0073\u0074\u0069\u006e\u0061\u0074\u0069\u006f\u006e",
                 "\u0056\u006f\u0063\u00ea \u0063\u0068\u0065\u0067\u006f\u0075 \u0061\u006f \u0073\u0065\u0075 \u0064\u0065\u0073\u0074\u0069\u006e\u006f",
                 "\u4f60\u5df2\u5230\u8fbe\u4f60\u7684\u76ee\u7684\u5730"};
-        translations.put(Direction.ARRIVED, arrived);
+        translationsTemp.put(ARRIVED, arrived);
 
         String[] proceedToElevator = {
                 "take the elevator to your destination floor",
@@ -86,278 +76,221 @@ public class TextDirectionGenerator {
                 "Pegue o elevador \u0061\u0074\u00e9 o andar de destino",
                 "\u628a\u7535\u68af\u5e26\u5230\u4f60\u7684\u76ee\u7684\u5730\u697c\u5c42"
         };
-        translations.put(Direction.PROCEED_TO_ELEVATOR, proceedToElevator);
-        return translations;
+        translationsTemp.put(PROCEED_TO_ELEVATOR, proceedToElevator);
 
+        translations = Collections.unmodifiableMap(translationsTemp);
     }
-    // This method will generate text directions from the points
 
-
-    public List<String> generateTextDirections() {
-        Collections.reverse(this.points);
-        List<Direction> directions = reduceDirections(
-                generateDirections()
-        );
-        for(Direction d: directions) {
-            System.out.println(d);
-        }
-        Collections.reverse(this.points);
-        return getDirectionsInLanguage(directions, pointsOfInterestNames);
+    private static final Map<DirectionType, String> iconFilePaths;  //Eng, Span, Fran, Port, Chine
+    static {
+        Map<DirectionType, String> tempIcons = new HashMap<DirectionType, String>();
+        tempIcons.put(PROCEED_FROM_TAG,"dir_icons/procceed.png");
+        tempIcons.put(TURN_LEFT,"dir_icons/left.png");
+        tempIcons.put(TURN_RIGHT,"dir_icons/right.png");
+        tempIcons.put(SLIGHT_LEFT,"dir_icons/slight left.png");
+        tempIcons.put(SLIGHT_RIGHT,"dir_icons/slight right.png");
+        tempIcons.put(ARRIVED,"dir_icons/arrive.png");
+        tempIcons.put(PROCEED_TO_ELEVATOR,"dir_icons/elevator.png");
+        iconFilePaths = Collections.unmodifiableMap(tempIcons);
     }
-    public List<Image> generateIcons() {
-        Collections.reverse(this.points);
-        List<Image> icons = new ArrayList<Image>();
-        List<Direction> directions = reduceDirections(
-                generateDirections()
-        );
-        for (Direction d: directions) {
-            System.out.println("iconblue: "+d);
 
-            if (d.equals(Direction.PROCEED_FROM_TAG)) {
-                System.out.println(".PROCEED_FROM_TAG");
-                //   case PROCEED_FROM_TAG:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/procceed.png")));
-            }
-            if (d.equals(Direction.GO_STRAIGHT)) {
-                System.out.println(".go straight");
-//                case GO_STRAIGHT:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-            }
-            if (d.equals(Direction.TURN_LEFT)) {
-                System.out.println(".turn left");
-                //   case TURN_LEFT:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/left.png")));
-            }
-            if (d.equals(Direction.SLIGHT_LEFT)) {
-                //case SLIGHT_LEFT:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight left.png")));
-            }
-            if (d.equals(Direction.TURN_RIGHT)) {
-                //              case TURN_RIGHT:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/right.png")));
-            }
-            if (d.equals(Direction.SLIGHT_RIGHT)) {
-                //case SLIGHT_RIGHT:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/slight right.png")));
-            }
-            if (d.equals(Direction.ARRIVED)) {
 
-                //case ARRIVED:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/arrive.png")));
-            }
-            if (d.equals(Direction.PROCEED_TO_ELEVATOR)) {
-                //case PROCEED_TO_ELEVATOR:
-                icons.add(new Image(getClass().getClassLoader().getResourceAsStream("dir_icons/elevator.png")));
-            }
-        }
-        Collections.reverse(this.points);
-        return icons;
-    }
-    public static List<String> getDirectionsInLanguage(
-            List<Direction> directions,
-            List<String> pointsOfInterestNames) {
-        int textIndex=0;
-        if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.ENGLISH){
-            textIndex=0;
-        }
-        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.SPANISH){
-            textIndex=1;
-        }
-        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.FRENCH){
-            textIndex=2;
-        }
-        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.PORTUGUESE){
-            textIndex=3;
-        }
-        else  if(ApplicationConfiguration.getInstance().getCurrentLanguage() ==ApplicationConfiguration.Language.CHINESE){
-            textIndex=4;
-        }
-        else{
-            textIndex=0;
-        }
-         /*textIndex = (ApplicationConfiguration.getInstance().getCurrentLanguage()
-                == ApplicationConfiguration.Language.ENGLISH) ? 0 : 1;*/
-        List<String> directionList = new ArrayList<String>();
-        String tagName = (pointsOfInterestNames.size() > 0) ? pointsOfInterestNames.get(0) : "starting point.";
-        boolean isFirstElement = true;
-        for(Direction d: directions) {
-            String addition = "";
-            switch(d) {
-                case PROCEED_FROM_TAG:
-                    addition = getTranslations().get(d)[textIndex] + tagName;
-                    break;
-                case GO_STRAIGHT:
-                case TURN_LEFT:
-                case SLIGHT_LEFT:
-                case TURN_RIGHT:
-                case SLIGHT_RIGHT:
-                case ARRIVED:
-                case PROCEED_TO_ELEVATOR:
-                    addition = getTranslations().get(d)[textIndex];
-                    break;
-                default:
 
-            }
+    public List<Image> finalImages;
+    public List<String> finalDirectionTexts;
+    public List<String> finalLandmarkTexts;
 
-            if(isFirstElement && (addition.length() > 0)) {
-                addition = addition.replaceFirst(addition.substring(0,1),addition.substring(0,1).toUpperCase());
-                isFirstElement = false;
-            } else {
-                if(textIndex == 0) {
-                    addition = "and then "+addition;
-                } else if(textIndex==1) {
-                    addition = "y "+addition;
-                }
-                else if(textIndex==2) {
-                    addition = "et alors "+addition;
-                }
-                else if(textIndex==3) {
-                    addition = "e depois "+addition;
-                }
-                else if(textIndex==4) {
-                    addition = "\u63a5\u7740 "+addition;
-                }
+    int langIndex;
 
-            }
-            directionList.add(addition);
-        }
-        return directionList;
-    }
 
     /**
-     * Reduce the directions so that they are simplified
-     * @param directions - directions that need to be reduced
-     * @return - Reduced Direction Set
+     * Creates a Text Direction Generator
+     *
+     * @param pathPoints - Points to Create Text Directions from
      */
-    public List<Direction> reduceDirections(List<Direction> directions) {
-        List<Direction> reducedDirections = new ArrayList<Direction>();
-        boolean lastGoStraight = false;
-        for(Direction d: directions) {
-            if(lastGoStraight) {
-                if(d == Direction.GO_STRAIGHT) {
-                    continue;
-                } else {
-                    lastGoStraight = false;
-                }
-            }
-            if(d == Direction.GO_STRAIGHT) {
-                lastGoStraight = true;
-            }
-            reducedDirections.add(d);
+    public TextDirectionGenerator(List<Node> pathPoints, int onFloor) {
+        this.pathPoints = pathPoints;
+        this.onFloor = onFloor;
+        switch (ApplicationConfiguration.getInstance().getCurrentLanguage()) {
+            case ENGLISH:
+                this.langIndex = 0;
+                break;
+            case SPANISH:
+                this.langIndex = 1;
+                break;
+            case FRENCH:
+                this.langIndex = 2;
+                break;
+            case PORTUGUESE:
+                this.langIndex = 3;
+                break;
+            case CHINESE:
+                this.langIndex = 4;
+                break;
+            default:
+                this.langIndex = 0;
         }
-        return reducedDirections;
     }
 
-    /**
-     * Get a direction from a previous (x,y) and current (x,y) and a next (x,y)
-     * @param prevToCurrentX - delta from previous x to current x
-     * @param prevToCurrentY - delta from previous y to current y
-     * @param currentToNextX - delta from current x to next x
-     * @param currentToNextY - delta from current y to next y
-     * @return - Direction of travel about the current point
-     */
-    public static Direction getDirectionFromDeltas(
-            double prevToCurrentX,
-            double prevToCurrentY,
-            double currentToNextX,
-            double currentToNextY
-    ) {
-        // What is the angle between the two lines?
-        double previousToCurrentAngle = Math.toDegrees(Math.atan2(prevToCurrentY, prevToCurrentX));
-        double currentToNewAngle = Math.toDegrees(Math.atan2(currentToNextY, currentToNextX));
-
-        double angle = currentToNewAngle - previousToCurrentAngle;
-
-        //System.out.println(previousToCurrentAngle+" "+currentToNewAngle+" "+angle);
-        if(Math.abs(angle) <= SLIGHT_THRESHOLD) {
-            return Direction.GO_STRAIGHT;
-        } else if(Math.abs(angle) > 180.0){
-            return Direction.GO_STRAIGHT;
-        }else if(Math.abs(angle) < FULL_THRESHOLD) {
-            if(angle > 0) {
-                return Direction.SLIGHT_RIGHT;
-            } else {
-                return  Direction.SLIGHT_LEFT;
-            }
-        } else {
-            if(angle > 0) {
-                return Direction.TURN_RIGHT;
-            } else {
-                return Direction.TURN_LEFT;
-            }
-        }
-
+    public static String getTranslation(Direction d, int languageIndex) {
+//        DirectionType dirType = d.directionType;
+//        switch(dirType) {
+//            case PROCEED_FROM_TAG:
+//            case GO_STRAIGHT:
+//            case TURN_LEFT:
+//            case SHARP_LEFT:
+//            case SLIGHT_LEFT:
+//            case TURN_RIGHT:
+//            case SLIGHT_RIGHT:
+//            case SHARP_RIGHT:
+//            case ARRIVED:
+//                //For most all cases, use the landmark version
+//                String formatStr = translations.get(dirType.toString())[languageIndex];
+//                return String.format(formatStr,d.nearbyTag.getTagName());
+//            case PROCEED_TO_ELEVATOR:
+//                //For elevator do not referance landmarks
+//                return translations.get(dirType.toString())[languageIndex];
+//            default:
+//                System.err.println("UNKNOWN DIRECTION TYPE PROVIDED.");
+//        }
+//        return null;
+        String result = translations.get(d.directionType)[languageIndex];
+        if (result == null) System.err.println("UNKNOWN DIRECTION TYPE");
+        return result;
     }
 
-    public List<Direction> generateDirections() {
+    // This method will generate text directions from the pathPoints
+
+    private List<Direction> generateDirections() {
         ArrayList<Direction> directions = new ArrayList<Direction>();
         System.out.println("Generating Directions..");
-        Node currentPoint, previousPoint, nextPoint;
-        for(int i = 0; i < points.size(); i++) {
-            currentPoint = points.get(i);
-            if(currentPoint.getFloor() != onFloor) {
+        Node currentNode, previousNode, nextNode;
+
+        for (int i = 0; i < pathPoints.size(); i++) {
+            currentNode = pathPoints.get(i);
+            //Do not get directions if node is node on current floor being displayed
+            if (currentNode.getFloor() != onFloor) {
                 continue;
             }
             // These next two if clauses make sure we have a next point and a previous point
-            if(i!=0) {
-                previousPoint = points.get(i - 1);
+            if (i != 0) {
+                previousNode = pathPoints.get(i - 1);
             } else {
-                previousPoint = null;
+                previousNode = null;
             }
 
-            if(i < (points.size() - 1)) {
-                nextPoint = points.get(i + 1);
+            if (i < (pathPoints.size() - 1)) {
+                nextNode = pathPoints.get(i + 1);
             } else {
-                nextPoint = null;
+                nextNode = null;
             }
 
-            if(nextPoint == null) {
-                directions.add(Direction.ARRIVED);
-                break;
-            } else if(nextPoint.getFloor() != onFloor) {
-                directions.add(Direction.PROCEED_TO_ELEVATOR);
+            //If no next node, then we have arrived at destination
+            if (nextNode == null) {
+                directions.add(new Direction(ARRIVED, null));
                 break;
             }
-            if(
-                    (previousPoint == null) ||
-                            (previousPoint.getFloor() != currentPoint.getFloor())
+            //If next node has changed floor, we must be entering an elevator
+            if (nextNode.getFloor() != onFloor) {
+                directions.add(new Direction(PROCEED_TO_ELEVATOR, null));
+                break;
+            }
+            //If there is no previous node or we've just changed floor, proceed from current location
+            if (
+                    (previousNode == null) ||
+                            (previousNode.getFloor() != currentNode.getFloor())
                     ) {
-                directions.add(Direction.PROCEED_FROM_TAG);
-                if(currentPoint.getTags().size() > 0) {
-                    pointsOfInterestNames.add(currentPoint.getTags().getFirst().getTagName());
-                }
+                directions.add(new Direction(PROCEED_FROM_TAG, currentNode.getMostSpecificTag()));
                 // Continue to next loop
                 continue;
             }
 
-            // nextPoint and previousPoint should not be null now
-            double deltaPrevToCurrentX = currentPoint.getX() - previousPoint.getX();
-            double deltaPrevToCurrentY = currentPoint.getY() - previousPoint.getY();
-
-            double deltaCurrentToNextX = nextPoint.getX() - currentPoint.getX();
-            double deltaCurrentToNextY = nextPoint.getY() - currentPoint.getY();
-
-            Direction d = getDirectionFromDeltas(
-                    deltaPrevToCurrentX, deltaPrevToCurrentY, deltaCurrentToNextX, deltaCurrentToNextY
-            );
-            if(d != Direction.GO_STRAIGHT) {
-                System.out.println(currentPoint.getTags().size());
-            }
+            //If no special case, then generate a direction based on path angles
+            Direction d = new Direction(previousNode, currentNode, nextNode);
+//            if(d != GO_STRAIGHT) {
+//                System.out.println(currentNode.getTags().size());
+//            }
             directions.add(d);
         }
 
         return directions;
     }
 
-    public enum Direction {
-        PROCEED_FROM_TAG,
-        GO_STRAIGHT,
-        TURN_LEFT,
-        SLIGHT_LEFT,
-        TURN_RIGHT,
-        SLIGHT_RIGHT,
-        PROCEED_TO_ELEVATOR,
-        LEAVE_ELEVATOR,
-        ARRIVED
+    /**
+     * Reduce the directions so that they are simplified
+     *
+     * @param directions - directions that need to be reduced
+     * @return - Reduced DirectionType Set
+     */
+    private List<Direction> reduceDirections(List<Direction> directions) {
+        List<Direction> reducedDirections = new ArrayList<Direction>();
+        Direction lastDirection = null;
+        for (Direction currentDirection : directions) {
+            if(lastDirection == null) {
+                lastDirection = currentDirection;
+                continue;
+            }
+            if (lastDirection.directionType == GO_STRAIGHT && currentDirection.directionType == GO_STRAIGHT &&
+                    lastDirection.nearbyTag == currentDirection.nearbyTag) {
+                lastDirection = currentDirection;
+                continue;
+            }
+            reducedDirections.add(currentDirection);
+            lastDirection = currentDirection;
+        }
+        return reducedDirections;
     }
+
+    private void populateDirections(List<Direction> directions) {
+        //Clear saved directions
+        finalDirectionTexts = new ArrayList<>();
+        finalLandmarkTexts = new ArrayList<>();
+        finalImages = new ArrayList<>();
+
+
+        boolean isFirstElement = true;
+        for (Direction d : directions) {
+            String directionStepText = getTranslation(d, langIndex);
+
+            if (isFirstElement && (directionStepText != null)) {
+//                directionStepText = directionStepText.replaceFirst(directionStepText.substring(0,1),directionStepText.substring(0,1).toUpperCase());
+                directionStepText = directionStepText.substring(0, 1).toUpperCase() + directionStepText.substring(1);
+                isFirstElement = false;
+            } else {
+                switch (langIndex) {
+                    case 0:
+                        directionStepText = "and then " + directionStepText;
+                        break;
+                    case 1:
+                        directionStepText = "y " + directionStepText;
+                        break;
+                    case 2:
+                        directionStepText = "et alors " + directionStepText;
+                        break;
+                    case 3:
+                        directionStepText = "e depois " + directionStepText;
+                        break;
+                    case 4:
+                        directionStepText = "\u63a5\u7740 " + directionStepText;
+                        break;
+                }
+            }
+
+            finalDirectionTexts.add(directionStepText);
+            finalLandmarkTexts.add(d.nearbyTag.toString());
+            finalImages.add(new Image(getClass().getClassLoader().getResourceAsStream(iconFilePaths.get(d.directionType))));
+        }
+    }
+
+    // This method will generate text directions from the pathPoints
+    public void generateTextDirections() {
+        Collections.reverse(this.pathPoints);
+        List<Direction> directions = reduceDirections(generateDirections());
+        for(Direction d: directions) {
+            System.out.println("DirectionType:"+d.directionType+"NearbyTag:"+d.nearbyTag);
+        }
+        Collections.reverse(this.pathPoints);
+        populateDirections(directions);
+    }
+
 }
