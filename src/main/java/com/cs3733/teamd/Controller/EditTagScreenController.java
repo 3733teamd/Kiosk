@@ -276,7 +276,9 @@ public class EditTagScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
 
-                displayResult(profSearchField.getText() + event.getText());
+                if(selectedTag!=null) {
+                    displayResult(profSearchField.getText() + event.getText());
+                }
             }
         });
         searchTagBar.setOnKeyPressed(new EventHandler<KeyEvent>() {

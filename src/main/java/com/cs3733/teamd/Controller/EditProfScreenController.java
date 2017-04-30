@@ -264,7 +264,9 @@ public class EditProfScreenController extends AbsController {
             public void handle(KeyEvent event) {
                 //String text = searchTagBar.getText();
 
-                displayResultAllTag(searchTagList.getText() + event.getText());
+                if(selectedProf != null) {
+                    displayResultAllTag(searchTagList.getText() + event.getText());
+                }
             }
         });
         profName.setOnKeyPressed(new EventHandler<KeyEvent>() {
