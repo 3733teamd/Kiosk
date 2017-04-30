@@ -253,6 +253,10 @@ public class EditProfScreenController extends AbsController {
                 displayResult(searchProfessionalBar.getText() + event.getText());
                 clearAllFields();
                 killButtons();
+
+                addNewProf.setOpacity(1);
+                addNewProf.setDisable(false);
+
             }
         });
         searchTagList.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -261,6 +265,18 @@ public class EditProfScreenController extends AbsController {
                 //String text = searchTagBar.getText();
 
                 displayResultAllTag(searchTagList.getText() + event.getText());
+            }
+        });
+        profName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(selectedProf!=null){
+                    modifyName.setDisable(false);
+                    modifyName.setOpacity(1);
+                }else{
+                    modifyName.setDisable(true);
+                    modifyName.setOpacity(.5);
+                }
             }
         });
     }
@@ -314,6 +330,8 @@ public class EditProfScreenController extends AbsController {
                                 Professional oldValue, Professional newValue) {
 
 
+                modifyName.setDisable(true);
+                modifyName.setOpacity(.5);
                 updateCurrentProfList(newValue);
                 setAllTagsList();
                 setAllTitleList();
@@ -428,6 +446,8 @@ public class EditProfScreenController extends AbsController {
             allProfList.setItems(FXCollections.observableArrayList(selectedProf));
             allProfList.refresh();
 
+            addNewProf.setDisable(true);
+            addNewProf.setOpacity(.5);
         }
 
     }
@@ -540,12 +560,14 @@ public class EditProfScreenController extends AbsController {
         addTag.setOpacity(.5);
         deleteProf.setOpacity(.5);
         modifyName.setOpacity(.5);
+        addNewProf.setOpacity(.5);
         modifyName.setDisable(true);
         deleteTitle.setDisable(true);
         deleteTag.setDisable(true);
         addTitle.setDisable(true);
         addTag.setDisable(true);
         deleteProf.setDisable(true);
+        addNewProf.setDisable(true);
 
     }
 
@@ -555,8 +577,7 @@ public class EditProfScreenController extends AbsController {
         addTitle.setOpacity(1.0);
         addTag.setOpacity(1.0);
         deleteProf.setOpacity(1.0);
-        modifyName.setOpacity(1);
-        modifyName.setDisable(false);
+
         deleteTitle.setDisable(false);
         deleteTag.setDisable(false);
         addTitle.setDisable(false);
