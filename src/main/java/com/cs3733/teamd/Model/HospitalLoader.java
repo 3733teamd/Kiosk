@@ -128,6 +128,7 @@ public class HospitalLoader {
                 String hospitalId = id;
                 Integer dbVersion = ((Long)hospitalJson.get("dbVersion")).intValue();
                 JSONArray floors = (JSONArray)hospitalJson.get("floors");
+                boolean multipleLanguages = (Boolean)hospitalJson.get("multipleLanguages");
                 Map<Integer, String> floorFiles = new HashMap<Integer, String>();
                 Iterator<Object> it2 = floors.iterator();
                 while(it2.hasNext()) {
@@ -135,6 +136,7 @@ public class HospitalLoader {
                     floorFiles.put(((Long)floorsJson.get("number")).intValue(), (String)floorsJson.get("file"));
                 }
                 Hospital h = new Hospital(name, hospitalId, dbVersion, floorFiles);
+                h.setMultipleLanguages(multipleLanguages);
                 findDbVersions(h);
                 return h;
             }

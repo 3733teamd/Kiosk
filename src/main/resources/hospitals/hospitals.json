@@ -30,11 +30,15 @@
       "hospitalId":"apartment",
       "dbVersion":1,
       "floors": [
-        {"number": 1, "file":"apartment1.png"},
-        {"number": 1001, "file":"apartment1.png"}
+        {"number": 1, "file":"TauKap1.png"},
+        {"number": 2, "file":"TauKap2.png"},
+        {"number": 3, "file":"TauKap3.png"},
+        {"number": 1001, "file":"TauKap1.png"},
+        {"number": 1002, "file":"TauKap2.png"},
+        {"number": 1003, "file":"TauKap3.png"}
       ],
       "multipleLanguages":false
     }
   ],
-  "currentHospital":"apartment"
+  "currentHospital":"faulkner"
 }

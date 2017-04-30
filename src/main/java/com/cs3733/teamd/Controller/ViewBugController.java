@@ -48,13 +48,13 @@ public class ViewBugController extends AbsController {
 
     @FXML
     public void leaveBugs(ActionEvent actionEvent) {
-        /*Stage closeStage= (Stage) exitBugs.getScene().getWindow();
-        closeStage.close();*/
-        try {
-            switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
-        }catch (Exception e){
-            System.out.println(e);
-        }
+        Stage closeStage= (Stage) exitBugs.getScene().getWindow();
+        closeStage.close();
+//        try {
+//            switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
+//        }catch (Exception e){
+//            System.out.println(e);
+//        }
     }
 
 
