@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,8 +19,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="exitBugs" layoutX="488.0" layoutY="332.0" mnemonicParsing="false" onAction="#leaveBugs" text="%Exit" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <Button fx:id="bugDeleteBtn" layoutX="40.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteBug" text="%delBug" />
       <TableView fx:id="table" layoutX="12.0" layoutY="100.0" prefHeight="200.0" prefWidth="577.0">
         <columns>
           <TableColumn fx:id="tagColumn" prefWidth="85.0" text="%Tag" />
@@ -28,5 +27,7 @@
         </columns>
       </TableView>
       <Button fx:id="closeReportBtn" layoutX="239.0" layoutY="340.0" mnemonicParsing="false" onAction="#closeReport" text="%CloseReport" visible="false" />
+      <JFXButton fx:id="bugDeleteBtn" buttonType="RAISED" layoutX="51.0" layoutY="331.0" onAction="#deleteBug" style="-fx-background-color: DCDCDC;" text="%delBug" />
+      <JFXButton fx:id="exitBugs" buttonType="RAISED" layoutX="397.0" layoutY="331.0" onAction="#leaveBugs" style="-fx-background-color: DCDCDC;" text="%Exit" />
    </children>
 </AnchorPane>
