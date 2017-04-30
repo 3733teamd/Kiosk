@@ -1021,13 +1021,12 @@ public class DBHandler {
         }
     }
 
-    public boolean addBugReport(String tag, String comment, String status) {
-        String sqlSelect = "INSERT INTO BugReport (tag, comment, status) VALUES (?,?,?)";
+    public boolean addBugReport(String tag, String comment) {
+        String sqlSelect = "INSERT INTO BugReport (tag, comment) VALUES (?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlSelect);
             statement.setString(1, tag);
             statement.setString(2, comment);
-            statement.setString(3, status);
             //statement.setInt(4, ID);
 
             statement.executeUpdate();
@@ -1039,13 +1038,12 @@ public class DBHandler {
         }
     }
 
-    public boolean deleteBugReport(String tag, String comment, String status) {
-        String sqlDelete = "DELETE FROM BugReport WHERE tag=? AND comment=? AND status=?";
+    public boolean deleteBugReport(String tag, String comment) {
+        String sqlDelete = "DELETE FROM BugReport WHERE tag=? AND comment=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sqlDelete);
             statement.setString(1, tag);
             statement.setString(2, comment);
-            statement.setString(3, status);
             statement.executeUpdate();
             statement.close();
             return true;
@@ -1067,7 +1065,7 @@ public class DBHandler {
                 Report addition = new Report();
                 addition.tagText = rs.getString(1);
                 addition.commentText = rs.getString(2);
-                addition.status = rs.getString(3);
+                addition.status="Not Implemented";
                 reports.add(addition);
             }
 
