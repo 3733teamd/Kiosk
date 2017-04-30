@@ -141,70 +141,21 @@ public class UserScreenController extends MapController {
 
     private Map<Integer, Offset> offsets= new HashMap<Integer, Offset>();
 
-    private void setOffsets() {
-        this.offsets.put(1, new Offset(0, 0));
-        this.offsets.put(2, new Offset(0, 0));
-        this.offsets.put(3, new Offset(0, 0));
-        this.offsets.put(4, new Offset(0, -10));
-        this.offsets.put(5, new Offset(0, 0));
-        this.offsets.put(6, new Offset(0, 0));
-        this.offsets.put(7, new Offset(0, 0));
-        this.offsets.put(101, new Offset(0, 0));
-        this.offsets.put(102, new Offset(0, 0));
-        this.offsets.put(103, new Offset(0, 0));
-        this.offsets.put(104, new Offset(0, 0));
-    }
-
-
     @FXML
     private void initialize()
     {
-        setOffsets();
+        boolean loggedIn = (dir.getCurrentUser() != null);
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
-        System.out.println(dir.getNodes());
-        /*
-            This code will find all of the tags and then all of the professionals and then merge the two.
-            The final result is a list of all the tags and professionals intertwined so that
-            a user can see a list of rooms and a list of professionals...
-         */
-        Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
-        tagAssociations = new HashMap<String, String>();
-        for(Tag t: dir.getTags()) {
-            // Don't add restricted
-            if(t.isRestricted() && (dir.getCurrentUser() == null)) {
-                continue;
-            }
-            professionalTagMerge.put(t.toString(), new ArrayList<String>());
-        }
-        for(Professional p: dir.getProfessionals()) {
-            for(Tag t: p.getTags()) {
-                // Don't add restricted
-                if(t.isRestricted() && (dir.getCurrentUser() == null)) {
-                    continue;
-                }
-                professionalTagMerge.get(t.toString()).add(p.getName());
-            }
-        }
-        // Now convert it into a list...
-        List<String> mergedTagProfessionalList = new ArrayList<String>();
-        for(String tag: professionalTagMerge.keySet()) {
-            for(String professional: professionalTagMerge.get(tag)) {
-                String textDisplay = tag+"-"+professional;
-                mergedTagProfessionalList.add(textDisplay);
-                tagAssociations.put(textDisplay, tag);
-            }
-            mergedTagProfessionalList.add(tag);
-            tagAssociations.put(tag, tag);
-        }
-
-        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
         overrideScrollWheel();
         panMethods();
         // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
         setSpanishText();
 //        directions.setText(output); //dir change type
-        floorMap.setImage(imgInt.display(floorNum));
+        // Belkin
+        setupImageAndTags();
+
+
         floors.clear();
         if(ApplicationConfiguration.getInstance().getHospital() == null) {
             if(floors.size() == 0){
@@ -229,6 +180,12 @@ public class UserScreenController extends MapController {
                 }
             }
 
+        }
+
+        if(!loggedIn) {
+            this.LoginButton.setText(Main.bundle.getString("login"));
+        } else {
+            this.LoginButton.setText(Main.bundle.getString("Logout"));
         }
 
 
@@ -272,6 +229,62 @@ public class UserScreenController extends MapController {
             init=false;
         }
 
+    }
+
+    private void setupImageAndTags() {
+        boolean loggedIn = (dir.getCurrentUser() != null);
+
+        if(floorNum < 1000) {
+            if(!loggedIn) {
+                floorMap.setImage(imgInt.display(onFloor));
+            } else {
+                floorMap.setImage(imgInt.display(onFloor + 1000));
+            }
+        } else {
+            floorMap.setImage(imgInt.display(onFloor));
+        }
+
+        /*
+            This code will find all of the tags and then all of the professionals and then merge the two.
+            The final result is a list of all the tags and professionals intertwined so that
+            a user can see a list of rooms and a list of professionals...
+         */
+        Map<String, List<String>> professionalTagMerge = new HashMap<String, List<String>>();
+        tagAssociations = new HashMap<String, String>();
+
+        System.out.println("Current User: "+loggedIn);
+
+        for(Tag t: dir.getTags()) {
+            // Don't add restricted
+            if(t.isRestricted() && !loggedIn) {
+                continue;
+            } else {
+                professionalTagMerge.put(t.toString(), new ArrayList<String>());
+            }
+        }
+        for(Professional p: dir.getProfessionals()) {
+            for(Tag t: p.getTags()) {
+                // Don't add restricted
+                if(t.isRestricted() && !loggedIn) {
+                    continue;
+                } else {
+                    professionalTagMerge.get(t.toString()).add(p.getName());
+                }
+            }
+        }
+        // Now convert it into a list...
+        List<String> mergedTagProfessionalList = new ArrayList<String>();
+        for(String tag: professionalTagMerge.keySet()) {
+            for(String professional: professionalTagMerge.get(tag)) {
+                String textDisplay = tag+"-"+professional;
+                mergedTagProfessionalList.add(textDisplay);
+                tagAssociations.put(textDisplay, tag);
+            }
+            mergedTagProfessionalList.add(tag);
+            tagAssociations.put(tag, tag);
+        }
+
+        TextFields.bindAutoCompletion(TypeDestination,mergedTagProfessionalList);
     }
 
 
@@ -464,7 +477,7 @@ public class UserScreenController extends MapController {
                     onFloor = new_val.intValue();
                     FloorMenu.setValue(onFloor);
                 }
-                floorMap.setImage(imgInt.display(onFloor));
+                setupImageAndTags();
                 // Notify super class
                 setFloor(onFloor);
                 output = "";
@@ -473,9 +486,6 @@ public class UserScreenController extends MapController {
                 directions.setItems(dirList);
 
                 System.out.println(onFloor);
-               // directions.setText(output);
-                //System.out.println(onFloor);
-
                 setupMap();
             }
         });
@@ -676,6 +686,7 @@ public class UserScreenController extends MapController {
             for(Tag tag: dir.getTags()){
                 if (Main.DestinationSelected.equals(tag.getTagName())){
                     currentTag = tag;
+                    System.out.println("Selected Search Tag: "+currentTag.getNodes().getFirst());
                 }
             }
             System.out.println(starttag.getNodes().getFirst());
@@ -780,7 +791,7 @@ public class UserScreenController extends MapController {
         if((pathNodes != null) && (pathNodes.getLast() != null)) {
             onFloor = pathNodes.getLast().getFloor();
             FloorMenu.setValue(onFloor);
-            floorMap.setImage(imgInt.display(onFloor));
+            setupImageAndTags();
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             dirList = FXCollections.observableArrayList(output);
@@ -803,7 +814,7 @@ public class UserScreenController extends MapController {
         if(midfloor != 0) {
             onFloor = midfloor;
             FloorMenu.setValue(onFloor);
-            floorMap.setImage(imgInt.display(onFloor));
+            setupImageAndTags();
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
         //    directions.setText(output);
@@ -826,7 +837,7 @@ public class UserScreenController extends MapController {
         if((pathNodes != null) && (pathNodes.getFirst() != null)) {
             onFloor = pathNodes.getFirst().getFloor();
             FloorMenu.setValue(onFloor);
-            floorMap.setImage(imgInt.display(onFloor));
+            setupImageAndTags();
             //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
             output = "";
             dirList = FXCollections.observableArrayList(output);
