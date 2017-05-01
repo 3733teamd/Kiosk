@@ -432,6 +432,10 @@ public class EditMapScreenController extends MapController implements IObservabl
                 if (keyEvent.getCode() == KeyCode.ENTER && !timeoutField.getText().isEmpty())  {
                     if(timeoutField.getText().matches("-?\\d+(\\.\\d+)?")){
                         MementoController.timeoutTime=Integer.parseInt(timeoutField.getText());
+                        String s = timeoutField.getText();
+
+                        timeoutField.setText("");
+                        timeoutField.setPromptText(s);
                         System.out.println("timeout"+ MementoController.timeoutTime);
                     }
 
