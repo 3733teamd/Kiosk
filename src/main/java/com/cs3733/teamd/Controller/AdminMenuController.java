@@ -223,16 +223,6 @@ public class AdminMenuController extends AbsController{
         }
     }
 
-    @FXML
-    private void setLanguageListener() throws IOException {
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
-        System.out.println("val"+LanguageButton.getSelectionModel().getSelectedItem());
-        super.switchLanguage(LanguageButton.getSelectionModel().getSelectedItem());
-        switchScreen(MMGpane,"/Views/AdminMenuScreen.fxml");
-        //setSpanishText();
 
     }
 
@@ -250,10 +240,6 @@ public class AdminMenuController extends AbsController{
     }
 
     public void logout(ActionEvent actionEvent) {
-        timer.cancel();
-        timer.purge();
-        running = false;
-        timerThread.interrupt();
         try {
             super.switchScreen(MMGpane, "/Views/UserScreen.fxml");
         } catch (IOException e) {
