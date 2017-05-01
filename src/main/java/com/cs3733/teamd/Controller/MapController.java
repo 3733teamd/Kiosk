@@ -118,8 +118,10 @@ public class MapController extends AbsController {
             scrollPane.setHvalue(xBarPosition);
             scrollPane.setVvalue(yBarPosition);
         } else {
-            scrollPane.setHvalue(scrollPane.getHvalue());
-            scrollPane.setVvalue(scrollPane.getVvalue());
+            scrollPane.setHvalue(xBarPosition);
+            scrollPane.setVvalue(yBarPosition);
+            //scrollPane.setHvalue(scrollPane.getHvalue());
+            //scrollPane.setVvalue(scrollPane.getVvalue());
         }
 
     }
@@ -237,7 +239,7 @@ public class MapController extends AbsController {
     // What floor do we draw on?
     protected void setFloor(int floor) {
         this.floor = floor;
-        this.zoomPercent = 100.0;
+        this.zoomPercent = 200.0;
         this.setBarPositions(0.5, 0.5, false);
     }
 

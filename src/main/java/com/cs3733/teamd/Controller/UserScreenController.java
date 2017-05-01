@@ -147,6 +147,7 @@ public class UserScreenController extends MapController {
         boolean loggedIn = (dir.getCurrentUser() != null);
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
+
         overrideScrollWheel();
         panMethods();
         // TextFields.bindAutoCompletion(TypeDestination,dir.getTags());
@@ -229,6 +230,7 @@ public class UserScreenController extends MapController {
             init=false;
         }
 
+        //super.setZoomAndBars(scrollPane.getWidth()/super.IMAGE_WIDTH,0.5,0.5);
     }
 
     private void setupImageAndTags() {
