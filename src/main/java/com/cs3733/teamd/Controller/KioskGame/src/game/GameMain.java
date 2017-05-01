@@ -45,6 +45,8 @@ public class GameMain extends Application {
         Image blk3 = null;
         Image blk4 = null;
 
+        boolean loggedin = false;
+
         if(dir.getCurrentUser() == null) {
             //String imagePath = "file:floor_imgs/flkUser1.png";
             flkuser1 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkUser1.png"));
@@ -59,6 +61,7 @@ public class GameMain extends Application {
             blk3 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk3.png"));
             blk4 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/blk4.png"));
         }else{
+            loggedin = true;
             //String imagePath = "file:floor_imgs/flkUser1.png";
             flkuser1 = new Image(getClass().getClassLoader().getResourceAsStream("floor_imgs/flkProf1.png"));
             //imagePath = "file:C:\\Users\\william\\Documents\\Kiosk\\src\\main\\resources\\floor_imgs\\flkUser2.png";
@@ -82,6 +85,8 @@ public class GameMain extends Application {
         final Image beluser2 = blk2;
         final Image beluser3 = blk3;
         final Image beluser4 = blk4;
+
+        final boolean isUser = loggedin;
 
         final long startNanoTime = System.nanoTime();
 
@@ -179,11 +184,40 @@ public class GameMain extends Application {
                     y = y;
                 }
                 if (input.contains("ENTER") && timer == 0) {
+                    //System.out.println("current x:" + curx + " current y:" + cury);
                     timer = 50;
-                    if (floorNum == 1 && cury > 250 && curx > 300) {
-                        changer = "B";
-                    }else if (floorNum == 1 && cury < 210 && curx < 300) {
-                        changer = "H";
+                    if (floorNum == 1 && cury > 240) {
+                        if(cury < 285){
+                            if(curx > 510 && curx < 725){
+                                changer = "B";
+                            }
+                        }else if(cury < 330){
+                            if(curx > 470 && curx < 725){
+                                changer = "B";
+                            }
+                        }else if(cury < 395){
+                            if(curx > 370 && curx < 915){
+                                changer = "B";
+                            }
+                        }else if(cury < 460){
+                            if(curx > 370 && curx < 1010){
+                                changer = "B";
+                            }
+                        }else if(cury < 555){
+                            if(curx > 190 && curx < 1035){
+                                changer = "B";
+                            }
+                        }
+                    }else if (floorNum == 1 && cury < 205 && curx < 270) {
+                        if(curx > 205){
+                            if(cury > 85){
+                                changer = "H";
+                            }
+                        }else if(curx > 120){
+                            if(cury > 170){
+                                changer = "H";
+                            }
+                        }
                     }else if (floorNum == 2) {
                         changer = "C";
                     }else if (floorNum == 3) {
