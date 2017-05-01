@@ -161,7 +161,7 @@ public class LoginScreenController extends AbsController {
         String pass = password.getText();
 
 
-
+       // switchScreen(MMGpane, "/Views/AdminMenuScreen.fxml");
         User u = dir.loginUser(user,pass);
 
         if (u != null){
