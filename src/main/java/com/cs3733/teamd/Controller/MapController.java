@@ -239,8 +239,61 @@ public class MapController extends AbsController {
     // What floor do we draw on?
     protected void setFloor(int floor) {
         this.floor = floor;
-        this.zoomPercent = 200.0;
-        this.setBarPositions(0.5, 0.5, false);
+        zoomToFloor();
+    }
+
+    private void zoomToFloor() {
+        // No path
+        if(circleNodeMap.values().isEmpty()) {
+            this.setZoomAndBars(100,0.5, 0.5);
+            return;
+        }
+        double minX = IMAGE_WIDTH;
+        double maxX = 0;
+        double minY = IMAGE_HEIGHT;
+        double maxY = 0;
+
+        for(Node n: nodes) {
+            if(n.getFloor() == floor) {
+                if(n.getX() > maxX) {
+                    maxX = n.getX();
+                }
+                if(n.getX() < minX) {
+                    minX = n.getX();
+                }
+                if(n.getY() > maxY) {
+                    maxY = n.getY();
+                }
+                if(n.getY() < minY) {
+                    minY = n.getY();
+                }
+            }
+        }
+        // What zoom will we be at?
+        double requiredWidth = maxX - minX;
+        double requiredHeight = maxY - minY;
+
+        double percentWidth = requiredWidth/IMAGE_WIDTH;
+        double percentHeight = requiredHeight/IMAGE_HEIGHT;
+
+        double zoom = 1.0;
+
+        if(percentHeight > percentWidth) {
+            zoom = (1.0/percentHeight);
+        } else {
+            zoom = (1.0/percentWidth);
+        }
+
+        double xPercent = (minX + (requiredWidth/2.0))/IMAGE_WIDTH;
+        double yPercent = (minY + (requiredHeight/2.0))/IMAGE_HEIGHT;
+
+        double zoomPercentNew = (zoom * 100.0);
+
+        if(zoomPercentNew < 100.0) {
+            zoomPercentNew = 100.0;
+        }
+
+        setZoomAndBars(zoomPercentNew, xPercent, yPercent);
     }
 
     protected class ZoomRestriction {
