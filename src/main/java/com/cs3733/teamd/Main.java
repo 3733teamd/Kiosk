@@ -78,7 +78,7 @@ public class Main extends Application {
 
         try {
             if(h != null) {
-                database.setupWithFileName(h.getDbPath());
+                database.setupWithFileName(h.getDbPath(), ApplicationConfiguration.getInstance().getAuthFile());
             } else {
                 System.err.println("Loading from default import");
                 database.setup();

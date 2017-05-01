@@ -84,7 +84,7 @@ public class SyncPopupController implements IOperationListener {
     @FXML
     void saveCurrentVersion(ActionEvent event) {
         DBHandler database = ApplicationConfiguration.getInstance().getDatabase();
-        String filename = getClass().getClassLoader().getResource("hospitals/hospitals.json").getFile();
+        String filename = ApplicationConfiguration.getInstance().getFullFilePath("hospitals/hospitals.json");
         System.out.println(filename);
         File f2 = new File(filename);
         database.dumpDatabaseToSqlStatements(
