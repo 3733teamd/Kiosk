@@ -148,7 +148,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0">
+                  <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0" style="-fx-background: d4d5d2;">
                      <content>
                         <AnchorPane fx:id="imagePane" onMouseClicked="#clickedOnPane" prefHeight="622.0" prefWidth="845.0">
                            <children>

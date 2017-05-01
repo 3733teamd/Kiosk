@@ -104,17 +104,20 @@ public class ApplicationConfiguration {
     }
 
     public boolean timeoutEnabled() {
-        return false;
+        return true;
     }
 
     public String getFullFilePath(String relativePath) {
         try {
-            String localFileName = getClass().getClassLoader().getResource(relativePath).getFile();
+            String localFileName = relativePath;//getClass().getClassLoader().getResource(relativePath).getFile();
             localFileName = URLDecoder.decode(localFileName, "UTF-8");
             return new File(localFileName).getAbsolutePath();
         } catch (Exception e) {
             return null;
         }
+    }
 
+    public String getAuthFile() {
+        return getClass().getClassLoader().getResource("DatabaseImports/default-auth.sql").getFile();
     }
 }

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -16,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.EditTagScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1292.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -68,7 +74,7 @@
                         </Button>
                         <Button fx:id="deleteTagBtn" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteTag" prefHeight="60.0" prefWidth="500.0" text="%delTag">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="24.0" />
                            </font>
                         </Button>
                     </items>
@@ -82,9 +88,9 @@
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="tagNameTxt" prefHeight="55.0" prefWidth="338.0" HBox.hgrow="ALWAYS" />
-                                          <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#modifyTag" prefHeight="54.0" prefWidth="170.0" text="%confTagName">
+                                          <Button fx:id="newTagNameBtn" mnemonicParsing="false" onAction="#modifyTag" prefHeight="54.0" prefWidth="179.0" text="%confTagName">
                                              <font>
-                                                <Font size="20.0" />
+                                                <Font size="24.0" />
                                              </font>
                                           </Button>
                                           <AnchorPane minWidth="400.0" prefHeight="55.0" prefWidth="166.0">
@@ -116,8 +122,14 @@
                                                       <Font size="20.0" />
                                                    </font>
                                                 </TextField>
-                                                <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="500.0" text="%addProfes" />
-                                                <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="500.0" text="%remProf" />
+                                                <Button fx:id="addProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addProf" prefHeight="60.0" prefWidth="500.0" text="%addProfes">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font></Button>
+                                                <Button fx:id="deleteProf" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#deleteProf" prefHeight="60.0" prefWidth="500.0" text="%remProf">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font></Button>
                                              </items>
                                           </SplitPane>
                                           <SplitPane dividerPositions="0.02932551319648094, 0.6524926686217009, 0.6862170087976539, 0.8196480938416423, 0.8592375366568915, 0.9046920821114369, 0.9589442815249267" orientation="VERTICAL" prefHeight="684.0" prefWidth="336.0" HBox.hgrow="ALWAYS">
@@ -128,8 +140,14 @@
                                                 <TextField fx:id="openTimeBox" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="321.0" />
                                                 <Label alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="320.0" text="%closingTime" />
                                                 <TextField fx:id="closingTimeBox" maxHeight="30.0" minHeight="30.0" />
-                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="500.0" text="%addTime" />
-                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="500.0" text="%remTime" />
+                                                <Button fx:id="addVisitHours" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#addToVisitingHourList" prefHeight="31.0" prefWidth="500.0" text="%addTime">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font></Button>
+                                                <Button fx:id="removeVisitBlockButton" alignment="CENTER" maxHeight="60.0" minHeight="60.0" mnemonicParsing="false" onAction="#removeVisitBlock" prefHeight="30.0" prefWidth="500.0" text="%remTime">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font></Button>
                                             </items>
                                           </SplitPane>
                                        </children>

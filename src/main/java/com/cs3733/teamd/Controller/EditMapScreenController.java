@@ -195,7 +195,7 @@ public class EditMapScreenController extends MapController implements IObservabl
         @Override
         public void run() {
             counter++;
-            //System.out.println("edit map" + counter);
+            System.out.println("edit map" + counter);
         }
     };
 

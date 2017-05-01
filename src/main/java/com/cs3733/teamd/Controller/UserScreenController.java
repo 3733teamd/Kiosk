@@ -238,8 +238,10 @@ public class UserScreenController extends MapController {
         if(floorNum < 1000) {
             if(!loggedIn) {
                 floorMap.setImage(imgInt.display(onFloor));
-            } else {
+            } else if(onFloor < 100) {
                 floorMap.setImage(imgInt.display(onFloor + 1000));
+            } else {
+                floorMap.setImage(imgInt.display(onFloor));
             }
         } else {
             floorMap.setImage(imgInt.display(onFloor));

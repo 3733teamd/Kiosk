@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
+<AnchorPane fx:id="MMGpane" prefHeight="800.0" prefWidth="1291.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.UserScreenController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -195,9 +195,9 @@
                               <ListView fx:id="directions" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0">
+                        <ScrollPane fx:id="scrollPane" prefHeight="662.0" prefWidth="846.0" style="-fx-background: d4d5d2;">
                            <content>
-                              <AnchorPane fx:id="imagePane" prefHeight="622.0" prefWidth="845.0">
+                              <AnchorPane fx:id="imagePane" prefHeight="622.0" prefWidth="845.0" style="-fx-background-color: d4d5d2;">
                                  <children>
                                     <ImageView fx:id="floorMap" fitHeight="606.0" fitWidth="844.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.888916015625" AnchorPane.topAnchor="39.0" />
                                     <Pane fx:id="mapCanvas" layoutY="0.0" prefHeight="606.0" prefWidth="844.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
