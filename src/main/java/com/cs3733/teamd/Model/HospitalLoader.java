@@ -1,5 +1,6 @@
 package com.cs3733.teamd.Model;
 
+import javafx.application.Application;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,6 +11,8 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by Stephen on 4/25/2017.
@@ -77,21 +80,60 @@ public class HospitalLoader {
         }
     }
 
+    private static void unzip(InputStream is, String destDir) {
+        File dir = new File(destDir);
+        // create output directory if it doesn't exist
+        if(!dir.exists()) dir.mkdirs();
+        FileInputStream fis;
+        //buffer for read and write data to file
+        byte[] buffer = new byte[1024];
+        try {
+            ZipInputStream zis = new ZipInputStream(is);
+            ZipEntry ze = zis.getNextEntry();
+            while(ze != null){
+                String fileName = ze.getName();
+                File newFile = new File((fileName));
+                if(!fileName.contains(".")) {
+                    ze = zis.getNextEntry();
+                } else {
+                    System.out.println("Unzipping to "+newFile.getAbsolutePath());
+                    //create directories for sub directories in zip
+                    System.out.println(newFile);
+                    new File(newFile.getParent()).mkdirs();
+                    FileOutputStream fos = new FileOutputStream(newFile);
+                    int len;
+                    while ((len = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                    //close this ZipEntry
+                    zis.closeEntry();
+                    ze = zis.getNextEntry();
+                }
+
+            }
+            //close last ZipEntry
+            zis.closeEntry();
+            zis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private boolean setupLocalHospitalDirectory() {
         if(!hospitalsExist()) {
             System.out.println("hospitals directory does not exist. creating...");
 
-            try {
-                String file = ApplicationConfiguration.getInstance().getFullFilePath("hospitals");
-                file = URLDecoder.decode(file, "UTF-8");
-                copyFolder(new File(getClass().getClassLoader().getResource("hospitals").getFile()),
-                        new File(file));
-                System.out.println("done.");
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
+            File f = new File("hospitals");
+            f.mkdir();
+            f = new File("hospitals/apartment");
+            f.mkdir();
+            f = new File("hospitals/faulkner");
+            f.mkdir();
+            unzip(getClass().getClassLoader().getResourceAsStream("hospitals.zip"), "");
+            return true;
+
 
         } else {
             return true;
