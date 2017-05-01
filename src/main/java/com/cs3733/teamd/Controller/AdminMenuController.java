@@ -36,9 +36,7 @@ public class AdminMenuController extends AbsController{
     public JFXButton toAddUser;
     public JFXButton toBugView;
     public AnchorPane MMGpane;
-    public TextField timeOutTextBox;
-    @FXML
-    private ComboBox<String> LanguageButton;
+
 
     final String[] languages = new String[] { "English", "\u0045\u0073\u0070\u0061\u00f1\u006f\u006c", "\u0046\u0072\u0061\u006e\u00e7\u0061\u0069\u0073", "\u4e2d\u6587", "\u0050\u006f\u0072\u0074\u0075\u0067\u0075\u00ea\u0073" };
     public static ObservableList<String> languageDropDown = FXCollections.observableArrayList();
@@ -107,16 +105,7 @@ public class AdminMenuController extends AbsController{
     public void initialize() {
         timer.scheduleAtFixedRate(timerTask, 30, 1000);
         timerThread.start();
-        if(languageDropDown.size()==0){
-            languageDropDown.addAll(languages);
-        }
-        LanguageButton.setItems(languageDropDown);
-        LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
-        if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
-            LanguageButton.setDisable(true);
-        } else {
-            LanguageButton.setDisable(false);
-        }
+
 
         //timer up counter
         MMGpane.setOnMouseMoved(new EventHandler<MouseEvent>() {
@@ -131,24 +120,8 @@ public class AdminMenuController extends AbsController{
                 counter = 0;
             }
         });
-        LanguageButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                counter = 0;
-            }
-        });
-        timeOutTextBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                counter = 0;
-            }
-        });
-        timeOutTextBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                counter = 0;
-            }
-        });
+
+
     }
 
     public void goToEditMap(ActionEvent actionEvent) {
@@ -223,8 +196,6 @@ public class AdminMenuController extends AbsController{
         }
     }
 
-
-    }
 
     @FXML
     void onSyncPopup(ActionEvent event) {
