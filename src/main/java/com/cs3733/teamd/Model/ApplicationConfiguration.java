@@ -119,9 +119,10 @@ public class ApplicationConfiguration {
     }
 
     public String getAuthFile(){
-        String file = getClass().getClassLoader().getResource("DatabaseImports/default-auth.sql").getFile();
+        String file = "hospitals/default-auth.sql";
         try {
             file = URLDecoder.decode(file, "UTF-8");
+            return new File(file).getAbsolutePath();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             file = "";
