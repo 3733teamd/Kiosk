@@ -28,25 +28,24 @@
                 </HBox>
                 <AnchorPane prefHeight="513.0" prefWidth="800.0">
                <children>
-                  <Text layoutX="52.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%CurrHospital" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-                  <Text layoutX="50.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%CurrDatabase" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="110.0" />
-                  <Text fx:id="hospitalName" layoutX="277.0" layoutY="65.8134765625" strokeType="OUTSIDE" strokeWidth="0.0" text="txt" textAlignment="CENTER" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="49.8134765625" />
-                  <Text fx:id="dbVersionText" layoutX="278.0" layoutY="125.8134765625" strokeType="OUTSIDE" strokeWidth="0.0" text="txt" textAlignment="RIGHT" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="109.8134765625" />
+                  <Text layoutX="70.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%CurrHospital" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="54.0" />
+                  <Text layoutX="70.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%CurrDatabase" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="114.0" />
+                  <Text fx:id="hospitalName" layoutX="354.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="txt" textAlignment="CENTER" AnchorPane.leftAnchor="354.0" AnchorPane.topAnchor="51.0" />
+                  <Text fx:id="dbVersionText" layoutX="355.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="txt" textAlignment="RIGHT" AnchorPane.leftAnchor="355.0" AnchorPane.topAnchor="111.0" />
                   <Button layoutX="70.0" layoutY="371.0" mnemonicParsing="false" onAction="#saveCurrentVersion" text="%Save" wrapText="true" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="371.0" />
-                  <Button layoutX="230.0" layoutY="90.0" mnemonicParsing="false" onAction="#onLoadVersion" prefHeight="37.0" prefWidth="125.0" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="%LoadVer" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="130.0">
+                  <Button layoutX="307.0" layoutY="131.0" mnemonicParsing="false" onAction="#onLoadVersion" prefHeight="37.0" prefWidth="125.0" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="%LoadVer" AnchorPane.leftAnchor="307.0" AnchorPane.topAnchor="131.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
                   <Button layoutX="257.0" layoutY="371.0" mnemonicParsing="false" onAction="#saveAsNewVersion" prefWidth="291.0" style="-fx-pref-width: 200;" text="%SaveVer" wrapText="true" AnchorPane.leftAnchor="257.0" AnchorPane.topAnchor="371.0" />
-                  <ComboBox fx:id="dbVersionBox" layoutX="50.0" layoutY="91.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="130.0" />
-                  <ComboBox fx:id="hospitalVersionBox" layoutX="50.0" layoutY="67.0" prefWidth="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="70.0" />
-                  <Button layoutX="230.0" layoutY="73.0" mnemonicParsing="false" onAction="#onLoadHospital" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="%LoadHospital" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="70.0">
+                  <ComboBox fx:id="dbVersionBox" layoutX="70.0" layoutY="134.0" prefWidth="150.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="134.0" />
+                  <ComboBox fx:id="hospitalVersionBox" layoutX="70.0" layoutY="74.0" prefWidth="150.0" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="74.0" />
+                  <Button layoutX="307.0" layoutY="71.0" mnemonicParsing="false" onAction="#onLoadHospital" style="-fx-font-size: 12; -fx-pref-width: 100; -fx-pref-height: 28;" text="%LoadHospital" AnchorPane.leftAnchor="307.0" AnchorPane.topAnchor="71.0">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button layoutX="500.0" layoutY="371.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-pref-width: 250;" text="%LoadRemote" wrapText="true" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="371.0" />
                </children></AnchorPane>
                 <AnchorPane prefHeight="300.0" prefWidth="800.0">
                     <children>

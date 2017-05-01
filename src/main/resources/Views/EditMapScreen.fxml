@@ -70,12 +70,12 @@
                <children>
                   <AnchorPane GridPane.columnIndex="4">
                      <children>
-                        <ChoiceBox fx:id="FloorMenu" prefHeight="58.0" prefWidth="162.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4" />
+                        <ChoiceBox fx:id="FloorMenu" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="4" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="7">
                      <children>
-                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="45.0" prefWidth="115.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
+                        <Button fx:id="BackButton" mnemonicParsing="false" onAction="#onBack" prefHeight="50.0" prefWidth="200.0" text="%back" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="7">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -84,12 +84,12 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="116.0" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
+                        <Button fx:id="EditTag" mnemonicParsing="false" onAction="#toEditTag" prefHeight="50.0" prefWidth="200.0" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="1" />
                      </children>
                   </AnchorPane>
                   <AnchorPane>
                      <children>
-                        <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="133.0" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="EditProf" mnemonicParsing="false" onAction="#toEditProf" prefHeight="50.0" prefWidth="200.0" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -114,29 +114,29 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="8">
                      <children>
-                        <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="45.0" prefWidth="103.0" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="8" />
+                        <Button fx:id="bugReports" mnemonicParsing="false" onAction="#viewBugReports" prefHeight="50.0" prefWidth="200.0" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="8" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="2">
                      <children>
-                        <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="192.0" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2" />
+                        <Button fx:id="CreateUserButton" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="50.0" prefWidth="200.0" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="2" />
                      </children>
                   </AnchorPane>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="108.0" GridPane.columnIndex="3">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%floor" textAlignment="CENTER" wrappingWidth="99.0" GridPane.columnIndex="3">
                      <font>
                         <Font size="33.0" />
                      </font>
                   </Text>
                   <AnchorPane GridPane.columnIndex="5">
                      <children>
-                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="45.0" prefWidth="136.0" text="%Logout" textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
+                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#Logout" prefHeight="50.0" prefWidth="200.0" text="%Logout" textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
                      </children>
                   </AnchorPane>
-                  <ComboBox fx:id="LanguageButton" onAction="#setLanguageListener" prefHeight="58.0" prefWidth="149.0" promptText="Language" GridPane.columnIndex="6" />
+                  <ComboBox fx:id="LanguageButton" onAction="#setLanguageListener" prefHeight="70.0" prefWidth="200.0" promptText="Language" GridPane.columnIndex="6" />
                </children>
             </GridPane>
             <GridPane prefHeight="637.0" prefWidth="1291.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
