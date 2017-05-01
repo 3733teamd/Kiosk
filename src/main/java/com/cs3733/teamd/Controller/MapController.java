@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.CircleNode;
+import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 public class MapController extends AbsController {
     // Height and width of the ImageView(from the FXML)
+    Directory dir = Directory.getInstance();
     protected static final double IMAGE_WIDTH = 844.0;
     protected static final double IMAGE_HEIGHT = 606.0;
 
@@ -244,16 +246,13 @@ public class MapController extends AbsController {
 
     private void zoomToFloor() {
         // No path
-        if(circleNodeMap.values().isEmpty()) {
-            this.setZoomAndBars(100,0.5, 0.5);
-            return;
-        }
+
         double minX = IMAGE_WIDTH;
         double maxX = 0;
         double minY = IMAGE_HEIGHT;
         double maxY = 0;
 
-        for(Node n: nodes) {
+        for(Node n: dir.getNodes()) {
             if(n.getFloor() == floor) {
                 if(n.getX() > maxX) {
                     maxX = n.getX();

@@ -144,6 +144,7 @@ public class UserScreenController extends MapController {
     @FXML
     private void initialize()
     {
+
         boolean loggedIn = (dir.getCurrentUser() != null);
 
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
@@ -233,7 +234,7 @@ public class UserScreenController extends MapController {
         }
 
         super.setFloor(onFloor);
-
+        drawStartTagAndTags();
         //super.setZoomAndBars(scrollPane.getWidth()/super.IMAGE_WIDTH,0.5,0.5);
     }
 
@@ -492,7 +493,7 @@ public class UserScreenController extends MapController {
                 setFloor(onFloor);
                 output = "";
                 dirList = FXCollections.observableArrayList(output);
-//                directions.setText(output);
+                //directions.setText(output);
                 directions.setItems(dirList);
 
                 System.out.println(onFloor);
@@ -504,6 +505,7 @@ public class UserScreenController extends MapController {
 
     @FXML
     private void setLanguageListener() throws IOException {
+
 
         //value=(Integer.parseInt( LanguageButton.getValue()));
 
