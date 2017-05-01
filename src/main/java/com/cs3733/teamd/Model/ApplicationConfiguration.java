@@ -104,7 +104,7 @@ public class ApplicationConfiguration {
     }
 
     public boolean timeoutEnabled() {
-        return false;
+        return true;
     }
 
     public String getFullFilePath(String relativePath) {
