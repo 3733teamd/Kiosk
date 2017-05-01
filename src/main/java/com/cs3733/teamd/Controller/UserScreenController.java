@@ -145,6 +145,7 @@ public class UserScreenController extends MapController {
     private void initialize()
     {
         boolean loggedIn = (dir.getCurrentUser() != null);
+
         super.initialize(this.scrollPane, this.floorMap, this.mapCanvas);
 
         overrideScrollWheel();
@@ -198,8 +199,10 @@ public class UserScreenController extends MapController {
 
         if(!ApplicationConfiguration.getInstance().getHospital().hasMultipleLanguages()) {
             LanguageButton.setDisable(true);
+            WalkthroughHospitalButton.setDisable(true);
         } else {
             LanguageButton.setDisable(false);
+            WalkthroughHospitalButton.setDisable(false);
         }
             LanguageButton.setItems(languageDropDown);
             LanguageButton.getSelectionModel().select(Main.bundle.getString("Language"));
