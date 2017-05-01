@@ -79,6 +79,13 @@ public class SyncPopupController implements IOperationListener {
 
         h.getDbVersions().add(maxVersion  + 1);
         saveCurrentVersion(event);
+        this.dbVersionText.setText(h.getDbVersion().toString());
+        List<Integer> list = new ArrayList<Integer>();
+        for(Integer version: h.getDbVersions()) {
+            list.add(version);
+        }
+        this.dbVersionBox.setItems(FXCollections.observableList(list));
+        this.dbVersionBox.setValue(h.getDbVersion());
     }
 
     @FXML
