@@ -307,12 +307,13 @@ public class UserScreenController extends MapController {
                 // Don't add restricted tag if user can't see them
                 if(t.isRestricted() && !restrictedTagsAllowed) {
                     continue;
-                }
-                if(t != starttag) {
-                    for(Node n: t.getNodes()) {
-                        super.addCircle(n, 7.0);
+                } else {
+                    if(t != starttag) {
+                        for(Node n: t.getNodes()) {
+                            super.addCircle(n, 7.0);
+                        }
+                        super.appendNodes(t.getNodes());
                     }
-                    super.appendNodes(t.getNodes());
                 }
             }
             super.addCircle(startNodes.get(0), 10.0);
