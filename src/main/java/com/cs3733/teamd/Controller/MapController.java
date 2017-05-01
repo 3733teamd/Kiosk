@@ -2,6 +2,7 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.CircleNode;
 import com.cs3733.teamd.Model.Entities.Node;
+import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -191,7 +192,12 @@ public class MapController extends AbsController {
         circle.setOnMouseEntered((event) -> {
             if(n.getTags().size() > 0) {
                 System.out.println("Hover");
-                label.setText(n.mostSpecificTagName());
+                Tag t = n.mostSpecificTagName();
+                String text = t.getTagName();
+                if(t.getVisitingBlockObjs().size() > 0) {
+                    text = text + " (" + t.getVisitingBlockObjs().getFirst().toString() +")";
+                }
+                label.setText(text);
                 mapCanvas.getChildren().add(label);
                 label.setLayoutX(getNodeX(n) - 35.0);
                 label.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
