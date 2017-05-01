@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
@@ -17,7 +24,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="MMGpane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
+<AnchorPane fx:id="MMGpane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cs3733.teamd.Controller.AdminMenuController">
    <children>
       <GridPane layoutX="-4.0" prefHeight="586.0" prefWidth="1302.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -53,37 +60,58 @@
                      <children>
                         <AnchorPane>
                            <children>
-                              <JFXButton fx:id="toEditMap" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditMap" prefHeight="92.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%EditM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS" />
+                              <JFXButton fx:id="toEditMap" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditMap" prefHeight="92.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%EditM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="1">
                            <children>
-                              <JFXButton fx:id="toEditTag" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditTag" prefHeight="82.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="1" />
+                              <JFXButton fx:id="toEditTag" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditTag" prefHeight="82.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%edT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="2">
                            <children>
-                              <JFXButton fx:id="toEditProf" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditProf" prefHeight="73.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="2" />
+                              <JFXButton fx:id="toEditProf" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEditProf" prefHeight="73.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%edP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="3">
                            <children>
-                              <JFXButton fx:id="toEnhancedMap" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEnhancedMap" prefHeight="64.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%enhanceMap" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="3" />
+                              <JFXButton fx:id="toEnhancedMap" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToEnhancedMap" prefHeight="64.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%enhanceMap" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="4">
                            <children>
-                              <JFXButton fx:id="toAddUser" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToAddUser" prefHeight="58.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="4" />
+                              <JFXButton fx:id="toAddUser" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToAddUser" prefHeight="58.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%CreatenewUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="5">
                            <children>
-                              <JFXButton fx:id="toSync" buttonType="RAISED" layoutY="3.0" onAction="#onSyncPopup" prefHeight="58.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%sync" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" GridPane.rowIndex="5" />
+                              <JFXButton fx:id="toSync" buttonType="RAISED" layoutY="3.0" onAction="#onSyncPopup" prefHeight="58.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%sync" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane GridPane.rowIndex="6">
                            <children>
-                              <JFXButton fx:id="toBugView" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToBugView" prefHeight="113.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="5" />
+                              <JFXButton fx:id="toBugView" buttonType="RAISED" layoutX="1.0" layoutY="1.0" onAction="#goToBugView" prefHeight="113.0" prefWidth="912.0" style="-fx-background-color: DCDCDCDC;" text="%ViewBugs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font></JFXButton>
                            </children>
                         </AnchorPane>
                      </children>

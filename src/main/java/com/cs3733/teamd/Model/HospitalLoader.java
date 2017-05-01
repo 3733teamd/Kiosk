@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -81,8 +82,10 @@ public class HospitalLoader {
             System.out.println("hospitals directory does not exist. creating...");
 
             try {
+                String file = ApplicationConfiguration.getInstance().getFullFilePath("hospitals");
+                file = URLDecoder.decode(file, "UTF-8");
                 copyFolder(new File(getClass().getClassLoader().getResource("hospitals").getFile()),
-                        new File(ApplicationConfiguration.getInstance().getFullFilePath("hospitals")));
+                        new File(file));
                 System.out.println("done.");
                 return true;
             } catch (IOException e) {
