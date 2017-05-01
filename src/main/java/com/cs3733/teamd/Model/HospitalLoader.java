@@ -6,6 +6,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 /**
@@ -29,7 +31,72 @@ public class HospitalLoader {
         return instance;
     }
 
+    private boolean hospitalsExist() {
+        File test = new File(ApplicationConfiguration.getInstance()
+                .getFullFilePath("hospitals"));
+        return test.isDirectory();
+    }
+
+    /**
+     * This function recursively copy all the sub folder and files from sourceFolder to destinationFolder
+     *
+     * This source is from: http://howtodoinjava.com/core-java/io/how-to-copy-directories-in-java/
+     * */
+    private static void copyFolder(File sourceFolder, File destinationFolder) throws IOException
+    {
+        //Check if sourceFolder is a directory or file
+        //If sourceFolder is file; then copy the file directly to new location
+        if (sourceFolder.isDirectory())
+        {
+            //Verify if destinationFolder is already present; If not then create it
+            if (!destinationFolder.exists())
+            {
+                destinationFolder.mkdir();
+                System.out.println("Directory created :: " + destinationFolder);
+            }
+
+            //Get all files from source directory
+            String files[] = sourceFolder.list();
+
+            //Iterate over all files and copy them to destinationFolder one by one
+            for (String file : files)
+            {
+                File srcFile = new File(sourceFolder, file);
+                File destFile = new File(destinationFolder, file);
+
+                //Recursive function call
+                copyFolder(srcFile, destFile);
+            }
+        }
+        else
+        {
+            //Copy the file content from one place to another
+            Files.copy(sourceFolder.toPath(), destinationFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("File copied :: " + destinationFolder);
+        }
+    }
+
+    private boolean setupLocalHospitalDirectory() {
+        if(!hospitalsExist()) {
+            System.out.println("hospitals directory does not exist. creating...");
+
+            try {
+                copyFolder(new File(getClass().getClassLoader().getResource("hospitals").getFile()),
+                        new File(ApplicationConfiguration.getInstance().getFullFilePath("hospitals")));
+                System.out.println("done.");
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        } else {
+            return true;
+        }
+    }
+
     private JSONArray loadHospitalsObject() {
+
         try {
             String filename = ApplicationConfiguration.getInstance()
                     .getFullFilePath("hospitals/hospitals.json");
@@ -55,6 +122,7 @@ public class HospitalLoader {
     }
 
     public List<String> loadHospitals() {
+
 
         JSONArray hospitalsJson = loadHospitalsObject();
         if(hospitalsJson == null) {
@@ -93,6 +161,7 @@ public class HospitalLoader {
     }
 
     public Hospital loadDefaultHospital() {
+        setupLocalHospitalDirectory();
         try {
             String filename = ApplicationConfiguration.getInstance()
                     .getFullFilePath("hospitals/hospitals.json");

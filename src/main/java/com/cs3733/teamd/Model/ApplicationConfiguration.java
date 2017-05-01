@@ -115,6 +115,9 @@ public class ApplicationConfiguration {
         } catch (Exception e) {
             return null;
         }
+    }
 
+    public String getAuthFile() {
+        return getClass().getClassLoader().getResource("DatabaseImports/default-auth.sql").getFile();
     }
 }
