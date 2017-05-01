@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class Main extends Application {
 
         try {
             if(h != null) {
-                database.setupWithFileName(h.getDbPath());
+                database.setupWithFileName(h.getDbPath(), ApplicationConfiguration.getInstance().getAuthFile());
             } else {
                 System.err.println("Loading from default import");
                 database.setup();
