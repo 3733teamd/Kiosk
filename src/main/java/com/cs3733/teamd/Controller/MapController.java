@@ -1,6 +1,7 @@
 package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Model.CircleNode;
+import com.cs3733.teamd.Model.Entities.Directory;
 import com.cs3733.teamd.Model.Entities.Node;
 import com.cs3733.teamd.Model.Entities.Tag;
 import javafx.geometry.Insets;
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 public class MapController extends AbsController {
     // Height and width of the ImageView(from the FXML)
+    Directory dir = Directory.getInstance();
     protected static final double IMAGE_WIDTH = 844.0;
     protected static final double IMAGE_HEIGHT = 606.0;
 
@@ -119,8 +121,10 @@ public class MapController extends AbsController {
             scrollPane.setHvalue(xBarPosition);
             scrollPane.setVvalue(yBarPosition);
         } else {
-            scrollPane.setHvalue(scrollPane.getHvalue());
-            scrollPane.setVvalue(scrollPane.getVvalue());
+            scrollPane.setHvalue(xBarPosition);
+            scrollPane.setVvalue(yBarPosition);
+            //scrollPane.setHvalue(scrollPane.getHvalue());
+            //scrollPane.setVvalue(scrollPane.getVvalue());
         }
 
     }
@@ -243,8 +247,58 @@ public class MapController extends AbsController {
     // What floor do we draw on?
     protected void setFloor(int floor) {
         this.floor = floor;
-        this.zoomPercent = 100.0;
-        this.setBarPositions(0.5, 0.5, false);
+        zoomToFloor();
+    }
+
+    private void zoomToFloor() {
+        // No path
+
+        double minX = IMAGE_WIDTH;
+        double maxX = 0;
+        double minY = IMAGE_HEIGHT;
+        double maxY = 0;
+
+        for(Node n: dir.getNodes()) {
+            if(n.getFloor() == floor) {
+                if(n.getX() > maxX) {
+                    maxX = n.getX();
+                }
+                if(n.getX() < minX) {
+                    minX = n.getX();
+                }
+                if(n.getY() > maxY) {
+                    maxY = n.getY();
+                }
+                if(n.getY() < minY) {
+                    minY = n.getY();
+                }
+            }
+        }
+        // What zoom will we be at?
+        double requiredWidth = maxX - minX;
+        double requiredHeight = maxY - minY;
+
+        double percentWidth = requiredWidth/IMAGE_WIDTH;
+        double percentHeight = requiredHeight/IMAGE_HEIGHT;
+
+        double zoom = 1.0;
+
+        if(percentHeight > percentWidth) {
+            zoom = (1.0/percentHeight);
+        } else {
+            zoom = (1.0/percentWidth);
+        }
+
+        double xPercent = (minX + (requiredWidth/2.0))/IMAGE_WIDTH;
+        double yPercent = (minY + (requiredHeight/2.0))/IMAGE_HEIGHT;
+
+        double zoomPercentNew = (zoom * 100.0);
+
+        if(zoomPercentNew < 100.0) {
+            zoomPercentNew = 100.0;
+        }
+
+        setZoomAndBars(zoomPercentNew, xPercent, yPercent);
     }
 
     protected class ZoomRestriction {

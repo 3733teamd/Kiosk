@@ -416,6 +416,7 @@ public class EditMapScreenController extends MapController implements IObservabl
         }
 
         setUpTimeoutField();
+        super.setFloor(onFloor);
 
     }//initialize end
 
@@ -459,11 +460,12 @@ public class EditMapScreenController extends MapController implements IObservabl
         FloorMenu.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                if(new_val!=null && old_val!=null)
-                floor = new_val.intValue();
-                FloorMenu.setValue(floor);
-                //floorMap.setImage(imageHashMap.get(floor));
-                floorMap.setImage(imgInt.display(floor));
+                if(new_val!=null && old_val!=null) {
+                    floor = new_val.intValue();
+                    FloorMenu.setValue(floor);
+                    EditMapScreenController.super.setFloor(floor);
+                    //floorMap.setImage(imageHashMap.get(floor));
+                    floorMap.setImage(imgInt.display(floor));
 
                 /*//TODO: heart of error
                 imagePane.getChildren().removeAll(floorCircs);
@@ -471,7 +473,8 @@ public class EditMapScreenController extends MapController implements IObservabl
                 floorCircs.clear();
                 floorLines.clear();
 */
-                drawfloorNodes();
+                    drawfloorNodes();
+                }
 
             }
         });
