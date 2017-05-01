@@ -3,6 +3,7 @@ package com.cs3733.teamd.Model;
 import com.cs3733.teamd.Database.DBHandler;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Locale;
 
@@ -117,7 +118,14 @@ public class ApplicationConfiguration {
         }
     }
 
-    public String getAuthFile() {
-        return getClass().getClassLoader().getResource("DatabaseImports/default-auth.sql").getFile();
+    public String getAuthFile(){
+        String file = getClass().getClassLoader().getResource("DatabaseImports/default-auth.sql").getFile();
+        try {
+            file = URLDecoder.decode(file, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            file = "";
+        }
+        return file;
     }
 }

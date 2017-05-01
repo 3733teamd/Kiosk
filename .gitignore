@@ -33,6 +33,8 @@
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+hospitals/
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 
