@@ -2,11 +2,7 @@ package com.cs3733.teamd.Controller;
 
 import com.cs3733.teamd.Main;
 import com.cs3733.teamd.Model.*;
-import com.cs3733.teamd.Model.Entities.Directory;
-import com.cs3733.teamd.Model.Entities.DirectoryInterface;
-import com.cs3733.teamd.Model.Entities.Node;
-import com.cs3733.teamd.Model.Entities.Professional;
-import com.cs3733.teamd.Model.Entities.Tag;
+import com.cs3733.teamd.Model.Entities.*;
 import com.cs3733.teamd.Controller.KioskGame.src.game.GameMain;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -679,23 +675,31 @@ public class UserScreenController extends MapController {
             System.out.println(starttag.getNodes().getFirst());
 
 
-            Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
+            try {
+                Pathfinder pf = new Pathfinder(starttag.getNodes().getFirst(), currentTag.getNodes());
+                pathNodes = pf.shortestPath();
+                output = "";
+                //  directions.setText(output);
+                //System.out.println(onFloor);
+                dirList = FXCollections.observableArrayList(output);
+//        directions.setText(output);
+                directions.setItems(dirList);
+
+                System.out.println(onFloor);
+
+                setupMap();
+            }catch(Exception e){
+                System.out.println("YOOOOOOOOOOOOO");
+                directions.setItems(FXCollections.observableArrayList("Unable to Connect Path"));
+                directions.refresh();
+                dir.addBugReport(new Report("Path Error","Unable to connect " + TypeDestination.getText() + " and " + starttag.getTagName()));
+            }
 
 
-            pathNodes = pf.shortestPath();
         }
         // Clear the canvas
         //gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
-        output = "";
-      //  directions.setText(output);
-        //System.out.println(onFloor);
-        dirList = FXCollections.observableArrayList(output);
-//        directions.setText(output);
-        directions.setItems(dirList);
 
-        System.out.println(onFloor);
-
-        setupMap();
 
     }
 
